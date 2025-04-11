@@ -13,75 +13,81 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="2DFramework">
+      <UniqueIdentifier>{c72a09f2-7172-4632-9836-3a2913d9d2b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame">
+      <UniqueIdentifier>{80bebe1e-dc27-4ede-8b88-0e2160ec812f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Image.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="ImageManager.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="KeyManager.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="MainGame.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="Image.cpp">
+      <Filter>2DFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageManager.cpp">
+      <Filter>2DFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyManager.cpp">
+      <Filter>2DFramework</Filter>
     </ClCompile>
     <ClCompile Include="SceneManager.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>2DFramework</Filter>
     </ClCompile>
     <ClCompile Include="TilemapTool.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>2DFramework</Filter>
     </ClCompile>
     <ClCompile Include="Timer.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>2DFramework</Filter>
     </ClCompile>
     <ClCompile Include="TimerManager.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>2DFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame.cpp">
+      <Filter>MainGame</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameObject.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Image.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="ImageManager.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="KeyManager.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="MainGame.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneManager.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Singleton.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="TilemapTool.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Timer.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="TimerManager.h">
-      <Filter>소스 파일</Filter>
+    <ClInclude Include="config.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="CommonFunction.h">
-      <Filter>소스 파일</Filter>
+      <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="config.h">
-      <Filter>소스 파일</Filter>
+    <ClInclude Include="KeyManager.h">
+      <Filter>2DFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="Image.h">
+      <Filter>2DFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageManager.h">
+      <Filter>2DFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>2DFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton.h">
+      <Filter>2DFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="TilemapTool.h">
+      <Filter>2DFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>2DFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="TimerManager.h">
+      <Filter>2DFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame.h">
+      <Filter>MainGame</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
