@@ -8,6 +8,7 @@
 #include <iostream>
 #include <bitset>
 #include <map>
+#include <unordered_map>
 #include <vector>
 
 using namespace std;
@@ -34,6 +35,13 @@ typedef struct tagFPOINT
 	float y;
 } FPOINT;
 
+// 포켓몬 기본 데이터
+struct PokemonData {
+	int idNumber;
+	string name;
+	int hp, atk, def, spAtk, spDef, speed, sum, average;
+	vector<string> types;
+};
 /*
 	extern 키워드 : 변수나 함수가 다른 파일에 정의되어 있다 라는
 	사실을 알리는 키워드.

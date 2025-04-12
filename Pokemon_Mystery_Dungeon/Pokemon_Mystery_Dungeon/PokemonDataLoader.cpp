@@ -28,7 +28,7 @@ bool PokemonDataLoader::LoadFromCSV(string& filepath)
         getline(stream, data.name, ',');
 
         // 능력치들
-        stream >> data.hP >> data.atk >> data.def >> data.spAtk >> data.spDef >> data.speed >> data.sum >> data.average;
+        stream >> data.hp >> data.atk >> data.def >> data.spAtk >> data.spDef >> data.speed >> data.sum >> data.average;
 
         // 타입1, 타입2
         getline(stream, token, ',');
