@@ -18,6 +18,8 @@ private:
 	Image* backGround;
 	Image* redFlower;
 	Image* yellowFlower;
+	Image* river;
+
 
 	int currAnimaionFrame;
 	float elapsedTime;

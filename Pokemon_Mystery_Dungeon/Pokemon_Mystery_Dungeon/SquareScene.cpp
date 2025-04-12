@@ -14,13 +14,20 @@ HRESULT SquareScene::Init()
 	backGround = new Image();
 	redFlower = new Image();
 	yellowFlower = new Image();
+	river = new Image();
 
-	//954, 714
+
+	//Size : 954, 714
 	backGround = ImageManager::GetInstance()->AddImage(
-		"±¤Àå¹è°æ", L"Image/SceneImage/Square2.bmp", 
+		"±¤Àå¹è°æ", L"Image/SceneImage/Square3.bmp", 
 		SQUARESIZE_X, SQUARESIZE_Y, 1,1,
 		0, RGB(255,0,255));
 
+	//210,41
+	river = ImageManager::GetInstance()->AddImage(
+		"°­¹°", L"Image/SceneImage/river.bmp",
+		210, 41, 6, 1,
+		0, RGB(200, 224, 168));
 
 	//33,144
 	yellowFlower = ImageManager::GetInstance()->AddImage(
@@ -84,7 +91,7 @@ void SquareScene::Update()
 
 
 	elapsedTime += TimerManager::GetInstance()->GetDeltaTime();
-	if (elapsedTime > 0.1f)
+	if (elapsedTime > 0.3f)
 	{
 		currAnimaionFrame++;
 		if (currAnimaionFrame >= yellowFlower->GetMaxFrameY())
@@ -108,6 +115,14 @@ void SquareScene::Render(HDC hdc)
     if (redFlower) {
         RenderFlowers(hdc, redFlower, redPositions, currAnimaionFrame);
     }
+	if (river) {
+		river->FrameRender(hdc, 64, 54, currAnimaionFrame, 0, 0);
+		river->FrameRender(hdc, 64, 104, currAnimaionFrame, 0, 0);
+		river->FrameRender(hdc, 152, 273, currAnimaionFrame, 0, 0);
+		river->FrameRender(hdc, 152, 400, currAnimaionFrame, 0, 0);
+		river->FrameRender(hdc, 152, 460, currAnimaionFrame, 0, 0);
+
+	}
 
     TimerManager::GetInstance()->Render(hdc);
 
