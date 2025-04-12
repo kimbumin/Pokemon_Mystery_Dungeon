@@ -134,7 +134,6 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="PokemonBase.cpp" />
-    <ClCompile Include="PokemonGenerator.cpp" />
     <ClCompile Include="PokemonDataLoader.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="TilemapTool.cpp" />
@@ -150,7 +149,6 @@
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="PokemonBase.h" />
-    <ClInclude Include="PokemonGenerator.h" />
     <ClInclude Include="PokemonDataLoader.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Singleton.h" />
