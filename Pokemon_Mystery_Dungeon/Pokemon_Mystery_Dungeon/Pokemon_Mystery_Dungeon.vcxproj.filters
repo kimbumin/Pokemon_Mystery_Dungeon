@@ -19,6 +19,15 @@
     <Filter Include="MainGame">
       <UniqueIdentifier>{80bebe1e-dc27-4ede-8b88-0e2160ec812f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{877e8bcd-c1e0-4b5f-99fc-fdca2f338e45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\소스">
+      <UniqueIdentifier>{abf8fa80-5034-42b3-bde2-76ff76b46b23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\헤더">
+      <UniqueIdentifier>{38a0ee5c-5f03-49e7-8c9f-c4668f24f24f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -36,9 +45,6 @@
     <ClCompile Include="SceneManager.cpp">
       <Filter>2DFramework</Filter>
     </ClCompile>
-    <ClCompile Include="TilemapTool.cpp">
-      <Filter>2DFramework</Filter>
-    </ClCompile>
     <ClCompile Include="Timer.cpp">
       <Filter>2DFramework</Filter>
     </ClCompile>
@@ -50,6 +56,12 @@
     </ClCompile>
     <ClCompile Include="MainGame.cpp">
       <Filter>MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="SquareScene.cpp">
+      <Filter>Scene\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="TilemapTool.cpp">
+      <Filter>Scene\소스</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -74,9 +86,6 @@
     <ClInclude Include="Singleton.h">
       <Filter>2DFramework</Filter>
     </ClInclude>
-    <ClInclude Include="TilemapTool.h">
-      <Filter>2DFramework</Filter>
-    </ClInclude>
     <ClInclude Include="Timer.h">
       <Filter>2DFramework</Filter>
     </ClInclude>
@@ -88,6 +97,12 @@
     </ClInclude>
     <ClInclude Include="MainGame.h">
       <Filter>MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="SquareScene.h">
+      <Filter>Scene\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="TilemapTool.h">
+      <Filter>Scene\헤더</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
