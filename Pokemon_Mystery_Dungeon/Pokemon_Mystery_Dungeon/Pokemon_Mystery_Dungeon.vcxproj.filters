@@ -22,6 +22,15 @@
     <Filter Include="Pokemon">
       <UniqueIdentifier>{1bf48eb1-590d-4728-99f9-99ca672d423e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{599419f2-6869-4367-b57b-c0d081d5ced7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\소스">
+      <UniqueIdentifier>{8b772c0c-b823-4a6a-99bf-78a2a32f8c4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\헤더">
+      <UniqueIdentifier>{d019c4f3-a62c-46d0-bbcd-44cbfd3d0eab}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -37,9 +46,6 @@
       <Filter>2DFramework</Filter>
     </ClCompile>
     <ClCompile Include="SceneManager.cpp">
-      <Filter>2DFramework</Filter>
-    </ClCompile>
-    <ClCompile Include="TilemapTool.cpp">
       <Filter>2DFramework</Filter>
     </ClCompile>
     <ClCompile Include="Timer.cpp">
@@ -59,6 +65,12 @@
     </ClCompile>
     <ClCompile Include="PokemonDataLoader.cpp">
       <Filter>Pokemon</Filter>
+    </ClCompile>
+    <ClCompile Include="SquareScene.cpp">
+      <Filter>Scene\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="TilemapTool.cpp">
+      <Filter>Scene\소스</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -83,9 +95,6 @@
     <ClInclude Include="Singleton.h">
       <Filter>2DFramework</Filter>
     </ClInclude>
-    <ClInclude Include="TilemapTool.h">
-      <Filter>2DFramework</Filter>
-    </ClInclude>
     <ClInclude Include="Timer.h">
       <Filter>2DFramework</Filter>
     </ClInclude>
@@ -103,6 +112,12 @@
     </ClInclude>
     <ClInclude Include="PokemonDataLoader.h">
       <Filter>Pokemon</Filter>
+    </ClInclude>
+    <ClInclude Include="SquareScene.h">
+      <Filter>Scene\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="TilemapTool.h">
+      <Filter>Scene\헤더</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

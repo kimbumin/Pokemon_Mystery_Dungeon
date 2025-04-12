@@ -8,7 +8,7 @@ HRESULT TilemapTool::Init()
 	SetClientRect(g_hWnd, TILEMAPTOOL_X, TILEMAPTOOL_Y);
 
 	sampleTile = ImageManager::GetInstance()->AddImage(
-		"배틀시티_샘플타일", L"Image/mapTiles.bmp", 640, 288,
+		"배틀시티_샘플타일", L"Image/SceneImage/mapTiles.bmp", 640, 288,
 		SAMPLE_TILE_X, SAMPLE_TILE_Y);
 
 	// 샘플 타일 영역
