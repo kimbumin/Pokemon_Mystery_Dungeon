@@ -9,7 +9,7 @@ private:
 
 public:
     void Init();
-    bool LoadFromCSV(string& filepath);
+    bool LoadFromCSV(const string& filepath);
 
     // Getter
     PokemonData* GetData(int idNumber);

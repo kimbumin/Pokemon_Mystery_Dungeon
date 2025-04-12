@@ -19,6 +19,9 @@
     <Filter Include="MainGame">
       <UniqueIdentifier>{80bebe1e-dc27-4ede-8b88-0e2160ec812f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Pokemon">
+      <UniqueIdentifier>{1bf48eb1-590d-4728-99f9-99ca672d423e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -50,6 +53,15 @@
     </ClCompile>
     <ClCompile Include="MainGame.cpp">
       <Filter>MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="PokemonBase.cpp">
+      <Filter>Pokemon</Filter>
+    </ClCompile>
+    <ClCompile Include="PokemonGenerator.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="PokemonDataLoader.cpp">
+      <Filter>Pokemon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -88,6 +100,15 @@
     </ClInclude>
     <ClInclude Include="MainGame.h">
       <Filter>MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="PokemonBase.h">
+      <Filter>Pokemon</Filter>
+    </ClInclude>
+    <ClInclude Include="PokemonGenerator.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="PokemonDataLoader.h">
+      <Filter>Pokemon</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
