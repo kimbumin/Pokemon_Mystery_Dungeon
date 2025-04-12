@@ -17,6 +17,12 @@ public:
 
 private:
 	Image* backGround;
+	Image* redFlower;
+	Image* yellowFlower;
+
+	int currAnimaionFrame;
+	float elapsedTime;
+
 
 
 
