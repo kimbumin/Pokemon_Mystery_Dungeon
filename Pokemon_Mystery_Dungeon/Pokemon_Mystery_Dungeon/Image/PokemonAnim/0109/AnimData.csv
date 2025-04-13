@@ -1,0 +1,13 @@
+Name,FrameWidth,FrameHeight,FrameCount
+Walk,32,56,10
+Attack,72,80,15
+Gas,80,104,15
+Shoot,40,56,16
+Sleep,24,40,6
+Hurt,48,56,2
+Idle,32,56,6
+Swing,72,80,9
+Double,48,64,16
+Hop,32,104,10
+Charge,40,56,10
+Rotate,24,48,9
