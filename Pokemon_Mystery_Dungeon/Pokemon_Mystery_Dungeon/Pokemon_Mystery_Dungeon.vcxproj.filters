@@ -31,6 +31,9 @@
     <Filter Include="Scene\헤더">
       <UniqueIdentifier>{d019c4f3-a62c-46d0-bbcd-44cbfd3d0eab}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Pokemon\Anim">
+      <UniqueIdentifier>{7a6cd8e0-6042-42c9-8af4-006104b917d4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -71,6 +74,9 @@
     </ClCompile>
     <ClCompile Include="TilemapTool.cpp">
       <Filter>Scene\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="PokemonImageLoader.cpp">
+      <Filter>Pokemon\Anim</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -118,6 +124,9 @@
     </ClInclude>
     <ClInclude Include="TilemapTool.h">
       <Filter>Scene\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="PokemonImageLoader.h">
+      <Filter>Pokemon\Anim</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
