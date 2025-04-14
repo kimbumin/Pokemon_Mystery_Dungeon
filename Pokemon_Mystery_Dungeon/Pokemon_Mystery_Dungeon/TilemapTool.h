@@ -1,16 +1,17 @@
 #pragma once
 #include "GameObject.h"
 
-// 샘플 타일 정보
-// 640 * 288
-#define SAMPLE_TILE_X	20
-#define SAMPLE_TILE_Y	9
-#define TILE_SIZE	32
+#define TILEMAPTOOL_X	1420
+#define TILEMAPTOOL_Y	700
+
+#define SAMPLE_TILE_X	21
+#define SAMPLE_TILE_Y	24
+#define TILE_SIZE	24
+#define TILE_SELECT_SIZE 25
 
 // 메인 그리기 공간 정보
-#define TILE_X	20
-#define TILE_Y	20
-
+#define TILE_X	25
+#define TILE_Y	25
 typedef struct tagTile
 {
 	RECT rc;
