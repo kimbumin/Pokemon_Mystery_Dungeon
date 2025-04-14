@@ -3,6 +3,9 @@
 #include "PokemonImageLoader.h"
 #include "Image.h"
 #include "PokemonAnimator.h"
+#include "IAnimState.h"
+#include "IdleAnimState.h"
+#include "AttackAnimState.h"
 
 HRESULT PokemonBase::Init()
 {
@@ -12,6 +15,11 @@ HRESULT PokemonBase::Init()
     CalStatus();
     currentHp = currentStatus.hp;
     animator = new PokemonAnimator();
+
+    currentAnimState = nullptr;
+
+    SetAnimState(new IdleAnimState());
+
     string idStr = PokemonImageLoader::GetInstance()->PokemonIdToString(baseStatus->idNumber);
     for (auto type = animTypes.begin(); type != animTypes.end(); ++type)
     {
@@ -40,7 +48,22 @@ void PokemonBase::Release()
 
 void PokemonBase::Update()
 {
-    animator->Update();
+    if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F2)) 
+    {
+        SetAnimState(new AttackAnimState());
+    }
+    if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F3))
+    {
+        SetAnimState(new IdleAnimState());
+    }
+    if (currentAnimState && currentAnimState->IsFinished())
+    {
+        SetAnimState(new IdleAnimState());
+    }
+    if (currentAnimState)
+    {
+        currentAnimState->Update(this);
+    }
 }
 
 void PokemonBase::Render(HDC hdc)
@@ -61,4 +84,17 @@ void PokemonBase::CalStatus()
 int PokemonBase::CalStat(int value)
 {
     return (value + IV + EV + 100) * level / 100;
+}
+
+void PokemonBase::SetAnimState(IAnimState* newState)
+{
+    if (currentAnimState)
+    {
+        currentAnimState->Exit(this);
+    }
+    currentAnimState = newState;
+    if (currentAnimState)
+    {
+        currentAnimState->Enter(this);
+    }
 }
