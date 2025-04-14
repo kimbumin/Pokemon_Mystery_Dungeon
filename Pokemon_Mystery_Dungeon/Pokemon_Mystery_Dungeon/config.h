@@ -48,6 +48,23 @@ struct PokemonData {
 	int hp, atk, def, spAtk, spDef, speed, sum, average;
 	vector<string> types;
 };
+
+enum class Direction
+{
+    SOUTH,      // 남
+    SOUTHEAST,  // 남동
+    EAST,       // 동
+    NORTHEAST,  // 북동
+    NORTH,      // 북
+    NORTHWEST,  // 북서
+    WEST,       // 서
+    SOUTHWEST,  // 남서
+    LENGTH,
+};
+
+// 포켓몬 애니메이션 종류들
+const vector<string> animTypes = { "Attack", "Hurt", "Idle", "Rotate", "Swing", "Walk" };
+
 /*
 	extern 키워드 : 변수나 함수가 다른 파일에 정의되어 있다 라는
 	사실을 알리는 키워드.

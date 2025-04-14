@@ -22,7 +22,7 @@ void PokemonImageLoader::BeginDungeon(const string& dungeonName)
 void PokemonImageLoader::LoadPokemonAnim(int pokemonId)
 {
 	string folderPath = "Image/PokemonAnim/" + PokemonIdToString(pokemonId) + "/";
-	string csvPath = folderPath + "AnimData.bmp";
+	string csvPath = folderPath + "AnimData.csv";
 
 	ifstream file(csvPath);
 	if (!file.is_open()) return;

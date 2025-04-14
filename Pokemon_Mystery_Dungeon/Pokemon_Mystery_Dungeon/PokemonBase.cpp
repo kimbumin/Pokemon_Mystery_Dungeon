@@ -1,26 +1,51 @@
 #include "PokemonBase.h"
 #include "PokemonDataLoader.h"
+#include "PokemonImageLoader.h"
+#include "Image.h"
+#include "PokemonAnimator.h"
 
 HRESULT PokemonBase::Init()
 {
-    baseStatus = PokemonDataLoader::GetInstance()->GetData(1);
+    baseStatus = PokemonDataLoader::GetInstance()->GetData(6);
     currentStatus = *baseStatus;
     level = 5; // 시작 레벨
     CalStatus();
     currentHp = currentStatus.hp;
+    animator = new PokemonAnimator();
+    string idStr = PokemonImageLoader::GetInstance()->PokemonIdToString(baseStatus->idNumber);
+    for (auto type = animTypes.begin(); type != animTypes.end(); ++type)
+    {
+        string key = idStr + *type;
+        Image* image = ImageManager::GetInstance()->FindImage(key);
+        if (image) {
+            int frameX = image->GetMaxFrameX();
+            int frameY = image->GetMaxFrameY();
+            float frameTime = 0.1f;
+            animator->AddAnimation(*type, image, frameX, frameY, frameTime, *type == "Idle");
+        }
+    }
     return S_OK;
 }
 
 void PokemonBase::Release()
 {
+    if (animator)
+    {
+        animator->Release();
+        delete animator;
+        animator = nullptr;
+    }
+
 }
 
 void PokemonBase::Update()
 {
+    animator->Update();
 }
 
 void PokemonBase::Render(HDC hdc)
 {
+    animator->Render(hdc, pos.x, pos.y);
 }
 
 void PokemonBase::CalStatus()

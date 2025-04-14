@@ -133,6 +133,7 @@
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainGame.cpp" />
+    <ClCompile Include="PokemonAnimator.cpp" />
     <ClCompile Include="PokemonBase.cpp" />
     <ClCompile Include="PokemonDataLoader.cpp" />
     <ClCompile Include="PokemonImageLoader.cpp" />
@@ -150,6 +151,7 @@
     <ClInclude Include="ImageManager.h" />
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="MainGame.h" />
+    <ClInclude Include="PokemonAnimator.h" />
     <ClInclude Include="PokemonBase.h" />
     <ClInclude Include="PokemonDataLoader.h" />
     <ClInclude Include="PokemonImageLoader.h" />

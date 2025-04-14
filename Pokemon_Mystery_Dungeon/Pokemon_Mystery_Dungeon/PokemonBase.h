@@ -1,7 +1,7 @@
 #pragma once
 #include "GameObject.h"
 
-class Image;
+class PokemonAnimator;
 class PokemonBase : public GameObject
 {
 private:
@@ -9,11 +9,14 @@ private:
 protected:
     const PokemonData* baseStatus;
     PokemonData currentStatus;
-    Image* image;
-    FPOINT pos = { 0,0 };
+    PokemonAnimator* animator;
+
+    FPOINT pos = { 100,100 };
     int level;
     int currentHp;
     bool isAlive;
+    Direction direction = Direction::SOUTH;
+
 
 public:
     virtual HRESULT Init() override;
@@ -23,6 +26,9 @@ public:
 
     virtual void CalStatus();
     virtual int CalStat(int value);
+
+    inline PokemonData GetCurrentPokemonData() { return currentStatus; }
+
     PokemonBase() {};
     virtual ~PokemonBase() {};
 };
