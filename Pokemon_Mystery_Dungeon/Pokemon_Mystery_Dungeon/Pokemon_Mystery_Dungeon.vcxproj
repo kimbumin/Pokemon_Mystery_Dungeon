@@ -129,6 +129,7 @@
   <ItemGroup>
     <ClCompile Include="AttackAnimState.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="HurtAnimState.cpp" />
     <ClCompile Include="IdleAnimState.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageManager.cpp" />
@@ -139,17 +140,21 @@
     <ClCompile Include="PokemonBase.cpp" />
     <ClCompile Include="PokemonDataLoader.cpp" />
     <ClCompile Include="PokemonImageLoader.cpp" />
+    <ClCompile Include="RotateAnimState.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SquareScene.cpp" />
+    <ClCompile Include="SwingAnimState.cpp" />
     <ClCompile Include="TilemapTool.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="TimerManager.cpp" />
+    <ClCompile Include="WalkAnimState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AttackAnimState.h" />
     <ClInclude Include="CommonFunction.h" />
     <ClInclude Include="config.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="HurtAnimState.h" />
     <ClInclude Include="IAnimState.h" />
     <ClInclude Include="IdleAnimState.h" />
     <ClInclude Include="Image.h" />
@@ -160,12 +165,15 @@
     <ClInclude Include="PokemonBase.h" />
     <ClInclude Include="PokemonDataLoader.h" />
     <ClInclude Include="PokemonImageLoader.h" />
+    <ClInclude Include="RotateAnimState.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="SquareScene.h" />
+    <ClInclude Include="SwingAnimState.h" />
     <ClInclude Include="TilemapTool.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="TimerManager.h" />
+    <ClInclude Include="WalkAnimState.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

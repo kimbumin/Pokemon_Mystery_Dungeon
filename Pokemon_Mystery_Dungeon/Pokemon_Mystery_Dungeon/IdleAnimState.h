@@ -10,6 +10,7 @@ public:
 	virtual void Update(PokemonBase* outer) override;
 	virtual void Exit(PokemonBase* outer) override;
 	virtual bool IsFinished() override;
+	virtual bool CanOverride() override;
 
 	IdleAnimState();
 	virtual ~IdleAnimState() {};

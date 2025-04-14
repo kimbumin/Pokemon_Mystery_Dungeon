@@ -1,7 +1,7 @@
 #pragma once
 #include "IAnimState.h"
 
-class AttackAnimState : public IAnimState
+class WalkAnimState : public IAnimState
 {
 private:
 	bool finished;
@@ -12,7 +12,7 @@ public:
 	virtual bool IsFinished() override;
 	virtual bool CanOverride() override;
 
-	AttackAnimState();
-	virtual ~AttackAnimState() {};
+	WalkAnimState();
+	virtual ~WalkAnimState() {};
 };
 

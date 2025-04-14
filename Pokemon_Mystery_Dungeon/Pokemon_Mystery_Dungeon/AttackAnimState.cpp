@@ -28,6 +28,11 @@ bool AttackAnimState::IsFinished()
 	return finished;
 }
 
+bool AttackAnimState::CanOverride()
+{
+	return finished;
+}
+
 AttackAnimState::AttackAnimState()
 {
 	finished = false;

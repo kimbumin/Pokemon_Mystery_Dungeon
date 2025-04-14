@@ -11,7 +11,10 @@ void PokemonAnimator::Release()
 
 void PokemonAnimator::Update() 
 {
-    if (currentAnim.empty()) return;
+    if (currentAnim.empty()) 
+    {
+        return;
+    }
     auto& data = animations[currentAnim];
 
     data.timer += TimerManager::GetInstance()->GetDeltaTime();
@@ -55,7 +58,10 @@ void PokemonAnimator::AddAnimation(const string& name, Image* image,
 
 void PokemonAnimator::Play(const string& name, Direction dir)
 {
-    if (animations.find(name) == animations.end()) return;
+    if (animations.find(name) == animations.end()) 
+    {
+        return;
+    }
     if (currentAnim != name)
     {
         currentAnim = name;

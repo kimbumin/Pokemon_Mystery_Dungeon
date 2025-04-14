@@ -11,6 +11,7 @@ public:
 	virtual void Update(PokemonBase* outer) = 0;
 	virtual void Exit(PokemonBase* outer) = 0;
 	virtual bool IsFinished() = 0;
+	virtual bool CanOverride() = 0;
 
 	virtual ~IAnimState() {};
 };

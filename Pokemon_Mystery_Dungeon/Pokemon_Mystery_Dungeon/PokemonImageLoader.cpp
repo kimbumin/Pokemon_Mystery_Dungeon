@@ -30,7 +30,8 @@ void PokemonImageLoader::LoadPokemonAnim(int pokemonId)
 	string line;
 	getline(file, line); // 첫 줄 생략
 
-    while (getline(file, line)) {
+    while (getline(file, line)) 
+    {
         istringstream ss(line);
         string name, widthStr, heightStr, countStr;
 
@@ -39,7 +40,10 @@ void PokemonImageLoader::LoadPokemonAnim(int pokemonId)
         getline(ss, heightStr, ',');
         getline(ss, countStr, ',');
 
-        if (name.empty()) continue;
+        if (name.empty()) 
+        {
+            continue;
+        }
 
         int frameWidth = stoi(widthStr);
         int frameHeight = stoi(heightStr);

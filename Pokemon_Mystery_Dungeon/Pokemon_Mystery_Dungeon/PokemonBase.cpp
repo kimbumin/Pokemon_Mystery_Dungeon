@@ -6,6 +6,10 @@
 #include "IAnimState.h"
 #include "IdleAnimState.h"
 #include "AttackAnimState.h"
+#include "WalkAnimState.h"
+#include "RotateAnimState.h"
+#include "SwingAnimState.h"
+#include "HurtAnimState.h"
 
 HRESULT PokemonBase::Init()
 {
@@ -25,7 +29,8 @@ HRESULT PokemonBase::Init()
     {
         string key = idStr + *type;
         Image* image = ImageManager::GetInstance()->FindImage(key);
-        if (image) {
+        if (image) 
+        {
             int frameX = image->GetMaxFrameX();
             int frameY = image->GetMaxFrameY();
             float frameTime = 0.1f;
@@ -48,13 +53,30 @@ void PokemonBase::Release()
 
 void PokemonBase::Update()
 {
+
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F2)) 
     {
-        SetAnimState(new AttackAnimState());
+        SetAnimState(new IdleAnimState());
     }
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F3))
     {
-        SetAnimState(new IdleAnimState());
+        SetAnimState(new AttackAnimState());
+    }
+    if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F4))
+    {
+        SetAnimState(new WalkAnimState());
+    }
+    if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F5))
+    {
+        SetAnimState(new RotateAnimState());
+    }
+    if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F6))
+    {
+        SetAnimState(new SwingAnimState());
+    }
+    if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F7))
+    {
+        SetAnimState(new HurtAnimState());
     }
     if (currentAnimState && currentAnimState->IsFinished())
     {
@@ -88,9 +110,16 @@ int PokemonBase::CalStat(int value)
 
 void PokemonBase::SetAnimState(IAnimState* newState)
 {
+    if (currentAnimState && !currentAnimState->CanOverride()) 
+    {
+        delete newState;
+        return;
+    }
+
     if (currentAnimState)
     {
         currentAnimState->Exit(this);
+        delete currentAnimState;
     }
     currentAnimState = newState;
     if (currentAnimState)

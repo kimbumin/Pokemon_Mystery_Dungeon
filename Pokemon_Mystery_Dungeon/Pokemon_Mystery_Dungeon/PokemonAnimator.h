@@ -4,11 +4,13 @@
 class Image;
 using namespace std;
 
-class PokemonAnimator {
+class PokemonAnimator 
+{
 
 private:
 
-    struct AnimData {
+    struct AnimData 
+    {
         Image* image;
         int frameCountX;
         int frameCountY;
