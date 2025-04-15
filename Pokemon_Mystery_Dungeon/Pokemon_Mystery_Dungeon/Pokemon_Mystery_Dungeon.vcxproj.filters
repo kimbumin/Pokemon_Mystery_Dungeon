@@ -31,6 +31,15 @@
     <Filter Include="Scene\헤더">
       <UniqueIdentifier>{d019c4f3-a62c-46d0-bbcd-44cbfd3d0eab}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UiState">
+      <UniqueIdentifier>{5238f2ff-cd0c-4c68-9af1-b7ad6148d201}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UiState\소스">
+      <UniqueIdentifier>{74092ff9-2d35-4db6-a77f-e9516a019092}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UiState\헤더">
+      <UniqueIdentifier>{53a9530e-f1f7-4664-9136-6ee6a72b8a40}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -71,6 +80,27 @@
     </ClCompile>
     <ClCompile Include="TilemapTool.cpp">
       <Filter>Scene\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleUIState.cpp">
+      <Filter>UiState\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="UIManager.cpp">
+      <Filter>UiState\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillSelectUIState.cpp">
+      <Filter>UiState\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillInfoUIState.cpp">
+      <Filter>UiState\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="InventoryUIState.cpp">
+      <Filter>UiState\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraManager.cpp">
+      <Filter>2DFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraTestScene.cpp">
+      <Filter>UiState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -118,6 +148,30 @@
     </ClInclude>
     <ClInclude Include="TilemapTool.h">
       <Filter>Scene\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleUIState.h">
+      <Filter>UiState\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="UIManager.h">
+      <Filter>UiState\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="UIState.h">
+      <Filter>UiState\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillSelectUIState.h">
+      <Filter>UiState\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillInfoUIState.h">
+      <Filter>UiState\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="InventoryUIState.h">
+      <Filter>UiState\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraManager.h">
+      <Filter>2DFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraTestScene.h">
+      <Filter>UiState</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
