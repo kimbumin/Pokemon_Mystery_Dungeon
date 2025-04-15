@@ -6,10 +6,8 @@
 HRESULT DungeonScene::Init()
 {
 	SetClientRect(g_hWnd, 2000, 1000);
-	map.Generate();
+	map.Init();
 
-	const Room& firstRoom = map.GetRooms().front();
-	
 
 	return S_OK;
 }
@@ -27,6 +25,7 @@ void DungeonScene::Update()
 void DungeonScene::Render(HDC hdc)
 {
 	PatBlt(hdc, 0, 0, 2000, 1000, WHITENESS);
-	map.Draw(hdc);
+
+	map.Render(hdc);
 
 }

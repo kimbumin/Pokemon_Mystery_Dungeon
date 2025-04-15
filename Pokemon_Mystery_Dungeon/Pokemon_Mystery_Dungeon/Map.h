@@ -2,26 +2,40 @@
 #include <vector>
 #include "CommonFunction.h"
 #include "Room.h"
-
-const int MAP_WIDTH = 50;
-const int MAP_HEIGHT = 50;
+#include "GameObject.h"
 
 enum TileType {
     TILE_WALL,
     TILE_FLOOR
 };
+class Image;
 
-class Map {
+class Map : public GameObject {
 public:
-    Map();
+    Map() {};
+    virtual ~Map() {};
+
+    HRESULT Init() override;
+    void Release() override;
+    void Update() override;
+    void Render(HDC hdc) override;
+
+
     void Generate();                    
     void Draw(HDC hdc);                 
 
     TileType GetTile(int x, int y) const;
-    TileType(*GetTiles())[MAP_WIDTH];  // 전체 타일 참조
+    const TileType(&GetTiles() const)[TILE_Y][TILE_X];
+    //TileType(*GetTiles())[TILE_X];  // 전체 타일 참조
     const std::vector<Room>& GetRooms() const;
 
 private:
-    TileType tiles[MAP_HEIGHT][MAP_WIDTH];
+    TileType tiles[TILE_Y][TILE_X];
     std::vector<Room> rooms;
+
+
+    Image* sampleTile;
+
+    std::vector<POINT> floorTiles;
+    std::vector<POINT> wallTiles;
 };

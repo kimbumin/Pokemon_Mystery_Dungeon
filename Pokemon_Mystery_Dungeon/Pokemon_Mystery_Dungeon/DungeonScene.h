@@ -19,7 +19,8 @@ public:
 
 private:
 	Map map;
+	Image* sampleTile;
 
-
+	TileType tiles[TILE_Y][TILE_X];
 };
 

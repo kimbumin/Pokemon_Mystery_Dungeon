@@ -30,6 +30,10 @@ using namespace std;
 #define TILE_SIZE	24
 #define TILE_SELECT_SIZE 25
 
+//던전 맵 타일 크기 25타일 * 25타일  
+#define TILE_X	25
+#define TILE_Y	25
+
 #define DEG_TO_RAD(degree) ((3.14 / 180.0) * degree)
 #define RAD_TO_DEG(radian) ((180.0 / 3.14) * radian)
 

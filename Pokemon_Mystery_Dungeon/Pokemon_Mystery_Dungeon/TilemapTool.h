@@ -1,8 +1,7 @@
 #pragma once
 #include "GameObject.h"
 
-#define TILE_X	25
-#define TILE_Y	25
+
 typedef struct tagTile
 {
 	RECT rc;
