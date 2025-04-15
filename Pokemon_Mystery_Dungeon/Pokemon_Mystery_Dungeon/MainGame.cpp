@@ -46,10 +46,6 @@ void MainGame::Release()
 
 void MainGame::Update()
 {
-	if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F2))
-	{
-		SceneManager::GetInstance()->ChangeScene("TestMap");
-	}
 	SceneManager::GetInstance()->Update();
 	InvalidateRect(g_hWnd, NULL, false);
 }

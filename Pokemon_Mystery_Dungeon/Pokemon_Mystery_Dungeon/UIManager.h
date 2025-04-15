@@ -7,18 +7,21 @@ class UIManager : public Singleton<UIManager>
 	friend class Singleton<UIManager>;
 
 private:
-	UIState* currentState = nullptr;
-	UIState* nextState = nullptr;
+	map<string, UIState*> UiStateMap; // UI 상태를 저장하는 맵
 
 	UIManager() = default;
 	~UIManager();
 
 public:
+	static UIState* currentState;
+	static UIState* nextState;
+
 	void Init();
 	void Release();
 	void Update();
 	void Render(HDC hdc);
-	void ChangeState(UIState* state);
+	HRESULT ChangeState(string key);
+	void AddState(string key, UIState* state);
 
 };
 

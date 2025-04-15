@@ -1,6 +1,7 @@
 #include "CameraTestScene.h"
 #include "ImageManager.h"
 #include "CameraManager.h"
+#include "UIManager.h"
 
 HRESULT CameraTestScene::Init()
 {
@@ -20,6 +21,11 @@ void CameraTestScene::Update()
 	POINT mouse;
 	GetCursorPos(&mouse);
 	ScreenToClient(g_hWnd, &mouse);
+
+	if (KeyManager::GetInstance()->IsOnceKeyDown(VK_TAB))
+	{
+		//UIManager::GetInstance()->ChangeState(new UIState());
+	}
 
 	CameraManager::GetInstance()->SetCameraPos(mouse.x, mouse.y);
 }
