@@ -1,5 +1,9 @@
 #pragma once
 #include "GameObject.h"
+#include "Map.h"
+
+class Player;
+class Map;
 
 class DungeonScene :public GameObject
 {
@@ -14,6 +18,7 @@ public:
 
 
 private:
+	Map map;
 
 
 };

@@ -75,6 +75,9 @@
     <ClCompile Include="DungeonScene.cpp">
       <Filter>Scene\소스</Filter>
     </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Scene\소스</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="config.h">
@@ -123,6 +126,12 @@
       <Filter>Scene\헤더</Filter>
     </ClInclude>
     <ClInclude Include="DungeonScene.h">
+      <Filter>Scene\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="Room.h">
+      <Filter>Scene\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
       <Filter>Scene\헤더</Filter>
     </ClInclude>
   </ItemGroup>
