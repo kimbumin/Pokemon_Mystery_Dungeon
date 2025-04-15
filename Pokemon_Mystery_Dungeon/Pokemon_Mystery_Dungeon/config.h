@@ -21,10 +21,10 @@ using namespace std;
 /*
 	컴파일러에서 해당 코드를 뒤에 정의된 코드로 변경한다. 
 */
-#define WINSIZE_X	1080
-#define WINSIZE_Y	500
-#define TILEMAPTOOL_X	1420
-#define TILEMAPTOOL_Y	700
+#define WINSIZE_X	800
+#define WINSIZE_Y	400
+#define TILEMAPTOOL_X	800
+#define TILEMAPTOOL_Y	400
 
 #define DEG_TO_RAD(degree) ((3.14 / 180.0) * degree)
 #define RAD_TO_DEG(radian) ((180.0 / 3.14) * radian)

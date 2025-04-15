@@ -6,7 +6,7 @@ HRESULT CameraTestScene::Init()
 {
 	testMap = ImageManager::GetInstance()->AddImage("TestMap", TEXT("Image/SceneImage/Square.bmp"), 954, 714);
 
-	CameraManager::GetInstance()->Init(800, 600);
+	CameraManager::GetInstance()->Init(400, 400);
 
 	return S_OK;
 }

@@ -22,9 +22,9 @@ HRESULT MainGame::Init()
 		return E_FAIL;
 	}
 	SceneManager::GetInstance()->AddScene("TestMap", new CameraTestScene());
-	SceneManager::GetInstance()->AddScene("±¤Àå", new SquareScene());
-	SceneManager::GetInstance()->ChangeScene("±¤Àå");
-
+	/*SceneManager::GetInstance()->AddScene("±¤Àå", new SquareScene());
+	SceneManager::GetInstance()->ChangeScene("±¤Àå");*/
+	SceneManager::GetInstance()->ChangeScene("TestMap");
 	return S_OK;
 }
 
