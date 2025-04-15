@@ -72,7 +72,7 @@
     <ClCompile Include="TilemapTool.cpp">
       <Filter>Scene\소스</Filter>
     </ClCompile>
-    <ClCompile Include="TinyWoodsScene.cpp">
+    <ClCompile Include="DungeonScene.cpp">
       <Filter>Scene\소스</Filter>
     </ClCompile>
   </ItemGroup>
@@ -122,8 +122,11 @@
     <ClInclude Include="TilemapTool.h">
       <Filter>Scene\헤더</Filter>
     </ClInclude>
-    <ClInclude Include="TinyWoodsScene.h">
+    <ClInclude Include="DungeonScene.h">
       <Filter>Scene\헤더</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>
