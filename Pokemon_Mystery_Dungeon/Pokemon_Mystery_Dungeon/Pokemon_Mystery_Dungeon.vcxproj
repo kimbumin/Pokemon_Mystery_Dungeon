@@ -104,6 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>Default</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -127,16 +128,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="EmberSkill.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageManager.cpp" />
+    <ClCompile Include="ISkill.cpp" />
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="PokemonBase.cpp" />
     <ClCompile Include="PokemonDataLoader.cpp" />
     <ClCompile Include="SceneManager.cpp" />
-    <ClCompile Include="Skill.cpp" />
+    <ClCompile Include="SkillManager.cpp" />
     <ClCompile Include="SquareScene.cpp" />
     <ClCompile Include="TilemapTool.cpp" />
     <ClCompile Include="Timer.cpp" />
@@ -145,16 +148,18 @@
   <ItemGroup>
     <ClInclude Include="CommonFunction.h" />
     <ClInclude Include="config.h" />
+    <ClInclude Include="EmberSkill.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageManager.h" />
+    <ClInclude Include="ISkill.h" />
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="PokemonBase.h" />
     <ClInclude Include="PokemonDataLoader.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Singleton.h" />
-    <ClInclude Include="Skill.h" />
+    <ClInclude Include="SkillManager.h" />
     <ClInclude Include="SquareScene.h" />
     <ClInclude Include="TilemapTool.h" />
     <ClInclude Include="Timer.h" />
