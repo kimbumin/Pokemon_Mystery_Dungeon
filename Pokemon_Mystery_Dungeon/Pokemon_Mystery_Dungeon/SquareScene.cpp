@@ -7,6 +7,7 @@
 #define SQUARESIZE_X 954
 #define SQUARESIZE_Y 714
 //타일 사이즈 : 현재 (33,22)로 생각중.
+// 24,24사이즈로 고민중.
 
 HRESULT SquareScene::Init()
 {

@@ -1,6 +1,5 @@
 #pragma once
 #include "GameObject.h"
-
 #define TILEMAPTOOL_X	1420
 #define TILEMAPTOOL_Y	700
 
@@ -20,9 +19,17 @@ typedef struct tagTile
 } TILE_INFO;
 
 class Image;
-class Button;
-class TilemapTool : public GameObject
+class TinyWoodsScene : public GameObject
 {
+public:
+	virtual HRESULT Init();		
+	virtual void Release();		
+	virtual void Update();		
+	virtual void Render(HDC hdc);	
+
+	TinyWoodsScene();
+	virtual ~TinyWoodsScene();
+
 private:
 	Image* sampleTile;
 	RECT rcSampleTile;
@@ -31,20 +38,6 @@ private:
 	RECT rcMain;
 
 	POINT selectedTile;
-
-	Button* saveButton;
 	wchar_t szText[128];
-
-public:
-	virtual HRESULT Init() override;
-	virtual void Release() override;
-	virtual void Update() override;
-	virtual void Render(HDC hdc) override;
-
-	void Save();
-	void Load();
-
-	TilemapTool() {};
-	virtual ~TilemapTool() {};
 };
 

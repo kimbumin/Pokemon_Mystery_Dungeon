@@ -66,8 +66,8 @@ void TilemapTool::Update()
 		{
 			int posX = g_ptMouse.x;
 			int posY = g_ptMouse.y;
-			int tileX = posX / TILE_SELECT_SIZE;
-			int tileY = posY / TILE_SELECT_SIZE;
+			int tileX = posX / TILE_SIZE;
+			int tileY = posY / TILE_SIZE;
 			tileInfo[tileY * TILE_X + tileX].frameX = selectedTile.x;
 			tileInfo[tileY * TILE_X + tileX].frameY = selectedTile.y;
 		}
@@ -123,6 +123,9 @@ void TilemapTool::Render(HDC hdc)
 		DeleteObject(hRedPen);
 	}
 
+
+	wsprintf(szText, TEXT("Mouse X : %d, Y : %d"), g_ptMouse.x, g_ptMouse.y);
+	TextOut(hdc, 300, 60, szText, wcslen(szText));
 }
 
 void TilemapTool::Save()
