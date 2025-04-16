@@ -65,7 +65,7 @@ void Map::Render(HDC hdc)
         sampleTile->FrameRender(hdc, pt.x * TILE_SIZE, pt.y * TILE_SIZE, 4, 1, 0, 1);
     }
    
-    stairs->FrameRender(hdc, stairPos.x * TILE_SIZE, stairPos.y * TILE_SIZE,0,0);
+    stairs->FrameRender(hdc, stairPos.x * TILE_SIZE, stairPos.y * TILE_SIZE,0,0); //중앙부터 그리려고 일단 FrameRender씀
 }
 
 void Map::Generate() {  
