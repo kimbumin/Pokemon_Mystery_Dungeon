@@ -128,6 +128,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AttackAnimState.cpp" />
     <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="CameraTestScene.cpp" />
     <ClCompile Include="DefaultUIState.cpp" />
@@ -136,6 +137,8 @@
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="DungeonScene.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="HurtAnimState.cpp" />
+    <ClCompile Include="IdleAnimState.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageGDIPlus.cpp" />
     <ClCompile Include="ImageManager.cpp" />
@@ -144,23 +147,29 @@
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainGame.cpp" />
+    <ClCompile Include="PokemonAnimator.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="PokemonBase.cpp" />
     <ClCompile Include="PokemonDataLoader.cpp" />
+    <ClCompile Include="PokemonImageLoader.cpp" />
+    <ClCompile Include="RotateAnimState.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SkillInfoUIState.cpp" />
     <ClCompile Include="SkillSelectUIState.cpp" />
     <ClCompile Include="SkillManager.cpp" />
     <ClCompile Include="SquareScene.cpp" />
+    <ClCompile Include="SwingAnimState.cpp" />
     <ClCompile Include="StoneShowerSkill.cpp" />
     <ClCompile Include="StartScene.cpp" />
     <ClCompile Include="TilemapTool.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="TimerManager.cpp" />
+    <ClCompile Include="WalkAnimState.cpp" />
     <ClCompile Include="TitleUIState.cpp" />
     <ClCompile Include="UIManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+     <ClInclude Include="AttackAnimState.h" />
     <ClInclude Include="CameraManager.h" />
     <ClInclude Include="CameraTestScene.h" />
     <ClInclude Include="DefaultUIState.h" />
@@ -171,6 +180,9 @@
     <ClInclude Include="EmberSkill.h" />
     <ClInclude Include="DungeonScene.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="HurtAnimState.h" />
+    <ClInclude Include="IAnimState.h" />
+    <ClInclude Include="IdleAnimState.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageGDIPlus.h" />
     <ClInclude Include="ImageManager.h" />
@@ -178,6 +190,11 @@
     <ClInclude Include="ISkill.h" />
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="MainGame.h" />
+    <ClInclude Include="PokemonAnimator.h" />
+    <ClInclude Include="PokemonBase.h" />
+    <ClInclude Include="PokemonDataLoader.h" />
+    <ClInclude Include="PokemonImageLoader.h" />
+    <ClInclude Include="RotateAnimState.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="PokemonBase.h" />
     <ClInclude Include="PokemonDataLoader.h" />
@@ -188,8 +205,9 @@
     <ClInclude Include="SkillSelectUIState.h" />
     <ClInclude Include="SkillManager.h" />
     <ClInclude Include="SquareScene.h" />
+    <ClInclude Include="SwingAnimState.h" />
+    <ClInclude Include="WalkAnimState.h" />
     <ClInclude Include="StoneShowerSkill.h" />
-
     <ClInclude Include="StartScene.h" />
     <ClInclude Include="TilemapTool.h" />
     <ClInclude Include="Timer.h" />

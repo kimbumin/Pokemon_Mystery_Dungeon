@@ -9,6 +9,8 @@
 #include <bitset>
 #include <map>
 #include <unordered_map>
+#include <set>
+#include <unordered_set>
 #include <vector>
 
 using namespace std;
@@ -56,6 +58,23 @@ struct PokemonData {
 	int hp, atk, def, spAtk, spDef, speed, sum, average;
 	vector<string> types;
 };
+
+enum class Direction
+{
+    SOUTH,      // ³²
+    SOUTHEAST,  // ³²µ¿
+    EAST,       // µ¿
+    NORTHEAST,  // ºÏµ¿
+    NORTH,      // ºÏ
+    NORTHWEST,  // ºÏ¼­
+    WEST,       // ¼­
+    SOUTHWEST,  // ³²¼­
+    LENGTH,
+};
+
+// Æ÷ÄÏ¸ó ¾Ö´Ï¸ŞÀÌ¼Ç Á¾·ùµé
+const vector<string> animTypes = { "Attack", "Hurt", "Idle", "Rotate", "Swing", "Walk" };
+
 /*
 	extern í‚¤ì›Œë“œ : ë³€ìˆ˜ë‚˜ í•¨ìˆ˜ê°€ ë‹¤ë¥¸ íŒŒì¼ì— ì •ì˜ë˜ì–´ ìˆë‹¤ ë¼ëŠ”
 	ì‚¬ì‹¤ì„ ì•Œë¦¬ëŠ” í‚¤ì›Œë“œ.
