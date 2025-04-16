@@ -22,13 +22,17 @@ public:
 
 
     void Generate();                    
-    void Draw(HDC hdc);                 
+    void Draw(HDC hdc);
 
-    TileType GetTile(int x, int y) const;
-    const TileType(&GetTiles() const)[TILE_Y][TILE_X];
-    //TileType(*GetTiles())[TILE_X];  // 전체 타일 참조
-    const std::vector<Room>& GetRooms() const;
+    void CreateRoom(const Room& room);
 
+    void ConnectRooms(const Room& a, const Room& b);
+
+    void ClassifyTiles();
+
+    TileType GetTile(int x, int y) const {return tiles[y][x];}
+
+    vector<POINT> GetWallTiles() { return wallTiles; };
 private:
     TileType tiles[TILE_Y][TILE_X];
     std::vector<Room> rooms;
