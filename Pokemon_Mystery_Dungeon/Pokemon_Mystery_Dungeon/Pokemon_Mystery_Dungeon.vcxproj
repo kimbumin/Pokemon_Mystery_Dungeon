@@ -141,6 +141,7 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SkillManager.cpp" />
     <ClCompile Include="SquareScene.cpp" />
+    <ClCompile Include="StoneShowerSkill.cpp" />
     <ClCompile Include="TilemapTool.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="TimerManager.cpp" />
@@ -161,6 +162,7 @@
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="SkillManager.h" />
     <ClInclude Include="SquareScene.h" />
+    <ClInclude Include="StoneShowerSkill.h" />
     <ClInclude Include="TilemapTool.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="TimerManager.h" />
