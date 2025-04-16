@@ -30,9 +30,13 @@ HRESULT Map::Init()
         24, 24, 1, 1,
         true, RGB(255, 0, 255)
     );
+    floorTiles.clear();
+    wallTiles.clear();
+    pathTiles.clear();
 
     Generate();
     ClassifyTiles();
+    TileDesign();
 
 
     //계단 위치 랜덤
@@ -56,13 +60,18 @@ void Map::Render(HDC hdc)
 {
 
     //// 이동가능 타일
+    for (const POINT& pt : pathTiles) {
+        sampleTile->FrameRender(hdc, pt.x * TILE_SIZE, pt.y * TILE_SIZE, 1, 1, 0, 1);
+    }
+    //// 이동가능 타일
     for (const POINT& pt : floorTiles) {
         sampleTile->FrameRender(hdc, pt.x * TILE_SIZE, pt.y * TILE_SIZE, 13, 1, 0, 1);
     }
 
     // 이동불가 타일
     for (const POINT& pt : wallTiles) {
-        sampleTile->FrameRender(hdc, pt.x * TILE_SIZE, pt.y * TILE_SIZE, 4, 1, 0, 1);
+        const auto& index = tileIndex[pt.y][pt.x];
+        sampleTile->FrameRender(hdc, pt.x * TILE_SIZE, pt.y * TILE_SIZE, index.first, index.second, 0, 1);
     }
    
     stairs->FrameRender(hdc, stairPos.x * TILE_SIZE, stairPos.y * TILE_SIZE,0,0); //중앙부터 그리려고 일단 FrameRender씀
@@ -130,18 +139,26 @@ void Map::ConnectRooms(const Room& a, const Room& b)
 
     if (uidDist(dre)) {
         for (int x = min(x1, x2); x <= max(x1, x2); ++x) {
-            tiles[y1][x] = TILE_FLOOR;
+            if (tiles[y1][x] != TILE_FLOOR) {
+				tiles[y1][x] = TILE_PATH;
+            }
         }
         for (int y = min(y1, y2); y <= max(y1, y2); ++y) {
-            tiles[y][x2] = TILE_FLOOR;
+            if (tiles[y][x2] != TILE_FLOOR) {
+				tiles[y][x2] = TILE_PATH;
+			}
         }
     }
     else {
         for (int y = min(y1, y2); y <= max(y1, y2); ++y){
-            tiles[y][x1] = TILE_FLOOR;
+            if (tiles[y][x1] != TILE_FLOOR) {
+				tiles[y][x1] = TILE_PATH;
+            }
         }
         for (int x = min(x1, x2); x <= max(x1, x2); ++x){
-            tiles[y2][x] = TILE_FLOOR;
+            if (tiles[y2][x] != TILE_FLOOR) {
+				tiles[y2][x] = TILE_PATH;
+            }
         }
     }
 }
@@ -150,10 +167,50 @@ void Map::ClassifyTiles()
 {
     for (int y = 0; y < TILE_Y; ++y) {
         for (int x = 0; x < TILE_X; ++x) {
-            if (tiles[y][x] == TILE_FLOOR)
+            if (tiles[y][x] == TILE_FLOOR){
                 floorTiles.push_back({ x, y });
-            else if (tiles[y][x] == TILE_WALL)
+            }
+            else if (tiles[y][x] == TILE_WALL){
                 wallTiles.push_back({ x, y });
+            }
+            else if (tiles[y][x] == TILE_PATH) {
+                pathTiles.push_back({ x,y });
+            }
         }
     }
 }
+
+void Map::TileDesign()  
+{  
+   tileIndex.clear();  
+   tileIndex.resize(TILE_Y, vector<pair<int, int>>(TILE_X, { 4, 1 })); // 기본 벽  
+
+   int dx[8] = { 0, 0, -1, 1, -1, 1, -1, 1 };  
+   int dy[8] = { 1, -1, 0, 0, -1, -1, 1, 1 };  
+
+   for (int y = 0; y < TILE_Y; ++y) {  
+       for (int x = 0; x < TILE_X; ++x) {  
+           if (tiles[y][x] != TILE_WALL) continue;  
+
+           for (int i = 0; i < 8; ++i) {  
+               int nx = x + dx[i];  
+               int ny = y + dy[i];  
+
+               if (nx >= 0 && nx < TILE_X && ny >= 0 && ny < TILE_Y && tiles[ny][nx] == TileType::TILE_FLOOR) {  
+                   switch (i) {  
+                   case 0: tileIndex[y][x] = { 4, 3 }; break; // 위  
+                   case 1: tileIndex[y][x] = { 4, 3 }; break; // 아래  
+                   case 2: tileIndex[y][x] = { 3, 4 }; break; // 왼쪽  
+                   case 3: tileIndex[y][x] = { 3, 4 }; break; // 오른쪽  
+                   case 4: tileIndex[y][x] = { 5, 5 }; break; // 왼위  
+                   case 5: tileIndex[y][x] = { 3, 5 }; break; // 오위  
+                   case 6: tileIndex[y][x] = { 5, 3 }; break; // 왼밑  
+                   case 7: tileIndex[y][x] = { 3, 3 }; break; // 오밑  
+                   }  
+                   break; 
+               }  
+           }  
+       }  
+   }  
+}
+

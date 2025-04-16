@@ -32,6 +32,8 @@ public:
 
     void ClassifyTiles();
 
+    void TileDesign();
+
     TileType GetTile(int x, int y) const {return tiles[y][x];}
 
     vector<POINT> GetWallTiles() { return wallTiles; };
@@ -45,6 +47,10 @@ private:
 
     std::vector<POINT> floorTiles;
     std::vector<POINT> wallTiles;
+    std::vector<POINT> pathTiles;
+
+
+    std::vector<std::vector<std::pair<int, int>>> tileIndex;
 
     POINT stairPos;
 

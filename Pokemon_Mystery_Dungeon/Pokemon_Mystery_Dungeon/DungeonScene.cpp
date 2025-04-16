@@ -21,6 +21,10 @@ void DungeonScene::Release()
 
 void DungeonScene::Update()
 {
+	if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F6)) {
+		//SceneManager::GetInstance()->AddScene("¥¯¿¸æ¿", new DungeonScene());
+		SceneManager::GetInstance()->ChangeScene("±§¿Â");
+	}
 
 }
 
