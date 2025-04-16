@@ -6,7 +6,9 @@
 
 enum TileType {
     TILE_WALL,
-    TILE_FLOOR
+    TILE_FLOOR,
+    TILE_PATH,
+    TYPE_LENGH
 };
 class Image;
 
@@ -39,7 +41,11 @@ private:
 
 
     Image* sampleTile;
+    Image* stairs;
 
     std::vector<POINT> floorTiles;
     std::vector<POINT> wallTiles;
+
+    POINT stairPos;
+
 };

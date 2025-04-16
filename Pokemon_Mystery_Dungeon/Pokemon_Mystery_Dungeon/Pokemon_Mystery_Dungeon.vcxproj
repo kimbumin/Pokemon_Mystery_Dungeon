@@ -140,6 +140,7 @@
     <ClCompile Include="PokemonDataLoader.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SquareScene.cpp" />
+    <ClCompile Include="StartScene.cpp" />
     <ClCompile Include="TilemapTool.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="TimerManager.cpp" />
@@ -160,6 +161,7 @@
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="SquareScene.h" />
+    <ClInclude Include="StartScene.h" />
     <ClInclude Include="TilemapTool.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="TimerManager.h" />

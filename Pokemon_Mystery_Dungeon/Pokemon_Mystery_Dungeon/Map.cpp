@@ -25,10 +25,22 @@ HRESULT Map::Init()
         525, 600, SAMPLE_TILE_X, SAMPLE_TILE_Y,
         true, RGB(255, 0, 255));
 
-    Generate();
+    stairs = ImageManager::GetInstance()->AddImage(
+        "stairs", L"Image/SceneImage/stairs.bmp",
+        24, 24, 1, 1,
+        true, RGB(255, 0, 255)
+    );
 
-    // 타일 정보 분리
+    Generate();
     ClassifyTiles();
+
+
+    //계단 위치 랜덤
+    if (!floorTiles.empty()) {
+        uniform_int_distribution<int> floorDist(0, floorTiles.size() - 1);
+        stairPos = floorTiles[floorDist(dre)];
+    }
+
     return S_OK;
 }
 
@@ -52,6 +64,8 @@ void Map::Render(HDC hdc)
     for (const POINT& pt : wallTiles) {
         sampleTile->FrameRender(hdc, pt.x * TILE_SIZE, pt.y * TILE_SIZE, 4, 1, 0, 1);
     }
+   
+    stairs->FrameRender(hdc, stairPos.x * TILE_SIZE, stairPos.y * TILE_SIZE,0,0);
 }
 
 void Map::Generate() {  

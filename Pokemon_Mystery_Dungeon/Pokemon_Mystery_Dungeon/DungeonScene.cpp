@@ -5,8 +5,7 @@
 
 HRESULT DungeonScene::Init()
 {
-	SetClientRect(g_hWnd, 2000, 1000);
-
+	SetClientRect(g_hWnd, TILE_SIZE * TILE_X, TILE_SIZE * TILE_Y);
 
 	map.Init();
 	wallTiles = map.GetWallTiles(); //wallTilesÁÂÇ¥  Point·Î
@@ -27,7 +26,7 @@ void DungeonScene::Update()
 
 void DungeonScene::Render(HDC hdc)
 {
-	PatBlt(hdc, 0, 0, 2000, 1000, WHITENESS);
+	PatBlt(hdc, 0, 0, 2000, 1000, BLACKNESS);
 
 	map.Render(hdc);
 
