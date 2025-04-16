@@ -34,6 +34,9 @@
     <Filter Include="Skill">
       <UniqueIdentifier>{3bcafe55-105c-41e8-9f74-0df9f1ad2904}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Skill\SkillList">
+      <UniqueIdentifier>{2cd1cea9-45b4-40ea-9b9f-302ff2538fce}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -75,14 +78,17 @@
     <ClCompile Include="TilemapTool.cpp">
       <Filter>Scene\소스</Filter>
     </ClCompile>
-    <ClCompile Include="EmberSkill.cpp">
+    <ClCompile Include="SkillManager.cpp">
       <Filter>Skill</Filter>
     </ClCompile>
     <ClCompile Include="ISkill.cpp">
       <Filter>Skill</Filter>
     </ClCompile>
-    <ClCompile Include="SkillManager.cpp">
-      <Filter>Skill</Filter>
+    <ClCompile Include="EmberSkill.cpp">
+      <Filter>Skill\SkillList</Filter>
+    </ClCompile>
+    <ClCompile Include="StoneShowerSkill.cpp">
+      <Filter>Skill\SkillList</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -131,14 +137,17 @@
     <ClInclude Include="TilemapTool.h">
       <Filter>Scene\헤더</Filter>
     </ClInclude>
-    <ClInclude Include="EmberSkill.h">
-      <Filter>Skill</Filter>
-    </ClInclude>
     <ClInclude Include="ISkill.h">
       <Filter>Skill</Filter>
     </ClInclude>
     <ClInclude Include="SkillManager.h">
       <Filter>Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="EmberSkill.h">
+      <Filter>Skill\SkillList</Filter>
+    </ClInclude>
+    <ClInclude Include="StoneShowerSkill.h">
+      <Filter>Skill\SkillList</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -4,12 +4,12 @@
 #include "Image.h"
 
 class Image;
-class EmberSkill : public ISkill {
+class StoneShowerSkill : public ISkill {
 private:
     Image* image;
 
-    enum class ElementType { FIRE };
-    enum class SkillType { SPECIAL };
+    enum class ElementType { ROCK };
+    enum class SkillType { PHYSICS };
 
     FPOINT pos;
     string name;
@@ -28,8 +28,8 @@ public:
     shared_ptr<ISkill> Clone() const override;
 
     string GetName() const override { return name; }
-    string GetElement() const override { return "FIRE"; }
-    string GetType() const override { return "SPECIAL"; }
+    string GetElement() const override { return "ROCK"; }
+    string GetType() const override { return "PHYSICS"; }
     int GetPower() const override { return stats.power; }
     int GetAccuracy() const override { return stats.accuracy; }
 };

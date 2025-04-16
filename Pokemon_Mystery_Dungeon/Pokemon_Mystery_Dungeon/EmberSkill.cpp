@@ -1,5 +1,4 @@
 #include "EmberSkill.h"
-#include "config.h"
 
 void EmberSkill::Init()
 {
@@ -10,7 +9,7 @@ void EmberSkill::Init()
 	stats.accuracy = 100;
 	stats.maxPP = 25;
 
-	ImageManager::GetInstance()->AddImage(
+	image = ImageManager::GetInstance()->AddImage(
 		"Ember", TEXT("Image/.bmp"), 1, 1, 1, 1,
 		true, RGB(255, 0, 255));
 }
@@ -25,7 +24,7 @@ void EmberSkill::Update()
 
 void EmberSkill::Render(HDC hdc)
 {
-	ImageManager::GetInstance()->FindImage("Ember");
+	image = ImageManager::GetInstance()->FindImage("Ember");
 	if (image)
 	{
 		image->FrameRender(hdc, pos.x, pos.y, 0 , 0);
