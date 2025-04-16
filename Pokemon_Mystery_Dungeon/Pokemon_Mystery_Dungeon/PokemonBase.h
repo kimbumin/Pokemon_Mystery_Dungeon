@@ -36,7 +36,16 @@ public:
     inline PokemonData GetCurrentPokemonData() { return currentStatus; }
     inline PokemonAnimator* GetAnimator() { return animator; }
     inline Direction GetDirection() { return direction; }
+    inline FPOINT GetPos() { return pos; }
+    inline int GetLevel() { return level; }
+    inline bool GetIsAlive() { return isAlive; }
 
+    //Setter
+    inline void SetStatus(PokemonData* baseStatus) { this->baseStatus = baseStatus; }
+    inline void SetPos(FPOINT pos) { this->pos = pos; }
+    inline void SetLevel(int level) { this->level = level; }
+    inline void SetIsAlive(bool isAlive) { this->isAlive = isAlive; }
+    
     PokemonBase() {};
     virtual ~PokemonBase() {};
 };
