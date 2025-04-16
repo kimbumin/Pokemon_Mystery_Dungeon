@@ -19,8 +19,7 @@ shared_ptr<ISkill> SkillManager::CreateSkill(const string& name)
 {
 	auto it = skillMap.find(name);
 	if (it != skillMap.end()) {
-		// 임시: 스킬 클래스마다 복사 생성자 필요
-		return make_shared<EmberSkill>(*dynamic_cast<EmberSkill*>(it->second.get()));
+		return it->second->Clone();
 	}
 	return nullptr;
 }
