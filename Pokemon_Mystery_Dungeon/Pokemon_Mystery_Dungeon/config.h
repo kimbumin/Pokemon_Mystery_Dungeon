@@ -22,7 +22,7 @@ using namespace std;
 #include "CollisionManager.h"
 
 /*
-	ì»´íŒŒì¼ëŸ¬ì—ì„œ í•´ë‹¹ ì½”ë“œë¥¼ ë’¤ì— ì •ì˜ëœ ì½”ë“œë¡œ ë³€ê²½í•œë‹¤. 
+	ÄÄÆÄÀÏ·¯¿¡¼­ ÇØ´ç ÄÚµå¸¦ µÚ¿¡ Á¤ÀÇµÈ ÄÚµå·Î º¯°æÇÑ´Ù.
 */
 #define WINSIZE_X	800
 #define WINSIZE_Y	400
@@ -34,14 +34,14 @@ using namespace std;
 #define TILE_SIZE	24
 #define TILE_SELECT_SIZE 25
 
-//ë˜ì „ ë§µ íƒ€ì¼ í¬ê¸° 25íƒ€ì¼ * 25íƒ€ì¼  
+//´øÀü ¸Ê Å¸ÀÏ Å©±â 25Å¸ÀÏ * 25Å¸ÀÏ  
 #define TILE_X	25
 #define TILE_Y	25
 
 #define DEG_TO_RAD(degree) ((3.14 / 180.0) * degree)
 #define RAD_TO_DEG(radian) ((180.0 / 3.14) * radian)
 
-// IV => ê°œì²´ê°’, EV = ë…¸ë ¥ì¹˜
+// IV => °³Ã¼°ª, EV = ³ë·ÂÄ¡
 #define IV 30
 #define EV 20
 
@@ -51,7 +51,7 @@ typedef struct tagFPOINT
 	float y;
 } FPOINT;
 
-// í¬ì¼“ëª¬ ê¸°ë³¸ ë°ì´í„°
+// Æ÷ÄÏ¸ó ±âº» µ¥ÀÌÅÍ
 struct PokemonData {
 	int idNumber;
 	string name;
@@ -76,8 +76,8 @@ enum class Direction
 const vector<string> animTypes = { "Attack", "Hurt", "Idle", "Rotate", "Swing", "Walk" };
 
 /*
-	extern í‚¤ì›Œë“œ : ë³€ìˆ˜ë‚˜ í•¨ìˆ˜ê°€ ë‹¤ë¥¸ íŒŒì¼ì— ì •ì˜ë˜ì–´ ìˆë‹¤ ë¼ëŠ”
-	ì‚¬ì‹¤ì„ ì•Œë¦¬ëŠ” í‚¤ì›Œë“œ.
+    extern Å°¿öµå : º¯¼ö³ª ÇÔ¼ö°¡ ´Ù¸¥ ÆÄÀÏ¿¡ Á¤ÀÇµÇ¾î ÀÖ´Ù ¶ó´Â
+    »ç½ÇÀ» ¾Ë¸®´Â Å°¿öµå.
 */
 extern HWND g_hWnd;
 extern HINSTANCE g_hInstance;
