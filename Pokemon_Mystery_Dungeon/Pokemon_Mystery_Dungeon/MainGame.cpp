@@ -4,6 +4,7 @@
 #include "Timer.h"
 #include "TilemapTool.h"
 #include "SquareScene.h"
+#include "CameraTestScene.h"
 
 HRESULT MainGame::Init()
 {
@@ -20,10 +21,10 @@ HRESULT MainGame::Init()
 			TEXT("백버퍼 생성 실패"), TEXT("경고"), MB_OK);
 		return E_FAIL;
 	}
-
 	SceneManager::GetInstance()->AddScene("광장", new SquareScene());
 	SceneManager::GetInstance()->ChangeScene("광장");
-
+	//SceneManager::GetInstance()->AddScene("TestMap", new CameraTestScene());
+	//SceneManager::GetInstance()->ChangeScene("TestMap");
 	return S_OK;
 }
 

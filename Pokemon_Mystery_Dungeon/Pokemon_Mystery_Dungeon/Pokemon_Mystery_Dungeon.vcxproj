@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -129,37 +129,65 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AttackAnimState.cpp" />
+    <ClCompile Include="CameraManager.cpp" />
+    <ClCompile Include="CameraTestScene.cpp" />
+    <ClCompile Include="DefaultUIState.cpp" />
+    <ClCompile Include="DialogueUIState.cpp" />
+    <ClCompile Include="EmberSkill.cpp" />
+    <ClCompile Include="CollisionManager.cpp" />
+    <ClCompile Include="DungeonScene.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="HurtAnimState.cpp" />
     <ClCompile Include="IdleAnimState.cpp" />
     <ClCompile Include="Image.cpp" />
+    <ClCompile Include="ImageGDIPlus.cpp" />
     <ClCompile Include="ImageManager.cpp" />
+    <ClCompile Include="InventoryUIState.cpp" />
+    <ClCompile Include="ISkill.cpp" />
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="PokemonAnimator.cpp" />
+    <ClCompile Include="Map.cpp" />
     <ClCompile Include="PokemonBase.cpp" />
     <ClCompile Include="PokemonDataLoader.cpp" />
     <ClCompile Include="PokemonImageLoader.cpp" />
     <ClCompile Include="RotateAnimState.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="SkillInfoUIState.cpp" />
+    <ClCompile Include="SkillSelectUIState.cpp" />
+    <ClCompile Include="SkillManager.cpp" />
     <ClCompile Include="SquareScene.cpp" />
     <ClCompile Include="SwingAnimState.cpp" />
+    <ClCompile Include="StoneShowerSkill.cpp" />
+    <ClCompile Include="StartScene.cpp" />
     <ClCompile Include="TilemapTool.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="TimerManager.cpp" />
     <ClCompile Include="WalkAnimState.cpp" />
+    <ClCompile Include="TitleUIState.cpp" />
+    <ClCompile Include="UIManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AttackAnimState.h" />
+     <ClInclude Include="AttackAnimState.h" />
+    <ClInclude Include="CameraManager.h" />
+    <ClInclude Include="CameraTestScene.h" />
+    <ClInclude Include="DefaultUIState.h" />
+    <ClInclude Include="DialogueUIState.h" />
+    <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="CommonFunction.h" />
     <ClInclude Include="config.h" />
+    <ClInclude Include="EmberSkill.h" />
+    <ClInclude Include="DungeonScene.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="HurtAnimState.h" />
     <ClInclude Include="IAnimState.h" />
     <ClInclude Include="IdleAnimState.h" />
     <ClInclude Include="Image.h" />
+    <ClInclude Include="ImageGDIPlus.h" />
     <ClInclude Include="ImageManager.h" />
+    <ClInclude Include="InventoryUIState.h" />
+    <ClInclude Include="ISkill.h" />
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="PokemonAnimator.h" />
@@ -167,14 +195,29 @@
     <ClInclude Include="PokemonDataLoader.h" />
     <ClInclude Include="PokemonImageLoader.h" />
     <ClInclude Include="RotateAnimState.h" />
+    <ClInclude Include="Map.h" />
+    <ClInclude Include="PokemonBase.h" />
+    <ClInclude Include="PokemonDataLoader.h" />
+    <ClInclude Include="Room.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Singleton.h" />
+    <ClInclude Include="SkillInfoUIState.h" />
+    <ClInclude Include="SkillSelectUIState.h" />
+    <ClInclude Include="SkillManager.h" />
     <ClInclude Include="SquareScene.h" />
     <ClInclude Include="SwingAnimState.h" />
+    <ClInclude Include="WalkAnimState.h" />
+    <ClInclude Include="StoneShowerSkill.h" />
+    <ClInclude Include="StartScene.h" />
     <ClInclude Include="TilemapTool.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="TimerManager.h" />
-    <ClInclude Include="WalkAnimState.h" />
+    <ClInclude Include="TitleUIState.h" />
+    <ClInclude Include="UIManager.h" />
+    <ClInclude Include="UIState.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
