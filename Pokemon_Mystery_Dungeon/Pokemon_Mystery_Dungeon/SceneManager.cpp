@@ -48,6 +48,9 @@ void SceneManager::Update()
 
 void SceneManager::Render(HDC hdc)
 {
+
+
+
 	if (currentScene)
 	{
 		currentScene->Render(hdc);
