@@ -1,12 +1,12 @@
 #pragma once
 #include "GameObject.h"
-#include "Image.h"
+#include "ImageGDIPlus.h"
 
 
 class CameraTestScene : public GameObject
 {
 private:
-	Image* testMap = nullptr;
+	ImageGDIPlus* testMap = nullptr;
 
 public:
 	HRESULT Init() override;

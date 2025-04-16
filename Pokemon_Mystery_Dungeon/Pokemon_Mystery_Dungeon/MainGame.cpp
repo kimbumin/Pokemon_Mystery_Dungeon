@@ -21,10 +21,10 @@ HRESULT MainGame::Init()
 			TEXT("¹é¹öÆÛ »ı¼º ½ÇÆĞ"), TEXT("°æ°í"), MB_OK);
 		return E_FAIL;
 	}
-	SceneManager::GetInstance()->AddScene("±¤Àå", new SquareScene());
-	SceneManager::GetInstance()->ChangeScene("±¤Àå");
-	//SceneManager::GetInstance()->AddScene("TestMap", new CameraTestScene());
-	//SceneManager::GetInstance()->ChangeScene("TestMap");
+	//SceneManager::GetInstance()->AddScene("±¤Àå", new SquareScene());
+	//SceneManager::GetInstance()->ChangeScene("±¤Àå");
+	SceneManager::GetInstance()->AddScene("TestMap", new CameraTestScene());
+	SceneManager::GetInstance()->ChangeScene("TestMap");
 	return S_OK;
 }
 

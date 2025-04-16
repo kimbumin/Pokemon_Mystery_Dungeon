@@ -1,11 +1,11 @@
 #pragma once
 #include "UIState.h"
-#include "Image.h"
+#include "ImageGDIPlus.h"
 
 class DialogueUIState : public UIState
 {
 private:
-	Image* dialogueBoxImage = nullptr;
+	ImageGDIPlus* dialogueBoxImage = nullptr;
 	int dialogueBoxX = 50;
 	int dialogueBoxY = 200;
 

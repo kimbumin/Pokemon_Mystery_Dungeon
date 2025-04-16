@@ -141,6 +141,7 @@
     <ClCompile Include="IdleAnimState.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageGDIPlus.cpp" />
+    <ClCompile Include="ImageGDIPlusManager.cpp" />
     <ClCompile Include="ImageManager.cpp" />
     <ClCompile Include="InventoryUIState.cpp" />
     <ClCompile Include="ISkill.cpp" />
@@ -169,7 +170,7 @@
     <ClCompile Include="UIManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-     <ClInclude Include="AttackAnimState.h" />
+    <ClInclude Include="AttackAnimState.h" />
     <ClInclude Include="CameraManager.h" />
     <ClInclude Include="CameraTestScene.h" />
     <ClInclude Include="DefaultUIState.h" />
@@ -185,6 +186,7 @@
     <ClInclude Include="IdleAnimState.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageGDIPlus.h" />
+    <ClInclude Include="ImageGDIPlusManager.h" />
     <ClInclude Include="ImageManager.h" />
     <ClInclude Include="InventoryUIState.h" />
     <ClInclude Include="ISkill.h" />

@@ -2,6 +2,10 @@
 
 #include "config.h"
 #include "MainGame.h"
+#include "gdiplus.h"
+#pragma comment(lib, "gdiplus.lib")
+
+using namespace Gdiplus;
 
 HINSTANCE g_hInstance;	// 프로그램 인스턴스 핸들
 HWND g_hWnd;
@@ -34,6 +38,11 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	LPSTR lpszCmdParam, int nCmdShow)
 {
 	g_hInstance = hInstance;
+
+	// GDI+ 초기화
+	GdiplusStartupInput gdiplusStartupInput;
+	ULONG_PTR gdiplusToken;
+	GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
 
 	WNDCLASSEX wndClass;
 	wndClass.cbSize = sizeof(WNDCLASSEX);
@@ -113,6 +122,9 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	g_mainGame.Release();
 	TimerManager::GetInstance()->Release();
+
+	// GDI+ 종료
+	GdiplusShutdown(gdiplusToken);
 
 	return message.wParam;
 }

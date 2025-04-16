@@ -1,6 +1,7 @@
 // config.h
 
 #pragma once
+#define _HAS_STD_BYTE 0
 #pragma comment(lib, "Winmm.lib")
 
 #include <Windows.h>

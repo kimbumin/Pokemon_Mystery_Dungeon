@@ -1,12 +1,13 @@
 #include "CameraTestScene.h"
-#include "ImageManager.h"
+#include "ImageGDIPlusManager.h"
 #include "CameraManager.h"
 #include "UIManager.h"
 #include "DialogueUIState.h"
 
 HRESULT CameraTestScene::Init()
 {
-	testMap = ImageManager::GetInstance()->AddImage("TestMap", TEXT("Image/SceneImage/Square.bmp"), 954, 714);
+	testMap = ImageGDIPlusManager::GetInstance()->AddImage(
+		"TestMap", TEXT("Image/SceneImage/TiniWoods2.bmp"));
 
 	UIManager::GetInstance()->AddState("DialogueBox", new DialogueUIState());
 
@@ -40,15 +41,12 @@ void CameraTestScene::Render(HDC hdc)
 
 	if (testMap)
 	{
-		BitBlt(
+		testMap->Render(
 			hdc,
-			0,0,
-			cam.right - cam.left,
-			cam.bottom - cam.top,
-			testMap->GetMemDC(),
-			cam.left,
-			cam.top,
-			SRCCOPY
+			-float(cam.left), -float(cam.top),  // 카메라 기준 보정
+			0.0f,
+			false, false,
+			1.0f
 		);
 	}
 	UIManager::GetInstance()->Render(hdc);
