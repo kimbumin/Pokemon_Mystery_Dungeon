@@ -130,8 +130,11 @@
   <ItemGroup>
     <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="CameraTestScene.cpp" />
+    <ClCompile Include="DefaultUIState.cpp" />
+    <ClCompile Include="DialogueUIState.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Image.cpp" />
+    <ClCompile Include="ImageGDIPlus.cpp" />
     <ClCompile Include="ImageManager.cpp" />
     <ClCompile Include="InventoryUIState.cpp" />
     <ClCompile Include="KeyManager.cpp" />
@@ -154,8 +157,11 @@
     <ClInclude Include="CameraTestScene.h" />
     <ClInclude Include="CommonFunction.h" />
     <ClInclude Include="config.h" />
+    <ClInclude Include="DefaultUIState.h" />
+    <ClInclude Include="DialogueUIState.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Image.h" />
+    <ClInclude Include="ImageGDIPlus.h" />
     <ClInclude Include="ImageManager.h" />
     <ClInclude Include="InventoryUIState.h" />
     <ClInclude Include="KeyManager.h" />

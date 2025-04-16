@@ -9,8 +9,6 @@ class UIManager : public Singleton<UIManager>
 private:
 	map<string, UIState*> UiStateMap; // UI 상태를 저장하는 맵
 
-	UIManager() = default;
-	~UIManager();
 
 public:
 	static UIState* currentState;
@@ -21,7 +19,7 @@ public:
 	void Update();
 	void Render(HDC hdc);
 	HRESULT ChangeState(string key);
-	void AddState(string key, UIState* state);
+	UIState* AddState(string key, UIState* state);
 
 };
 

@@ -2,10 +2,13 @@
 #include "ImageManager.h"
 #include "CameraManager.h"
 #include "UIManager.h"
+#include "DialogueUIState.h"
 
 HRESULT CameraTestScene::Init()
 {
 	testMap = ImageManager::GetInstance()->AddImage("TestMap", TEXT("Image/SceneImage/Square.bmp"), 954, 714);
+
+	UIManager::GetInstance()->AddState("DialogueBox", new DialogueUIState());
 
 	CameraManager::GetInstance()->Init(400, 400);
 
@@ -24,10 +27,11 @@ void CameraTestScene::Update()
 
 	if (KeyManager::GetInstance()->IsOnceKeyDown(VK_TAB))
 	{
-		//UIManager::GetInstance()->ChangeState(new UIState());
+		UIManager::GetInstance()->ChangeState("DialogueBox");
 	}
 
 	CameraManager::GetInstance()->SetCameraPos(mouse.x, mouse.y);
+	UIManager::GetInstance()->Update();
 }
 
 void CameraTestScene::Render(HDC hdc)
@@ -47,4 +51,5 @@ void CameraTestScene::Render(HDC hdc)
 			SRCCOPY
 		);
 	}
+	UIManager::GetInstance()->Render(hdc);
 }

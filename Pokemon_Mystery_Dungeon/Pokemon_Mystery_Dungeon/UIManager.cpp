@@ -67,6 +67,20 @@ HRESULT UIManager::ChangeState(string key)
 	return E_FAIL;
 }
 
-void UIManager::AddState(string key, UIState* state)
+UIState* UIManager::AddState(string key, UIState* state)
 {
+	if (state == nullptr)
+	{
+		return nullptr;
+	}
+
+	auto iter = UiStateMap.find(key);
+	if (iter != UiStateMap.end())
+	{
+		return iter->second;
+	}
+
+	UiStateMap.insert(make_pair(key, state));
+
+	return state;
 }

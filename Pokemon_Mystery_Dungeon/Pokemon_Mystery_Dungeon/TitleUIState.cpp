@@ -1,8 +1,9 @@
 #include "TitleUIState.h"
 #include "Image.h"
 
-void TitleUIState::Init()
+HRESULT TitleUIState::Init()
 {
+	return S_OK;
 }
 
 void TitleUIState::Release()

@@ -102,6 +102,15 @@
     <ClCompile Include="CameraTestScene.cpp">
       <Filter>UiState</Filter>
     </ClCompile>
+    <ClCompile Include="DefaultUIState.cpp">
+      <Filter>UiState\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="DialogueUIState.cpp">
+      <Filter>UiState\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageGDIPlus.cpp">
+      <Filter>2DFramework</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="config.h">
@@ -172,6 +181,15 @@
     </ClInclude>
     <ClInclude Include="CameraTestScene.h">
       <Filter>UiState</Filter>
+    </ClInclude>
+    <ClInclude Include="DefaultUIState.h">
+      <Filter>UiState\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="DialogueUIState.h">
+      <Filter>UiState\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageGDIPlus.h">
+      <Filter>2DFramework</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
