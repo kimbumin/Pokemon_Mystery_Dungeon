@@ -41,7 +41,7 @@ public:
     inline bool GetIsAlive() { return isAlive; }
 
     //Setter
-    inline void SetStatus(PokemonData* baseStatus) { this->baseStatus = baseStatus; }
+    inline void SetStatus(PokemonData baseStatus) { this->baseStatus = &baseStatus; }
     inline void SetPos(FPOINT pos) { this->pos = pos; }
     inline void SetLevel(int level) { this->level = level; }
     inline void SetIsAlive(bool isAlive) { this->isAlive = isAlive; }

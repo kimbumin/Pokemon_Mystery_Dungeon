@@ -8,9 +8,8 @@ private:
 	unordered_set<string> loadedImageKeys;
 
 public:
-	void BeginDungeon(const string& dungeonName);
 	void LoadPokemonAnim(int pokemonId);
-	void EndDungeon();
+	void ClearPokemonImage();
 
 	string PokemonIdToString(int pokemonId);
 };

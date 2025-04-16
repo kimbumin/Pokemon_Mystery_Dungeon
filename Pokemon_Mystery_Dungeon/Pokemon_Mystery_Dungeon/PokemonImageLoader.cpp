@@ -3,21 +3,6 @@
 #include <fstream>
 #include <iomanip>
 
-void PokemonImageLoader::BeginDungeon(const string& dungeonName)
-{
-	loadedImageKeys.clear();
-    // 던전에 따른 등장하는 포켓몬들 로드
-    // Pokemon Roads Appearing Following Dungeon
-    // LoadPokemonAnim(pokemonId);
-    // LoadPokemonAnim(pokemonId);
-    // LoadPokemonAnim(pokemonId);
-
-    // 던전마다 등장하는 포켓몬을 연결하는 데이터
-    // 전역 데이터 vs 외부 파일로 정의
-    // Data linking dungeons and pokemon.
-    // Global data vs external file defined
-    
-}
 
 void PokemonImageLoader::LoadPokemonAnim(int pokemonId)
 {
@@ -73,7 +58,7 @@ void PokemonImageLoader::LoadPokemonAnim(int pokemonId)
 
 }
 
-void PokemonImageLoader::EndDungeon()
+void PokemonImageLoader::ClearPokemonImage()
 {
     for (auto it = loadedImageKeys.begin(); it != loadedImageKeys.end(); ++it)
     {
