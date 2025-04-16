@@ -152,6 +152,8 @@
     <ClCompile Include="PokemonBase.cpp" />
     <ClCompile Include="PokemonDataLoader.cpp" />
     <ClCompile Include="PokemonImageLoader.cpp" />
+    <ClCompile Include="PokemonMovement.cpp" />
+    <ClCompile Include="PokemonPlayer.cpp" />
     <ClCompile Include="RotateAnimState.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SkillInfoUIState.cpp" />
@@ -169,7 +171,7 @@
     <ClCompile Include="UIManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-     <ClInclude Include="AttackAnimState.h" />
+    <ClInclude Include="AttackAnimState.h" />
     <ClInclude Include="CameraManager.h" />
     <ClInclude Include="CameraTestScene.h" />
     <ClInclude Include="DefaultUIState.h" />
@@ -194,6 +196,8 @@
     <ClInclude Include="PokemonBase.h" />
     <ClInclude Include="PokemonDataLoader.h" />
     <ClInclude Include="PokemonImageLoader.h" />
+    <ClInclude Include="PokemonMovement.h" />
+    <ClInclude Include="PokemonPlayer.h" />
     <ClInclude Include="RotateAnimState.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="PokemonBase.h" />
