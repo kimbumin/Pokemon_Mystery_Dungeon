@@ -1,15 +1,17 @@
-#include "TilemapTool.h"
 #include "Image.h"
 #include "CommonFunction.h"
 #include <functional>
+#include "TilemapTool.h"
+
 
 HRESULT TilemapTool::Init()
 {
 	SetClientRect(g_hWnd, TILEMAPTOOL_X, TILEMAPTOOL_Y);
 
 	sampleTile = ImageManager::GetInstance()->AddImage(
-		"배틀시티_샘플타일", L"Image/SceneImage/mapTiles.bmp", 640, 288,
-		SAMPLE_TILE_X, SAMPLE_TILE_Y);
+		"smapleTile", L"Image/SceneImage/TiniWoods3.bmp",
+		525, 600, SAMPLE_TILE_X, SAMPLE_TILE_Y,
+		true , RGB(255, 0, 255));
 
 	// 샘플 타일 영역
 	rcSampleTile.left = TILEMAPTOOL_X - sampleTile->GetWidth();
@@ -21,8 +23,8 @@ HRESULT TilemapTool::Init()
 	{
 		for (int j = 0; j < TILE_X; ++j)
 		{
-			tileInfo[i * TILE_X + j].frameX = 3;
-			tileInfo[i * TILE_X + j].frameY = 0;
+			tileInfo[i * TILE_X + j].frameX = 4;
+			tileInfo[i * TILE_X + j].frameY = 1;
 			tileInfo[i * TILE_X + j].rc.left = j * TILE_SIZE;
 			tileInfo[i * TILE_X + j].rc.top = i * TILE_SIZE;
 			tileInfo[i * TILE_X + j].rc.right = 
@@ -37,9 +39,6 @@ HRESULT TilemapTool::Init()
 	rcMain.top = 0;
 	rcMain.right = TILE_X * TILE_SIZE;
 	rcMain.bottom = TILE_Y * TILE_SIZE;
-
-	// UI - 버튼
-
 
 	return S_OK;
 }
@@ -57,8 +56,8 @@ void TilemapTool::Update()
 		{
 			int posX = g_ptMouse.x - rcSampleTile.left;
 			int posY = g_ptMouse.y - rcSampleTile.top;
-			selectedTile.x = posX / TILE_SIZE;
-			selectedTile.y = posY / TILE_SIZE;
+			selectedTile.x = posX / TILE_SELECT_SIZE;
+			selectedTile.y = posY / TILE_SELECT_SIZE;
 		}
 	}
 	else if (PtInRect(&rcMain, g_ptMouse))
@@ -72,6 +71,12 @@ void TilemapTool::Update()
 			tileInfo[tileY * TILE_X + tileX].frameX = selectedTile.x;
 			tileInfo[tileY * TILE_X + tileX].frameY = selectedTile.y;
 		}
+	}
+	if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F2)) {
+		Save();
+	}
+	if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F3)) {
+		Load();
 	}
 
 }
@@ -96,7 +101,31 @@ void TilemapTool::Render(HDC hdc)
 		TILEMAPTOOL_X - sampleTile->GetWidth(),
 		sampleTile->GetHeight() + 100,
 		selectedTile.x, selectedTile.y, false, false);
+	
 
+	// 샘플타일 영역에서 선택한 타일 표시
+	int sampleTileStartX = TILEMAPTOOL_X - sampleTile->GetWidth();
+	sampleTile->Render(hdc, sampleTileStartX, 0);
+	{
+		HPEN hOldPen;
+		HPEN hRedPen = CreatePen(PS_SOLID, 2, RGB(255, 0, 0));
+		hOldPen = (HPEN)SelectObject(hdc, hRedPen);
+		HBRUSH hOldBrush = (HBRUSH)SelectObject(hdc, GetStockObject(NULL_BRUSH));
+
+		Rectangle(hdc,
+			sampleTileStartX + selectedTile.x * TILE_SELECT_SIZE,
+			selectedTile.y * TILE_SELECT_SIZE,
+			sampleTileStartX + (selectedTile.x + 1) * TILE_SELECT_SIZE,
+			(selectedTile.y + 1) * TILE_SELECT_SIZE);
+
+		SelectObject(hdc, hOldPen);
+		SelectObject(hdc, hOldBrush);
+		DeleteObject(hRedPen);
+	}
+
+
+	wsprintf(szText, TEXT("Mouse X : %d, Y : %d"), g_ptMouse.x, g_ptMouse.y);
+	TextOut(hdc, 300, 60, szText, wcslen(szText));
 }
 
 void TilemapTool::Save()
@@ -113,6 +142,7 @@ void TilemapTool::Save()
 	DWORD dwByte = 0;
 	WriteFile(hFile, tileInfo, sizeof(tileInfo), &dwByte, NULL);
 	CloseHandle(hFile);
+	MessageBox(g_hWnd, TEXT("타일맵이 성공적으로 저장되었습니다."), TEXT("완료"), MB_OK);
 }
 
 void TilemapTool::Load()
@@ -132,4 +162,5 @@ void TilemapTool::Load()
 		MessageBox(g_hWnd, TEXT("파일 읽기 실패"), TEXT("경고"), MB_OK);
 	}
 	CloseHandle(hFile);
+	MessageBox(g_hWnd, TEXT("타일맵이 성공적으로 로드되었습니다."), TEXT("완료"), MB_OK);
 }
