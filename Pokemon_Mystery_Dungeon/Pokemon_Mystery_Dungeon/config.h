@@ -22,7 +22,7 @@ using namespace std;
 #include "CollisionManager.h"
 
 /*
-	ì»´íŒŒ?¼ëŸ¬?ì„œ ?´ë‹¹ ì½”ë“œë¥??¤ì— ?•ì˜??ì½”ë“œë¡?ë³€ê²½í•œ?? 
+	ÄÄÆÄÀÏ·¯¿¡¼­ ÇØ´ç ÄÚµå¸¦ µÚ¿¡ Á¤ÀÇµÈ ÄÚµå·Î º¯°æÇÑ´Ù.
 */
 #define WINSIZE_X	800
 #define WINSIZE_Y	400
@@ -34,14 +34,15 @@ using namespace std;
 #define TILE_SIZE	24
 #define TILE_SELECT_SIZE 25
 
-//?˜ì „ ë§??€???¬ê¸° 25?€??* 25?€?? 
+
+//´øÀü ¸Ê Å¸ÀÏ Å©±â 25Å¸ÀÏ * 25Å¸ÀÏ  
 #define TILE_X	25
 #define TILE_Y	25
 
 #define DEG_TO_RAD(degree) ((3.14 / 180.0) * degree)
 #define RAD_TO_DEG(radian) ((180.0 / 3.14) * radian)
 
-// IV => ê°œì²´ê°? EV = ?¸ë ¥ì¹?
+// IV => °³Ã¼°ª, EV = ³ë·ÂÄ¡
 #define IV 30
 #define EV 20
 
@@ -51,7 +52,7 @@ typedef struct tagFPOINT
 	float y;
 } FPOINT;
 
-// ?¬ì¼“ëª?ê¸°ë³¸ ?°ì´??
+// Æ÷ÄÏ¸ó ±âº» µ¥ÀÌÅÍ
 struct PokemonData {
 	int idNumber;
 	string name;
@@ -76,8 +77,8 @@ enum class Direction
 const vector<string> animTypes = { "Attack", "Hurt", "Idle", "Rotate", "Swing", "Walk" };
 
 /*
-	extern ?¤ì›Œ??: ë³€?˜ë‚˜ ?¨ìˆ˜ê°€ ?¤ë¥¸ ?Œì¼???•ì˜?˜ì–´ ?ˆë‹¤ ?¼ëŠ”
-	?¬ì‹¤???Œë¦¬???¤ì›Œ??
+    extern Å°¿öµå : º¯¼ö³ª ÇÔ¼ö°¡ ´Ù¸¥ ÆÄÀÏ¿¡ Á¤ÀÇµÇ¾î ÀÖ´Ù ¶ó´Â
+    »ç½ÇÀ» ¾Ë¸®´Â Å°¿öµå.
 */
 extern HWND g_hWnd;
 extern HINSTANCE g_hInstance;
