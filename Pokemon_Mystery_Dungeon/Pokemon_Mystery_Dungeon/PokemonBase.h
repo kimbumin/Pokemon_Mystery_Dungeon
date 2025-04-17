@@ -16,7 +16,7 @@ protected:
     IAnimState* currentAnimState;
     IActionState* currentActionState;
 
-    FPOINT pos = { 100,100 };
+    FPOINT pos = { 240 ,240 };
     int level;
     int currentHp;
     bool isAlive;
@@ -45,10 +45,11 @@ public:
 
     //Setter
     inline void SetStatus(PokemonData baseStatus) { this->baseStatus = &baseStatus; }
+    inline void SetDirection(Direction direction) { this->direction = direction; }
     inline void SetPos(FPOINT pos) { this->pos = pos; }
     inline void SetLevel(int level) { this->level = level; }
     inline void SetIsAlive(bool isAlive) { this->isAlive = isAlive; }
-    
+
     PokemonBase() {};
     virtual ~PokemonBase() {};
 };

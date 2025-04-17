@@ -11,10 +11,13 @@
 #include "HurtAnimState.h"
 
 #include "MoveActionState.h"
+#include "IdleActionState.h"
+// Skill
+// UseItem
 HRESULT PokemonBase::Init()
 {
     isAlive = true;
-    baseStatus = PokemonDataLoader::GetInstance()->GetData(64); // 따로 빌더에서 정해줄 것
+    baseStatus = PokemonDataLoader::GetInstance()->GetData(151); // 따로 빌더에서 정해줄 것
 
     currentStatus = *baseStatus;
     level = 5; // 따로 빌더에서 정해줄 것
@@ -26,7 +29,7 @@ HRESULT PokemonBase::Init()
     currentActionState = nullptr;
 
     SetAnimState(new IdleAnimState());
-    SetActionState(new MoveActionState());
+    SetActionState(new IdleActionState());
 
     string idStr = PokemonImageLoader::GetInstance()->PokemonIdToString(baseStatus->idNumber);
     for (auto type = animTypes.begin(); type != animTypes.end(); ++type)
