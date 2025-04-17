@@ -1,16 +1,14 @@
-// ItemManager.h
-#pragma once
-#include "IItem.h"
+#include"IItem.h"
 
-class ItemManager {
+class ItemManager
+{
 private:
-	vector<unique_ptr<IItem>> items;
-	int mapWidth, mapHeight;
+    vector<unique_ptr<IItem>> items;
 
 public:
-	ItemManager(int width, int height) : mapWidth(width), mapHeight(height) {}
 
-	void AddItem(unique_ptr<IItem> item);
-	void Update();
-	void Render(HDC hdc);
+    void SpawnRandomItem(); // 랜덤 아이템 생성
+    void GetItem(/*Player* player*/);// 플레이어의 위치와 충돌 검사 후 플레이어가 습득
+    void Update(/*Player* player*/);
+    void Render(); //맵에 아이템 랜더
 };
