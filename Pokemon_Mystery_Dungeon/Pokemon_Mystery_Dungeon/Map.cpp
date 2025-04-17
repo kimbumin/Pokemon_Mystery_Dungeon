@@ -61,7 +61,7 @@ void Map::Render(HDC hdc)
 
     //// ÀÌµ¿°¡´É Å¸ÀÏ
     for (const POINT& pt : pathTiles) {
-        sampleTile->FrameRender(hdc, pt.x * TILE_SIZE, pt.y * TILE_SIZE, 1, 1, 0, 1);
+        sampleTile->FrameRender(hdc, pt.x * TILE_SIZE, pt.y * TILE_SIZE, 13, 1, 0, 1);
     }
     //// ÀÌµ¿°¡´É Å¸ÀÏ
     for (const POINT& pt : floorTiles) {
@@ -180,37 +180,64 @@ void Map::ClassifyTiles()
     }
 }
 
-void Map::TileDesign()  
-{  
-   tileIndex.clear();  
-   tileIndex.resize(TILE_Y, vector<pair<int, int>>(TILE_X, { 4, 1 })); // ±âº» º®  
+void Map::TileDesign()
+{
+    tileIndex.clear();
+    tileIndex.resize(TILE_Y, vector<pair<int, int>>(TILE_X, { 4, 1 })); // ±âº» º®
 
-   int dx[8] = { 0, 0, -1, 1, -1, 1, -1, 1 };  
-   int dy[8] = { 1, -1, 0, 0, -1, -1, 1, 1 };  
+    //»óÇÏÁÂ¿ì, ¿À¹Ø,¿Þ¹Ø,¿ÀÀ§,¿ÞÀ§ ¼ø¼­
+    const int dx[WALL_TILE_TYPE_COUNT] = { 0, 0, -1, 1, -1, 1, -1, 1 };
+    const int dy[WALL_TILE_TYPE_COUNT] = { 1, -1, 0, 0, -1, -1, 1, 1 };
+    const pair<int, int> wallTypes[WALL_TILE_TYPE_COUNT] = {
+        { 4, 3 }, // À§
+        { 4, 3 }, // ¾Æ·¡
+        { 3, 4 }, // ¿ÞÂÊ
+        { 3, 4 }, // ¿À¸¥ÂÊ
+        { 5, 5 }, // ¿À¹Ø
+        { 3, 5 }, // ¿Þ¹Ø
+        { 5, 3 }, // ¿ÀÀ§
+        { 3, 3 }  // ¿ÞÀ§
+    };
 
-   for (int y = 0; y < TILE_Y; ++y) {  
-       for (int x = 0; x < TILE_X; ++x) {  
-           if (tiles[y][x] != TILE_WALL) continue;  
+    auto InBounds = [](int x, int y) {
+        return x >= 0 && x < TILE_X && y >= 0 && y < TILE_Y;
+        };
 
-           for (int i = 0; i < 8; ++i) {  
-               int nx = x + dx[i];  
-               int ny = y + dy[i];  
+    auto IsPathOrFloor = [&](int x, int y) {
+        return tiles[y][x] == TileType::TILE_PATH || tiles[y][x] == TileType::TILE_FLOOR;
+        };
 
-               if (nx >= 0 && nx < TILE_X && ny >= 0 && ny < TILE_Y && tiles[ny][nx] == TileType::TILE_FLOOR) {  
-                   switch (i) {  
-                   case 0: tileIndex[y][x] = { 4, 3 }; break; // À§  
-                   case 1: tileIndex[y][x] = { 4, 3 }; break; // ¾Æ·¡  
-                   case 2: tileIndex[y][x] = { 3, 4 }; break; // ¿ÞÂÊ  
-                   case 3: tileIndex[y][x] = { 3, 4 }; break; // ¿À¸¥ÂÊ  
-                   case 4: tileIndex[y][x] = { 5, 5 }; break; // ¿ÞÀ§  
-                   case 5: tileIndex[y][x] = { 3, 5 }; break; // ¿ÀÀ§  
-                   case 6: tileIndex[y][x] = { 5, 3 }; break; // ¿Þ¹Ø  
-                   case 7: tileIndex[y][x] = { 3, 3 }; break; // ¿À¹Ø  
-                   }  
-                   break; 
-               }  
-           }  
-       }  
-   }  
+    auto IsMixedPathFloor = [&](int x1, int y1, int x2, int y2) {
+        return (tiles[y1][x1] == TileType::TILE_PATH && tiles[y2][x2] == TileType::TILE_FLOOR) ||
+            (tiles[y1][x1] == TileType::TILE_FLOOR && tiles[y2][x2] == TileType::TILE_PATH);
+        };
+
+    for (int y = 0; y < TILE_Y; ++y) {
+        for (int x = 0; x < TILE_X; ++x) {
+            if (tiles[y][x] != TILE_WALL) continue;
+
+            // ±âº» 8¹æÇâ °Ë»ç
+            for (int i = 0; i < 8; ++i) {
+                int nx = x + dx[i];
+                int ny = y + dy[i];
+                if (InBounds(nx, ny) && IsPathOrFloor(nx, ny)) {
+                    tileIndex[y][x] = wallTypes[i];
+                    break;
+                }
+            }
+
+            //¸ð¼­¸®
+            if (InBounds(x - 1, y + 1) && IsMixedPathFloor(x, y + 1, x - 1, y))
+                tileIndex[y][x] = wallTypes[LEFT_BOTTOM]; // ¿Þ¹Ø
+
+            else if (InBounds(x + 1, y + 1) && IsMixedPathFloor(x, y + 1, x + 1, y))
+                tileIndex[y][x] = wallTypes[RIGHT_BOTTOM]; // ¿À¹Ø
+
+            else if (InBounds(x - 1, y - 1) && IsMixedPathFloor(x, y - 1, x - 1, y))
+                tileIndex[y][x] = wallTypes[LEFT_TOP]; // ¿ÞÀ§
+
+            else if (InBounds(x + 1, y - 1) && IsMixedPathFloor(x, y - 1, x + 1, y))
+                tileIndex[y][x] = wallTypes[RIGHT_TOP]; // ¿ÀÀ§
+        }
+    }
 }
-

@@ -10,6 +10,19 @@ enum TileType {
     TILE_PATH,
     TYPE_LENGH
 };
+
+enum WallTileType {
+    TOP = 0,
+    BOTTOM,
+    LEFT,
+    RIGHT,
+    RIGHT_BOTTOM,
+    LEFT_BOTTOM,
+    RIGHT_TOP,
+    LEFT_TOP,
+    WALL_TILE_TYPE_COUNT
+};
+
 class Image;
 
 class Map : public GameObject {
