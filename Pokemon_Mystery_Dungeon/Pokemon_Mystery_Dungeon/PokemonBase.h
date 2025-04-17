@@ -3,6 +3,7 @@
 
 class PokemonAnimator;
 class IAnimState;
+class IActionState;
 class PokemonBase : public GameObject
 {
 private:
@@ -13,6 +14,7 @@ protected:
     PokemonAnimator* animator;
 
     IAnimState* currentAnimState;
+    IActionState* currentActionState;
 
     FPOINT pos = { 100,100 };
     int level;
@@ -31,6 +33,7 @@ public:
     virtual int CalStat(int value);
 
     void SetAnimState(IAnimState* newState);
+    void SetActionState(IActionState* newState);
 
     // Getter
     inline PokemonData GetCurrentPokemonData() { return currentStatus; }
