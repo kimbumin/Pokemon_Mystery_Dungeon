@@ -144,6 +144,7 @@
     <ClCompile Include="ImageManager.cpp" />
     <ClCompile Include="InventoryUIState.cpp" />
     <ClCompile Include="ISkill.cpp" />
+    <ClCompile Include="ItemManager.cpp" />
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainGame.cpp" />
@@ -169,7 +170,7 @@
     <ClCompile Include="UIManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-     <ClInclude Include="AttackAnimState.h" />
+    <ClInclude Include="AttackAnimState.h" />
     <ClInclude Include="CameraManager.h" />
     <ClInclude Include="CameraTestScene.h" />
     <ClInclude Include="DefaultUIState.h" />
@@ -183,11 +184,13 @@
     <ClInclude Include="HurtAnimState.h" />
     <ClInclude Include="IAnimState.h" />
     <ClInclude Include="IdleAnimState.h" />
+    <ClInclude Include="IItem.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageGDIPlus.h" />
     <ClInclude Include="ImageManager.h" />
     <ClInclude Include="InventoryUIState.h" />
     <ClInclude Include="ISkill.h" />
+    <ClInclude Include="ItemManager.h" />
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="PokemonAnimator.h" />

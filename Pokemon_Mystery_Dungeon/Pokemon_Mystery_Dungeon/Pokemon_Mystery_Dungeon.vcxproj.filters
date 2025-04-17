@@ -55,6 +55,12 @@
     <Filter Include="Skill\SkillList">
       <UniqueIdentifier>{2cd1cea9-45b4-40ea-9b9f-302ff2538fce}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Item">
+      <UniqueIdentifier>{292e1985-8ade-4dd1-8a97-5bfdae3d0072}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ItemManager">
+      <UniqueIdentifier>{68f4fe66-5ac9-4eee-9157-1ee63d69df50}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -168,6 +174,15 @@
     <ClCompile Include="Map.cpp">
       <Filter>Scene\소스</Filter>
     </ClCompile>
+    <ClCompile Include="CollisionManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="StartScene.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemManager.cpp">
+      <Filter>ItemManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="config.h">
@@ -211,7 +226,7 @@
     </ClInclude>
     <ClInclude Include="TilemapTool.h">
       <Filter>Scene\헤더</Filter>
-    </ClInclude> 
+    </ClInclude>
     <ClInclude Include="TitleUIState.h">
       <Filter>UiState\헤더</Filter>
     </ClInclude>
@@ -296,9 +311,26 @@
     <ClInclude Include="Map.h">
       <Filter>Scene\헤더</Filter>
     </ClInclude>
+    <ClInclude Include="CollisionManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="PokemonBase.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="PokemonDataLoader.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="StartScene.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="IItem.h">
+      <Filter>ItemManager</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemManager.h">
+      <Filter>ItemManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
-
   </ItemGroup>
 </Project>
