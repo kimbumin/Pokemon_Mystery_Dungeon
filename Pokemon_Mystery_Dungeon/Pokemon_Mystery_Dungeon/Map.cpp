@@ -25,6 +25,16 @@ HRESULT Map::Init()
         525, 600, SAMPLE_TILE_X, SAMPLE_TILE_Y,
         true, RGB(255, 0, 255));
 
+    //sampleTile = ImageManager::GetInstance()->AddImage(
+    //    "smapleTile", L"Image/SceneImage/Sea1.bmp",
+    //    525, 600, 18, SAMPLE_TILE_Y,
+    //    true, RGB(255, 0, 255));
+
+    //sampleTile = ImageManager::GetInstance()->AddImage(
+    //    "smapleTile", L"Image/SceneImage/Sea3.bmp",
+    //    450, 600, 18, SAMPLE_TILE_Y,
+    //    true, RGB(255, 0, 255));
+
     stairs = ImageManager::GetInstance()->AddImage(
         "stairs", L"Image/SceneImage/stairs.bmp",
         24, 24, 1, 1,
