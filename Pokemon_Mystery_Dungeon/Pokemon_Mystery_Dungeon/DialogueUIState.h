@@ -6,8 +6,9 @@ class DialogueUIState : public UIState
 {
 private:
 	ImageGDIPlus* dialogueBoxImage = nullptr;
-	int dialogueBoxX = 50;
-	int dialogueBoxY = 200;
+	int dialogueBoxX = -400;
+	int dialogueBoxY = 240;
+	bool isSlidingIn = true;
 
 public:
 	~DialogueUIState();

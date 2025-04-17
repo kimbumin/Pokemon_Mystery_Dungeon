@@ -1,5 +1,7 @@
 #include "UIManager.h"
 #include "UIState.h"
+#include "DialogueUIState.h"
+#include "DefaultUIState.h"
 
 UIState* UIManager::currentState = nullptr;
 UIState* UIManager::nextState = nullptr;
@@ -84,3 +86,27 @@ UIState* UIManager::AddState(string key, UIState* state)
 
 	return state;
 }
+
+void UIManager::RegisterAllUIStates()
+{
+	AddState("dialogueBox", new DialogueUIState());
+	AddState("defaultBox", new DefaultUIState());
+}
+
+void UIManager::OpenUIStateBox(const string& key)
+{
+	bool& isActive = IsOpenMap[key];
+	isActive = !isActive;
+
+	if (isActive)
+	{
+		ChangeState(key);
+	}
+	else
+	{
+		currentState = nullptr;
+	}
+
+}
+
+

@@ -1,6 +1,7 @@
 #pragma once
 #include <Windows.h>
 #include <gdiplus.h>
+#include "config.h"
 #pragma comment(lib, "gdiplus.lib")
 
 class ImageGDIPlus
@@ -15,7 +16,8 @@ public:
 	};
 
 private:
-	Gdiplus::Image* image = nullptr;
+	Gdiplus::Bitmap* image = nullptr;
+	HBITMAP hBitmap = nullptr;
 
 	int width = 0;
 	int height = 0;
@@ -31,11 +33,17 @@ public:
 	
 	void Release();
 
+	// 카메라 뷰에	맞춰서 그리기
+	void RenderBackground(HDC hdc);
+
 	// x좌표, y좌표, 회전각도, x축 반전 여부, y축 반전 여부, 투명도
 	void Render(HDC hdc, float x, float y, float angle = 0.0f, bool flipX = false, bool flipY = false, float alpha = 1.0f);
 
-	// x좌표, y좌표, 가로배율, 새로 배율, 회전각도, x축 반전 여부, y축 반전 여부, 투명도
+	// 자동 크기 조정? - 보류
+	//void RenderScale(HDC hdc, float x, float y, float alpha = 1.0f);
+
 	void RenderScale(HDC hdc, float x, float y, float scaleX, float scaleY, float angle = 0.0f, bool flipX = false, bool flipY = false, float alpha = 1.0f);
+	// x좌표, y좌표, 가로배율, 새로 배율, 회전각도, x축 반전 여부, y축 반전 여부, 투명도
 
 	// x좌표, y좌표, 프레임 인덱스, 회전각도, x축 반전 여부, y축 반전 여부, 투명도
 	void RenderFrame(HDC hdc, float x, float y, int frameIndex, float angle = 0.0f, bool flipX = false, bool flipY = false, float alpha = 1.0f);

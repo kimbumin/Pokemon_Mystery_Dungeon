@@ -28,6 +28,9 @@ using namespace std;
 #define WINSIZE_X	800
 #define WINSIZE_Y	400
 
+#define GameViewSize_X	500
+#define GameViewSize_Y	400
+
 #define TILEMAPTOOL_X	1420
 #define TILEMAPTOOL_Y	700
 #define SAMPLE_TILE_X	21

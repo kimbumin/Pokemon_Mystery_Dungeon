@@ -18,7 +18,7 @@ POINT g_ptMouse;	// ¸¶¿ì½º ÁÂÇ¥
 RECT GetRect(int left, int top, int width, int height);
 RECT GetRectAtCenter(int x, int y, int width, int height);
 
-// Render
+// RenderBackground
 void RenderStar(HDC hdc, int posX, int posY);
 void RenderRect(HDC hdc, int x, int y, int width, int height);
 void RenderRectAtCenter(HDC hdc, int centerX, int centerY, int width, int height);

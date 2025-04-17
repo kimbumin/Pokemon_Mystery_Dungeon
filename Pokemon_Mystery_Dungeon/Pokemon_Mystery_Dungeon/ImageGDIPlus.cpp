@@ -1,10 +1,11 @@
 #include "ImageGDIPlus.h"
+#include "CameraManager.h"
 
 HRESULT ImageGDIPlus::Init(const wchar_t* filePath, int maxFrameX, int maxFrameY)
 {
 	Release();
 
-	image = Gdiplus::Image::FromFile(filePath);
+	image = new Gdiplus::Bitmap(filePath);
 
 	if (!image || image->GetLastStatus() != Gdiplus::Ok)
 	{
@@ -22,7 +23,11 @@ HRESULT ImageGDIPlus::Init(const wchar_t* filePath, int maxFrameX, int maxFrameY
 	frameHeight = height / maxFrameY;
 
 	currFrameX = currFrameY = 0;
-
+	
+	if (image->GetHBITMAP(Gdiplus::Color(0, 0, 0, 0), &hBitmap) != Gdiplus::Ok)
+	{
+		return E_FAIL;
+	}
 
 	return S_OK;
 }
@@ -34,6 +39,37 @@ void ImageGDIPlus::Release()
 		delete image;
 		image = nullptr;
 	}
+
+	if (hBitmap)
+	{
+		DeleteObject(hBitmap);
+		hBitmap = nullptr;
+	}
+}
+
+void ImageGDIPlus::RenderBackground(HDC hdc)
+{
+	if (!hBitmap)	return;
+	
+	HDC memDC = CreateCompatibleDC(hdc);
+	HBITMAP oldBitmap = (HBITMAP)SelectObject(memDC, hBitmap);
+
+	RECT cam = CameraManager::GetInstance()->GetViewPos();
+	int width = cam.right - cam.left;
+	int height = cam.bottom - cam.top;
+
+	BitBlt(
+		hdc,
+		0, 0,
+		width, height,
+		memDC,
+		cam.left, cam.top,
+		SRCCOPY
+	);
+
+	SelectObject(memDC, oldBitmap);
+	DeleteDC(memDC);
+
 }
 
 void ImageGDIPlus::Render(HDC hdc, float x, float y, float angle, bool flipX, bool flipY, float alpha)
@@ -67,6 +103,21 @@ void ImageGDIPlus::Render(HDC hdc, float x, float y, float angle, bool flipX, bo
 		&imageAttributes
 	);
 }
+
+// º¸·ù
+//void ImageGDIPlus::RenderScale(HDC hdc, float x, float y, float alpha)
+//{
+//	if (!image)	return;
+//
+//	RECT rect;
+//	GetClientRect(g_hWnd, &rect);
+//
+//	float scaleX = (float)(rect.right - rect.left) / (float)GameViewSize_X;
+//	float scaleY = (float)(rect.bottom - rect.top) / (float)GameViewSize_Y;
+//
+//	RenderScale(hdc, x * scaleX, y * scaleY, scaleX, scaleY, 0.0f, false, false, alpha);
+//
+//}
 
 void ImageGDIPlus::RenderScale(HDC hdc, float x, float y, float scaleX, float scaleY, float angle, bool flipX, bool flipY, float alpha)
 {
