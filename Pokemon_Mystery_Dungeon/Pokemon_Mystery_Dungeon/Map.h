@@ -8,6 +8,7 @@ enum TileType {
     TILE_WALL,
     TILE_FLOOR,
     TILE_PATH,
+    TILE_OUTLINE,
     TYPE_LENGH
 };
 

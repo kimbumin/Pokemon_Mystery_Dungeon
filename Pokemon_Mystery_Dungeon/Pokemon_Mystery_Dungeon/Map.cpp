@@ -212,11 +212,23 @@ void Map::TileDesign()
             (tiles[y1][x1] == TileType::TILE_FLOOR && tiles[y2][x2] == TileType::TILE_PATH);
         };
 
+    //통로 커브길 추가
+    auto IsSampleType = [&](int x1, int y1, int x2, int y2) {
+        return(tiles[y1][x1] == tiles[y2][x2] &&
+            (tiles[y1][x1] == TileType::TILE_PATH || tiles[y1][x1] == TileType::TILE_FLOOR));
+    };
+
+	auto IsCurveCorner = [&](int x1, int y1, int x2, int y2) {
+		return IsMixedPathFloor(x1, y1, x2, y2) || IsSampleType(x1, y1, x2, y2);
+	};
+
+
+
     for (int y = 0; y < TILE_Y; ++y) {
         for (int x = 0; x < TILE_X; ++x) {
             if (tiles[y][x] != TILE_WALL) continue;
 
-            // 기본 8방향 검사
+            // 8방향 검사
             for (int i = 0; i < 8; ++i) {
                 int nx = x + dx[i];
                 int ny = y + dy[i];
@@ -227,16 +239,16 @@ void Map::TileDesign()
             }
 
             //모서리
-            if (InBounds(x - 1, y + 1) && IsMixedPathFloor(x, y + 1, x - 1, y))
+            if (InBounds(x - 1, y + 1) && IsCurveCorner(x, y + 1, x - 1, y))
                 tileIndex[y][x] = wallTypes[LEFT_BOTTOM]; // 왼밑
 
-            else if (InBounds(x + 1, y + 1) && IsMixedPathFloor(x, y + 1, x + 1, y))
+            else if (InBounds(x + 1, y + 1) && IsCurveCorner(x, y + 1, x + 1, y))
                 tileIndex[y][x] = wallTypes[RIGHT_BOTTOM]; // 오밑
 
-            else if (InBounds(x - 1, y - 1) && IsMixedPathFloor(x, y - 1, x - 1, y))
+            else if (InBounds(x - 1, y - 1) && IsCurveCorner(x, y - 1, x - 1, y))
                 tileIndex[y][x] = wallTypes[LEFT_TOP]; // 왼위
 
-            else if (InBounds(x + 1, y - 1) && IsMixedPathFloor(x, y - 1, x + 1, y))
+            else if (InBounds(x + 1, y - 1) && IsCurveCorner(x, y - 1, x + 1, y))
                 tileIndex[y][x] = wallTypes[RIGHT_TOP]; // 오위
         }
     }
