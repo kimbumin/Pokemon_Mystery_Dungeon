@@ -3,13 +3,14 @@
 HRESULT OranBerry::Init()
 {
 	x = 0; y = 0;
-
 	healHP = 10;
 	name = "OranBerry";
 
 	image = ImageManager::GetInstance()->AddImage(
-		"OranBerry", TEXT("Image/ItemImage.bmp"), 1, 1, 1, 1,
-		true, RGB(255, 0, 255));
+		"OranBerry", L"Image/ItemImage/Oran_Berry.bmp",
+		12, 12, 1, 1, true, RGB(255, 0, 255));
+
+	return S_OK;
 }
 
 void OranBerry::Update()
@@ -21,7 +22,7 @@ void OranBerry::Render(HDC hdc)
 	image = ImageManager::GetInstance()->FindImage("OranBerry");
 	if (image)
 	{
-		image->FrameRender(hdc, x, y, 1, 0, false, true);
+		image->FrameRender(hdc, x, y, 0, 0, false, true);
 	}
 }
 
