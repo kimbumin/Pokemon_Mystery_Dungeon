@@ -20,6 +20,7 @@ public:
 	virtual void Use() override;
 	virtual void SetPosition(int newX, int newY) override;
 
+	inline virtual string GetName() const override { return name; }
 	inline virtual int GetX() const override { return x; }
 	inline virtual int GetY() const override { return y; }
 };

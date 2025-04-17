@@ -5,11 +5,12 @@
 class Image;
 class LeppaBerry : public IItem {
 private:
+
 	Image* image;
 
 	int x;
 	int y;
-	int healHP;
+	int healPP;
 	string name;
 
 public:
@@ -20,6 +21,7 @@ public:
 	virtual void Use() override;
 	virtual void SetPosition(int newX, int newY) override;
 
+	inline virtual string GetName() const override { return name; }
 	inline virtual int GetX() const override { return x; }
 	inline virtual int GetY() const override { return y; }
 };

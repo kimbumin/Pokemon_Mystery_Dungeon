@@ -3,7 +3,7 @@
 HRESULT LeppaBerry::Init()
 {
 	x = 0; y = 0;
-	healHP = 10;
+	healPP = 10;
 	name = "LeppaBerry";
 
 	image = ImageManager::GetInstance()->AddImage(
