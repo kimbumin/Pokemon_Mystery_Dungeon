@@ -3,17 +3,13 @@
 #include "PokemonImageLoader.h"
 #include "Image.h"
 #include "PokemonAnimator.h"
-#include "IdleAnimState.h"
-#include "AttackAnimState.h"
-#include "WalkAnimState.h"
-#include "RotateAnimState.h"
-#include "SwingAnimState.h"
-#include "HurtAnimState.h"
+
 
 #include "MoveActionState.h"
 #include "IdleActionState.h"
 // Skill
 // UseItem
+
 HRESULT PokemonBase::Init()
 {
     isAlive = true;
@@ -127,16 +123,13 @@ int PokemonBase::CalStat(int value)
 
 void PokemonBase::SetAnimState(IAnimState* newState)
 {
-    if (currentAnimState && !currentAnimState->CanOverride()) 
+    if (currentAnimState && !currentAnimState->CanOverride())
     {
-        delete newState;
         return;
     }
-
     if (currentAnimState)
     {
-        currentAnimState->Exit(this);
-        delete currentAnimState;
+       currentAnimState->Exit(this);
     }
     currentAnimState = newState;
     if (currentAnimState)
@@ -163,4 +156,29 @@ void PokemonBase::SetActionState(IActionState* newState)
     {
         currentActionState->Enter(this);
     }
+}
+
+void PokemonBase::PlayWalkAnim() 
+{ 
+    SetAnimState(&walkAnim); 
+}
+void PokemonBase::PlayIdleAnim() 
+{ 
+    SetAnimState(&idleAnim); 
+}
+void PokemonBase::PlayAttackAnim() 
+{ 
+    SetAnimState(&attackAnim); 
+}
+void PokemonBase::PlayHurtAnim() 
+{ 
+    SetAnimState(&hurtAnim); 
+}
+void PokemonBase::PlaySwingAnim() 
+{ 
+    SetAnimState(&swingAnim); 
+}
+void PokemonBase::PlayRotateAnim() 
+{ 
+    SetAnimState(&rotateAnim); 
 }

@@ -1,6 +1,13 @@
 #pragma once
 #include "GameObject.h"
 
+#include "IdleAnimState.h"
+#include "AttackAnimState.h"
+#include "WalkAnimState.h"
+#include "RotateAnimState.h"
+#include "SwingAnimState.h"
+#include "HurtAnimState.h"
+
 class PokemonAnimator;
 class IAnimState;
 class IActionState;
@@ -9,12 +16,20 @@ class PokemonBase : public GameObject
 private:
 
 protected:
+
     const PokemonData* baseStatus;
     PokemonData currentStatus;
     PokemonAnimator* animator;
 
     IAnimState* currentAnimState;
     IActionState* currentActionState;
+
+    WalkAnimState walkAnim;
+    IdleAnimState idleAnim;
+    AttackAnimState attackAnim;
+    HurtAnimState hurtAnim;
+    SwingAnimState swingAnim;
+    RotateAnimState rotateAnim;
 
     FPOINT pos = { 240 ,240 };
     int level;
@@ -49,6 +64,14 @@ public:
     inline void SetPos(FPOINT pos) { this->pos = pos; }
     inline void SetLevel(int level) { this->level = level; }
     inline void SetIsAlive(bool isAlive) { this->isAlive = isAlive; }
+
+    // Rapper Function
+    void PlayWalkAnim();
+    void PlayIdleAnim();
+    void PlayAttackAnim();
+    void PlayHurtAnim();
+    void PlaySwingAnim();
+    void PlayRotateAnim();
 
     PokemonBase() {};
     virtual ~PokemonBase() {};
