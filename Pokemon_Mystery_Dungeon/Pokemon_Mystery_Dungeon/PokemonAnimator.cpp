@@ -31,7 +31,7 @@ void PokemonAnimator::Update()
             else 
             {
                 data.currentFrame = data.frameCountX - 1;
-                data.finished = true;
+                data.isFinished = true;
             }
         }
     }
@@ -68,7 +68,7 @@ void PokemonAnimator::Play(const string& name, Direction dir)
         auto& data = animations[name];
         data.currentFrame = 0;
         data.timer = 0.f;
-        data.finished = false;
+        data.isFinished = false;
     }
     direction = dir;
 }
@@ -77,7 +77,7 @@ bool PokemonAnimator::IsFinished(const string& name){
     auto it = animations.find(name);
     if (it != animations.end()) 
     {
-        return it->second.finished;
+        return it->second.isFinished;
     }
     return false;
 }
