@@ -2,7 +2,7 @@
 #include "config.h"
 
 class PokemonBase;
-class IAnimState
+class IActionState
 {
 private:
 
@@ -13,6 +13,6 @@ public:
 	virtual bool IsFinished() = 0;
 	virtual bool CanOverride() = 0;
 
-	virtual ~IAnimState() {};
+	virtual ~IActionState() {};
 };
 

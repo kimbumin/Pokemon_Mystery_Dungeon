@@ -17,7 +17,7 @@ private:
         float frameDuration;
         bool looping = true;
         float timer = 0.f;
-        bool finished = false;
+        bool isFinished = false;
         int currentFrame = 0;
     };
 

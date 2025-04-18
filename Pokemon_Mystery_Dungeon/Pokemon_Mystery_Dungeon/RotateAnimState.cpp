@@ -2,37 +2,37 @@
 #include "PokemonBase.h"
 #include "PokemonAnimator.h"
 
-void RotateAnimState::Enter(PokemonBase* outer)
+void RotateAnimState::Enter(PokemonBase* owner)
 {
-	finished = false;
-	outer->GetAnimator()->Play("Rotate", outer->GetDirection());
+	isFinished = false;
+	owner->GetAnimator()->Play("Rotate", owner->GetDirection());
 }
 
-void RotateAnimState::Update(PokemonBase* outer)
+void RotateAnimState::Update(PokemonBase* owner)
 {
-	outer->GetAnimator()->Update();
-	if (outer->GetAnimator()->IsFinished("Rotate"))
+	owner->GetAnimator()->Update();
+	if (owner->GetAnimator()->IsFinished("Rotate"))
 	{
-		finished = true;
+		isFinished = true;
 	}
 }
 
-void RotateAnimState::Exit(PokemonBase* outer)
+void RotateAnimState::Exit(PokemonBase* owner)
 {
 }
 
 bool RotateAnimState::IsFinished()
 {
-	return finished;
+	return isFinished;
 }
 
 bool RotateAnimState::CanOverride()
 {
-	return finished;
+	return isFinished;
 }
 
 RotateAnimState::RotateAnimState()
 {
-	finished = false;
+	isFinished = false;
 
 }

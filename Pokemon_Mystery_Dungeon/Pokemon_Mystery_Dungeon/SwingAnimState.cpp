@@ -2,36 +2,36 @@
 #include "PokemonBase.h"
 #include "PokemonAnimator.h"
 
-void SwingAnimState::Enter(PokemonBase* outer)
+void SwingAnimState::Enter(PokemonBase* owner)
 {
-    finished = false;
-    outer->GetAnimator()->Play("Swing", outer->GetDirection());
+    isFinished = false;
+    owner->GetAnimator()->Play("Swing", owner->GetDirection());
 }
 
-void SwingAnimState::Update(PokemonBase* outer)
+void SwingAnimState::Update(PokemonBase* owner)
 {
-    outer->GetAnimator()->Update();
-    if (outer->GetAnimator()->IsFinished("Swing"))
+    owner->GetAnimator()->Update();
+    if (owner->GetAnimator()->IsFinished("Swing"))
     {
-        finished = true;
+        isFinished = true;
     }
 }
 
-void SwingAnimState::Exit(PokemonBase* outer)
+void SwingAnimState::Exit(PokemonBase* owner)
 {
 }
 
 bool SwingAnimState::IsFinished()
 {
-    return finished;
+    return isFinished;
 }
 
 bool SwingAnimState::CanOverride()
 {
-    return finished;
+    return isFinished;
 }
 
 SwingAnimState::SwingAnimState()
 {
-    finished = false;
+    isFinished = false;
 }

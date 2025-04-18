@@ -2,25 +2,25 @@
 #include "PokemonBase.h"
 #include "PokemonAnimator.h"
 
-void IdleAnimState::Enter(PokemonBase* outer)
+void IdleAnimState::Enter(PokemonBase* owner)
 {
-	finished = false;
-	outer->GetAnimator()->Play("Idle", outer->GetDirection());
+	isFinished = false;
+	owner->GetAnimator()->Play("Idle", owner->GetDirection());
 }
 
-void IdleAnimState::Update(PokemonBase* outer)
+void IdleAnimState::Update(PokemonBase* owner)
 {
-	outer->GetAnimator()->Update();
+	owner->GetAnimator()->Update();
 }
 
-void IdleAnimState::Exit(PokemonBase* outer)
+void IdleAnimState::Exit(PokemonBase* owner)
 {
 
 }
 
 bool IdleAnimState::IsFinished()
 {
-	return finished;
+	return isFinished;
 }
 
 bool IdleAnimState::CanOverride()
@@ -32,5 +32,5 @@ bool IdleAnimState::CanOverride()
 
 IdleAnimState::IdleAnimState()
 {
-	finished = false;
+	isFinished = false;
 }
