@@ -21,12 +21,16 @@ void DungeonScene::Release()
 
 void DungeonScene::Update()
 {
+	if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F6)) {
+		//SceneManager::GetInstance()->AddScene("¥¯¿¸æ¿", new DungeonScene());
+		SceneManager::GetInstance()->ChangeScene("±§¿Â");
+	}
 
 }
 
 void DungeonScene::Render(HDC hdc)
 {
-	PatBlt(hdc, 0, 0, 2000, 1000, BLACKNESS);
+	PatBlt(hdc, 0, 0, 2000, 2000, BLACKNESS);
 
 	map.Render(hdc);
 
