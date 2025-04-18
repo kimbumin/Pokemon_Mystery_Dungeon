@@ -6,11 +6,11 @@
 //최대 방 개수
 const int MAX_ROOMS = 8;
 
-const int MIN_WIDTH = 6;
-const int MAX_WIDTH = 10;
+const int MIN_WIDTH = 4;
+const int MAX_WIDTH = 6;
 
-const int MIN_HEIGHT = 6;
-const int MAX_HEIGHT = 10;
+const int MIN_HEIGHT = 4;
+const int MAX_HEIGHT = 6;
 random_device rd;
 default_random_engine dre(rd());
 
@@ -108,7 +108,9 @@ void Map::Render(HDC hdc)
     }
     //// 이동가능 타일
     for (const POINT& pt : floorTiles) {
-        if (tileIndex[pt.y][pt.x] != make_pair(12, 0) and tileIndex[pt.y][pt.x] != make_pair(13, 2)) {
+        if (tileIndex[pt.y][pt.x] != make_pair(12, 0) and 
+            tileIndex[pt.y][pt.x] != make_pair(13, 2) and 
+            tileIndex[pt.y][pt.x] != make_pair(14, 1)) {
 			tileImage->FrameRender(hdc, pt.x * TILE_SIZE, pt.y * TILE_SIZE, 13, 1, 0, 1);
         }
         else {
@@ -309,7 +311,7 @@ void Map::TileDesign()
         
         { { 1, 0, 1, 0, 1, 1, 1, 1 }, {5, 5} },
         
-        { { 1, 1, 1, 1, 1, 1, 0, 1 }, {4, 6} },
+        { { 1, 1, 1, 1, 1, -1, 0, -1 }, {4, 6} },
         
         { { 1, 1, 1, 1, 0, 1, 1, -1 }, {3, 7} },
         { { 1, 0, 1, 0, 0, 1, 0, 1 }, {4, 7} },
@@ -348,7 +350,7 @@ void Map::TileDesign()
         { { 1, 1, 1, 0, 0, 0, 0, 1 }, {3, 19} },
         { { 1, 1, 1, 0, 0, 1, 0, 0 }, {4, 19} },
         
-        { { 0, 0, 1, 0, 0, 1, 1, 1 }, {3, 20} },
+        { { 0, 0, 1, 0, 0, -1, 1, 1 }, {3, 20} },
         { { 1, 0, 0, 0, 0, 1, 1, 1 }, {4, 20} },
         
         { { 1, 0, 1, 0, 0, 1, 0, 0 }, {3, 21} },
@@ -395,6 +397,7 @@ void Map::TileDesign()
 
 void Map::RandomTileDesign() {
     
+    //floor끝부분 디자인
     for (int y = 1; y < TILE_Y; ++y) {
         for (int x = 1; x <TILE_X; ++x) {
             if (tileIndex[y][x] == make_pair(3, 15)) {
@@ -403,7 +406,9 @@ void Map::RandomTileDesign() {
             if (tileIndex[y][x] == make_pair(4, 0)) {
                 tileIndex[y - 1][x] = { 13,2 };
             }
-
+            if (tileIndex[y][x] == make_pair(3, 1)) {
+                tileIndex[y][x - 1] = { 14,1 };
+            }
 
         }
     }
