@@ -17,6 +17,8 @@ default_random_engine dre(rd());
 uniform_int_distribution uidWidth{ MIN_WIDTH, MAX_WIDTH };
 uniform_int_distribution uidHeight{ MIN_HEIGHT, MAX_HEIGHT };
 uniform_int_distribution uidDist{ 0,1 };
+uniform_int_distribution uid0to3{ 0, 3 };
+
 
 HRESULT Map::Init()
 {
@@ -269,6 +271,8 @@ void Map::TileDesign()
         { { -1, 1, 1,
              0,    1,
              0, 0, -1 }, {5, 0} },
+        { {1,1,0,0,1,0,0,1}, {5,0}},
+        {{1,0,0,1,0,0,1,1}, {3,2}},
         
         { { 1, 0, 0, 1, 0, 1, 0, 0 }, {3, 1} },
         { { 0, 0, 0, 1, 0, 1, 0, 0 }, {3, 1} },
@@ -398,7 +402,7 @@ void Map::TileDesign()
 
 void Map::RandomTileDesign() {
     
-    //floor끝부분 디자인
+    //floor끝부분 디자인 리펙토링 예정 4.18.
     for (int y = 1; y < TILE_Y; ++y) {
         for (int x = 1; x <TILE_X; ++x) {
             if (tileIndex[y][x] == make_pair(3, 15)) {
@@ -409,6 +413,11 @@ void Map::RandomTileDesign() {
             }
             if (tileIndex[y][x] == make_pair(3, 1)) {
                 tileIndex[y][x - 1] = { 14,1 };
+            }
+            if (not uid0to3(dre)) {
+                if(tileIndex[y][x] == make_pair(4, 1)) {
+                    tileIndex[y][x] ={7, 1};
+                }
             }
 
         }
