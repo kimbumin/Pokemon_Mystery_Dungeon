@@ -1,16 +1,23 @@
 #pragma once
 #include "GameObject.h"
 
-#include "IdleAnimState.h"
-#include "AttackAnimState.h"
-#include "WalkAnimState.h"
-#include "RotateAnimState.h"
-#include "SwingAnimState.h"
-#include "HurtAnimState.h"
+//#include "IdleAnimState.h"
+//#include "AttackAnimState.h"
+//#include "WalkAnimState.h"
+//#include "RotateAnimState.h"
+//#include "SwingAnimState.h"
+//#include "HurtAnimState.h"
 
 class PokemonAnimator;
 class IAnimState;
 class IActionState;
+
+class WalkAnimState;
+class IdleAnimState;
+class AttackAnimState;
+class HurtAnimState;
+class SwingAnimState;
+class RotateAnimState;
 class PokemonBase : public GameObject
 {
 private:
@@ -24,12 +31,21 @@ protected:
     IAnimState* currentAnimState;
     IActionState* currentActionState;
 
-    WalkAnimState walkAnim;
-    IdleAnimState idleAnim;
-    AttackAnimState attackAnim;
-    HurtAnimState hurtAnim;
-    SwingAnimState swingAnim;
-    RotateAnimState rotateAnim;
+    //// Animation State Pooling
+    //WalkAnimState walkAnim;
+    //IdleAnimState idleAnim;
+    //AttackAnimState attackAnim;
+    //HurtAnimState hurtAnim;
+    //SwingAnimState swingAnim;
+    //RotateAnimState rotateAnim;
+
+    // Action Dynamic State Pooling
+    WalkAnimState* walkAnim;
+    IdleAnimState* idleAnim;
+    AttackAnimState* attackAnim;
+    HurtAnimState* hurtAnim;
+    SwingAnimState* swingAnim;
+    RotateAnimState* rotateAnim;
 
     FPOINT pos = { 240 ,240 };
     int level;
@@ -72,6 +88,8 @@ public:
     void PlayHurtAnim();
     void PlaySwingAnim();
     void PlayRotateAnim();
+
+
 
     PokemonBase() {};
     virtual ~PokemonBase() {};

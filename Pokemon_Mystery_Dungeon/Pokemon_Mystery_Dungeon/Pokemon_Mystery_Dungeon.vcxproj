@@ -198,6 +198,7 @@
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="MoveActionState.h" />
     <ClInclude Include="PokemonAnimator.h" />
+    <ClInclude Include="PokemonBase.h" />
     <ClInclude Include="PokemonImageLoader.h" />
     <ClInclude Include="PokemonPlayer.h" />
     <ClInclude Include="RotateAnimState.h" />

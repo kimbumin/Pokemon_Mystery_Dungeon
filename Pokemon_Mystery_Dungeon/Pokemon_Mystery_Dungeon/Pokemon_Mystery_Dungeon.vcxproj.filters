@@ -186,6 +186,9 @@
     <ClCompile Include="IdleActionState.cpp">
       <Filter>Pokemon\Action</Filter>
     </ClCompile>
+    <ClCompile Include="TurnManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="config.h">
@@ -221,9 +224,6 @@
     <ClInclude Include="MainGame.h">
       <Filter>MainGame</Filter>
     </ClInclude>
-    <ClInclude Include="PokemonBase.h">
-      <Filter>Pokemon</Filter>
-    </ClInclude>
     <ClInclude Include="SquareScene.h">
       <Filter>Scene\헤더</Filter>
     </ClInclude>
@@ -247,9 +247,6 @@
     </ClInclude>
     <ClInclude Include="PokemonAnimator.h">
       <Filter>Pokemon\Anim</Filter>
-    </ClInclude>
-    <ClInclude Include="PokemonDataLoader.h">
-      <Filter>Pokemon\Data</Filter>
     </ClInclude>
     <ClInclude Include="HurtAnimState.h">
       <Filter>Pokemon\Anim\AnimState</Filter>
@@ -337,6 +334,12 @@
     </ClInclude>
     <ClInclude Include="IdleActionState.h">
       <Filter>Pokemon\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="TurnManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="PokemonBase.h">
+      <Filter>Pokemon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

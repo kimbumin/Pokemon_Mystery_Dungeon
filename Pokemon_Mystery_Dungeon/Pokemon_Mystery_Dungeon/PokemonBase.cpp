@@ -4,9 +4,17 @@
 #include "Image.h"
 #include "PokemonAnimator.h"
 
+#include "IdleAnimState.h"
+#include "AttackAnimState.h"
+#include "WalkAnimState.h"
+#include "RotateAnimState.h"
+#include "SwingAnimState.h"
+#include "HurtAnimState.h"
 
 #include "MoveActionState.h"
 #include "IdleActionState.h"
+
+
 // Skill
 // UseItem
 
@@ -21,10 +29,18 @@ HRESULT PokemonBase::Init()
     currentHp = currentStatus.hp;
     animator = new PokemonAnimator();
 
+    walkAnim = new WalkAnimState;
+    idleAnim = new IdleAnimState;
+    attackAnim = new AttackAnimState;
+    hurtAnim = new HurtAnimState;
+    swingAnim = new SwingAnimState;
+    rotateAnim = new RotateAnimState;
+
+    //currentAnimState = &idleAnim;
     currentAnimState = nullptr;
     currentActionState = nullptr;
 
-    SetAnimState(new IdleAnimState());
+    SetAnimState(idleAnim);
     SetActionState(new IdleActionState());
 
     string idStr = PokemonImageLoader::GetInstance()->PokemonIdToString(baseStatus->idNumber);
@@ -36,7 +52,7 @@ HRESULT PokemonBase::Init()
         {
             int frameX = image->GetMaxFrameX();
             int frameY = image->GetMaxFrameY();
-            float frameTime = 1.f / frameX;
+            float frameTime = 1.f / frameX; //  Check: 재생 속도 하드코딩 개선 사항
             animator->AddAnimation(*type, image, frameX, frameY, frameTime, *type == "Idle");
         }
     }
@@ -51,45 +67,81 @@ void PokemonBase::Release()
         delete animator;
         animator = nullptr;
     }
-
+    if (walkAnim)
+    {
+        delete walkAnim;
+        walkAnim = nullptr;
+    }
+    if (idleAnim)
+    {
+        delete idleAnim;
+        idleAnim = nullptr;
+    }   
+    if (attackAnim)
+    {
+        delete attackAnim;
+        attackAnim = nullptr;
+    }   
+    if (hurtAnim)
+    {
+        delete hurtAnim;
+        hurtAnim = nullptr;
+    }   
+    if (swingAnim)
+    {
+        delete swingAnim;
+        swingAnim = nullptr;
+    }   
+    if (rotateAnim)
+    {
+        delete rotateAnim;
+        rotateAnim = nullptr;
+    }
 }
 
 void PokemonBase::Update()
 {
-
-    if (KeyManager::GetInstance()->IsOnceKeyDown(VK_UP))
+    if (currentAnimState->CanOverride())
     {
-        direction = Direction::NORTH;
-        SetAnimState(new WalkAnimState());
-        SetActionState(new MoveActionState());
-    }
-    if (KeyManager::GetInstance()->IsOnceKeyDown(VK_LEFT))
-    {
-        direction = Direction::WEST;
-        SetAnimState(new WalkAnimState());
-        SetActionState(new MoveActionState());
-    }
-    if (KeyManager::GetInstance()->IsOnceKeyDown(VK_DOWN))
-    {
-        direction = Direction::SOUTH;
-        SetAnimState(new WalkAnimState());
-        SetActionState(new MoveActionState());
-    }
-    if (KeyManager::GetInstance()->IsOnceKeyDown(VK_RIGHT))
-    {
-        direction = Direction::EAST;
-        SetAnimState(new WalkAnimState());
-        SetActionState(new MoveActionState());
+        if (KeyManager::GetInstance()->IsOnceKeyDown(VK_UP))
+        {
+            direction = Direction::NORTH;
+            //SetAnimState(&walkAnim);
+            SetAnimState(walkAnim);
+            SetActionState(new MoveActionState());
+        }
+        if (KeyManager::GetInstance()->IsOnceKeyDown(VK_LEFT))
+        {
+            direction = Direction::WEST;
+            //SetAnimState(&walkAnim);
+            SetAnimState(walkAnim);
+            SetActionState(new MoveActionState());
+        }
+        if (KeyManager::GetInstance()->IsOnceKeyDown(VK_DOWN))
+        {
+            direction = Direction::SOUTH;
+            //SetAnimState(&walkAnim);
+            SetAnimState(walkAnim);
+            SetActionState(new MoveActionState());
+        }
+        if (KeyManager::GetInstance()->IsOnceKeyDown(VK_RIGHT))
+        {
+            direction = Direction::EAST;
+            //SetAnimState(&walkAnim);
+            SetAnimState(walkAnim);
+            SetActionState(new MoveActionState());
+        }
     }
 
     if (currentAnimState && currentAnimState->IsFinished())
     {
-        SetAnimState(new IdleAnimState());
+        //SetAnimState(&idleAnim);
+        SetAnimState(idleAnim);
     }
     if (currentAnimState)
     {
         currentAnimState->Update(this);
-    }    
+    }
 
     if (currentActionState && currentActionState->IsFinished())
     {
@@ -99,6 +151,7 @@ void PokemonBase::Update()
     {
         currentActionState->Update(this);
     }
+
 }
 
 void PokemonBase::Render(HDC hdc)
@@ -160,25 +213,31 @@ void PokemonBase::SetActionState(IActionState* newState)
 
 void PokemonBase::PlayWalkAnim() 
 { 
-    SetAnimState(&walkAnim); 
+   // SetAnimState(&walkAnim); 
+    SetAnimState(walkAnim); 
 }
 void PokemonBase::PlayIdleAnim() 
 { 
-    SetAnimState(&idleAnim); 
+    //SetAnimState(&idleAnim); 
+    SetAnimState(idleAnim); 
 }
 void PokemonBase::PlayAttackAnim() 
 { 
-    SetAnimState(&attackAnim); 
+    //SetAnimState(&attackAnim); 
+    SetAnimState(attackAnim); 
 }
 void PokemonBase::PlayHurtAnim() 
 { 
-    SetAnimState(&hurtAnim); 
+   // SetAnimState(&hurtAnim); 
+    SetAnimState(hurtAnim); 
 }
 void PokemonBase::PlaySwingAnim() 
 { 
-    SetAnimState(&swingAnim); 
+    //SetAnimState(&swingAnim); 
+    SetAnimState(swingAnim); 
 }
 void PokemonBase::PlayRotateAnim() 
 { 
-    SetAnimState(&rotateAnim); 
+    //SetAnimState(&rotateAnim); 
+    SetAnimState(rotateAnim); 
 }
