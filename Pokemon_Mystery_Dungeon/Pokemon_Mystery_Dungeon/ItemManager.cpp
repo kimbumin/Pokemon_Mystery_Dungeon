@@ -1,13 +1,39 @@
 #include "ItemManager.h"
+#include "LeppaBerry.h"
+#include "OranBerry.h"
 
 void ItemManager::SpawnRandomItem()
 {
-	//맵의 위치를 받아서 아이템 스폰
+    int randX = 200;
+    int randY = 200;
+
+    int randomItem = rand() % 2;
+
+    unique_ptr<IItem> newItem;
+
+
+    //팩토리로 바꿀 수 있음
+    switch (randomItem)
+    {
+    case 0:
+        newItem = make_unique<LeppaBerry>();
+        break;
+    case 1:
+        newItem = make_unique<OranBerry>();
+        break;
+    }
+
+    if (newItem)
+    {
+        newItem->Init();
+        newItem->SetPosition(randX, randY);
+        items.push_back(move(newItem));
+    }
 }
 
-void ItemManager::GetItem(Player* player)
+void ItemManager::GetItem(/*Player* player*/)
 {
-    for (auto it = items.begin(); it != items.end(); )
+    /*for (auto it = items.begin(); it != items.end(); )
     {
         POINT playerPos = player->GetPosition();
         IItem* item = it->get(); // IItem 꺼내기
@@ -24,18 +50,22 @@ void ItemManager::GetItem(Player* player)
         {
             ++it;
         }
-    }
+    }*/
 }
-
-
 
 
 void ItemManager::Update()
 {
-
+    for (auto& item : items)
+    {
+        item->Update();
+    }
 }
 
-void ItemManager::Render()
+void ItemManager::Render(HDC hdc)
 {
-
+    for (auto& item : items)
+    {
+        item->Render(hdc);
+    }
 }

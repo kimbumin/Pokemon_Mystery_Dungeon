@@ -5,10 +5,13 @@
 class IItem : public GameObject {
 public:
 	virtual ~IItem() {}
-	virtual void Use(/*»ç¿ëÀÚ*/) = 0;
+	virtual HRESULT Init() = 0;
+	virtual void Update() = 0;
+	virtual void Render(HDC hdc) = 0;
+	virtual void Use() = 0;
+	virtual void SetPosition(int x, int y) = 0;
+
+	virtual string GetName() const = 0;
 	virtual int GetX() const = 0;
 	virtual int GetY() const = 0;
-	virtual void SetPosition(int x, int y) = 0;
-	inline virtual string GetName() const = 0;
 };
-
