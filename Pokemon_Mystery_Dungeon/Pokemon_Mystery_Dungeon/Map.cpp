@@ -25,15 +25,15 @@ HRESULT Map::Init()
         525, 600, SAMPLE_TILE_X, SAMPLE_TILE_Y,
         true, RGB(255, 0, 255));
 
-    //sampleTile = ImageManager::GetInstance()->AddImage(
-    //    "smapleTile", L"Image/SceneImage/Sea1.bmp",
-    //    525, 600, 18, SAMPLE_TILE_Y,
-    //    true, RGB(255, 0, 255));
+  /*  sampleTile = ImageManager::GetInstance()->AddImage(
+        "smapleTile", L"Image/SceneImage/Sea1.bmp",
+        525, 600, 18, SAMPLE_TILE_Y,
+        true, RGB(255, 0, 255));
 
-    //sampleTile = ImageManager::GetInstance()->AddImage(
-    //    "smapleTile", L"Image/SceneImage/Sea3.bmp",
-    //    450, 600, 18, SAMPLE_TILE_Y,
-    //    true, RGB(255, 0, 255));
+    sampleTile = ImageManager::GetInstance()->AddImage(
+        "smapleTile", L"Image/SceneImage/Sea3.bmp",
+        450, 600, 18, SAMPLE_TILE_Y,
+        true, RGB(255, 0, 255));*/
 
     stairs = ImageManager::GetInstance()->AddImage(
         "stairs", L"Image/SceneImage/stairs.bmp",
@@ -190,76 +190,165 @@ void Map::ClassifyTiles()
     }
 }
 
+
+
 void Map::TileDesign()
 {
-    tileIndex.clear();
-    tileIndex.resize(TILE_Y, vector<pair<int, int>>(TILE_X, { 4, 1 })); // ±‚∫ª ∫Æ
+	tileIndex.clear();
+	tileIndex.resize(TILE_Y, vector<pair<int, int>>(TILE_X, { 4, 1 })); // ±‚∫ª ∫Æ ≈∏¿œ
 
-    //ªÛ«œ¡¬øÏ, ø¿πÿ,øﬁπÿ,ø¿¿ß,øﬁ¿ß º¯º≠
-    const int dx[WALL_TILE_TYPE_COUNT] = { 0, 0, -1, 1, -1, 1, -1, 1 };
-    const int dy[WALL_TILE_TYPE_COUNT] = { 1, -1, 0, 0, -1, -1, 1, 1 };
-    const pair<int, int> wallTypes[WALL_TILE_TYPE_COUNT] = {
-        { 4, 3 }, // ¿ß
-        { 4, 3 }, // æ∆∑°
-        { 3, 4 }, // øﬁ¬ 
-        { 3, 4 }, // ø¿∏•¬ 
-        { 5, 5 }, // ø¿πÿ
-        { 3, 5 }, // øﬁπÿ
-        { 5, 3 }, // ø¿¿ß
-        { 3, 3 }  // øﬁ¿ß
-    };
+	auto InBounds = [](int x, int y) {
+		return x >= 0 && x < TILE_X && y >= 0 && y < TILE_Y;
+		};
 
-    auto InBounds = [](int x, int y) {
-        return x >= 0 && x < TILE_X && y >= 0 && y < TILE_Y;
+	auto IsPathOrFloor = [&](int x, int y) {
+		return tiles[y][x] == TileType::TILE_PATH || tiles[y][x] == TileType::TILE_FLOOR;
+		};
+
+    // ∆–≈œ ∫Ò±≥ «‘ºˆ
+    auto MatchPattern = [](const WildPattern& pattern, const vector<int>& current) -> bool {
+        for (int i = 0; i < DIR_COUNT; ++i) {
+            if (pattern[i] == -1) continue;
+            if (pattern[i] != current[i]) return false;
+        }
+        return true;
         };
 
-    auto IsPathOrFloor = [&](int x, int y) {
-        return tiles[y][x] == TileType::TILE_PATH || tiles[y][x] == TileType::TILE_FLOOR;
-        };
-
-    auto IsMixedPathFloor = [&](int x1, int y1, int x2, int y2) {
-        return (tiles[y1][x1] == TileType::TILE_PATH && tiles[y2][x2] == TileType::TILE_FLOOR) ||
-            (tiles[y1][x1] == TileType::TILE_FLOOR && tiles[y2][x2] == TileType::TILE_PATH);
-        };
-
-    //≈Î∑Œ ƒø∫Í±Ê √ﬂ∞°
-    auto IsSampleType = [&](int x1, int y1, int x2, int y2) {
-        return(tiles[y1][x1] == tiles[y2][x2] &&
-            (tiles[y1][x1] == TileType::TILE_PATH || tiles[y1][x1] == TileType::TILE_FLOOR));
-    };
-
-	auto IsCurveCorner = [&](int x1, int y1, int x2, int y2) {
-		return IsMixedPathFloor(x1, y1, x2, y2) || IsSampleType(x1, y1, x2, y2);
+	vector<WildTilePattern> tilePatterns = {
+		// {øﬁ¿ß, ¿ß, ø¿¿ß, øﬁ, ø¿, øﬁæ∆, æ∆∑°, ø¿æ∆∑°}  1:floor, 0:wall
+        { { 1, 1, -1,
+            1,    0,
+           -1, 0,  0 }, {3, 0} },
+        
+        { { 1, 1, 1, 0, 0, 0, 0, 0 }, {4, 0} },
+        
+        { { 1, 1, 0, 0, 0, 0, 0, 0 }, {4, 0} },
+        { { 0, 1, 1, 0, 0, 0, 0, 0 }, {4, 0} },
+        
+        { { -1, 1, 1,
+             0,    1,
+             0, 0, -1 }, {5, 0} },
+        
+        { { 1, 0, 0, 1, 0, 1, 0, 0 }, {3, 1} },
+        { { 0, 0, 0, 1, 0, 1, 0, 0 }, {3, 1} },
+        { { 1, 0, 0, 1, 0, 0, 0, 0 }, {3, 1} },
+        { { 0, 0, 0, 0, 0, 0, 0, 0 }, {4, 1} },
+        
+        { { 0, 0, 1, 0, 1, 0, 0, 1 }, {5, 1} },
+        { { 0, 0, 0, 0, 1, 0, 0, 1 }, {5, 1} },
+        { { 0, 0, 1, 0, 1, 0, 0, 0 }, {5, 1} },
+        
+        { { -1, 0, 0,
+             1,    0,
+             1, 1, -1 }, {3, 2} },
+        
+        { { 0, 0, 0, 0, 0, 1, 1, 1 }, {4, 2} },
+        { { 0, 0, 0,
+             0,    0,
+             0, 1, 1 }, {4, 2} },
+        { { 0, 0, 0, 0, 0, 1, 1, 0 }, {4, 2} },
+        
+        { { 0, 0, -1,
+             0,    1,
+            -1, 1, 1 }, {5, 2} },
+        
+        { { 1, 1, 1, 1, 0, 1, 0, 1 }, {3, 3} },
+        
+        { { -1, 1, -1,
+              0,    0,
+             -1, 1, -1 }, {4, 3} },
+        
+        { { 1, 1, 1, 0, 1, 1, 0, 1 }, {5, 3} },
+        
+        { { -1, 0, -1,
+              1,    1,
+             -1, 0, -1 }, {3, 4} },
+        
+        { { 1, 1, 1, 1, 1, 1, 1, 1 }, {4, 4} },
+        
+        { { 1, 0, 1, 1, 0, 1, 1, 1 }, {3, 5} },
+        
+        { { 1, 0, 1, 0, 1, 1, 1, 1 }, {5, 5} },
+        
+        { { 1, 1, 1, 1, 1, 1, 0, 1 }, {4, 6} },
+        
+        { { 1, 1, 1, 1, 0, 1, 1, 1 }, {3, 7} },
+        { { 1, 0, 1, 0, 0, 1, 0, 1 }, {4, 7} },
+        { { 1, 1, 1, 0, 1, 1, 1, 1 }, {5, 7} },
+        
+        { { 1, 0, 1, 1, 1, 1, 1, 1 }, {4, 8} },
+        
+        { { 1, 1, 1, 0, 0, 1, 0, 1 }, {4, 9} },
+        
+        { { 1, 0, 1, 1, 0, 1, 0, 1 }, {3, 10} },
+        
+        { { 1, 0, 1, 0, 1, 1, 0, 1 }, {5, 10} },
+        
+        { { 1, 0, 1, 0, 0, 1, 1, 1 }, {4, 11} },
+        
+        { { 0, 0, 0, 0, 0, 1, 0, 1 }, {4, 12} },
+        
+        { { 0, 0, 1, 0, 0, 0, 0, 1 }, {3, 13} },
+        
+        { { 1, 0, 0, 0, 0, 1, 0, 0 }, {5, 13} },
+        
+        { { 1, 0, 1, 0, 0, 0, 0, 0 }, {4, 14} },
+        
+        { { 0, 0, 0, 0, 0, 0, 0, 1 }, {3, 15} },
+        { { 0, 0, 0, 0, 0, 1, 0, 0 }, {4, 15} },
+        
+        { { 0, 0, 1, 0, 0, 0, 0, 0 }, {3, 16} },
+        { { 1, 0, 0, 0, 0, 0, 0, 0 }, {4, 16} },
+        
+        { { 1, 0, 0, 1, 0, 1, 0, 1 }, {3, 17} },
+        { { 0, 0, 1, 0, 1, 1, 0, 1 }, {4, 17} },
+        
+        { { 1, 0, 1, 1, 0, 1, 0, 0 }, {3, 18} },
+        { { 1, 0, 1, 0, 1, 0, 0, 1 }, {4, 18} },
+        
+        { { 1, 1, 1, 0, 0, 0, 0, 1 }, {3, 19} },
+        { { 1, 1, 1, 0, 0, 1, 0, 0 }, {4, 19} },
+        
+        { { 0, 0, 1, 0, 0, 1, 1, 1 }, {3, 20} },
+        { { 1, 0, 0, 0, 0, 1, 1, 1 }, {4, 20} },
+        
+        { { 1, 0, 1, 0, 0, 1, 0, 0 }, {3, 21} },
+        { { 1, 0, 1, 0, 0, 0, 0, 1 }, {4, 21} },
+        
+        { { 1, 0, 0, 0, 0, 1, 0, 1 }, {3, 22} },
+        { { 0, 0, 1, 0, 0, 1, 0, 1 }, {4, 22} },
+        
+        { { 1, 0, 0, 0, 0, 0, 0, 1 }, {3, 23} },
+        { { 0, 0, 1, 0, 0, 1, 0, 0 }, {4, 23} },
 	};
-
 
 
     for (int y = 0; y < TILE_Y; ++y) {
         for (int x = 0; x < TILE_X; ++x) {
             if (tiles[y][x] != TILE_WALL) continue;
 
-            // 8πÊ«‚ ∞ÀªÁ
-            for (int i = 0; i < 8; ++i) {
-                int nx = x + dx[i];
-                int ny = y + dy[i];
+            vector<int> currentPattern(DIR_COUNT, 0);
+
+            for (int dir = 0; dir < DIR_COUNT; ++dir) {
+                int nx = x + dx[dir];
+                int ny = y + dy[dir];
                 if (InBounds(nx, ny) && IsPathOrFloor(nx, ny)) {
-                    tileIndex[y][x] = wallTypes[i];
+                    currentPattern[dir] = 1;
+                }
+            }
+
+            bool matched = false;
+            for (const auto& pattern : tilePatterns) {
+                if (MatchPattern(pattern.pattern, currentPattern)) {
+                    tileIndex[y][x] = pattern.tileIndex;
+                    matched = true;
                     break;
                 }
             }
 
-            //∏º≠∏Æ
-            if (InBounds(x - 1, y + 1) && IsCurveCorner(x, y + 1, x - 1, y))
-                tileIndex[y][x] = wallTypes[LEFT_BOTTOM]; // øﬁπÿ
-
-            else if (InBounds(x + 1, y + 1) && IsCurveCorner(x, y + 1, x + 1, y))
-                tileIndex[y][x] = wallTypes[RIGHT_BOTTOM]; // ø¿πÿ
-
-            else if (InBounds(x - 1, y - 1) && IsCurveCorner(x, y - 1, x - 1, y))
-                tileIndex[y][x] = wallTypes[LEFT_TOP]; // øﬁ¿ß
-
-            else if (InBounds(x + 1, y - 1) && IsCurveCorner(x, y - 1, x + 1, y))
-                tileIndex[y][x] = wallTypes[RIGHT_TOP]; // ø¿¿ß
+            if (!matched) {
+                tileIndex[y][x] = { 4, 1 };
+            }
         }
     }
 }
