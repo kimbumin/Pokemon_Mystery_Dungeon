@@ -2,37 +2,37 @@
 #include "PokemonBase.h"
 #include "PokemonAnimator.h"
 
-void HurtAnimState::Enter(PokemonBase* outer)
+void HurtAnimState::Enter(PokemonBase* owner)
 {
-	finished = false;
-	outer->GetAnimator()->Play("Hurt", outer->GetDirection());
+	isFinished = false;
+	owner->GetAnimator()->Play("Hurt", owner->GetDirection());
 }
 
-void HurtAnimState::Update(PokemonBase* outer)
+void HurtAnimState::Update(PokemonBase* owner)
 {
-	outer->GetAnimator()->Update();
-	if (outer->GetAnimator()->IsFinished("Hurt"))
+	owner->GetAnimator()->Update();
+	if (owner->GetAnimator()->IsFinished("Hurt"))
 	{
-		finished = true;
+		isFinished = true;
 	}
 }
 
-void HurtAnimState::Exit(PokemonBase* outer)
+void HurtAnimState::Exit(PokemonBase* owner)
 {
 }
 
 bool HurtAnimState::IsFinished()
 {
-	return finished;
+	return isFinished;
 }
 
 bool HurtAnimState::CanOverride()
 {
-	return finished;
+	return isFinished;
 }
 
 HurtAnimState::HurtAnimState()
 {
-	finished = false;
+	isFinished = false;
 }
 
