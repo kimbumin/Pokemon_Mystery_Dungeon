@@ -34,9 +34,6 @@
     <Filter Include="Pokemon\Anim">
       <UniqueIdentifier>{7a6cd8e0-6042-42c9-8af4-006104b917d4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Pokemon\State">
-      <UniqueIdentifier>{26c85d89-0c82-474c-af36-a924a242eafe}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Pokemon\Data">
       <UniqueIdentifier>{ccad6fa7-6281-498a-8920-ae27b68b7657}</UniqueIdentifier>
     </Filter>
@@ -66,6 +63,12 @@
     </Filter>
     <Filter Include="Ui\UiConfig\소스">
       <UniqueIdentifier>{e0ee7add-e1cc-4a7e-bb40-97762c1e4572}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pokemon\Anim\AnimState">
+      <UniqueIdentifier>{26c85d89-0c82-474c-af36-a924a242eafe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pokemon\Action">
+      <UniqueIdentifier>{c0154f23-7937-4184-b0d5-a2b424262739}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -109,10 +112,10 @@
       <Filter>Pokemon\Anim</Filter>
     </ClCompile>
     <ClCompile Include="AttackAnimState.cpp">
-      <Filter>Pokemon\State</Filter>
+      <Filter>Pokemon\Anim\AnimState</Filter>
     </ClCompile>
     <ClCompile Include="IdleAnimState.cpp">
-      <Filter>Pokemon\State</Filter>
+      <Filter>Pokemon\Anim\AnimState</Filter>
     </ClCompile>
     <ClCompile Include="PokemonAnimator.cpp">
       <Filter>Pokemon\Anim</Filter>
@@ -121,16 +124,16 @@
       <Filter>Pokemon\Data</Filter>
     </ClCompile>
     <ClCompile Include="RotateAnimState.cpp">
-      <Filter>Pokemon\State</Filter>
+      <Filter>Pokemon\Anim\AnimState</Filter>
     </ClCompile>
     <ClCompile Include="HurtAnimState.cpp">
-      <Filter>Pokemon\State</Filter>
+      <Filter>Pokemon\Anim\AnimState</Filter>
     </ClCompile>
     <ClCompile Include="SwingAnimState.cpp">
-      <Filter>Pokemon\State</Filter>
+      <Filter>Pokemon\Anim\AnimState</Filter>
     </ClCompile>
     <ClCompile Include="WalkAnimState.cpp">
-      <Filter>Pokemon\State</Filter>
+      <Filter>Pokemon\Anim\AnimState</Filter>
     </ClCompile>
     <ClCompile Include="TitleUIState.cpp">
       <Filter>Ui\UiState\소스</Filter>
@@ -183,17 +186,17 @@
     <ClCompile Include="StartScene.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="ImageGDIPlusManager.cpp">
-      <Filter>2DFramework</Filter>
+    <ClCompile Include="PokemonPlayer.cpp">
+      <Filter>Pokemon</Filter>
     </ClCompile>
-    <ClCompile Include="UIElement.cpp">
-      <Filter>Ui\UiConfig\소스</Filter>
+    <ClCompile Include="MoveActionState.cpp">
+      <Filter>Pokemon\Action</Filter>
     </ClCompile>
-    <ClCompile Include="UIElementImage.cpp">
-      <Filter>Ui\UiConfig\소스</Filter>
+    <ClCompile Include="IdleActionState.cpp">
+      <Filter>Pokemon\Action</Filter>
     </ClCompile>
-    <ClCompile Include="UIManager.cpp">
-      <Filter>Ui\UiConfig\소스</Filter>
+    <ClCompile Include="TurnManager.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -230,9 +233,6 @@
     <ClInclude Include="MainGame.h">
       <Filter>MainGame</Filter>
     </ClInclude>
-    <ClInclude Include="PokemonBase.h">
-      <Filter>Pokemon</Filter>
-    </ClInclude>
     <ClInclude Include="SquareScene.h">
       <Filter>Scene\헤더</Filter>
     </ClInclude>
@@ -246,31 +246,28 @@
       <Filter>Pokemon\Anim</Filter>
     </ClInclude>
     <ClInclude Include="IAnimState.h">
-      <Filter>Pokemon\State</Filter>
+      <Filter>Pokemon\Anim\AnimState</Filter>
     </ClInclude>
     <ClInclude Include="IdleAnimState.h">
-      <Filter>Pokemon\State</Filter>
+      <Filter>Pokemon\Anim\AnimState</Filter>
     </ClInclude>
     <ClInclude Include="AttackAnimState.h">
-      <Filter>Pokemon\State</Filter>
+      <Filter>Pokemon\Anim\AnimState</Filter>
     </ClInclude>
     <ClInclude Include="PokemonAnimator.h">
       <Filter>Pokemon\Anim</Filter>
     </ClInclude>
-    <ClInclude Include="PokemonDataLoader.h">
-      <Filter>Pokemon\Data</Filter>
-    </ClInclude>
     <ClInclude Include="HurtAnimState.h">
-      <Filter>Pokemon\State</Filter>
+      <Filter>Pokemon\Anim\AnimState</Filter>
     </ClInclude>
     <ClInclude Include="RotateAnimState.h">
-      <Filter>Pokemon\State</Filter>
+      <Filter>Pokemon\Anim\AnimState</Filter>
     </ClInclude>
     <ClInclude Include="SwingAnimState.h">
-      <Filter>Pokemon\State</Filter>
+      <Filter>Pokemon\Anim\AnimState</Filter>
     </ClInclude>
     <ClInclude Include="WalkAnimState.h">
-      <Filter>Pokemon\State</Filter>
+      <Filter>Pokemon\Anim\AnimState</Filter>
     </ClInclude>
     <ClInclude Include="UIState.h">
       <Filter>Ui\UiState\헤더</Filter>
@@ -332,29 +329,23 @@
     <ClInclude Include="StartScene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="ImageGDIPlusManager.h">
-      <Filter>2DFramework</Filter>
+    <ClInclude Include="PokemonPlayer.h">
+      <Filter>Pokemon</Filter>
+    </ClInclude>
+    <ClInclude Include="IActionState.h">
+      <Filter>Pokemon\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveActionState.h">
+      <Filter>Pokemon\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="IdleActionState.h">
+      <Filter>Pokemon\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="TurnManager.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="PokemonBase.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="PokemonDataLoader.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="PokemonBase.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="PokemonDataLoader.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="UIElement.h">
-      <Filter>Ui\UiConfig\헤더</Filter>
-    </ClInclude>
-    <ClInclude Include="UIElementImage.h">
-      <Filter>Ui\UiConfig\헤더</Filter>
-    </ClInclude>
-    <ClInclude Include="UIManager.h">
-      <Filter>Ui\UiConfig\헤더</Filter>
+      <Filter>Pokemon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

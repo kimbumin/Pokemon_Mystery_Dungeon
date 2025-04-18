@@ -2,38 +2,38 @@
 #include "PokemonBase.h"
 #include "PokemonAnimator.h"
 
-void AttackAnimState::Enter(PokemonBase* outer)
+void AttackAnimState::Enter(PokemonBase* owner)
 {
-	finished = false;
-	outer->GetAnimator()->Play("Attack", outer->GetDirection());
+	isFinished = false;
+	owner->GetAnimator()->Play("Attack", owner->GetDirection());
 }
 
-void AttackAnimState::Update(PokemonBase* outer)
+void AttackAnimState::Update(PokemonBase* owner)
 {
-	outer->GetAnimator()->Update();
+	owner->GetAnimator()->Update();
 
-	if (outer->GetAnimator()->IsFinished("Attack"))
+	if (owner->GetAnimator()->IsFinished("Attack"))
 	{
-		finished = true;
+		isFinished = true;
 	}
 }
 
-void AttackAnimState::Exit(PokemonBase* outer)
+void AttackAnimState::Exit(PokemonBase* owner)
 {
 
 }
 
 bool AttackAnimState::IsFinished()
 {
-	return finished;
+	return isFinished;
 }
 
 bool AttackAnimState::CanOverride()
 {
-	return finished;
+	return isFinished;
 }
 
 AttackAnimState::AttackAnimState()
 {
-	finished = false;
+	isFinished = false;
 }
