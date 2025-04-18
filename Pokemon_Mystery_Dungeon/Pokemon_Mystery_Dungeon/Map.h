@@ -65,6 +65,8 @@ public:
 
     void TileDesign();
 
+    void RandomTileDesign();
+
     TileType GetTile(int x, int y) const {return tiles[y][x];}
 
     vector<POINT> GetWallTiles() { return wallTiles; };
@@ -81,6 +83,7 @@ private:
     Image* ice1;
     Image* ice2;
     Image* tiniWoods;
+    Image* tiniMeadow;
 
 
 

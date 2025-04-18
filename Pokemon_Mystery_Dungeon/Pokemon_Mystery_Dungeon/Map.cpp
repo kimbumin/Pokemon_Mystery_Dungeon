@@ -20,66 +20,73 @@ uniform_int_distribution uidDist{ 0,1 };
 
 HRESULT Map::Init()
 {
+    {
 
-    tiniWoods = ImageManager::GetInstance()->AddImage(
-        "TiniWoods3", L"Image/SceneImage/TiniWoods3.bmp",
-        525, 600, SAMPLE_TILE_X, SAMPLE_TILE_Y,
-        true, RGB(255, 0, 255));
+        tiniWoods = ImageManager::GetInstance()->AddImage(
+            "TiniWoods3", L"Image/SceneImage/TiniWoods3.bmp",
+            525, 600, SAMPLE_TILE_X, SAMPLE_TILE_Y,
+            true, RGB(255, 0, 255));
+
+        sea1 = ImageManager::GetInstance()->AddImage(
+            "Sea1", L"Image/SceneImage/Sea1.bmp",
+            525, 600, 18, SAMPLE_TILE_Y,
+            true, RGB(255, 0, 255));
+
+        sea2 = ImageManager::GetInstance()->AddImage(
+            "Sea3", L"Image/SceneImage/Sea3.bmp",
+            450, 600, 18, SAMPLE_TILE_Y,
+            true, RGB(255, 0, 255));
 
 
-    sea1 = ImageManager::GetInstance()->AddImage(
-        "Sea1", L"Image/SceneImage/Sea1.bmp",
-        525, 600, 18, SAMPLE_TILE_Y,
-        true, RGB(255, 0, 255));
-
-    sea2 = ImageManager::GetInstance()->AddImage(
-        "Sea3", L"Image/SceneImage/Sea3.bmp",
-        450, 600, 18, SAMPLE_TILE_Y,
-        true, RGB(255, 0, 255));
+        magma1 = ImageManager::GetInstance()->AddImage(
+            "MagmaCave1", L"Image/SceneImage/MagmaCave1.bmp",
+            525, 600, 21, SAMPLE_TILE_Y,
+            true, RGB(255, 0, 255));
 
 
-    magma1 = ImageManager::GetInstance()->AddImage(
-        "MagmaCave1", L"Image/SceneImage/MagmaCave1.bmp",
-        525, 600, 21, SAMPLE_TILE_Y,
-        true, RGB(255, 0, 255));
-    
-    magma2 = ImageManager::GetInstance()->AddImage(
-        "MagmaCave2", L"Image/SceneImage/MagmaCave2.bmp",
-        750, 600, 30, SAMPLE_TILE_Y,
-        true, RGB(255, 0, 255));
-    
-    ice1 = ImageManager::GetInstance()->AddImage(
-        "IceMountain1", L"Image/SceneImage/IceMountain1.bmp",
-        675, 600, 27, SAMPLE_TILE_Y,
-        true, RGB(255, 0, 255));
-    
-    ice2 = ImageManager::GetInstance()->AddImage(
-        "IceMountain2", L"Image/SceneImage/IceMountain2.bmp",
-        675, 600, 27, SAMPLE_TILE_Y,
-        true, RGB(255, 0, 255));
+        ice1 = ImageManager::GetInstance()->AddImage(
+            "IceMountain1", L"Image/SceneImage/IceMountain1.bmp",
+            675, 600, 27, SAMPLE_TILE_Y,
+            true, RGB(255, 0, 255));
 
-    stairs = ImageManager::GetInstance()->AddImage(
-        "stairs", L"Image/SceneImage/stairs.bmp",
-        24, 24, 1, 1,
-        true, RGB(255, 0, 255)
-    );
+        ice2 = ImageManager::GetInstance()->AddImage(
+            "IceMountain2", L"Image/SceneImage/IceMountain2.bmp",
+            675, 600, 27, SAMPLE_TILE_Y,
+            true, RGB(255, 0, 255));
+        //--
+        magma2 = ImageManager::GetInstance()->AddImage(
+            "MagmaCave2", L"Image/SceneImage/MagmaCave2.bmp",
+            750, 600, 30, SAMPLE_TILE_Y,
+            true, RGB(255, 0, 255));
+        tiniMeadow = ImageManager::GetInstance()->AddImage(
+            "TinyMeadow", L"Image/SceneImage/TinyMeadow.bmp",
+            750, 600, 30, SAMPLE_TILE_Y,
+            true, RGB(255, 0, 255));
+        //--
+
+        stairs = ImageManager::GetInstance()->AddImage(
+            "stairs", L"Image/SceneImage/stairs.bmp",
+            24, 24, 1, 1,
+            true, RGB(255, 0, 255));
+    }
+
     floorTiles.clear();
     wallTiles.clear();
     pathTiles.clear();
 
     Generate();
     ClassifyTiles();
+
     TileDesign();
+    RandomTileDesign();
 
-
-    //계단 위치 랜덤
+    //계단
     if (!floorTiles.empty()) {
         uniform_int_distribution<int> floorDist(0, floorTiles.size() - 1);
         stairPos = floorTiles[floorDist(dre)];
     }
 
-    tileImage = ice2;
-
+    tileImage = tiniWoods;
 
     return S_OK;
 }
@@ -101,7 +108,13 @@ void Map::Render(HDC hdc)
     }
     //// 이동가능 타일
     for (const POINT& pt : floorTiles) {
-        tileImage->FrameRender(hdc, pt.x * TILE_SIZE, pt.y * TILE_SIZE, 13, 1, 0, 1);
+        if (tileIndex[pt.y][pt.x] != make_pair(12, 0) and tileIndex[pt.y][pt.x] != make_pair(13, 2)) {
+			tileImage->FrameRender(hdc, pt.x * TILE_SIZE, pt.y * TILE_SIZE, 13, 1, 0, 1);
+        }
+        else {
+            const auto& index = tileIndex[pt.y][pt.x];
+            tileImage->FrameRender(hdc, pt.x * TILE_SIZE, pt.y * TILE_SIZE, index.first, index.second, 0, 1);
+        }
     }
 
     // 이동불가 타일
@@ -298,9 +311,9 @@ void Map::TileDesign()
         
         { { 1, 1, 1, 1, 1, 1, 0, 1 }, {4, 6} },
         
-        { { 1, 1, 1, 1, 0, 1, 1, 1 }, {3, 7} },
+        { { 1, 1, 1, 1, 0, 1, 1, -1 }, {3, 7} },
         { { 1, 0, 1, 0, 0, 1, 0, 1 }, {4, 7} },
-        { { 1, 1, 1, 0, 1, 1, 1, 1 }, {5, 7} },
+        { { 1, 1, 1, 0, 1, -1, 1, 1 }, {5, 7} },
         
         { { 1, 0, 1, 1, 1, 1, 1, 1 }, {4, 8} },
         
@@ -351,7 +364,7 @@ void Map::TileDesign()
 
     for (int y = 0; y < TILE_Y; ++y) {
         for (int x = 0; x < TILE_X; ++x) {
-            if (tiles[y][x] != TILE_WALL) continue;
+            //if (tiles[y][x] != TILE_WALL) continue;
 
             vector<int> currentPattern(DIR_COUNT, 0);
 
@@ -375,6 +388,23 @@ void Map::TileDesign()
             if (!matched) {
                 tileIndex[y][x] = { 4, 1 };
             }
+        }
+    }
+}
+
+
+void Map::RandomTileDesign() {
+    
+    for (int y = 1; y < TILE_Y; ++y) {
+        for (int x = 1; x <TILE_X; ++x) {
+            if (tileIndex[y][x] == make_pair(3, 15)) {
+                tileIndex[y + 1][x + 1] = { 12,0 };
+            }
+            if (tileIndex[y][x] == make_pair(4, 0)) {
+                tileIndex[y - 1][x] = { 13,2 };
+            }
+
+
         }
     }
 }
