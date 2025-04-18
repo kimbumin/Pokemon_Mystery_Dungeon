@@ -70,6 +70,12 @@
     <Filter Include="Pokemon\Action">
       <UniqueIdentifier>{c0154f23-7937-4184-b0d5-a2b424262739}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ItemManager">
+      <UniqueIdentifier>{68f4fe66-5ac9-4eee-9157-1ee63d69df50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ItemManager\Item">
+      <UniqueIdentifier>{292e1985-8ade-4dd1-8a97-5bfdae3d0072}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -180,12 +186,6 @@
     <ClCompile Include="Map.cpp">
       <Filter>Scene\소스</Filter>
     </ClCompile>
-    <ClCompile Include="CollisionManager.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="StartScene.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="PokemonPlayer.cpp">
       <Filter>Pokemon</Filter>
     </ClCompile>
@@ -197,6 +197,42 @@
     </ClCompile>
     <ClCompile Include="TurnManager.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionManager.cpp">
+      <Filter>2DFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="StartScene.cpp">
+      <Filter>Scene\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageGDIPlusManager.cpp">
+      <Filter>2DFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="UIManager.cpp">
+      <Filter>Ui\UiConfig\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="UIElement.cpp">
+      <Filter>Ui\UiConfig\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="UIElementImage.cpp">
+      <Filter>Ui\UiConfig\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemManager.cpp">
+      <Filter>ItemManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Branch.cpp">
+      <Filter>ItemManager\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="LeppaBerry.cpp">
+      <Filter>ItemManager\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="OranBerry.cpp">
+      <Filter>ItemManager\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="PPAider.cpp">
+      <Filter>ItemManager\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="PPHeal.cpp">
+      <Filter>ItemManager\Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -317,18 +353,6 @@
     <ClInclude Include="Map.h">
       <Filter>Scene\헤더</Filter>
     </ClInclude>
-    <ClInclude Include="CollisionManager.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="PokemonBase.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="PokemonDataLoader.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="StartScene.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="PokemonPlayer.h">
       <Filter>Pokemon</Filter>
     </ClInclude>
@@ -343,6 +367,48 @@
     </ClInclude>
     <ClInclude Include="TurnManager.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="PokemonBase.h">
+      <Filter>Pokemon</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionManager.h">
+      <Filter>2DFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="StartScene.h">
+      <Filter>Scene\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageGDIPlusManager.h">
+      <Filter>2DFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="UIManager.h">
+      <Filter>Ui\UiConfig\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="UIElement.h">
+      <Filter>Ui\UiConfig\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="UIElementImage.h">
+      <Filter>Ui\UiConfig\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="IItem.h">
+      <Filter>ItemManager</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemManager.h">
+      <Filter>ItemManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Branch.h">
+      <Filter>ItemManager\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="LeppaBerry.h">
+      <Filter>ItemManager\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="OranBerry.h">
+      <Filter>ItemManager\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="PPAider.h">
+      <Filter>ItemManager\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="PPHeal.h">
+      <Filter>ItemManager\Item</Filter>
     </ClInclude>
     <ClInclude Include="PokemonBase.h">
       <Filter>Pokemon</Filter>

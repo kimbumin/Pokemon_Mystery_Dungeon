@@ -129,6 +129,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AttackAnimState.cpp" />
+    <ClCompile Include="Branch.cpp" />
     <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="CameraTestScene.cpp" />
     <ClCompile Include="DefaultUIState.cpp" />
@@ -146,15 +147,20 @@
     <ClCompile Include="ImageManager.cpp" />
     <ClCompile Include="InventoryUIState.cpp" />
     <ClCompile Include="ISkill.cpp" />
+    <ClCompile Include="ItemManager.cpp" />
     <ClCompile Include="KeyManager.cpp" />
+    <ClCompile Include="LeppaBerry.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainGame.cpp" />
+    <ClCompile Include="OranBerry.cpp" />
     <ClCompile Include="MoveActionState.cpp" />
     <ClCompile Include="PokemonAnimator.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="PokemonBase.cpp" />
     <ClCompile Include="PokemonDataLoader.cpp" />
     <ClCompile Include="PokemonImageLoader.cpp" />
+    <ClCompile Include="PPAider.cpp" />
+    <ClCompile Include="PPHeal.cpp" />
     <ClCompile Include="PokemonPlayer.cpp" />
     <ClCompile Include="RotateAnimState.cpp" />
     <ClCompile Include="SceneManager.cpp" />
@@ -177,6 +183,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AttackAnimState.h" />
+    <ClInclude Include="Branch.h" />
     <ClInclude Include="CameraManager.h" />
     <ClInclude Include="CameraTestScene.h" />
     <ClInclude Include="DefaultUIState.h" />
@@ -192,18 +199,24 @@
     <ClInclude Include="IAnimState.h" />
     <ClInclude Include="IdleActionState.h" />
     <ClInclude Include="IdleAnimState.h" />
+    <ClInclude Include="IItem.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageGDIPlus.h" />
     <ClInclude Include="ImageGDIPlusManager.h" />
     <ClInclude Include="ImageManager.h" />
     <ClInclude Include="InventoryUIState.h" />
     <ClInclude Include="ISkill.h" />
+    <ClInclude Include="ItemManager.h" />
     <ClInclude Include="KeyManager.h" />
+    <ClInclude Include="LeppaBerry.h" />
     <ClInclude Include="MainGame.h" />
+    <ClInclude Include="OranBerry.h" />
     <ClInclude Include="MoveActionState.h" />
     <ClInclude Include="PokemonAnimator.h" />
     <ClInclude Include="PokemonBase.h" />
     <ClInclude Include="PokemonImageLoader.h" />
+    <ClInclude Include="PPAider.h" />
+    <ClInclude Include="PPHeal.h" />
     <ClInclude Include="PokemonPlayer.h" />
     <ClInclude Include="RotateAnimState.h" />
     <ClInclude Include="Map.h" />
