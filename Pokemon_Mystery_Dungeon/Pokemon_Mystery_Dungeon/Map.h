@@ -73,11 +73,15 @@ private:
     std::vector<Room> rooms;
 
 
-    Image* sampleTile;
-    Image* Sea1;
-    Image* Sea2;
+    Image* tileImage;
+    Image* sea1;
+    Image* sea2;
     Image* magma1;
     Image* magma2;
+    Image* ice1;
+    Image* ice2;
+    Image* tiniWoods;
+
 
 
     Image* stairs;

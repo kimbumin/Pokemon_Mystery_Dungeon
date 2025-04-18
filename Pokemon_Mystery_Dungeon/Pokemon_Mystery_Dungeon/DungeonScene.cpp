@@ -30,7 +30,7 @@ void DungeonScene::Update()
 
 void DungeonScene::Render(HDC hdc)
 {
-	PatBlt(hdc, 0, 0, 2000, 1000, BLACKNESS);
+	PatBlt(hdc, 0, 0, 2000, 2000, BLACKNESS);
 
 	map.Render(hdc);
 

@@ -20,20 +20,43 @@ uniform_int_distribution uidDist{ 0,1 };
 
 HRESULT Map::Init()
 {
-    sampleTile = ImageManager::GetInstance()->AddImage(
-        "smapleTile", L"Image/SceneImage/TiniWoods3.bmp",
+
+    tiniWoods = ImageManager::GetInstance()->AddImage(
+        "TiniWoods3", L"Image/SceneImage/TiniWoods3.bmp",
         525, 600, SAMPLE_TILE_X, SAMPLE_TILE_Y,
         true, RGB(255, 0, 255));
 
-  /*  sampleTile = ImageManager::GetInstance()->AddImage(
-        "smapleTile", L"Image/SceneImage/Sea1.bmp",
+
+    sea1 = ImageManager::GetInstance()->AddImage(
+        "Sea1", L"Image/SceneImage/Sea1.bmp",
         525, 600, 18, SAMPLE_TILE_Y,
         true, RGB(255, 0, 255));
 
-    sampleTile = ImageManager::GetInstance()->AddImage(
-        "smapleTile", L"Image/SceneImage/Sea3.bmp",
+    sea2 = ImageManager::GetInstance()->AddImage(
+        "Sea3", L"Image/SceneImage/Sea3.bmp",
         450, 600, 18, SAMPLE_TILE_Y,
-        true, RGB(255, 0, 255));*/
+        true, RGB(255, 0, 255));
+
+
+    magma1 = ImageManager::GetInstance()->AddImage(
+        "MagmaCave1", L"Image/SceneImage/MagmaCave1.bmp",
+        525, 600, 21, SAMPLE_TILE_Y,
+        true, RGB(255, 0, 255));
+    
+    magma2 = ImageManager::GetInstance()->AddImage(
+        "MagmaCave2", L"Image/SceneImage/MagmaCave2.bmp",
+        750, 600, 30, SAMPLE_TILE_Y,
+        true, RGB(255, 0, 255));
+    
+    ice1 = ImageManager::GetInstance()->AddImage(
+        "IceMountain1", L"Image/SceneImage/IceMountain1.bmp",
+        675, 600, 27, SAMPLE_TILE_Y,
+        true, RGB(255, 0, 255));
+    
+    ice2 = ImageManager::GetInstance()->AddImage(
+        "IceMountain2", L"Image/SceneImage/IceMountain2.bmp",
+        675, 600, 27, SAMPLE_TILE_Y,
+        true, RGB(255, 0, 255));
 
     stairs = ImageManager::GetInstance()->AddImage(
         "stairs", L"Image/SceneImage/stairs.bmp",
@@ -55,6 +78,9 @@ HRESULT Map::Init()
         stairPos = floorTiles[floorDist(dre)];
     }
 
+    tileImage = ice2;
+
+
     return S_OK;
 }
 
@@ -71,17 +97,17 @@ void Map::Render(HDC hdc)
 
     //// 이동가능 타일
     for (const POINT& pt : pathTiles) {
-        sampleTile->FrameRender(hdc, pt.x * TILE_SIZE, pt.y * TILE_SIZE, 13, 1, 0, 1);
+        tileImage->FrameRender(hdc, pt.x * TILE_SIZE, pt.y * TILE_SIZE, 13, 1, 0, 1);
     }
     //// 이동가능 타일
     for (const POINT& pt : floorTiles) {
-        sampleTile->FrameRender(hdc, pt.x * TILE_SIZE, pt.y * TILE_SIZE, 13, 1, 0, 1);
+        tileImage->FrameRender(hdc, pt.x * TILE_SIZE, pt.y * TILE_SIZE, 13, 1, 0, 1);
     }
 
     // 이동불가 타일
     for (const POINT& pt : wallTiles) {
         const auto& index = tileIndex[pt.y][pt.x];
-        sampleTile->FrameRender(hdc, pt.x * TILE_SIZE, pt.y * TILE_SIZE, index.first, index.second, 0, 1);
+        tileImage->FrameRender(hdc, pt.x * TILE_SIZE, pt.y * TILE_SIZE, index.first, index.second, 0, 1);
     }
    
     stairs->FrameRender(hdc, stairPos.x * TILE_SIZE, stairPos.y * TILE_SIZE,0,0); //중앙부터 그리려고 일단 FrameRender씀
