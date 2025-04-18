@@ -1,19 +1,28 @@
 #pragma once
 #include "UIState.h"
 #include "ImageGDIPlus.h"
+#include "UIElementImage.h"
 
-class DefaultUIState : public UIState
+
+
+class DefaultUIState : public UIState, public UIElement
 {
 private:
-	ImageGDIPlus* defaultBoxImage = nullptr;
+	UIElementImage* OtherInterfaceInfoBox = nullptr;
+	UIElementImage* PokemonInfoBox = nullptr;
+	UIElementImage* MapInfoBox = nullptr;
 
-	int defaultImageX = 25;
-	int defaultImageY = 50;
+	UIElementImage* Cursor = nullptr;
+	
+	const int OffsetY[3] = { 30, 70, 110 };
+	int YIndex = 0;
 
-	bool isSlidingIn = true;
+	float fadeOutTime = 0.0f;
+	float fadeInTime = 1.0f;
 
 public:
 	HRESULT Init() override;
+
 	void Release() override;
 	void Update() override;
 	void Render(HDC hdc) override;

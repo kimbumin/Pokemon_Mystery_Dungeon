@@ -165,6 +165,8 @@
     <ClCompile Include="TilemapTool.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="TimerManager.cpp" />
+    <ClCompile Include="UIElement.cpp" />
+    <ClCompile Include="UIElementImage.cpp" />
     <ClCompile Include="WalkAnimState.cpp" />
     <ClCompile Include="TitleUIState.cpp" />
     <ClCompile Include="UIManager.cpp" />
@@ -208,6 +210,8 @@
     <ClInclude Include="SkillManager.h" />
     <ClInclude Include="SquareScene.h" />
     <ClInclude Include="SwingAnimState.h" />
+    <ClInclude Include="UIElement.h" />
+    <ClInclude Include="UIElementImage.h" />
     <ClInclude Include="WalkAnimState.h" />
     <ClInclude Include="StoneShowerSkill.h" />
     <ClInclude Include="StartScene.h" />

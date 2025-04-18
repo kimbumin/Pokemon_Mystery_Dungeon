@@ -29,7 +29,7 @@ void CameraTestScene::Update()
 
 	if (KeyManager::GetInstance()->IsOnceKeyDown(VK_TAB))
 	{
-		UIManager::GetInstance()->OpenUIStateBox("defaultBox");
+		UIManager::GetInstance()->OpenUIStateBox("defaultUI");
 	}
 	UIManager::GetInstance()->Update();
 }

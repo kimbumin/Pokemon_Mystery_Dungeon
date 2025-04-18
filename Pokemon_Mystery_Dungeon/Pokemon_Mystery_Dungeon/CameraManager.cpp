@@ -9,13 +9,14 @@ void CameraManager::Init(int width, int height)
 
 void CameraManager::SetCameraPos(int x, int y)
 {
+	// 카메라 위치 설정
 	cameraPos.x = x;
 	cameraPos.y = y;
 
 	int halfWidth = screenWidth / 2;
 	int halfHeight = screenHeight / 2;
 
-	// 카메라의 위치를 설정
+	// 카메라 위치를 기준으로 view 영역 설정
 	viewPos.left = x - halfWidth;
 	viewPos.top = y - halfHeight;
 	viewPos.right = viewPos.left + screenWidth;
