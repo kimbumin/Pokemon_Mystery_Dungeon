@@ -34,6 +34,7 @@ using namespace std;
 #define TILE_SIZE	24
 #define TILE_SELECT_SIZE 25
 
+
 //던전 맵 타일 크기 25타일 * 25타일  
 #define TILE_X	25
 #define TILE_Y	25
