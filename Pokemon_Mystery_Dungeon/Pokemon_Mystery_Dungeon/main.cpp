@@ -2,6 +2,10 @@
 
 #include "config.h"
 #include "MainGame.h"
+#include "gdiplus.h"
+#pragma comment(lib, "gdiplus.lib")
+
+using namespace Gdiplus;
 
 HINSTANCE g_hInstance;	// 프로그램 인스턴스 핸들
 HWND g_hWnd;
@@ -14,7 +18,7 @@ POINT g_ptMouse;	// 마우스 좌표
 RECT GetRect(int left, int top, int width, int height);
 RECT GetRectAtCenter(int x, int y, int width, int height);
 
-// Render
+// RenderBackground
 void RenderStar(HDC hdc, int posX, int posY);
 void RenderRect(HDC hdc, int x, int y, int width, int height);
 void RenderRectAtCenter(HDC hdc, int centerX, int centerY, int width, int height);
@@ -34,6 +38,11 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	LPSTR lpszCmdParam, int nCmdShow)
 {
 	g_hInstance = hInstance;
+
+	// GDI+ 초기화
+	GdiplusStartupInput gdiplusStartupInput;
+	ULONG_PTR gdiplusToken;
+	GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
 
 	WNDCLASSEX wndClass;
 	wndClass.cbSize = sizeof(WNDCLASSEX);
@@ -113,6 +122,9 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	g_mainGame.Release();
 	TimerManager::GetInstance()->Release();
+
+	// GDI+ 종료
+	GdiplusShutdown(gdiplusToken);
 
 	return message.wParam;
 }

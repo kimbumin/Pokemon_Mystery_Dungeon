@@ -37,20 +37,32 @@
     <Filter Include="Pokemon\Data">
       <UniqueIdentifier>{ccad6fa7-6281-498a-8920-ae27b68b7657}</UniqueIdentifier>
     </Filter>
-    <Filter Include="UiState">
-      <UniqueIdentifier>{5238f2ff-cd0c-4c68-9af1-b7ad6148d201}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="UiState\소스">
-      <UniqueIdentifier>{74092ff9-2d35-4db6-a77f-e9516a019092}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="UiState\헤더">
-      <UniqueIdentifier>{53a9530e-f1f7-4664-9136-6ee6a72b8a40}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Skill">
       <UniqueIdentifier>{3bcafe55-105c-41e8-9f74-0df9f1ad2904}</UniqueIdentifier>
     </Filter>
     <Filter Include="Skill\SkillList">
       <UniqueIdentifier>{2cd1cea9-45b4-40ea-9b9f-302ff2538fce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui">
+      <UniqueIdentifier>{5238f2ff-cd0c-4c68-9af1-b7ad6148d201}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\UiState">
+      <UniqueIdentifier>{c7938cab-8ee9-4d08-b4a2-a3697f6886bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\UiState\소스">
+      <UniqueIdentifier>{74092ff9-2d35-4db6-a77f-e9516a019092}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\UiState\헤더">
+      <UniqueIdentifier>{53a9530e-f1f7-4664-9136-6ee6a72b8a40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\UiConfig">
+      <UniqueIdentifier>{18fdbbbd-9614-492f-bd3f-a237b3b76ad8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\UiConfig\헤더">
+      <UniqueIdentifier>{e3f41a62-b217-441a-9f4a-07581c51498b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\UiConfig\소스">
+      <UniqueIdentifier>{e0ee7add-e1cc-4a7e-bb40-97762c1e4572}</UniqueIdentifier>
     </Filter>
     <Filter Include="Pokemon\Anim\AnimState">
       <UniqueIdentifier>{26c85d89-0c82-474c-af36-a924a242eafe}</UniqueIdentifier>
@@ -124,31 +136,28 @@
       <Filter>Pokemon\Anim\AnimState</Filter>
     </ClCompile>
     <ClCompile Include="TitleUIState.cpp">
-      <Filter>UiState\소스</Filter>
-    </ClCompile>
-    <ClCompile Include="UIManager.cpp">
-      <Filter>UiState\소스</Filter>
+      <Filter>Ui\UiState\소스</Filter>
     </ClCompile>
     <ClCompile Include="SkillSelectUIState.cpp">
-      <Filter>UiState\소스</Filter>
+      <Filter>Ui\UiState\소스</Filter>
     </ClCompile>
     <ClCompile Include="SkillInfoUIState.cpp">
-      <Filter>UiState\소스</Filter>
+      <Filter>Ui\UiState\소스</Filter>
     </ClCompile>
     <ClCompile Include="InventoryUIState.cpp">
-      <Filter>UiState\소스</Filter>
+      <Filter>Ui\UiState\소스</Filter>
     </ClCompile>
     <ClCompile Include="CameraManager.cpp">
       <Filter>2DFramework</Filter>
     </ClCompile>
     <ClCompile Include="CameraTestScene.cpp">
-      <Filter>UiState</Filter>
+      <Filter>Ui</Filter>
     </ClCompile>
     <ClCompile Include="DefaultUIState.cpp">
-      <Filter>UiState\소스</Filter>
+      <Filter>Ui\UiState\소스</Filter>
     </ClCompile>
     <ClCompile Include="DialogueUIState.cpp">
-      <Filter>UiState\소스</Filter>
+      <Filter>Ui\UiState\소스</Filter>
     </ClCompile>
     <ClCompile Include="ImageGDIPlus.cpp">
       <Filter>2DFramework</Filter>
@@ -231,7 +240,7 @@
       <Filter>Scene\헤더</Filter>
     </ClInclude>
     <ClInclude Include="TitleUIState.h">
-      <Filter>UiState\헤더</Filter>
+      <Filter>Ui\UiState\헤더</Filter>
     </ClInclude>
     <ClInclude Include="PokemonImageLoader.h">
       <Filter>Pokemon\Anim</Filter>
@@ -260,32 +269,29 @@
     <ClInclude Include="WalkAnimState.h">
       <Filter>Pokemon\Anim\AnimState</Filter>
     </ClInclude>
-    <ClInclude Include="UIManager.h">
-      <Filter>UiState\헤더</Filter>
-    </ClInclude>
     <ClInclude Include="UIState.h">
-      <Filter>UiState\헤더</Filter>
+      <Filter>Ui\UiState\헤더</Filter>
     </ClInclude>
     <ClInclude Include="SkillSelectUIState.h">
-      <Filter>UiState\헤더</Filter>
+      <Filter>Ui\UiState\헤더</Filter>
     </ClInclude>
     <ClInclude Include="SkillInfoUIState.h">
-      <Filter>UiState\헤더</Filter>
+      <Filter>Ui\UiState\헤더</Filter>
     </ClInclude>
     <ClInclude Include="InventoryUIState.h">
-      <Filter>UiState\헤더</Filter>
+      <Filter>Ui\UiState\헤더</Filter>
     </ClInclude>
     <ClInclude Include="CameraManager.h">
       <Filter>2DFramework</Filter>
     </ClInclude>
     <ClInclude Include="CameraTestScene.h">
-      <Filter>UiState</Filter>
+      <Filter>Ui</Filter>
     </ClInclude>
     <ClInclude Include="DefaultUIState.h">
-      <Filter>UiState\헤더</Filter>
+      <Filter>Ui\UiState\헤더</Filter>
     </ClInclude>
     <ClInclude Include="DialogueUIState.h">
-      <Filter>UiState\헤더</Filter>
+      <Filter>Ui\UiState\헤더</Filter>
     </ClInclude>
     <ClInclude Include="ImageGDIPlus.h">
       <Filter>2DFramework</Filter>

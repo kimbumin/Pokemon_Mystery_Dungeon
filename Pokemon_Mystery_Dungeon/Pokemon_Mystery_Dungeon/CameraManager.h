@@ -8,7 +8,8 @@ class CameraManager : public Singleton<CameraManager>
 	friend class Singleton<CameraManager>;
 
 private:
-	RECT viewRect = { 0 };
+	RECT viewPos = { 0 };
+	POINT cameraPos = { 0 };
 	int screenWidth = 800;
 	int screenHeight = 600;
 
@@ -18,7 +19,8 @@ public:
 	void Init(int width, int height);
 	void SetCameraPos(int x, int y);
 
-	RECT GetCameraRect() const { return viewRect; }
+	RECT GetViewPos() const { return viewPos; }
+	POINT GetCameraPos() const { return cameraPos; }
 
 };
 

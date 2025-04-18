@@ -142,6 +142,7 @@
     <ClCompile Include="IdleAnimState.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageGDIPlus.cpp" />
+    <ClCompile Include="ImageGDIPlusManager.cpp" />
     <ClCompile Include="ImageManager.cpp" />
     <ClCompile Include="InventoryUIState.cpp" />
     <ClCompile Include="ISkill.cpp" />
@@ -167,6 +168,8 @@
     <ClCompile Include="TilemapTool.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="TimerManager.cpp" />
+    <ClCompile Include="UIElement.cpp" />
+    <ClCompile Include="UIElementImage.cpp" />
     <ClCompile Include="TurnManager.cpp" />
     <ClCompile Include="WalkAnimState.cpp" />
     <ClCompile Include="TitleUIState.cpp" />
@@ -191,6 +194,7 @@
     <ClInclude Include="IdleAnimState.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageGDIPlus.h" />
+    <ClInclude Include="ImageGDIPlusManager.h" />
     <ClInclude Include="ImageManager.h" />
     <ClInclude Include="InventoryUIState.h" />
     <ClInclude Include="ISkill.h" />
@@ -211,6 +215,8 @@
     <ClInclude Include="SkillManager.h" />
     <ClInclude Include="SquareScene.h" />
     <ClInclude Include="SwingAnimState.h" />
+    <ClInclude Include="UIElement.h" />
+    <ClInclude Include="UIElementImage.h" />
     <ClInclude Include="TurnManager.h" />
     <ClInclude Include="WalkAnimState.h" />
     <ClInclude Include="StoneShowerSkill.h" />

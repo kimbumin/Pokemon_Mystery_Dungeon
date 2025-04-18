@@ -1,16 +1,17 @@
 #include "CameraTestScene.h"
-#include "ImageManager.h"
+#include "ImageGDIPlusManager.h"
 #include "CameraManager.h"
 #include "UIManager.h"
 #include "DialogueUIState.h"
 
 HRESULT CameraTestScene::Init()
 {
-	testMap = ImageManager::GetInstance()->AddImage("TestMap", TEXT("Image/SceneImage/Square.bmp"), 954, 714);
+	testMap = ImageGDIPlusManager::GetInstance()->AddImage(
+		"TestMap", TEXT("Image/UIImage/testBackImg.bmp"));
 
-	UIManager::GetInstance()->AddState("DialogueBox", new DialogueUIState());
+	UIManager::GetInstance()->RegisterAllUIStates();
 
-	CameraManager::GetInstance()->Init(400, 400);
+	CameraManager::GetInstance()->Init(GameViewSize_X, GameViewSize_Y);
 
 	return S_OK;
 }
@@ -24,32 +25,22 @@ void CameraTestScene::Update()
 	POINT mouse;
 	GetCursorPos(&mouse);
 	ScreenToClient(g_hWnd, &mouse);
+	CameraManager::GetInstance()->SetCameraPos(mouse.x, mouse.y);
 
 	if (KeyManager::GetInstance()->IsOnceKeyDown(VK_TAB))
 	{
-		UIManager::GetInstance()->ChangeState("DialogueBox");
+		UIManager::GetInstance()->OpenUIStateBox("defaultUI");
 	}
-
-	CameraManager::GetInstance()->SetCameraPos(mouse.x, mouse.y);
 	UIManager::GetInstance()->Update();
 }
 
 void CameraTestScene::Render(HDC hdc)
 {
-	RECT cam = CameraManager::GetInstance()->GetCameraRect();
+	RECT cam = CameraManager::GetInstance()->GetViewPos();
 
 	if (testMap)
 	{
-		BitBlt(
-			hdc,
-			0,0,
-			cam.right - cam.left,
-			cam.bottom - cam.top,
-			testMap->GetMemDC(),
-			cam.left,
-			cam.top,
-			SRCCOPY
-		);
+		testMap->RenderBackground(hdc);
 	}
 	UIManager::GetInstance()->Render(hdc);
 }
