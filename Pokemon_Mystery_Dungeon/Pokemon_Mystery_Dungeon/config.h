@@ -21,6 +21,8 @@ using namespace std;
 #include "TimerManager.h"
 #include "SceneManager.h"
 #include "CollisionManager.h"
+#include "CameraManager.h"
+#include "ImageGDIPlusManager.h"
 
 /*
 	컴파일러에서 해당 코드를 뒤에 정의된 코드로 변경한다.

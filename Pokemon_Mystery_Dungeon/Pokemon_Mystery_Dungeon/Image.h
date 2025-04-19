@@ -57,6 +57,8 @@ private:
 	bool isTransparent;
 	COLORREF transColor;
 
+	HBITMAP hBitmap = nullptr;
+
 public:
 	// 빈 비트맵 이미지를 만드는 함수
 	HRESULT Init(int width, int height);
@@ -69,6 +71,10 @@ public:
 	HRESULT Init(const wchar_t* filePath, int width, int height,
 		int maxFrameX, int maxFrameY,
 		bool isTransparent = FALSE, COLORREF transColor = FALSE);
+
+
+	// 배경 그리기
+	void RenderBackground(HDC hdc);
 
 	// 화면에 출력
 	void Render(HDC hdc, int destX = 0, int destY = 0);

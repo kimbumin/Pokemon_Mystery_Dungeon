@@ -11,7 +11,7 @@ HRESULT CameraTestScene::Init()
 
 	UIManager::GetInstance()->RegisterAllUIStates();
 
-	CameraManager::GetInstance()->Init(GameViewSize_X, GameViewSize_Y);
+	CameraManager::GetInstance()->Init(GameViewSize_X, GameViewSize_Y, 1420, 700);
 
 	return S_OK;
 }

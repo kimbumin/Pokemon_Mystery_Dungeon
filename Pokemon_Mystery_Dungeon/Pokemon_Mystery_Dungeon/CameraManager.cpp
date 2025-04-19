@@ -1,9 +1,12 @@
 #include "CameraManager.h"
 
-void CameraManager::Init(int width, int height)
+void CameraManager::Init(int camerWidth, int cameraHeight, int mapSizeX, int mapSizeY)
 {
-	screenHeight = height;
-	screenWidth = width;
+	screenWidth = camerWidth;
+	screenHeight = cameraHeight;
+
+	tileMapSizeX = mapSizeX;
+	tileMapSizeY = mapSizeY;
 	SetCameraPos(0, 0);
 }
 
@@ -34,14 +37,14 @@ void CameraManager::SetCameraPos(int x, int y)
 		cameraPos.y = screenHeight / 2;
 	}
 
-	if (viewPos.right > TILEMAPTOOL_X) {
-		viewPos.right = TILEMAPTOOL_X;
-		viewPos.left = TILEMAPTOOL_X - screenWidth;
-		cameraPos.x = TILEMAPTOOL_X - screenWidth / 2;
+	if (viewPos.right > tileMapSizeX) {
+		viewPos.right = tileMapSizeX;
+		viewPos.left = tileMapSizeX - screenWidth;
+		cameraPos.x = tileMapSizeX - screenWidth / 2;
 	}
-	if (viewPos.bottom > TILEMAPTOOL_Y) {
-		viewPos.bottom = TILEMAPTOOL_Y;
-		viewPos.top = TILEMAPTOOL_Y - screenHeight;
-		cameraPos.y = TILEMAPTOOL_Y - screenHeight / 2;
+	if (viewPos.bottom > tileMapSizeY) {
+		viewPos.bottom = tileMapSizeY;
+		viewPos.top = tileMapSizeY - screenHeight;
+		cameraPos.y = tileMapSizeY - screenHeight / 2;
 	}
 }

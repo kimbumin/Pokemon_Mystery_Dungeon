@@ -108,6 +108,38 @@ HRESULT Image::Init(const wchar_t* filePath, int width, int height, int maxFrame
     return S_OK;   // S_OK, E_FAIL
 }
 
+void Image::RenderBackground(HDC hdc)
+{
+    if (!imageInfo || !imageInfo->hMemDC) return;
+
+    RECT cam = CameraManager::GetInstance()->GetViewPos();
+
+    int width = cam.right - cam.left;
+    int height = cam.bottom - cam.top;
+
+    if (isTransparent) {
+        GdiTransparentBlt(
+            hdc,
+            0, 0,
+            width, height,
+            imageInfo->hMemDC,
+            cam.left, cam.top,
+            width, height,
+            transColor
+        );
+    }
+    else {
+        BitBlt(
+            hdc,
+            0, 0,
+            width, height,
+            imageInfo->hMemDC,
+            cam.left, cam.top,
+            SRCCOPY
+        );
+    }
+}
+
 void Image::Render(HDC hdc, int destX, int destY)
 {
     if (isTransparent)

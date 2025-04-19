@@ -4,6 +4,7 @@
 #include "Timer.h"
 #include "TilemapTool.h"
 #include "SquareScene.h"
+#include "TileMapTestScene.h"
 #include "CameraTestScene.h"
 
 HRESULT MainGame::Init()
@@ -21,7 +22,7 @@ HRESULT MainGame::Init()
 			TEXT("¹é¹öÆÛ »ý¼º ½ÇÆÐ"), TEXT("°æ°í"), MB_OK);
 		return E_FAIL;
 	}
-	SceneManager::GetInstance()->AddScene("±¤Àå", new SquareScene());
+	SceneManager::GetInstance()->AddScene("±¤Àå", new TileMapTestScene());
 	SceneManager::GetInstance()->ChangeScene("±¤Àå");
 	//SceneManager::GetInstance()->AddScene("TestMap", new CameraTestScene());
 	//SceneManager::GetInstance()->ChangeScene("TestMap");
@@ -53,6 +54,7 @@ void MainGame::Update()
 void MainGame::Render()
 {
 	HDC hBackBufferDC = backBuffer->GetMemDC();
+	PatBlt(hBackBufferDC, 0, 0, GameViewSize_X, GameViewSize_Y, BLACKNESS);
 
 	SceneManager::GetInstance()->Render(hBackBufferDC);
 
