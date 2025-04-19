@@ -2,6 +2,7 @@
 #include "UIState.h"
 #include "DialogueUIState.h"
 #include "DefaultUIState.h"
+#include "SkillUIState.h"
 #include "SkillInfoUIState.h"
 
 UIState* UIManager::currentState = nullptr;
@@ -92,7 +93,8 @@ void UIManager::RegisterAllUIStates()
 {
 	AddState("dialogueBox", new DialogueUIState());
 	AddState("defaultUI", new DefaultUIState());
-	AddState("SkillInfoUI", new SkillInfoUIState());
+	AddState("SkillUI", new SkillUIState());
+	AddState("SkillUseUI", new SkillInfoUIState());
 }
 
 void UIManager::OpenUIStateBox(const string& key)

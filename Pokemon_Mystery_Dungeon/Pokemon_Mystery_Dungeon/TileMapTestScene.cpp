@@ -170,17 +170,14 @@ void TileMapTestScene::RenderFlowers(HDC hdc, Image* flower, const std::vector<P
 
 	for (const auto& pos : positions) {
 
-		///* ------------------------------------------------------------------------ */
-		//// 꽃 위치 카메라 따라가게 설정
-		//int flowerX = pos.x - cam.left;
-		//int flowerY = pos.y - cam.top;
+	/* ------------------------------------------------------------------------ */
+	// 꽃 위치 카메라 따라가게 설정
+	int flowerX = pos.x - cam.left;
+	int flowerY = pos.y - cam.top;
 
-		//flower->FrameRender(hdc, flowerX, flowerY, 0, currFrame, 0);
+	flower->FrameRender(hdc, flowerX, flowerY, 0, currFrame, 0);
 
-		///* ------------------------------------------------------------------------ */
+	/* ------------------------------------------------------------------------ */
 
-		for (const auto& pos : positions) {
-			flower->FrameRender(hdc, pos.x, pos.y, 0, currFrame, 0);
-		}
 	}
 }

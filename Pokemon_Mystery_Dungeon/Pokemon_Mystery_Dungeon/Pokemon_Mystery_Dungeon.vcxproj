@@ -165,7 +165,7 @@
     <ClCompile Include="RotateAnimState.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SkillInfoUIState.cpp" />
-    <ClCompile Include="SkillSelectUIState.cpp" />
+    <ClCompile Include="SkillUIState.cpp" />
     <ClCompile Include="SkillManager.cpp" />
     <ClCompile Include="SquareScene.cpp" />
     <ClCompile Include="SwingAnimState.cpp" />
@@ -224,8 +224,8 @@
     <ClInclude Include="Room.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Singleton.h" />
+    <ClInclude Include="SkillUIState.h" />
     <ClInclude Include="SkillInfoUIState.h" />
-    <ClInclude Include="SkillSelectUIState.h" />
     <ClInclude Include="SkillManager.h" />
     <ClInclude Include="SquareScene.h" />
     <ClInclude Include="SwingAnimState.h" />

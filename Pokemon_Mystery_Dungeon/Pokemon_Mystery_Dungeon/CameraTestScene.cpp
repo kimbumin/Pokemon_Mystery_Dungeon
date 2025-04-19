@@ -1,8 +1,8 @@
 #include "CameraTestScene.h"
 #include "ImageGDIPlusManager.h"
 #include "CameraManager.h"
-#include "UIManager.h"
 #include "DialogueUIState.h"
+#include "UIManager.h"
 
 HRESULT CameraTestScene::Init()
 {
