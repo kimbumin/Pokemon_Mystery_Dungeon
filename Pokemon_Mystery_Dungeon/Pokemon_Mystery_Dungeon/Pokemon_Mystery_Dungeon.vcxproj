@@ -137,6 +137,7 @@
     <ClCompile Include="EmberSkill.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="DungeonScene.cpp" />
+    <ClCompile Include="EnemyBumin.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="HurtAnimState.cpp" />
     <ClCompile Include="IdleActionState.cpp" />
@@ -154,6 +155,7 @@
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="OranBerry.cpp" />
     <ClCompile Include="MoveActionState.cpp" />
+    <ClCompile Include="PlayerBumin.cpp" />
     <ClCompile Include="PokemonAnimator.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="PokemonBase.cpp" />
@@ -193,6 +195,7 @@
     <ClInclude Include="config.h" />
     <ClInclude Include="EmberSkill.h" />
     <ClInclude Include="DungeonScene.h" />
+    <ClInclude Include="EnemyBumin.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="HurtAnimState.h" />
     <ClInclude Include="IActionState.h" />
@@ -212,6 +215,7 @@
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="OranBerry.h" />
     <ClInclude Include="MoveActionState.h" />
+    <ClInclude Include="PlayerBumin.h" />
     <ClInclude Include="PokemonAnimator.h" />
     <ClInclude Include="PokemonBase.h" />
     <ClInclude Include="PokemonImageLoader.h" />

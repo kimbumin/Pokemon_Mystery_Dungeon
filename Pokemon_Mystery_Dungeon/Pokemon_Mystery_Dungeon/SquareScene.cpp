@@ -17,6 +17,15 @@ HRESULT SquareScene::Init()
 	river = new Image();
 
 
+	player = new PlayerBumin();
+	enemy = new EnemyBumin();
+	emberSkill = new EmberSkill();
+
+	player->Init(); // 만약 Init 필요하면
+	enemy->Init();
+	emberSkill->Init();
+
+
 	//Size : 954, 714
 	backGround = ImageManager::GetInstance()->AddImage(
 		"광장배경", L"Image/SceneImage/Square3.bmp", 
@@ -79,18 +88,37 @@ HRESULT SquareScene::Init()
 
 void SquareScene::Release()
 {
-
+	if (player)
+	{
+		delete player;
+		player = nullptr;
+	}
+	if (enemy)
+	{
+		delete enemy;
+		enemy = nullptr;
+	}
+	if (emberSkill)
+	{
+		delete emberSkill;
+		emberSkill = nullptr;
+	}
 }
 
 void SquareScene::Update()
 {
+
 	if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F1)) {
 
 		SceneManager::GetInstance()->AddScene("타일맵툴", new TilemapTool());
 		SceneManager::GetInstance()->ChangeScene("타일맵툴");
 	}
 
-
+	if (KeyManager::GetInstance()->IsOnceKeyDown(VK_SPACE)) {
+		emberSkill->Use(player, enemy);
+	}
+	// 스킬 업데이트
+	emberSkill->Update();
 	elapsedTime += TimerManager::GetInstance()->GetDeltaTime();
 	if (elapsedTime > 0.3f)
 	{
@@ -128,6 +156,11 @@ void SquareScene::Render(HDC hdc)
 		river->FrameRender(hdc, 152, 460, currAnimaionFrame, 0, 0);
 
 	}
+
+
+	if (player) player->Render(hdc);
+	if (enemy) enemy->Render(hdc);
+	if (emberSkill) emberSkill->Render(hdc);
 
     TimerManager::GetInstance()->Render(hdc);
 
