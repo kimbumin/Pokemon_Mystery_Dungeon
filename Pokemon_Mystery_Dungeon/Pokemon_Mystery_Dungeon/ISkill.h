@@ -1,13 +1,14 @@
 #pragma once
 #include "config.h"
+#include "GameObject.h"
 
-class ISkill {
+class ISkill : public GameObject {
 public:
-    virtual void Init() = 0;
+    virtual HRESULT Init() = 0;
     virtual void Release() = 0;
     virtual void Update() = 0;
     virtual void Render(HDC hdc) = 0;
-    virtual void Use() = 0;
+    virtual void Use(GameObject* user, GameObject* target) = 0;
     virtual shared_ptr<ISkill> Clone() const = 0;
 
 
