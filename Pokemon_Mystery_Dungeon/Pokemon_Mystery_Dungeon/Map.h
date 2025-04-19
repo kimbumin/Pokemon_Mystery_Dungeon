@@ -34,7 +34,7 @@ using WildPattern = vector<int>;
 
 struct TilePattern {
     Pattern pattern;           
-    pair<int, int> tileIndex;  //≈∏¿œ¿Œµ¶Ω∫
+    pair<int, int> tileIndex; 
 };
 
 struct WildTilePattern {
