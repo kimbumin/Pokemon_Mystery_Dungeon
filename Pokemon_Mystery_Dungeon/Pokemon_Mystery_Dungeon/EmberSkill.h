@@ -19,12 +19,16 @@ private:
         int maxPP;
     } stats;
 
+    float elapsedTime;
+    bool isActive;  // 스킬 효과가 활성화되어 있는지 여부
+    int frameCount;  // 애니메이션 프레임 카운트 (필요한 경우)
+
 public:
-    void Init() override;
+    HRESULT Init() override;
     void Release() override;
     void Update() override;
     void Render(HDC hdc) override;
-    void Use() override;
+    void Use(PlayerBumin* user, EnemyBumin* target) override;
     shared_ptr<ISkill> Clone() const override;
 
     string GetName() const override { return name; }

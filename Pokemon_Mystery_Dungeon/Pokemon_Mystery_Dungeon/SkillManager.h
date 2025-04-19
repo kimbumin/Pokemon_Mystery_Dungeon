@@ -8,7 +8,7 @@ private:
 
 public:
     void RegisterSkill(const string& name, shared_ptr<ISkill> skill);
-    void UseSkill(const string& skillName, GameObject* user, GameObject* target);
+    void UseSkill(const string& skillName, PlayerBumin* user, EnemyBumin* target);
     void Release();
 
     shared_ptr<ISkill> CreateSkill(const string& name);

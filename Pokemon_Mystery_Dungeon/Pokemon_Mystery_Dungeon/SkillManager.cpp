@@ -8,7 +8,7 @@ void SkillManager::RegisterSkill(const string& name, shared_ptr<ISkill> skill)
 }
 
 // 스킬 사용 (사용자와 대상에게 스킬 사용)
-void SkillManager::UseSkill(const string& skillName, GameObject* user, GameObject* target)
+void SkillManager::UseSkill(const string& skillName, PlayerBumin* user, EnemyBumin* target)
 {
 	auto it = skillMap.find(skillName);
 	if (it != skillMap.end())

@@ -1,6 +1,8 @@
 #pragma once
 #include "config.h"
 #include "GameObject.h"
+#include "PlayerBumin.h"
+#include "EnemyBumin.h"
 
 class ISkill : public GameObject {
 public:
@@ -8,7 +10,7 @@ public:
     virtual void Release() = 0;
     virtual void Update() = 0;
     virtual void Render(HDC hdc) = 0;
-    virtual void Use(GameObject* user, GameObject* target) = 0;
+    virtual void Use(PlayerBumin* user, EnemyBumin* target) = 0;
     virtual shared_ptr<ISkill> Clone() const = 0;
 
 

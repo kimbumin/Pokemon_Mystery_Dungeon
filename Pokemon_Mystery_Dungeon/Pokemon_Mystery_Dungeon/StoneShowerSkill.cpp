@@ -1,6 +1,6 @@
 #include "StoneShowerSkill.h"
 
-void StoneShowerSkill::Init()
+HRESULT StoneShowerSkill::Init()
 {
 	pos.x = 0;
 	pos.y = 0;
@@ -12,6 +12,8 @@ void StoneShowerSkill::Init()
 	image = ImageManager::GetInstance()->AddImage(
 		"StoneShower", TEXT("Image/rocktype1.bmp"), 312, 54, 8, 1,
 		true, RGB(255, 0, 255));
+
+	return S_OK;
 }
 
 void StoneShowerSkill::Release()
@@ -31,7 +33,7 @@ void StoneShowerSkill::Render(HDC hdc)
 	}
 }
 
-void StoneShowerSkill::Use()
+void StoneShowerSkill::Use(PlayerBumin* user, EnemyBumin* target)
 {
 }
 
