@@ -3,6 +3,7 @@
 #include "CommonFunction.h"
 #include "TilemapTool.h"
 #include "DungeonScene.h"
+#include "StartScene.h"
 
 #define SQUARESIZE_X 954
 #define SQUARESIZE_Y 714
@@ -105,6 +106,10 @@ void SquareScene::Update()
 	if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F6)) {
 		SceneManager::GetInstance()->AddScene("´øÀü¾À", new DungeonScene());
 		SceneManager::GetInstance()->ChangeScene("´øÀü¾À");
+	}
+	if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F5)) {
+		SceneManager::GetInstance()->AddScene("½ºÅ¸Æ®¾À", new StartScene());
+		SceneManager::GetInstance()->ChangeScene("½ºÅ¸Æ®¾À");
 	}
 }
 
