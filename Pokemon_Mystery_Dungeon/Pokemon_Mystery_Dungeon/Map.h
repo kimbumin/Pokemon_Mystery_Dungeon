@@ -63,6 +63,12 @@ public:
 
     void ClassifyTiles();
 
+    bool InBounds(int x, int y) const;
+
+    bool IsPathOrFloor(int x, int y) const;
+
+    bool MatchPattern(const WildPattern& pattern, const vector<int>& current) const;
+
     void TileDesign();
 
     void RandomTileDesign();

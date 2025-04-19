@@ -5,7 +5,6 @@
 
 //최대 방 개수
 const int MAX_ROOMS = 8;
-
 const int MIN_WIDTH = 4;
 const int MAX_WIDTH = 6;
 
@@ -19,6 +18,10 @@ uniform_int_distribution uidHeight{ MIN_HEIGHT, MAX_HEIGHT };
 uniform_int_distribution uidDist{ 0,1 };
 uniform_int_distribution uid0to3{ 0, 3 };
 
+const pair<int, int> FLOWER = { 7,1 };
+const pair<int, int> STONE_RIGHT = { 14,1 };
+const pair<int, int> STONE_BOTTOM = { 13,2 };
+const pair<int, int> STONE_LEFT_TOP = { 12,0 };
 
 HRESULT Map::Init()
 {
@@ -104,20 +107,19 @@ void Map::Update()
 void Map::Render(HDC hdc)
 {
 
-    //// 이동가능 타일
+    // 이동가능 path tile, floor tile (13,1)
     for (const POINT& pt : pathTiles) {
         tileImage->FrameRender(hdc, pt.x * TILE_SIZE, pt.y * TILE_SIZE, 13, 1, 0, 1);
     }
-    //// 이동가능 타일
+    // 이동가능 타일
     for (const POINT& pt : floorTiles) {
-        if (tileIndex[pt.y][pt.x] != make_pair(12, 0) and 
-            tileIndex[pt.y][pt.x] != make_pair(13, 2) and 
-            tileIndex[pt.y][pt.x] != make_pair(14, 1)) {
-			tileImage->FrameRender(hdc, pt.x * TILE_SIZE, pt.y * TILE_SIZE, 13, 1, 0, 1);
+        pair<int, int> indexPos = tileIndex[pt.y][pt.x];
+
+        if (indexPos == STONE_RIGHT or indexPos == STONE_LEFT_TOP or indexPos == STONE_BOTTOM) {
+            tileImage->FrameRender(hdc, pt.x * TILE_SIZE, pt.y * TILE_SIZE, indexPos.first, indexPos.second, 0, 1);
         }
         else {
-            const auto& index = tileIndex[pt.y][pt.x];
-            tileImage->FrameRender(hdc, pt.x * TILE_SIZE, pt.y * TILE_SIZE, index.first, index.second, 0, 1);
+			tileImage->FrameRender(hdc, pt.x * TILE_SIZE, pt.y * TILE_SIZE, 13, 1, 0, 1);
         }
     }
 
@@ -234,28 +236,25 @@ void Map::ClassifyTiles()
 }
 
 
+bool Map::InBounds(int x, int y) const {
+    return x >= 0 && x < TILE_X && y >= 0 && y < TILE_Y;
+}
+bool Map::IsPathOrFloor(int x, int y) const {
+    return tiles[y][x] == TileType::TILE_PATH || tiles[y][x] == TileType::TILE_FLOOR;
+}
+
+bool Map::MatchPattern(const WildPattern& pattern, const vector<int>& current) const {
+    for (int i = 0; i < DIR_COUNT; ++i) {
+        if (pattern[i] == -1) continue;
+        if (pattern[i] != current[i]) return false;
+    }
+    return true;
+}
 
 void Map::TileDesign()
 {
 	tileIndex.clear();
 	tileIndex.resize(TILE_Y, vector<pair<int, int>>(TILE_X, { 4, 1 })); // 기본 벽 타일
-
-	auto InBounds = [](int x, int y) {
-		return x >= 0 && x < TILE_X && y >= 0 && y < TILE_Y;
-		};
-
-	auto IsPathOrFloor = [&](int x, int y) {
-		return tiles[y][x] == TileType::TILE_PATH || tiles[y][x] == TileType::TILE_FLOOR;
-		};
-
-    // 패턴 비교 함수
-    auto MatchPattern = [](const WildPattern& pattern, const vector<int>& current) -> bool {
-        for (int i = 0; i < DIR_COUNT; ++i) {
-            if (pattern[i] == -1) continue;
-            if (pattern[i] != current[i]) return false;
-        }
-        return true;
-        };
 
 	vector<WildTilePattern> tilePatterns = {
 		// {왼위, 위, 오위, 왼, 오, 왼아, 아래, 오아래}  1:floor, 0:wall
@@ -271,7 +270,7 @@ void Map::TileDesign()
         { { -1, 1, 1,
              0,    1,
              0, 0, -1 }, {5, 0} },
-        { {1,1,0,0,1,0,0,1}, {5,0}},
+        { {1,1,0,0,-1,0,0,1}, {5,0}},
         { {1,0,0,0,1,0,0,1}, {5,0}},
         {{1,0,0,1,0,0,1,1}, {3,2}},
         {{1,0,0,1,0,0,0,1}, {3,2} },
@@ -290,6 +289,8 @@ void Map::TileDesign()
              1, 1, -1 }, {3, 2} },
         
         { { 0, 0, 0, 0, 0, 1, 1, 1 }, {4, 2} },
+        { { 0, 0, 0, 0, 0, 1, 1, 1 }, {4, 2} },
+
         { { 0, 0, 0,
              0,    0,
              0, 1, 1 }, {4, 2} },
@@ -298,7 +299,7 @@ void Map::TileDesign()
         { { 0, 0, -1,
              0,    1,
             -1, 1, -1 }, {5, 2} },
-        
+
         { { 1, 1, 1, 1, 0, 1, 0, 1 }, {3, 3} },
         
         { { -1, 1, -1,
@@ -320,9 +321,11 @@ void Map::TileDesign()
         { { 1, 1, 1, 1, 1, -1, 0, -1 }, {4, 6} },
         
         { { 1, 1, -1, 1, 0, 1, 1, -1 }, {3, 7} },
+        { { 1, 1, 1, 1, 0, 0, 0, -1 }, {3, 7} },
 
         { { 1, 0, 1, 0, 0, 1, 0, 1 }, {4, 7} },
-        { { -1, 1, 1, 0, 1, -1, 1, 1 }, {5, 7} },
+       // { { -1, 1, 1, 0, 1, -1, 1, 1 }, {5, 7} },
+        { { -1, 1, -1, 0, 1, -1, 1, -1 }, {5, 7} },
         
         { { -1, 0, -1, 1, 1, 1, 1, 1 }, {4, 8} },
         
@@ -404,24 +407,33 @@ void Map::TileDesign()
 
 void Map::RandomTileDesign() {
     
-    //floor끝부분 디자인 리펙토링 예정 4.18.
+    const pair<int, int> INDEX_3_15 = { 3, 15 };
+    const pair<int, int> INDEX_4_0 = { 4, 0 };
+    const pair<int, int> INDEX_3_1 = { 3, 1 };
+    const pair<int, int> INDEX_4_1 = { 4, 1 };
+
+
     for (int y = 1; y < TILE_Y; ++y) {
-        for (int x = 1; x <TILE_X; ++x) {
-            if (tileIndex[y][x] == make_pair(3, 15)) {
-                tileIndex[y + 1][x + 1] = { 12,0 };
-            }
-            if (tileIndex[y][x] == make_pair(4, 0)) {
-                tileIndex[y - 1][x] = { 13,2 };
-            }
-            if (tileIndex[y][x] == make_pair(3, 1)) {
-                tileIndex[y][x - 1] = { 14,1 };
-            }
-            if (not uid0to3(dre)) {
-                if(tileIndex[y][x] == make_pair(4, 1)) {
-                    tileIndex[y][x] ={7, 1};
-                }
+        for (int x = 1; x < TILE_X; ++x) {
+
+            if (tileIndex[y][x] == INDEX_3_15) {
+                if (InBounds(x + 1, y + 1))
+                    tileIndex[y + 1][x + 1] = STONE_LEFT_TOP;
             }
 
+            if (tileIndex[y][x] == INDEX_4_0) {
+                if (InBounds(x, y - 1))
+                    tileIndex[y - 1][x] = STONE_BOTTOM;
+            }
+
+            if (tileIndex[y][x] == INDEX_3_1) {
+                if (InBounds(x - 1, y))
+                    tileIndex[y][x - 1] = STONE_RIGHT;
+            }
+
+            if (tileIndex[y][x] == INDEX_4_1 && !uid0to3(dre)) {
+                tileIndex[y][x] = FLOWER;
+            }
         }
     }
 }
