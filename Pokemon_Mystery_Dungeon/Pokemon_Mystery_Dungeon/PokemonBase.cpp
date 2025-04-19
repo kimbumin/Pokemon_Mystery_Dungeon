@@ -107,7 +107,7 @@ void PokemonBase::Update()
         {
             direction = Direction::NORTH;
             //SetAnimState(&walkAnim);
-            SetAnimState(walkAnim);
+            PlayWalkAnim();
             SetActionState(new MoveActionState());
         }
         if (KeyManager::GetInstance()->IsOnceKeyDown(VK_LEFT))
