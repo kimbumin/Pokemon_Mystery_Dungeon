@@ -1,8 +1,11 @@
 #pragma once
+#include "config.h"
 #include <Windows.h>
 #include <gdiplus.h>
-#include "config.h"
+#include <gdiplusimaging.h>
 #pragma comment(lib, "gdiplus.lib")
+
+#define PropertyTagFrameDelay 0x5100
 
 class ImageGDIPlus
 {
@@ -32,6 +35,10 @@ private:
 	UINT gifFrameCount = 1;
 	UINT gifCurrentFrame = 0;
 
+	vector<UINT> gifFrameDelay;
+	float gifElapsedTime = 0.0f;
+	float gifSpeedMultiplier = 1.0f;
+
 
 public:
 	HRESULT Init(const wchar_t* filePath, int maxFrameX, int maxFrameY, bool ifGif = false);
@@ -56,6 +63,8 @@ public:
 	// x좌표, y좌표, 어느 비율까지 그릴지 지정(0.0 ~ 1.0), 투명도
 	void RenderLeftToRight(HDC hdc, float x, float y, float percent, float alpha = 1.0f);
 
+	void Update(float deltaTime);
+
 	void SetGifFrame(UINT frameIndex);
 	UINT GetGifFrameCount() const;
 
@@ -67,5 +76,6 @@ public:
 	inline int GetMaxFrameY() const { return maxFrameY; }
 	inline int GetCurrFrameX() const { return currFrameX; }
 	inline int GetCurrFrameY() const { return currFrameY; }
+	void SetGifSpeed(float multiplier) { gifSpeedMultiplier = multiplier; }
 };
 

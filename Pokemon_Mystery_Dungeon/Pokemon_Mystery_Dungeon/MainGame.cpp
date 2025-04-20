@@ -6,6 +6,7 @@
 #include "SquareScene.h"
 #include "TileMapTestScene.h"
 #include "CameraTestScene.h"
+#include "UIManager.h"
 
 HRESULT MainGame::Init()
 {
@@ -48,6 +49,7 @@ void MainGame::Release()
 void MainGame::Update()
 {
 	SceneManager::GetInstance()->Update();
+	UIManager::GetInstance()->Update();
 	InvalidateRect(g_hWnd, NULL, false);
 }
 

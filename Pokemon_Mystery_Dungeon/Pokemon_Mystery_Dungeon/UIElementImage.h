@@ -25,7 +25,12 @@ public:
 	void setScale(float newScaleX, float newScaleY) { scaleX = newScaleX; scaleY = newScaleY; }
 	void SetAngle(float newAngle) { angle = newAngle; }
 	void SetFlip(bool newFlipX, bool newFlipY) { flipX = newFlipX; flipY = newFlipY; }
+	int GetImageWidth() const { return image ? image->GetWidth() : 0; }
+	int GetImageHeight() const { return image ? image->GetHeight() : 0; }
+
+	void SetSpeed(float speed);
 
 	void Render(HDC hdc) override;
+	void Update() override;
 };
 

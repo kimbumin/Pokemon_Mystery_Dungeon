@@ -29,6 +29,25 @@ HRESULT ImageGDIPlus::Init(const wchar_t* filePath, int maxFrameX, int maxFrameY
 		image->GetFrameDimensionsList(&gifFrameDimension, 1);
 		gifFrameCount = image->GetFrameCount(&gifFrameDimension);
 		gifCurrentFrame = 0;
+
+		UINT size = image->GetPropertyItemSize(PropertyTagFrameDelay);
+		if (size > 0)
+		{
+			Gdiplus::PropertyItem* pItem = (Gdiplus::PropertyItem*)malloc(size);
+			if (image->GetPropertyItem(PropertyTagFrameDelay, size, pItem) == Gdiplus::Ok)
+			{
+				UINT* delays = (UINT*)pItem->value;
+				gifFrameDelay.resize(gifFrameCount);
+				for (UINT i = 0; i < gifFrameCount; ++i)
+				{
+					// GDI+는 1/100초 단위 → ms로 환산
+					gifFrameDelay[i] = delays[i] * 10;
+					if (gifFrameDelay[i] == 0)
+						gifFrameDelay[i] = 100;
+				}
+			}
+			free(pItem);
+		}
 	}
 
 	return S_OK;
@@ -116,6 +135,12 @@ void ImageGDIPlus::Render(HDC hdc, float x, float y, float angle, bool flipX, bo
 void ImageGDIPlus::RenderScale(HDC hdc, float x, float y, float scaleX, float scaleY, float angle, bool flipX, bool flipY, float alpha)
 {
 	if (!image)	return;
+
+	if (isGif)
+	{
+		image->SelectActiveFrame(&gifFrameDimension, gifCurrentFrame);
+	}
+
 	Gdiplus::Graphics graphics(hdc);
 
 	// 이미지 보간 설정
@@ -214,4 +239,17 @@ void ImageGDIPlus::RenderFrameScale(HDC hdc, float x, float y, float scaleX, flo
 void ImageGDIPlus::RenderLeftToRight(HDC hdc, float x, float y, float percent, float alpha)
 {
 
+}
+
+void ImageGDIPlus::Update(float deltaTime)
+{
+	if (!isGif || gifFrameCount <= 1 || gifFrameDelay.empty()) return;
+
+	gifElapsedTime += deltaTime * 1000.0f * gifSpeedMultiplier;
+
+	if (gifElapsedTime >= gifFrameDelay[gifCurrentFrame])
+	{
+		gifElapsedTime = 0.0f;
+		gifCurrentFrame = (gifCurrentFrame + 1) % gifFrameCount;
+	}
 }

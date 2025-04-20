@@ -21,14 +21,14 @@ void ImageGDIPlusManager::Release()
 	ReleaseInstance();
 }
 
-ImageGDIPlus* ImageGDIPlusManager::AddImage(string key, const wchar_t* filePath, int maxFrameX, int maxFrameY)
+ImageGDIPlus* ImageGDIPlusManager::AddImage(string key, const wchar_t* filePath, int maxFrameX, int maxFrameY, bool asGif)
 {
 	ImageGDIPlus* imageGDIPlus = nullptr;
 	imageGDIPlus = FindImageGDIPlus(key);
 	if (imageGDIPlus) return imageGDIPlus;
 
 	imageGDIPlus = new ImageGDIPlus;
-	if (FAILED(imageGDIPlus->Init(filePath, maxFrameX, maxFrameY)))
+	if (FAILED(imageGDIPlus->Init(filePath, maxFrameX, maxFrameY, asGif)))
 	{
 		imageGDIPlus->Release();
 		delete imageGDIPlus;
