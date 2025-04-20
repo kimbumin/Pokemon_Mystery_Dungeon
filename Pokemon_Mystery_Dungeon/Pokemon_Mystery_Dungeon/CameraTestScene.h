@@ -2,11 +2,11 @@
 #include "GameObject.h"
 #include "ImageGDIPlus.h"
 
-
+class Image;
 class CameraTestScene : public GameObject
 {
 private:
-	ImageGDIPlus* testMap = nullptr;
+	Image* backGround;
 
 	bool isDialogueBoxOpen = false;
 

@@ -5,11 +5,18 @@
 #include "UIManager.h"
 #include "DialogueManager.h"
 #include "DialogueTemplate.h"
+#include "ImageManager.h"
+#include "Image.h"
+
+#define SQUARESIZE_X 954
+#define SQUARESIZE_Y 714
 
 HRESULT CameraTestScene::Init()
 {
-	testMap = ImageGDIPlusManager::GetInstance()->AddImage(
-		"TestMap", TEXT("Image/UIImage/testBackImg.bmp"));
+	backGround = ImageManager::GetInstance()->AddImage(
+		"±¤Àå¹è°æ", L"Image/SceneImage/Square3.bmp",
+		SQUARESIZE_X, SQUARESIZE_Y, 1, 1,
+		0, RGB(255, 0, 255));
 
 	UIManager::GetInstance()->RegisterAllUIStates();
 
@@ -53,9 +60,8 @@ void CameraTestScene::Render(HDC hdc)
 {
 	RECT cam = CameraManager::GetInstance()->GetViewPos();
 
-	if (testMap)
-	{
-		testMap->RenderBackground(hdc);
+	if (backGround) {
+		backGround->RenderBackground(hdc);
 	}
 	UIManager::GetInstance()->Render(hdc);
 }

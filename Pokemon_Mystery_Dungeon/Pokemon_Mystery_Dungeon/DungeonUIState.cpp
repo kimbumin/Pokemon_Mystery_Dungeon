@@ -11,9 +11,8 @@ HRESULT DungeonUIState::Init()
 	// UI 엘리먼트 생성
 	DungeonInfoBox = new UIElementImage();
 	DungeonInfoBox->SetImage(DungeonInfoBoxImage);
-	DungeonInfoBox->SetLocalPos(25, 10);
+	DungeonInfoBox->SetLocalPos(25, 100);
 	DungeonInfoBox->setAlpha(0.7f);
-	DungeonInfoBox->setScale(1.0f, 1.0f);
 	DungeonInfoBox->SetParent(this);
 
 
