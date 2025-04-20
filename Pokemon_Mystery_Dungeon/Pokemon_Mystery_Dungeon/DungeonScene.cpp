@@ -10,6 +10,7 @@ HRESULT DungeonScene::Init()
 	map.Init();
 	wallTiles = map.GetWallTiles(); //wallTilesÁÂÇ¥  Point·Î
 
+	dungeonFloor = 0;
 
 	return S_OK;
 }
@@ -25,7 +26,11 @@ void DungeonScene::Update()
 		//SceneManager::GetInstance()->AddScene("´øÀü¾À", new DungeonScene());
 		SceneManager::GetInstance()->ChangeScene("±¤Àå");
 	}
-
+	if (KeyManager::GetInstance()->IsOnceKeyDown(VK_SPACE)) {
+		map.Init();
+		wallTiles = map.GetWallTiles();
+		++dungeonFloor;
+	}
 }
 
 void DungeonScene::Render(HDC hdc)

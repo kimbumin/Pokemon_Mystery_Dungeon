@@ -21,6 +21,8 @@ private:
 	Map map;
 	Image* sampleTile;
 
+	int dungeonFloor;
+
 	TileType tiles[TILE_Y][TILE_X];
 	std::vector<POINT> wallTiles;
 };

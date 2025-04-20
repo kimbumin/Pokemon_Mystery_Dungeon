@@ -4,6 +4,7 @@
 #include "TilemapTool.h"
 #include "DungeonScene.h"
 #include "StartScene.h"
+#include "LoadingScene.h"
 
 #define SQUARESIZE_X 954
 #define SQUARESIZE_Y 714
@@ -91,25 +92,27 @@ void SquareScene::Update()
 		SceneManager::GetInstance()->ChangeScene("Å¸ÀÏ¸ÊÅø");
 	}
 
-
-	elapsedTime += TimerManager::GetInstance()->GetDeltaTime();
-	if (elapsedTime > 0.3f)
+	if (yellowFlower && TimerManager::GetInstance())
 	{
-		currAnimaionFrame++;
-		if (currAnimaionFrame >= yellowFlower->GetMaxFrameY())
+		elapsedTime += TimerManager::GetInstance()->GetDeltaTime();
+		if (elapsedTime > 0.3f)
 		{
-			currAnimaionFrame = 0;
+			currAnimaionFrame++;
+			if (currAnimaionFrame >= yellowFlower->GetMaxFrameY())
+			{
+				currAnimaionFrame = 0;
+			}
+			elapsedTime = 0;
 		}
-		elapsedTime = 0;
 	}
-
 	if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F6)) {
 		SceneManager::GetInstance()->AddScene("´øÀü¾À", new DungeonScene());
-		SceneManager::GetInstance()->ChangeScene("´øÀü¾À");
+		SceneManager::GetInstance()->ChangeScene("´øÀü¾À", "·Îµù¾À");
 	}
 	if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F5)) {
 		SceneManager::GetInstance()->AddScene("½ºÅ¸Æ®¾À", new StartScene());
-		SceneManager::GetInstance()->ChangeScene("½ºÅ¸Æ®¾À");
+		SceneManager::GetInstance()->AddScene("·Îµù¾À", new LoadingScene());
+		SceneManager::GetInstance()->ChangeScene("½ºÅ¸Æ®¾À", "·Îµù¾À");
 	}
 }
 

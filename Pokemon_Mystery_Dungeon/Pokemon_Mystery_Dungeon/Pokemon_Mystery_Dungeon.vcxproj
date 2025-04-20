@@ -150,6 +150,7 @@
     <ClCompile Include="ItemManager.cpp" />
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="LeppaBerry.cpp" />
+    <ClCompile Include="LoadingScene.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="OranBerry.cpp" />
@@ -209,6 +210,7 @@
     <ClInclude Include="ItemManager.h" />
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="LeppaBerry.h" />
+    <ClInclude Include="LoadingScene.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="OranBerry.h" />
     <ClInclude Include="MoveActionState.h" />
