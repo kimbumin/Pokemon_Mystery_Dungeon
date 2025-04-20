@@ -16,10 +16,8 @@ protected:
 
 public:
     virtual HRESULT Init() override;
+    virtual void Release() override;
     virtual void Update() override;
-
-    // 이거 Base에서 만들지 고민
-    void ExecuteCommand(IActionState* action);
 
     // 아이템 관련 행동 처리
     bool CanPickUpItem() const;

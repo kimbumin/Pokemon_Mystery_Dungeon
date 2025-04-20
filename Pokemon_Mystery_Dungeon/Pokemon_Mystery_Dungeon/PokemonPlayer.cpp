@@ -7,6 +7,10 @@ HRESULT PokemonPlayer::Init()
 	return PokemonBase::Init();
 }
 
+void PokemonPlayer::Release()
+{
+}
+
 void PokemonPlayer::Update()
 {
 	PokemonBase::Update();
@@ -14,12 +18,6 @@ void PokemonPlayer::Update()
 	{
 		LevelUp();
 	}
-}
-
-void PokemonPlayer::ExecuteCommand(IActionState* action)
-{
-	SetActionState(action);
-
 }
 
 bool PokemonPlayer::CanPickUpItem() const

@@ -160,6 +160,7 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="PokemonBase.cpp" />
     <ClCompile Include="PokemonDataLoader.cpp" />
+    <ClCompile Include="PokemonEnemy.cpp" />
     <ClCompile Include="PokemonImageLoader.cpp" />
     <ClCompile Include="PPAider.cpp" />
     <ClCompile Include="PPHeal.cpp" />
@@ -218,6 +219,7 @@
     <ClInclude Include="MoveActionState.h" />
     <ClInclude Include="PokemonAnimator.h" />
     <ClInclude Include="PokemonBase.h" />
+    <ClInclude Include="PokemonEnemy.h" />
     <ClInclude Include="PokemonImageLoader.h" />
     <ClInclude Include="PPAider.h" />
     <ClInclude Include="PPHeal.h" />
