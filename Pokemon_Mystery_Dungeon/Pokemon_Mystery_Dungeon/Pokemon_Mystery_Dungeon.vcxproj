@@ -128,6 +128,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AttackActionState.cpp" />
     <ClCompile Include="AttackAnimState.cpp" />
     <ClCompile Include="Branch.cpp" />
     <ClCompile Include="CameraManager.cpp" />
@@ -139,6 +140,7 @@
     <ClCompile Include="DungeonScene.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="HurtAnimState.cpp" />
+    <ClCompile Include="HurtActionState.cpp" />
     <ClCompile Include="IdleActionState.cpp" />
     <ClCompile Include="IdleAnimState.cpp" />
     <ClCompile Include="Image.cpp" />
@@ -182,6 +184,7 @@
     <ClCompile Include="UIManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AttackActionState.h" />
     <ClInclude Include="AttackAnimState.h" />
     <ClInclude Include="Branch.h" />
     <ClInclude Include="CameraManager.h" />
@@ -195,6 +198,7 @@
     <ClInclude Include="DungeonScene.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="HurtAnimState.h" />
+    <ClInclude Include="HurtActionState.h" />
     <ClInclude Include="IActionState.h" />
     <ClInclude Include="IAnimState.h" />
     <ClInclude Include="IdleActionState.h" />
