@@ -133,7 +133,9 @@
     <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="CameraTestScene.cpp" />
     <ClCompile Include="DefaultUIState.cpp" />
+    <ClCompile Include="DialogueManager.cpp" />
     <ClCompile Include="DialogueUIState.cpp" />
+    <ClCompile Include="DungeonUIState.cpp" />
     <ClCompile Include="EmberSkill.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="DungeonScene.cpp" />
@@ -178,6 +180,7 @@
     <ClCompile Include="UIElement.cpp" />
     <ClCompile Include="UIElementImage.cpp" />
     <ClCompile Include="TurnManager.cpp" />
+    <ClCompile Include="UIElementText.cpp" />
     <ClCompile Include="WalkAnimState.cpp" />
     <ClCompile Include="TitleUIState.cpp" />
     <ClCompile Include="UIManager.cpp" />
@@ -188,10 +191,13 @@
     <ClInclude Include="CameraManager.h" />
     <ClInclude Include="CameraTestScene.h" />
     <ClInclude Include="DefaultUIState.h" />
+    <ClInclude Include="DialogueManager.h" />
+    <ClInclude Include="DialogueTemplate.h" />
     <ClInclude Include="DialogueUIState.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="CommonFunction.h" />
     <ClInclude Include="config.h" />
+    <ClInclude Include="DungeonUIState.h" />
     <ClInclude Include="EmberSkill.h" />
     <ClInclude Include="DungeonScene.h" />
     <ClInclude Include="GameObject.h" />
@@ -233,6 +239,7 @@
     <ClInclude Include="UIElement.h" />
     <ClInclude Include="UIElementImage.h" />
     <ClInclude Include="TurnManager.h" />
+    <ClInclude Include="UIElementText.h" />
     <ClInclude Include="WalkAnimState.h" />
     <ClInclude Include="StoneShowerSkill.h" />
     <ClInclude Include="StartScene.h" />

@@ -1,5 +1,5 @@
 #pragma once
-#include "Config.h"
+#include "config.h"
 #include <vector>
 #include <Windows.h>
 
@@ -14,7 +14,7 @@ protected:
 
 public:
 	UIElement() = default;
-	virtual ~UIElement() = default;
+	virtual ~UIElement();
 
 	void SetParent(UIElement* newParent);
 

@@ -1,6 +1,7 @@
 #include "DefaultUIState.h"
 #include "ImageGDIPlusManager.h"
-#include "Timer.h"
+#include "UIElementImage.h"
+#include "UIElementText.h"
 #include "UIManager.h"
 
 

@@ -1,10 +1,11 @@
 #pragma once
 #include "UIState.h"
 #include "ImageGDIPlus.h"
-#include "UIElementImage.h"
+#include "UIElement.h"
 
 
-
+class UIElementImage;
+class UIElementText;
 class DefaultUIState : public UIState, public UIElement
 {
 private:
@@ -14,6 +15,8 @@ private:
 
 	UIElementImage* Cursor = nullptr;
 	
+	
+
 	const int OffsetY[3] = { 30, 70, 110 };
 	int YIndex = 0;
 

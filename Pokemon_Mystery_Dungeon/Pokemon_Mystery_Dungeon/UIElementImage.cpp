@@ -14,4 +14,9 @@ void UIElementImage::Render(HDC hdc)
 		flipX, flipY,
 		alpha
 	);
+
+	for (auto child : children)
+	{
+		child->Render(hdc);
+	}
 }
