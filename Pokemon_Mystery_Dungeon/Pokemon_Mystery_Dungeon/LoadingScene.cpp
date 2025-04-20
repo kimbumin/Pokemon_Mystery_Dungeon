@@ -1,6 +1,6 @@
 #include "LoadingScene.h"
 #include <string>
-
+#include "CommonFunction.h"
 LoadingScene::LoadingScene(): frameCount(0)
 {
 }
@@ -11,6 +11,8 @@ LoadingScene::~LoadingScene()
 
 HRESULT LoadingScene::Init()
 {
+    SetClientRect(g_hWnd, WINSIZE_X, WINSIZE_Y);
+
     frameCount = 0;
     return S_OK;
 }
@@ -28,6 +30,8 @@ void LoadingScene::Update()
 
 void LoadingScene::Render(HDC hdc)
 {
+    PatBlt(hdc, 0, 0, 2000, 2000, BLACKNESS);
+
     std::string text = "Loading";
     int dotCount = (frameCount / 60) % 4; // 0 ~ 3
     for (int i = 0; i < dotCount; ++i)
@@ -36,4 +40,8 @@ void LoadingScene::Render(HDC hdc)
     }
 
     TextOutA(hdc, 300, 300, text.c_str(), static_cast<int>(text.length()));
+
+
+
+
 }

@@ -6,6 +6,7 @@
 
 HRESULT StartScene::Init()
 {	
+	SetClientRect(g_hWnd, WINSIZE_X, WINSIZE_Y); //인트로 애니메이션사이즈 1280*720
 	currFrameIndex = 0;
 	elapsedTime = 0.0f;
 
@@ -14,7 +15,7 @@ HRESULT StartScene::Init()
 	{
 		wchar_t filename[256];
 		swprintf(filename, 256, L"Image/SceneImage/intro_animation/teset-%04d.png", i);
-
+	
 		std::string key = "introFrame" + std::to_string(i);
 		ImageGDIPlus* frame = ImageGDIPlusManager::GetInstance()->AddImage(key, filename);
 
@@ -23,7 +24,6 @@ HRESULT StartScene::Init()
 		}
 	}
 
-	SetClientRect(g_hWnd, 1240, 700); //인트로 애니메이션사이즈 1280*720
 
 
 	
@@ -41,10 +41,9 @@ void StartScene::Update()
 	if (elapsedTime > 0.033f) 
 	{
 		currFrameIndex++;
-		// 전체 프레임을 다 재생한 뒤, 마지막 30프레임 반복
+		// 마지막 30프레임 반복
 		if (currFrameIndex >= introFrames.size()) {
-			const int loopStart = introFrames.size() - 30;
-			currFrameIndex = loopStart + (currFrameIndex - loopStart) % 15;
+			currFrameIndex = introFrames.size() - 30;
 		}
 		elapsedTime = 0;
 	}
@@ -61,7 +60,7 @@ void StartScene::Update()
 void StartScene::Render(HDC hdc)
 {
 	if (!introFrames.empty() && currFrameIndex < introFrames.size()) {
-		introFrames[currFrameIndex]->Render(hdc, -20, -10);
+		introFrames[currFrameIndex]->RenderScale(hdc, -10, 0, 0.65, 0.6); //800* 400  1280*720 사이즈로 맞추려면, 
 	}
 
 }

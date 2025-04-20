@@ -111,7 +111,7 @@ void SquareScene::Update()
 	}
 	if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F5)) {
 		SceneManager::GetInstance()->AddScene("½ºÅ¸Æ®¾À", new StartScene());
-		SceneManager::GetInstance()->AddScene("·Îµù¾À", new LoadingScene());
+		SceneManager::GetInstance()->AddLoadingScene("·Îµù¾À", new LoadingScene());
 		SceneManager::GetInstance()->ChangeScene("½ºÅ¸Æ®¾À", "·Îµù¾À");
 	}
 }
