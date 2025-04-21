@@ -3,6 +3,8 @@
 #include "PokemonPool.h"
 #include "PokemonImageLoader.h"
 #include "TurnManager.h"
+#include "PlayerManager.h"
+#include "PokemonPlayer.h"
 #include "CommonFunction.h"
 
 void DungeonManager::Init()
@@ -58,4 +60,23 @@ void DungeonManager::EnterDungeon(string dungeonName)
 
     // 턴 매니저한테 Pool 넘기기
     TurnManager::GetInstance()->InitTurnOrder(pool);
+}
+
+void DungeonManager::ExitDungeon()
+{
+    PokemonImageLoader::GetInstance()->ClearPokemonImage();
+    int playerId = PlayerManager::GetInstance()->GetPlayer()->GetCurrentPokemonData().idNumber;
+    PokemonImageLoader::GetInstance()->LoadPokemonAnim(playerId);
+
+    if (pool)
+    {
+        pool->Release();
+        delete pool;
+        pool = nullptr;
+    }
+    if (builder)
+    {
+        delete builder;
+        builder = nullptr;
+    }
 }

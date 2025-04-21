@@ -1,10 +1,12 @@
 #include "PokemonPool.h"
 #include "PokemonBase.h"
+#include "PlayerManager.h"
+#include "PokemonPlayer.h"
 
 HRESULT PokemonPool::Init()
 {
 	pokemonPool.resize(20);
-	// iterPokemonPool[0] = PlayerManager::GetInstance()->GetPlayer();
+	pokemonPool[0] = PlayerManager::GetInstance()->GetPlayer();
 	for (iterPokemonPool = begin() + 1; iterPokemonPool != end(); ++iterPokemonPool)
 	{
 		(*iterPokemonPool) = new PokemonBase;
