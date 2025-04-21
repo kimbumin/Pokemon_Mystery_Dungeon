@@ -8,6 +8,11 @@ void PokemonDataLoader::Init()
     baseDataMap.clear();
 }
 
+void PokemonDataLoader::Release()
+{
+    PokemonDataLoader::GetInstance()->ReleaseInstance();
+}
+
 bool PokemonDataLoader::LoadFromCSV(const string& filepath)
 {
     ifstream file(filepath);

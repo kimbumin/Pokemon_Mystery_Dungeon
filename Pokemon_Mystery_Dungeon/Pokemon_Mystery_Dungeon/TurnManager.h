@@ -24,6 +24,7 @@ private:
 public:
 
     void InitTurnOrder(PokemonPool* pokemonPool);
+    void Release();
     void Update();
 
     PokemonBase* GetCurrentPokemon();

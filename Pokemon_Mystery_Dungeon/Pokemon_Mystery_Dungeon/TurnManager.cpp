@@ -7,6 +7,11 @@ void TurnManager::InitTurnOrder(PokemonPool* pokemonPool)
     turnOrder = pokemonPool;
 }
 
+void TurnManager::Release()
+{
+    TurnManager::GetInstance()->ReleaseInstance();
+}
+
 PokemonBase* TurnManager::GetCurrentPokemon()
 {
     int count = 0;

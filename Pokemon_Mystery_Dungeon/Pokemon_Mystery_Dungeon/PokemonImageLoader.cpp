@@ -4,6 +4,11 @@
 #include <iomanip>
 
 
+void PokemonImageLoader::Release()
+{
+    PokemonImageLoader::GetInstance()->ReleaseInstance();
+}
+
 void PokemonImageLoader::LoadPokemonAnim(int pokemonId)
 {
 	string folderPath = "Image/PokemonAnim/" + PokemonIdToString(pokemonId) + "/";

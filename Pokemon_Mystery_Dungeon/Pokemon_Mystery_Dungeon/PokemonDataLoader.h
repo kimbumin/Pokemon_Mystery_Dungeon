@@ -9,6 +9,7 @@ private:
 
 public:
     void Init();
+    void Release();
     bool LoadFromCSV(const string& filepath);
 
     // Getter
