@@ -7,6 +7,7 @@
 #include "DialogueTemplate.h"
 #include "ImageManager.h"
 #include "Image.h"
+#include "InfoUIState.h"
 
 #define SQUARESIZE_X 954
 #define SQUARESIZE_Y 714
@@ -23,7 +24,7 @@ HRESULT CameraTestScene::Init()
 	CameraManager::GetInstance()->Init(GameViewSize_X, GameViewSize_Y, 1420, 700);
 	UIManager::GetInstance()->AddState("dialogueBox", new DialogueUIState());
 
-
+	
 	return S_OK;
 }
 
@@ -43,6 +44,8 @@ void CameraTestScene::Update()
 		UIManager::GetInstance()->OpenUIStateBox("defaultUI");
 	}
 	// I키 누르면 dialogueBox UI 상태로 전환 + 테스트 대사 출력
+	// 흐름
+	// CameraTestScene → DialogueManager → UIManager → DialogueUIState → PushDialogueLine()
 	if (KeyManager::GetInstance()->IsOnceKeyDown(0x49)) // 'I' 키
 	{
 		DialogueManager::GetInstance()->ShowLine(DialogueTemplate::FoundItem,{ {L"itemName", L"Monster Ball"} });

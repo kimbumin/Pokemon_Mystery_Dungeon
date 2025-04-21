@@ -246,6 +246,9 @@
     <ClCompile Include="DialogueManager.cpp">
       <Filter>Ui\UiConfig\소스</Filter>
     </ClCompile>
+    <ClCompile Include="InfoUIState.cpp">
+      <Filter>Ui\UiState\소스</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="config.h">
@@ -439,6 +442,9 @@
     </ClInclude>
     <ClInclude Include="DialogueTemplate.h">
       <Filter>Ui\UiConfig\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="InfoUIState.h">
+      <Filter>Ui\UiState\헤더</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -5,6 +5,7 @@
 #include <gdiplusimaging.h>
 #pragma comment(lib, "gdiplus.lib")
 
+// 5100은 GIF에서 '프레임 딜레이 정보'를 가져오기 위한 ID임 - 각 프레임이 보여질 시간(딜레이)
 #define PropertyTagFrameDelay 0x5100
 
 class ImageGDIPlus
@@ -37,7 +38,7 @@ private:
 
 	vector<UINT> gifFrameDelay;
 	float gifElapsedTime = 0.0f;
-	float gifSpeedMultiplier = 1.0f;
+	float gifSpeedMultiplier = 3.0f;
 
 
 public:

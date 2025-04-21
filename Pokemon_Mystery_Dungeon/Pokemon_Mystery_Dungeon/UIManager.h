@@ -11,10 +11,14 @@ private:
 	map<string, bool> IsOpenMap;
 	string currentStateKey;
 
-public:
 	static UIState* currentState;
 	static UIState* nextState;
 
+	vector<UIState*> persistentStates;
+	vector<UIState*> toggleStates;
+
+public:
+	
 	void Init();
 	void Release();
 	void Update();
@@ -23,8 +27,12 @@ public:
 	UIState* AddState(string key, UIState* state);
 	UIState* FindState(const string& key);
 	void RegisterAllUIStates();
+
 	void OpenUIStateBox(const string& key);
 	void CloseUIStateBox(const string& key);
+
+	void AddPersistentState(UIState* state);
+	void AddToggleState(UIState* state, bool isOpen);
 
 
 

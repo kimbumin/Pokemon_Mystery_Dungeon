@@ -11,6 +11,7 @@ UIState* UIManager::nextState = nullptr;
 
 void UIManager::Init()
 {
+	
 }
 
 void UIManager::Release()
@@ -31,6 +32,16 @@ void UIManager::Release()
 
 void UIManager::Update()
 {
+	for (auto& state : persistentStates)
+	{
+		state->Update();
+	}
+
+	for (auto& state : toggleStates)
+	{
+		state->Update();
+	}
+
 	if (currentState)
 	{
 		currentState->Update();
@@ -39,6 +50,17 @@ void UIManager::Update()
 
 void UIManager::Render(HDC hdc)
 {
+	for (auto& state : persistentStates)
+	{
+		state->Render(hdc);
+	}
+
+	for (auto& state : toggleStates)
+	{
+		state->Render(hdc);
+	}
+
+
 	if (currentState)
 	{
 		currentState->Render(hdc);
@@ -126,6 +148,33 @@ void UIManager::CloseUIStateBox(const string& key)
 	{
 		currentState = nullptr;
 		currentStateKey = "";
+	}
+}
+
+void UIManager::AddPersistentState(UIState* state)
+{
+	if (state)
+	{
+		persistentStates.push_back(state);
+	}
+}
+
+void UIManager::AddToggleState(UIState* state, bool isOpen)
+{
+	auto iter = find(toggleStates.begin(), toggleStates.end(), state);
+	if (isOpen)
+	{
+		if (iter == toggleStates.end())
+		{
+			toggleStates.push_back(state);
+		}
+	}
+	else
+	{
+		if (iter != toggleStates.end())
+		{
+			toggleStates.erase(iter);
+		}
 	}
 }
 

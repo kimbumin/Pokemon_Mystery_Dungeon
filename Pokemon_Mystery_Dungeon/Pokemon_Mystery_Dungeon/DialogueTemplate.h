@@ -9,5 +9,4 @@ namespace DialogueTemplate
 	inline const wstring ArrivedAtLocation = L"You arrived at ¡´location¡µ.";
 	inline const wstring StatusEffect = L"You are now affected by ¡´effectName¡µ.";
 	inline const wstring EnemyFled = L"¡´enemyName¡µ has fled.";
-
 }

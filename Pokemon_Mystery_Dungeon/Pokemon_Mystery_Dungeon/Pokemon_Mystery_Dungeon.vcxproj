@@ -147,6 +147,7 @@
     <ClCompile Include="ImageGDIPlus.cpp" />
     <ClCompile Include="ImageGDIPlusManager.cpp" />
     <ClCompile Include="ImageManager.cpp" />
+    <ClCompile Include="InfoUIState.cpp" />
     <ClCompile Include="InventoryUIState.cpp" />
     <ClCompile Include="ISkill.cpp" />
     <ClCompile Include="ItemManager.cpp" />
@@ -211,6 +212,7 @@
     <ClInclude Include="ImageGDIPlus.h" />
     <ClInclude Include="ImageGDIPlusManager.h" />
     <ClInclude Include="ImageManager.h" />
+    <ClInclude Include="InfoUIState.h" />
     <ClInclude Include="InventoryUIState.h" />
     <ClInclude Include="ISkill.h" />
     <ClInclude Include="ItemManager.h" />
