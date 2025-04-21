@@ -3,6 +3,7 @@
 #include "Map.h"
 
 class Player;
+class MPlayer;
 class Map;
 
 class DungeonScene :public GameObject
@@ -20,8 +21,10 @@ public:
 private:
 	Map map;
 	Image* sampleTile;
+	MPlayer* mPlayer;
 
 	int dungeonFloor;
+	POINT stairPos;
 
 	TileType tiles[TILE_Y][TILE_X];
 	std::vector<POINT> wallTiles;

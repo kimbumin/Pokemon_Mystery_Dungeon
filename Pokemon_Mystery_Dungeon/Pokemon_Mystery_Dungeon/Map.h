@@ -58,26 +58,21 @@ public:
     void Draw(HDC hdc);
 
     void MiniMapRender(HDC hdc, int drawingX, int drawingY);
-
     void CreateRoom(const Room& room);
-
     void ConnectRooms(const Room& a, const Room& b);
-
     void ClassifyTiles();
-
     bool InBounds(int x, int y) const;
-
     bool IsPathOrFloor(int x, int y) const;
-
     bool MatchPattern(const WildPattern& pattern, const vector<int>& current) const;
-
     void TileDesign();
-
     void RandomTileDesign();
 
     TileType GetTile(int x, int y) const {return tiles[y][x];}
 
     vector<POINT> GetWallTiles() { return wallTiles; };
+
+    POINT GetStairPos() { return stairPos; }
+
 private:
 
     TileType tiles[TILE_Y][TILE_X];

@@ -128,7 +128,7 @@ void SquareScene::Update()
 	}
 
 	if (collisionBoxTool) {
-		collisionBoxTool->Update();
+//		collisionBoxTool->Update();
 		CollisionManager::GetInstance()->MapPlayerCheck(mPlayer, collisionBoxTool->GetRectBoxes());
 	}
 
