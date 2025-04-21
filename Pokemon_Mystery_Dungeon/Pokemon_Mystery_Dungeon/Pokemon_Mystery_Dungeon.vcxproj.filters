@@ -243,6 +243,15 @@
     <ClCompile Include="PokemonEnemy.cpp">
       <Filter>Pokemon</Filter>
     </ClCompile>
+    <ClCompile Include="DungeonManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="PokemonPool.cpp">
+      <Filter>Pokemon</Filter>
+    </ClCompile>
+    <ClCompile Include="PokemonBuilder.cpp">
+      <Filter>Pokemon</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="config.h">
@@ -429,6 +438,15 @@
       <Filter>Pokemon\Action</Filter>
     </ClInclude>
     <ClInclude Include="PokemonEnemy.h">
+      <Filter>Pokemon</Filter>
+    </ClInclude>
+    <ClInclude Include="DungeonManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="PokemonPool.h">
+      <Filter>Pokemon</Filter>
+    </ClInclude>
+    <ClInclude Include="PokemonBuilder.h">
       <Filter>Pokemon</Filter>
     </ClInclude>
   </ItemGroup>

@@ -135,6 +135,7 @@
     <ClCompile Include="CameraTestScene.cpp" />
     <ClCompile Include="DefaultUIState.cpp" />
     <ClCompile Include="DialogueUIState.cpp" />
+    <ClCompile Include="DungeonManager.cpp" />
     <ClCompile Include="EmberSkill.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="DungeonScene.cpp" />
@@ -159,9 +160,11 @@
     <ClCompile Include="PokemonAnimator.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="PokemonBase.cpp" />
+    <ClCompile Include="PokemonBuilder.cpp" />
     <ClCompile Include="PokemonDataLoader.cpp" />
     <ClCompile Include="PokemonEnemy.cpp" />
     <ClCompile Include="PokemonImageLoader.cpp" />
+    <ClCompile Include="PokemonPool.cpp" />
     <ClCompile Include="PPAider.cpp" />
     <ClCompile Include="PPHeal.cpp" />
     <ClCompile Include="PokemonPlayer.cpp" />
@@ -195,6 +198,7 @@
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="CommonFunction.h" />
     <ClInclude Include="config.h" />
+    <ClInclude Include="DungeonManager.h" />
     <ClInclude Include="EmberSkill.h" />
     <ClInclude Include="DungeonScene.h" />
     <ClInclude Include="GameObject.h" />
@@ -219,8 +223,10 @@
     <ClInclude Include="MoveActionState.h" />
     <ClInclude Include="PokemonAnimator.h" />
     <ClInclude Include="PokemonBase.h" />
+    <ClInclude Include="PokemonBuilder.h" />
     <ClInclude Include="PokemonEnemy.h" />
     <ClInclude Include="PokemonImageLoader.h" />
+    <ClInclude Include="PokemonPool.h" />
     <ClInclude Include="PPAider.h" />
     <ClInclude Include="PPHeal.h" />
     <ClInclude Include="PokemonPlayer.h" />
