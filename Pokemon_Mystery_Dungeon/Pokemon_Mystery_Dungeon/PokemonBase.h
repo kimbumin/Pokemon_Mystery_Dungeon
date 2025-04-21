@@ -50,6 +50,7 @@ protected:
     int level;
     int currentHp;
     bool isAlive;
+    bool isTurnComplete;
     Direction direction = Direction::SOUTH;
 
     // 배운 스킬 리스트

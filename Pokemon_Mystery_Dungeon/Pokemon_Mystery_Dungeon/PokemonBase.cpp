@@ -21,11 +21,11 @@
 
 HRESULT PokemonBase::Init()
 {
-    isAlive = true;
-    baseStatus = PokemonDataLoader::GetInstance()->GetData(151); // 따로 빌더에서 정해줄 것
+    isAlive = false;
+    baseStatus = PokemonDataLoader::GetInstance()->GetData(0);
 
     currentStatus = *baseStatus;
-    level = 5; // 따로 빌더에서 정해줄 것
+    level = 0;
     CalStatus();
     currentHp = currentStatus.hp;
     animator = new PokemonAnimator();

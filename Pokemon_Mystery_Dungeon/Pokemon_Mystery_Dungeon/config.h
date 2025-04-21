@@ -92,6 +92,15 @@ constexpr pair<int, int> directionOffsets[8] = {
 // 포켓몬 애니메이션 종류들
 const vector<string> animTypes = { "Attack", "Hurt", "Idle", "Rotate", "Swing", "Walk" };
 
+// 던전에 대한 정보
+struct DungeonSpawnInfo
+{
+    vector<int> pokemonIds; // 등장하는 포켓몬들의 ID
+    int minLevel; // 레벨 구간
+    int maxLevel;
+    int spawnCount; // 등장하는 몬스터의 수
+};
+
 /*
     extern 키워드 : 변수나 함수가 다른 파일에 정의되어 있다 라는
     사실을 알리는 키워드.
