@@ -156,6 +156,7 @@
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="OranBerry.cpp" />
     <ClCompile Include="MoveActionState.cpp" />
+    <ClCompile Include="MPlayer.cpp" />
     <ClCompile Include="PokemonAnimator.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="PokemonBase.cpp" />
@@ -216,6 +217,7 @@
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="OranBerry.h" />
     <ClInclude Include="MoveActionState.h" />
+    <ClInclude Include="MPlayer.h" />
     <ClInclude Include="PokemonAnimator.h" />
     <ClInclude Include="PokemonBase.h" />
     <ClInclude Include="PokemonImageLoader.h" />
