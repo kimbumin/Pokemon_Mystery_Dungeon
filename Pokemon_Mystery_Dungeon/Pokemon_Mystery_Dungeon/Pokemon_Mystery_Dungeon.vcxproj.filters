@@ -237,6 +237,9 @@
     <ClCompile Include="LoadingScene.cpp">
       <Filter>Scene\소스</Filter>
     </ClCompile>
+    <ClCompile Include="CollisionBoxTool.cpp">
+      <Filter>Scene\소스</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="config.h">
@@ -417,6 +420,9 @@
       <Filter>Pokemon</Filter>
     </ClInclude>
     <ClInclude Include="LoadingScene.h">
+      <Filter>Scene\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionBoxTool.h">
       <Filter>Scene\헤더</Filter>
     </ClInclude>
   </ItemGroup>

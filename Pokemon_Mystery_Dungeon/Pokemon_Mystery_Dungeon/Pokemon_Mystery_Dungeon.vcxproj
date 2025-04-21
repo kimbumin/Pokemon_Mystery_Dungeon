@@ -132,6 +132,7 @@
     <ClCompile Include="Branch.cpp" />
     <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="CameraTestScene.cpp" />
+    <ClCompile Include="CollisionBoxTool.cpp" />
     <ClCompile Include="DefaultUIState.cpp" />
     <ClCompile Include="DialogueUIState.cpp" />
     <ClCompile Include="EmberSkill.cpp" />
@@ -187,6 +188,7 @@
     <ClInclude Include="Branch.h" />
     <ClInclude Include="CameraManager.h" />
     <ClInclude Include="CameraTestScene.h" />
+    <ClInclude Include="CollisionBoxTool.h" />
     <ClInclude Include="DefaultUIState.h" />
     <ClInclude Include="DialogueUIState.h" />
     <ClInclude Include="CollisionManager.h" />

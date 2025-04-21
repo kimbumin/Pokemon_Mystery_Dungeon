@@ -1,6 +1,9 @@
 #pragma once
 #include "GameObject.h"
 
+
+class CollisionBoxTool;
+
 class SquareScene : public GameObject
 {
 public:
@@ -19,6 +22,8 @@ private:
 	Image* redFlower;
 	Image* yellowFlower;
 	Image* river;
+
+	CollisionBoxTool* collisionBoxTool;
 
 
 	int currAnimaionFrame;

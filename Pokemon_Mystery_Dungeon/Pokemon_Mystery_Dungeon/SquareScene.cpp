@@ -5,6 +5,7 @@
 #include "DungeonScene.h"
 #include "StartScene.h"
 #include "LoadingScene.h"
+#include "CollisionBoxTool.h"
 
 #define SQUARESIZE_X 954
 #define SQUARESIZE_Y 714
@@ -76,6 +77,11 @@ HRESULT SquareScene::Init()
 		{341, 611},
 	};
 	elapsedTime = 0;
+
+
+	collisionBoxTool = new CollisionBoxTool();
+	collisionBoxTool->Init();
+
 	return S_OK;
 }
 
@@ -114,6 +120,11 @@ void SquareScene::Update()
 		SceneManager::GetInstance()->AddLoadingScene("·Îµù¾À", new LoadingScene());
 		SceneManager::GetInstance()->ChangeScene("½ºÅ¸Æ®¾À", "·Îµù¾À");
 	}
+
+	if (collisionBoxTool) {
+		collisionBoxTool->Update();
+	}
+
 }
 
 
@@ -135,6 +146,9 @@ void SquareScene::Render(HDC hdc)
 		river->FrameRender(hdc, 152, 400, currAnimaionFrame, 0, 0);
 		river->FrameRender(hdc, 152, 460, currAnimaionFrame, 0, 0);
 
+	}
+	if (collisionBoxTool) {
+		collisionBoxTool->Render(hdc);
 	}
 
     TimerManager::GetInstance()->Render(hdc);
