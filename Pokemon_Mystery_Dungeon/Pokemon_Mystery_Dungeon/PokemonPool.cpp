@@ -8,6 +8,7 @@ HRESULT PokemonPool::Init()
 	for (iterPokemonPool = begin() + 1; iterPokemonPool != end(); ++iterPokemonPool)
 	{
 		(*iterPokemonPool) = new PokemonBase;
+		(*iterPokemonPool)->SetIsAlive(false);
 	}
 	return S_OK;
 }
