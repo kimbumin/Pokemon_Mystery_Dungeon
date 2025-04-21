@@ -18,15 +18,16 @@ private:
     std::wstring mapName;
 
 public:
-    HRESULT Init() override;
+    HRESULT Init(wstring mapName);
     void Release() override;
     void Update() override;
     void Render(HDC hdc) override;
 
-    void SetMap(const std::wstring& name, Image* backgroundImage);
-    const std::vector<CollisionBox>& GetCollisionBoxes() const { return boxes; }
+    void SetMapName(const std::wstring& name) { mapName = name; }
 
-private:
+    const std::vector<CollisionBox>& GetCollisionBoxes() const { return boxes; }
+    std::vector<RECT> GetRectBoxes() const;
+
     void SaveToFile();
     void LoadFromFile();
 };

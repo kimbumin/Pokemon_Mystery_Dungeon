@@ -20,6 +20,7 @@ void MPlayer::Release()
 
 void MPlayer::Update()
 {
+    SavePrevPos();
     Move();
     UpdateRect();
 }

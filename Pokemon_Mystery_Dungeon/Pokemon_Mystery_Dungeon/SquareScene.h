@@ -3,6 +3,7 @@
 
 
 class CollisionBoxTool;
+class MPlayer;
 
 class SquareScene : public GameObject
 {
@@ -23,6 +24,7 @@ private:
 	Image* yellowFlower;
 	Image* river;
 
+	MPlayer* mPlayer;
 	CollisionBoxTool* collisionBoxTool;
 
 

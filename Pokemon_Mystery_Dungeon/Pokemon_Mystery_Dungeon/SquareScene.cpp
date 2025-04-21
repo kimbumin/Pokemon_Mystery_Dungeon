@@ -6,6 +6,7 @@
 #include "StartScene.h"
 #include "LoadingScene.h"
 #include "CollisionBoxTool.h"
+#include "MPlayer.h"
 
 #define SQUARESIZE_X 954
 #define SQUARESIZE_Y 714
@@ -18,30 +19,30 @@ HRESULT SquareScene::Init()
 	redFlower = new Image();
 	yellowFlower = new Image();
 	river = new Image();
+	{
+		//Size : 954, 714
+		backGround = ImageManager::GetInstance()->AddImage(
+			"±¤Àå¹è°æ", L"Image/SceneImage/Square3.bmp",
+			SQUARESIZE_X, SQUARESIZE_Y, 1, 1,
+			0, RGB(255, 0, 255));
 
+		//210,41
+		river = ImageManager::GetInstance()->AddImage(
+			"°­¹°", L"Image/SceneImage/river.bmp",
+			210, 41, 6, 1,
+			0, RGB(200, 224, 168));
 
-	//Size : 954, 714
-	backGround = ImageManager::GetInstance()->AddImage(
-		"±¤Àå¹è°æ", L"Image/SceneImage/Square3.bmp", 
-		SQUARESIZE_X, SQUARESIZE_Y, 1,1,
-		0, RGB(255,0,255));
+		//33,144
+		yellowFlower = ImageManager::GetInstance()->AddImage(
+			"³ë¶õ²É", L"Image/SceneImage/YellowFlower.bmp",
+			33, 144, 1, 6,
+			0, RGB(184, 240, 120));
 
-	//210,41
-	river = ImageManager::GetInstance()->AddImage(
-		"°­¹°", L"Image/SceneImage/river.bmp",
-		210, 41, 6, 1,
-		0, RGB(200, 224, 168));
-
-	//33,144
-	yellowFlower = ImageManager::GetInstance()->AddImage(
-		"³ë¶õ²É", L"Image/SceneImage/YellowFlower.bmp", 
-		33, 144, 1,6,
-		0, RGB(184,240,120));
-	
-	redFlower = ImageManager::GetInstance()->AddImage(
-		"ºÓÀº²É", L"Image/SceneImage/RedFlower.bmp", 
-		33, 144, 1,6,
-		0, RGB(184,240,120));
+		redFlower = ImageManager::GetInstance()->AddImage(
+			"ºÓÀº²É", L"Image/SceneImage/RedFlower.bmp",
+			33, 144, 1, 6,
+			0, RGB(184, 240, 120));
+	}
 
 	redPositions = {
 		{545, 128},
@@ -80,7 +81,12 @@ HRESULT SquareScene::Init()
 
 
 	collisionBoxTool = new CollisionBoxTool();
-	collisionBoxTool->Init();
+	collisionBoxTool->Init(L"Square");
+
+
+	mPlayer = new MPlayer();
+	mPlayer->Init();
+
 
 	return S_OK;
 }
@@ -123,8 +129,14 @@ void SquareScene::Update()
 
 	if (collisionBoxTool) {
 		collisionBoxTool->Update();
+		CollisionManager::GetInstance()->MapPlayerCheck(mPlayer, collisionBoxTool->GetRectBoxes());
 	}
 
+	if (mPlayer) {
+		mPlayer->Update();
+	}
+	
+	
 }
 
 
@@ -148,7 +160,10 @@ void SquareScene::Render(HDC hdc)
 
 	}
 	if (collisionBoxTool) {
-		collisionBoxTool->Render(hdc);
+	//	collisionBoxTool->Render(hdc);
+	}
+	if (mPlayer) {
+		mPlayer->Render(hdc);
 	}
 
     TimerManager::GetInstance()->Render(hdc);
