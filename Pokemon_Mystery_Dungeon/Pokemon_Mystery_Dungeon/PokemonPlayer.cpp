@@ -3,8 +3,10 @@
 
 HRESULT PokemonPlayer::Init()
 {
+	PokemonBase::Init();
+	exp = pow(level, 3);
 	expToLevelUp = pow((level + 1), 3);
-	return PokemonBase::Init();
+	return S_OK;
 }
 
 void PokemonPlayer::Release()

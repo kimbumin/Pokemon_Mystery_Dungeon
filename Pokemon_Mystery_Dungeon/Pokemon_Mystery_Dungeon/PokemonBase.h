@@ -87,6 +87,8 @@ public:
     inline void SetLevel(int level) { this->level = level; }
     inline void SetIsAlive(bool isAlive) { this->isAlive = isAlive; }
 
+    void SetAnimator();
+
     // Rapper Anim Function
     void PlayWalkAnim();
     void PlayIdleAnim();

@@ -21,13 +21,13 @@
 
 HRESULT PokemonBase::Init()
 {
-    isAlive = false;
-    baseStatus = PokemonDataLoader::GetInstance()->GetData(0);
-
+    // isAlive = false;
+    // baseStatus = PokemonDataLoader::GetInstance()->GetData(0);
     currentStatus = *baseStatus;
-    level = 0;
+    // level = 0;
     CalStatus();
     currentHp = currentStatus.hp;
+
     animator = new PokemonAnimator();
 
     walkAnim = new WalkAnimState;
@@ -48,20 +48,7 @@ HRESULT PokemonBase::Init()
     SetAnimState(idleAnim);
     SetActionState(idleAction);
 
-    string idStr = PokemonImageLoader::GetInstance()->PokemonIdToString(baseStatus->idNumber);
-    for (auto type = animTypes.begin(); type != animTypes.end(); ++type)
-    {
-        string key = idStr + *type;
-        Image* image = ImageManager::GetInstance()->FindImage(key);
-        if (image) 
-        {
-            int frameX = image->GetMaxFrameX();
-            int frameY = image->GetMaxFrameY();
-            float frameTime = 1.f / frameX; //  Check: 재생 속도 하드코딩 개선 사항 (CSV에 있는 데이터로 매 프레임마다 재생속도도 다르게 할 수 있다)
-            animator->AddAnimation(*type, image, frameX, frameY, frameTime, *type == "Idle");
-            // 반복되는 애니메이션은 Idle만 있어서
-        }
-    }
+    SetAnimator();
     return S_OK;
 }
 
@@ -227,7 +214,25 @@ void PokemonBase::SetActionState(IActionState* newState)
     }
 }
 
-void PokemonBase::PlayWalkAnim() 
+void PokemonBase::SetAnimator()
+{
+    string idStr = PokemonImageLoader::GetInstance()->PokemonIdToString(baseStatus->idNumber);
+    for (auto type = animTypes.begin(); type != animTypes.end(); ++type)
+    {
+        string key = idStr + *type;
+        Image* image = ImageManager::GetInstance()->FindImage(key);
+        if (image)
+        {
+            int frameX = image->GetMaxFrameX();
+            int frameY = image->GetMaxFrameY();
+            float frameTime = 1.f / frameX; //  Check: 재생 속도 하드코딩 개선 사항 (CSV에 있는 데이터로 매 프레임마다 재생속도도 다르게 할 수 있다)
+            animator->AddAnimation(*type, image, frameX, frameY, frameTime, *type == "Idle");
+            // 반복되는 애니메이션은 Idle만 있어서
+        }
+    }
+}
+
+void PokemonBase::PlayWalkAnim()
 { 
     SetAnimState(walkAnim); 
 }

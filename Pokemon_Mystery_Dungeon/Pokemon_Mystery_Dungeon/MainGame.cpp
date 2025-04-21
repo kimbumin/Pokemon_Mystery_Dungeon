@@ -5,13 +5,21 @@
 #include "TilemapTool.h"
 #include "SquareScene.h"
 #include "CameraTestScene.h"
+#include "PokemonDataLoader.h"
+#include "PokemonImageLoader.h"
+#include "PlayerManager.h"
+#include "TurnManager.h"
 
 HRESULT MainGame::Init()
 {
 	ImageManager::GetInstance()->Init();
 	KeyManager::GetInstance()->Init();
 	SceneManager::GetInstance()->Init();
+	
+	PokemonDataLoader::GetInstance()->Init();
+	PokemonDataLoader::GetInstance()->LoadFromCSV("Data/PokemonBaseStatus.csv");
 
+	PlayerManager::GetInstance()->Init();
 	hdc = GetDC(g_hWnd);
 
 	backBuffer = new Image();
@@ -42,11 +50,14 @@ void MainGame::Release()
 	SceneManager::GetInstance()->Release();
 	KeyManager::GetInstance()->Release();
 	ImageManager::GetInstance()->Release();
+	PlayerManager::GetInstance()->Release();
 }
 
 void MainGame::Update()
 {
+	TurnManager::GetInstance()->Update();
 	SceneManager::GetInstance()->Update();
+	PlayerManager::GetInstance()->Update();
 	InvalidateRect(g_hWnd, NULL, false);
 }
 
@@ -58,6 +69,7 @@ void MainGame::Render()
 
 	TimerManager::GetInstance()->Render(hBackBufferDC);
 
+	PlayerManager::GetInstance()->Render(hBackBufferDC);
 
 	backBuffer->Render(hdc);
 }
