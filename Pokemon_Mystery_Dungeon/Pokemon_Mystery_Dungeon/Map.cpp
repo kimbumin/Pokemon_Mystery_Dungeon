@@ -172,11 +172,58 @@ void Map::Draw(HDC hdc) {  //과정 여기다 할까 생각중
     for (int y = 0; y < TILE_Y; ++y) {
         for (int x = 0; x < TILE_X; ++x) {
             RECT rc = { x * TILE_SIZE, y * TILE_SIZE, (x + 1) * TILE_SIZE, (y + 1) * TILE_SIZE };
-            HBRUSH brush = (tiles[y][x] == TILE_FLOOR) ? (HBRUSH)GetStockObject(WHITE_BRUSH) : (HBRUSH)GetStockObject(BLACK_BRUSH);
+            HBRUSH brush = (tiles[y][x] == TILE_FLOOR or tiles[y][x] == TILE_PATH) ? (HBRUSH)GetStockObject(WHITE_BRUSH) : (HBRUSH)GetStockObject(BLACK_BRUSH);
             FillRect(hdc, &rc, brush);
         }
     }
 }  
+
+void Map::MiniMapRender(HDC hdc, int drawingX, int drawingY) {
+    const int MINIMAP_TILE_SIZE = 4; //미니맵 타일크기
+
+    for (int y = 0; y < TILE_Y; ++y) {
+        for (int x = 0; x < TILE_X; ++x) {
+            RECT rc = {
+                drawingX + x * MINIMAP_TILE_SIZE,
+                drawingY + y * MINIMAP_TILE_SIZE,
+                drawingX + (x + 1) * MINIMAP_TILE_SIZE,
+                drawingY + (y + 1) * MINIMAP_TILE_SIZE
+            };
+
+            HBRUSH brush = nullptr;
+
+            switch (tiles[y][x]) {
+            case TILE_FLOOR:
+                brush = CreateSolidBrush(RGB(50, 50, 50));
+                break;
+            case TILE_PATH:
+                brush = CreateSolidBrush(RGB(150, 150, 255)); // 연한 파란색
+                break;
+            case TILE_WALL:
+
+                continue;
+            default:
+                brush = CreateSolidBrush(RGB(0, 0, 0));
+                break;
+            }
+
+            FillRect(hdc, &rc, brush);
+            DeleteObject(brush);
+        }
+    }
+
+    RECT stairRc = {
+        drawingX + stairPos.x * MINIMAP_TILE_SIZE,
+        drawingY + stairPos.y * MINIMAP_TILE_SIZE,
+        drawingX + (stairPos.x + 1) * MINIMAP_TILE_SIZE,
+        drawingY + (stairPos.y + 1) * MINIMAP_TILE_SIZE
+    };
+    HBRUSH stairBrush = CreateSolidBrush(RGB(255, 255, 0));
+    FillRect(hdc, &stairRc, stairBrush);
+    DeleteObject(stairBrush);
+}
+
+
 
 void Map::CreateRoom(const Room& room)
 {

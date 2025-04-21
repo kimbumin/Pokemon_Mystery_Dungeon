@@ -57,6 +57,8 @@ public:
     void Generate();                    
     void Draw(HDC hdc);
 
+    void MiniMapRender(HDC hdc, int drawingX, int drawingY);
+
     void CreateRoom(const Room& room);
 
     void ConnectRooms(const Room& a, const Room& b);
@@ -77,6 +79,7 @@ public:
 
     vector<POINT> GetWallTiles() { return wallTiles; };
 private:
+
     TileType tiles[TILE_Y][TILE_X];
     std::vector<Room> rooms;
 

@@ -38,8 +38,13 @@ void DungeonScene::Render(HDC hdc)
 	PatBlt(hdc, 0, 0, 2000, 2000, BLACKNESS);
 
 	map.Render(hdc);
+	map.MiniMapRender(hdc, 0, 0);
 
 	//for (const POINT& wall : wallTiles) {
 	//	RenderRectAtCenter(hdc, wall.x*TILE_SIZE, wall.y*TILE_SIZE, TILE_SIZE, TILE_SIZE);
 	//}
+	
+//	map.Draw(hdc);
+
+
 }
