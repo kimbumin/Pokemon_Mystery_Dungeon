@@ -1,18 +1,34 @@
 #include "TurnManager.h"
 #include "PokemonBase.h"
+#include "PokemonPool.h"
 
-void TurnManager::InitTurnOrder(vector<PokemonBase*>& pokemons)
+void TurnManager::InitTurnOrder(PokemonPool* pokemonPool)
 {
+    turnOrder = pokemonPool;
 }
 
 PokemonBase* TurnManager::GetCurrentPokemon()
 {
-    return turnOrder[currentIndex];
+    int count = 0;
+    for (auto iter = turnOrder->begin(); iter != turnOrder->end(); ++iter)
+    {
+        if (!(*iter)->GetIsAlive()) 
+        {
+            continue;
+        }
+
+        if (count == currentIndex)
+        {
+            return *iter;
+        }
+        ++count;
+    }
+    return nullptr;
 }
 
 bool TurnManager::IsPlayerTurn()
 {
-    if (currentIndex = 0)
+    if (currentIndex == 0)
     {
         return true;
     }
@@ -24,7 +40,7 @@ bool TurnManager::IsPlayerTurn()
 
 void TurnManager::Update()
 {
-    if (turnOrder.empty()) 
+    if (!turnOrder || turnOrder->IsEmpty())
     {
         return;
     }
@@ -66,8 +82,20 @@ void TurnManager::Update()
 
     case TurnState::TurnEnd:
         ++ currentIndex;
+        int total = 0;
+        for (auto it = turnOrder->begin(); it != turnOrder->end(); ++it)
+        {
+            if ((*it)->GetIsAlive())
+            {
+                ++total;
+            }
+        }
+        if (currentIndex >= total)
+        {
+            currentIndex = 0;
+        }
         state = TurnState::WaitingForInput;
-        // 한 턴 경과
+        elapsedTime = 0.0f;
         break;
     }
 }
