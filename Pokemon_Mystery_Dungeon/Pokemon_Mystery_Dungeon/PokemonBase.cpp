@@ -115,7 +115,7 @@ void PokemonBase::Release()
 
 void PokemonBase::Update()
 {
-    if (currentActionState->CanOverride())
+   /* if (currentActionState->CanOverride())
     {
         if (KeyManager::GetInstance()->IsOnceKeyDown(VK_UP))
         {
@@ -137,7 +137,7 @@ void PokemonBase::Update()
             direction = Direction::EAST;
             SetActionState(moveAction);
         }
-    }
+    }*/
     if (currentAnimState)
     {
         currentAnimState->Update(this);

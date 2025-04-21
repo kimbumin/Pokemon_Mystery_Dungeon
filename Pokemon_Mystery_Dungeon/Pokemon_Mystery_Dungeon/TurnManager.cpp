@@ -55,25 +55,36 @@ void TurnManager::Update()
     switch (state)
     {
     case TurnState::WaitingForInput:
-        /*
-        if (플레이어차례) IsPlayerTurn()
+        
+        if (IsPlayerTurn())
         {
-            if(유효한 입력을 하면)
+            if (KeyManager::GetInstance()->IsOnceKeyDown(VK_UP)) // UI가 어떤 상태이고 그거에 맞는 입력이 들어오면(이거도 switch문으로 표현해야할지도)
             {
-            // 플레이어 행동 결정
+                // 플레이어 행동 결정
+                current->ExecuteMoveAction();
                 state = TurnState::ExecutingAction;
 
+            }
+            else 
+            {
+                return;
             }
         }
         else
         {
             // AI 행동 결정
+            current->ExecuteMoveAction();
             state = TurnState::ExecutingAction;
         }
-        */  
+        
         break;
 
     case TurnState::ExecutingAction:
+        if (!IsPlayerTurn())
+        {
+            state = TurnState::TurnEnd;
+            break;
+        }
         state = TurnState::WaitingForAnim;
         break;
 

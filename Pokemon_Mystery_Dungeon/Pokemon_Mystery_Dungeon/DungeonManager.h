@@ -19,6 +19,9 @@ public:
     void EnterDungeon(string dungeonName);
     void ExitDungeon();
 
+    // Getter
+    inline PokemonPool* GetPokemonPool() { return pool; }
+
     DungeonManager() {};
     virtual ~DungeonManager() {};
 };
