@@ -1,13 +1,12 @@
 #include "DungeonManager.h"
-
-#include "CommonFunction.h"
-#include "PlayerManager.h"
-#include "PokemonAnimator.h"
 #include "PokemonBuilder.h"
-#include "PokemonImageLoader.h"
-#include "PokemonPlayer.h"
 #include "PokemonPool.h"
+#include "PokemonImageLoader.h"
 #include "TurnManager.h"
+#include "PlayerManager.h"
+#include "PokemonPlayer.h"
+#include "CommonFunction.h"
+#include "PokemonAnimator.h"
 
 void DungeonManager::Init()
 {
@@ -19,9 +18,18 @@ void DungeonManager::LoadDungeonData()
     // 던전 이름 → 등장 포켓몬 ID + 레벨 범위 + 수
     // 외부 파일로 빼낼생각이 있다
     // 밑에는 예시
-    dungeonSpawnMap["Volcano"] = DungeonSpawnInfo{{4, 5, 37}, 5, 10, 10};
+    dungeonSpawnMap["Volcano"] = DungeonSpawnInfo{
+        {4, 5, 37},
+        5, 10,
+        10
+    };
 
-    dungeonSpawnMap["TinyForest"] = DungeonSpawnInfo{{10, 13, 16}, 3, 6, 8};
+    dungeonSpawnMap["TinyForest"] = DungeonSpawnInfo{
+        {10, 13, 16},
+        3, 6,
+        8
+    };
+
 }
 
 void DungeonManager::EnterDungeon(string dungeonName)
@@ -32,7 +40,7 @@ void DungeonManager::EnterDungeon(string dungeonName)
     builder = new PokemonBuilder();
     builder->SetPool(pool);
 
-    if (dungeonSpawnMap.find(dungeonName) == dungeonSpawnMap.end())
+    if (dungeonSpawnMap.find(dungeonName) == dungeonSpawnMap.end()) 
     {
         return;
     }
@@ -59,11 +67,8 @@ void DungeonManager::ExitDungeon()
 {
     PokemonImageLoader::GetInstance()->ClearPokemonImage();
 
-    int playerId = PlayerManager::GetInstance()
-                       ->GetPlayer()
-                       ->GetCurrentPokemonData()
-                       .idNumber;
-
+    int playerId = PlayerManager::GetInstance()->GetPlayer()->GetCurrentPokemonData().idNumber;
+    
     PlayerManager::GetInstance()->GetPlayer()->GetAnimator()->Clear();
     PokemonImageLoader::GetInstance()->LoadPokemonAnim(playerId);
     PlayerManager::GetInstance()->GetPlayer()->SetAnimator();

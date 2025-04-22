@@ -15,20 +15,20 @@ enum class TurnState
 class TurnManager : public Singleton<TurnManager>
 {
 private:
+
     PokemonPool* turnOrder;
     int currentIndex = 0;
     TurnState state = TurnState::WaitingForInput;
     float elapsedTime = 0.f;
 
 public:
+
     void InitTurnOrder(PokemonPool* pokemonPool);
     void Release();
     void Update();
 
     PokemonBase* GetCurrentPokemon();
     bool IsPlayerTurn();
-    TurnState GetState()
-    {
-        return state;
-    }
+    TurnState GetState(){ return state; }
 };
+

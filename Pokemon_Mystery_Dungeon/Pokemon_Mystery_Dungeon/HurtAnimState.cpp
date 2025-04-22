@@ -1,21 +1,20 @@
 #include "HurtAnimState.h"
-
-#include "PokemonAnimator.h"
 #include "PokemonBase.h"
+#include "PokemonAnimator.h"
 
 void HurtAnimState::Enter(PokemonBase* owner)
 {
-    isFinished = false;
-    owner->GetAnimator()->Play("Hurt", owner->GetDirection());
+	isFinished = false;
+	owner->GetAnimator()->Play("Hurt", owner->GetDirection());
 }
 
 void HurtAnimState::Update(PokemonBase* owner)
 {
-    owner->GetAnimator()->Update();
-    if (owner->GetAnimator()->IsFinished("Hurt"))
-    {
-        isFinished = true;
-    }
+	owner->GetAnimator()->Update();
+	if (owner->GetAnimator()->IsFinished("Hurt"))
+	{
+		isFinished = true;
+	}
 }
 
 void HurtAnimState::Exit(PokemonBase* owner)
@@ -24,15 +23,16 @@ void HurtAnimState::Exit(PokemonBase* owner)
 
 bool HurtAnimState::IsFinished()
 {
-    return isFinished;
+	return isFinished;
 }
 
 bool HurtAnimState::CanOverride()
 {
-    return isFinished;
+	return isFinished;
 }
 
 HurtAnimState::HurtAnimState()
 {
-    isFinished = false;
+	isFinished = false;
 }
+

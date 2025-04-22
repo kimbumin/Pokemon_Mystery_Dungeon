@@ -1,6 +1,6 @@
 #pragma once
-#include "MPlayer.h"
 #include "Scene.h"
+#include "MPlayer.h"
 
 class Boss;
 class CollisionBoxTool;
@@ -27,4 +27,6 @@ private:
     int backGroundHeight;
     Image* backGround;
     CollisionBoxTool* collisionBoxTool;
+
+
 };

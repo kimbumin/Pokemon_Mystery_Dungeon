@@ -1,8 +1,7 @@
 #pragma once
-#include <string>
-#include <vector>
-
 #include "GameObject.h"
+#include <vector>
+#include <string>
 
 struct CollisionBox
 {
@@ -24,15 +23,9 @@ public:
     void Update() override;
     void Render(HDC hdc) override;
 
-    void SetMapName(const std::wstring& name)
-    {
-        mapName = name;
-    }
+    void SetMapName(const std::wstring& name) { mapName = name; }
 
-    const std::vector<CollisionBox>& GetCollisionBoxes() const
-    {
-        return boxes;
-    }
+    const std::vector<CollisionBox>& GetCollisionBoxes() const { return boxes; }
     std::vector<RECT> GetRectBoxes() const;
 
     void SaveToFile();

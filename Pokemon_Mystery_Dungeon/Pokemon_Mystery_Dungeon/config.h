@@ -5,45 +5,46 @@
 #pragma comment(lib, "Winmm.lib")
 
 #include <Windows.h>
-
-#include <bitset>
-#include <iostream>
-#include <map>
-#include <set>
 #include <string>
+#include <iostream>
+#include <bitset>
+#include <map>
 #include <unordered_map>
+#include <set>
 #include <unordered_set>
 #include <vector>
 
 using namespace std;
 
-#include "CameraManager.h"
-#include "CollisionManager.h"
-#include "ImageGDIPlusManager.h"
-#include "ImageManager.h"
 #include "KeyManager.h"
-#include "SceneManager.h"
+#include "ImageManager.h"
 #include "TimerManager.h"
+#include "SceneManager.h"
+#include "CollisionManager.h"
+#include "CameraManager.h"
+#include "ImageGDIPlusManager.h"
+
 
 /*
-        컴파일러에서 해당 코드를 뒤에 정의된 코드로 변경한다.
+	컴파일러에서 해당 코드를 뒤에 정의된 코드로 변경한다.
 */
-#define WINSIZE_X 800
-#define WINSIZE_Y 400
+#define WINSIZE_X	800
+#define WINSIZE_Y	400
 
-#define GameViewSize_X 500
-#define GameViewSize_Y 400
+#define GameViewSize_X	500
+#define GameViewSize_Y	400
 
-#define TILEMAPTOOL_X 1420
-#define TILEMAPTOOL_Y 700
-#define SAMPLE_TILE_X 21
-#define SAMPLE_TILE_Y 24
-#define TILE_SIZE 24
+#define TILEMAPTOOL_X	1420
+#define TILEMAPTOOL_Y	700
+#define SAMPLE_TILE_X	21
+#define SAMPLE_TILE_Y	24
+#define TILE_SIZE	24
 #define TILE_SELECT_SIZE 25
 
-// 던전 맵 타일 크기 25타일 * 25타일
-#define TILE_X 25
-#define TILE_Y 25
+
+//던전 맵 타일 크기 25타일 * 25타일  
+#define TILE_X	25
+#define TILE_Y	25
 
 #define DEG_TO_RAD(degree) ((3.14 / 180.0) * degree)
 #define RAD_TO_DEG(radian) ((180.0 / 3.14) * radian)
@@ -54,17 +55,16 @@ using namespace std;
 
 typedef struct tagFPOINT
 {
-    float x;
-    float y;
+	float x;
+	float y;
 } FPOINT;
 
 // 포켓몬 기본 데이터
-struct PokemonData
-{
-    int idNumber;
-    string name;
-    int hp, atk, def, spAtk, spDef, speed, sum, average;
-    vector<string> types;
+struct PokemonData {
+	int idNumber;
+	string name;
+	int hp, atk, def, spAtk, spDef, speed, sum, average;
+	vector<string> types;
 };
 
 enum class Direction
@@ -82,27 +82,26 @@ enum class Direction
 
 // 배열의 Index에 Direction 넣어서
 constexpr pair<int, int> directionOffsets[8] = {
-    {0, 1},    // SOUTH
-    {1, 1},    // SOUTHEAST
-    {1, 0},    // EAST
-    {1, -1},   // NORTHEAST
-    {0, -1},   // NORTH
-    {-1, -1},  // NORTHWEST
-    {-1, 0},   // WEST
-    {-1, 1}    // SOUTHWEST
+    { 0,  1 },  // SOUTH
+    { 1,  1 },  // SOUTHEAST
+    { 1,  0 },  // EAST
+    { 1, -1 },  // NORTHEAST
+    { 0, -1 },  // NORTH
+    {-1, -1 },  // NORTHWEST
+    {-1,  0 },  // WEST
+    {-1,  1 }   // SOUTHWEST
 };
 
 // 포켓몬 애니메이션 종류들
-const vector<string> animTypes = {"Attack", "Hurt",  "Idle",
-                                  "Rotate", "Swing", "Walk"};
+const vector<string> animTypes = { "Attack", "Hurt", "Idle", "Rotate", "Swing", "Walk" };
 
 // 던전에 대한 정보
 struct DungeonSpawnInfo
 {
-    vector<int> pokemonIds;  // 등장하는 포켓몬들의 ID
-    int minLevel;            // 레벨 구간
+    vector<int> pokemonIds; // 등장하는 포켓몬들의 ID
+    int minLevel; // 레벨 구간
     int maxLevel;
-    int spawnCount;  // 등장하는 몬스터의 수
+    int spawnCount; // 등장하는 몬스터의 수
 };
 
 /*

@@ -1,7 +1,6 @@
 #include "SwingAnimState.h"
-
-#include "PokemonAnimator.h"
 #include "PokemonBase.h"
+#include "PokemonAnimator.h"
 
 void SwingAnimState::Enter(PokemonBase* owner)
 {

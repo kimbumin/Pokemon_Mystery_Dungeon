@@ -1,8 +1,8 @@
 #pragma once
 #include "config.h"
 
-class Scene
-{
+
+class Scene {
 public:
     virtual HRESULT Init() = 0;
     virtual void Release() = 0;
@@ -10,7 +10,5 @@ public:
     virtual void Render(HDC hdc) = 0;
 
     Scene() {};
-    virtual ~Scene()
-    {
-    }
+    virtual ~Scene() {}
 };

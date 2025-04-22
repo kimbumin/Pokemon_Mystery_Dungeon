@@ -1,20 +1,19 @@
 #include "WalkAnimState.h"
-
-#include "PokemonAnimator.h"
 #include "PokemonBase.h"
+#include "PokemonAnimator.h"
 void WalkAnimState::Enter(PokemonBase* owner)
 {
-    isFinished = false;
-    owner->GetAnimator()->Play("Walk", owner->GetDirection());
+	isFinished = false;
+	owner->GetAnimator()->Play("Walk", owner->GetDirection());
 }
 
 void WalkAnimState::Update(PokemonBase* owner)
 {
-    owner->GetAnimator()->Update();
-    if (owner->GetAnimator()->IsFinished("Walk"))
-    {
-        isFinished = true;
-    }
+	owner->GetAnimator()->Update();
+	if (owner->GetAnimator()->IsFinished("Walk"))
+	{
+		isFinished = true;
+	}
 }
 
 void WalkAnimState::Exit(PokemonBase* owner)
@@ -23,15 +22,15 @@ void WalkAnimState::Exit(PokemonBase* owner)
 
 bool WalkAnimState::IsFinished()
 {
-    return isFinished;
+	return isFinished;
 }
 
 bool WalkAnimState::CanOverride()
 {
-    return isFinished;
+	return isFinished;
 }
 
 WalkAnimState::WalkAnimState()
 {
-    isFinished = false;
+	isFinished = false;
 }

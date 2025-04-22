@@ -6,13 +6,15 @@ class Image;
 class CameraTestScene : public GameObject
 {
 private:
-    Image* backGround;
+	Image* backGround;
 
-    bool isDialogueBoxOpen = false;
+	bool isDialogueBoxOpen = false;
 
 public:
-    HRESULT Init() override;
-    void Release() override;
-    void Update() override;
-    void Render(HDC hdc) override;
+	HRESULT Init() override;
+	void Release() override;
+	void Update() override;
+	void Render(HDC hdc) override;
+	
 };
+

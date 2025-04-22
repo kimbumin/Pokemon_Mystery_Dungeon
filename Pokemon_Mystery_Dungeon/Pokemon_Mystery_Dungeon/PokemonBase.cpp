@@ -1,19 +1,20 @@
 #include "PokemonBase.h"
-
-#include "AttackActionState.h"
-#include "AttackAnimState.h"
-#include "HurtActionState.h"
-#include "HurtAnimState.h"
-#include "IdleActionState.h"
-#include "IdleAnimState.h"
-#include "Image.h"
-#include "MoveActionState.h"
-#include "PokemonAnimator.h"
 #include "PokemonDataLoader.h"
 #include "PokemonImageLoader.h"
+#include "Image.h"
+#include "PokemonAnimator.h"
+
+#include "IdleAnimState.h"
+#include "AttackAnimState.h"
+#include "WalkAnimState.h"
 #include "RotateAnimState.h"
 #include "SwingAnimState.h"
-#include "WalkAnimState.h"
+#include "HurtAnimState.h"
+
+#include "MoveActionState.h"
+#include "IdleActionState.h"
+#include "AttackActionState.h"
+#include "HurtActionState.h"
 
 // Skill
 // UseItem
@@ -69,22 +70,22 @@ void PokemonBase::Release()
     {
         delete idleAnim;
         idleAnim = nullptr;
-    }
+    }   
     if (attackAnim)
     {
         delete attackAnim;
         attackAnim = nullptr;
-    }
+    }   
     if (hurtAnim)
     {
         delete hurtAnim;
         hurtAnim = nullptr;
-    }
+    }   
     if (swingAnim)
     {
         delete swingAnim;
         swingAnim = nullptr;
-    }
+    }   
     if (rotateAnim)
     {
         delete rotateAnim;
@@ -114,29 +115,29 @@ void PokemonBase::Release()
 
 void PokemonBase::Update()
 {
-    /* if (currentActionState->CanOverride())
-     {
-         if (KeyManager::GetInstance()->IsOnceKeyDown(VK_UP))
-         {
-             direction = Direction::NORTH;
-             SetActionState(moveAction);
-         }
-         if (KeyManager::GetInstance()->IsOnceKeyDown(VK_LEFT))
-         {
-             direction = Direction::WEST;
-             SetActionState(moveAction);
-         }
-         if (KeyManager::GetInstance()->IsOnceKeyDown(VK_DOWN))
-         {
-             direction = Direction::SOUTH;
-             SetActionState(moveAction);
-         }
-         if (KeyManager::GetInstance()->IsOnceKeyDown(VK_RIGHT))
-         {
-             direction = Direction::EAST;
-             SetActionState(moveAction);
-         }
-     }*/
+   /* if (currentActionState->CanOverride())
+    {
+        if (KeyManager::GetInstance()->IsOnceKeyDown(VK_UP))
+        {
+            direction = Direction::NORTH;
+            SetActionState(moveAction);
+        }
+        if (KeyManager::GetInstance()->IsOnceKeyDown(VK_LEFT))
+        {
+            direction = Direction::WEST;
+            SetActionState(moveAction);
+        }
+        if (KeyManager::GetInstance()->IsOnceKeyDown(VK_DOWN))
+        {
+            direction = Direction::SOUTH;
+            SetActionState(moveAction);
+        }
+        if (KeyManager::GetInstance()->IsOnceKeyDown(VK_RIGHT))
+        {
+            direction = Direction::EAST;
+            SetActionState(moveAction);
+        }
+    }*/
     if (currentAnimState)
     {
         currentAnimState->Update(this);
@@ -149,6 +150,7 @@ void PokemonBase::Update()
     {
         currentActionState->Update(this);
     }
+
 }
 
 void PokemonBase::Render(HDC hdc)
@@ -158,12 +160,12 @@ void PokemonBase::Render(HDC hdc)
 
 void PokemonBase::CalStatus()
 {
-    currentStatus.hp = CalStat(baseStatus->hp) + 10 /*보정값*/;
-    currentStatus.atk = CalStat(baseStatus->atk) + 5 /*보정값*/;
-    currentStatus.def = CalStat(baseStatus->def) + 5 /*보정값*/;
-    currentStatus.spAtk = CalStat(baseStatus->spAtk) + 5 /*보정값*/;
-    currentStatus.spDef = CalStat(baseStatus->spDef) + 5 /*보정값*/;
-    currentStatus.speed = CalStat(baseStatus->speed) + 5 /*보정값*/;
+    currentStatus.hp = CalStat(baseStatus->hp) + 10/*보정값*/;
+    currentStatus.atk = CalStat(baseStatus->atk) + 5/*보정값*/;
+    currentStatus.def = CalStat(baseStatus->def) + 5/*보정값*/;
+    currentStatus.spAtk = CalStat(baseStatus->spAtk) + 5/*보정값*/;
+    currentStatus.spDef = CalStat(baseStatus->spDef) + 5/*보정값*/;
+    currentStatus.speed = CalStat(baseStatus->speed) + 5/*보정값*/;
 }
 
 int PokemonBase::CalStat(int value)
@@ -174,8 +176,7 @@ int PokemonBase::CalStat(int value)
 void PokemonBase::TakeDamage()
 {
     // 데미지 입는 것을 입는 관점에서 or 주는 관점에서
-    // 입히는 데미지를 전투 시스템에서 전달하고 전투시스템에서 계산 때리고 그
-    // 결과를 이걸로 적용하는 구조
+    // 입히는 데미지를 전투 시스템에서 전달하고 전투시스템에서 계산 때리고 그 결과를 이걸로 적용하는 구조
 }
 
 void PokemonBase::SetAnimState(IAnimState* newState)
@@ -186,7 +187,7 @@ void PokemonBase::SetAnimState(IAnimState* newState)
     }
     if (currentAnimState)
     {
-        currentAnimState->Exit(this);
+       currentAnimState->Exit(this);
     }
     currentAnimState = newState;
     if (currentAnimState)
@@ -215,8 +216,7 @@ void PokemonBase::SetActionState(IActionState* newState)
 
 void PokemonBase::SetAnimator()
 {
-    string idStr = PokemonImageLoader::GetInstance()->PokemonIdToString(
-        baseStatus->idNumber);
+    string idStr = PokemonImageLoader::GetInstance()->PokemonIdToString(baseStatus->idNumber);
     for (auto type = animTypes.begin(); type != animTypes.end(); ++type)
     {
         string key = idStr + *type;
@@ -225,40 +225,36 @@ void PokemonBase::SetAnimator()
         {
             int frameX = image->GetMaxFrameX();
             int frameY = image->GetMaxFrameY();
-            float frameTime =
-                1.f / frameX;  //  Check: 재생 속도 하드코딩 개선 사항 (CSV에
-                               //  있는 데이터로 매 프레임마다 재생속도도 다르게
-                               //  할 수 있다)
-            animator->AddAnimation(*type, image, frameX, frameY, frameTime,
-                                   *type == "Idle");
+            float frameTime = 1.f / frameX; //  Check: 재생 속도 하드코딩 개선 사항 (CSV에 있는 데이터로 매 프레임마다 재생속도도 다르게 할 수 있다)
+            animator->AddAnimation(*type, image, frameX, frameY, frameTime, *type == "Idle");
             // 반복되는 애니메이션은 Idle만 있어서
         }
     }
 }
 
 void PokemonBase::PlayWalkAnim()
-{
-    SetAnimState(walkAnim);
+{ 
+    SetAnimState(walkAnim); 
 }
-void PokemonBase::PlayIdleAnim()
-{
-    SetAnimState(idleAnim);
+void PokemonBase::PlayIdleAnim() 
+{ 
+    SetAnimState(idleAnim); 
 }
-void PokemonBase::PlayAttackAnim()
-{
-    SetAnimState(attackAnim);
+void PokemonBase::PlayAttackAnim() 
+{ 
+    SetAnimState(attackAnim); 
 }
-void PokemonBase::PlayHurtAnim()
-{
-    SetAnimState(hurtAnim);
+void PokemonBase::PlayHurtAnim() 
+{ 
+    SetAnimState(hurtAnim); 
 }
-void PokemonBase::PlaySwingAnim()
-{
-    SetAnimState(swingAnim);
+void PokemonBase::PlaySwingAnim() 
+{ 
+    SetAnimState(swingAnim); 
 }
-void PokemonBase::PlayRotateAnim()
-{
-    SetAnimState(rotateAnim);
+void PokemonBase::PlayRotateAnim() 
+{ 
+    SetAnimState(rotateAnim); 
 }
 
 void PokemonBase::ExecuteMoveAction()

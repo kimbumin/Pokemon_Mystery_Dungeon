@@ -8,24 +8,25 @@ class TilemapTool;
 class MainGame : public GameObject
 {
 private:
-    HDC hdc;
-    PAINTSTRUCT ps;
-    wchar_t szText[128];
+	HDC hdc;
+	PAINTSTRUCT ps;
+	wchar_t szText[128];
 
-    Image* backBuffer;
+	Image* backBuffer;
 
-    TilemapTool* tilemapTool;
+	TilemapTool* tilemapTool;
 
-    Timer* timer;
+	Timer* timer;
 
 public:
-    virtual HRESULT Init() override;
-    virtual void Release() override;
-    virtual void Update() override;
-    void Render();
+	virtual HRESULT Init() override;
+	virtual void Release() override;
+	virtual void Update() override;
+	void Render();
 
-    LRESULT MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam);
+	LRESULT MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam);
 
-    MainGame();
-    ~MainGame();
+	MainGame();
+	~MainGame();
 };
+

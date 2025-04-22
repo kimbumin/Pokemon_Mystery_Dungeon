@@ -5,6 +5,7 @@ class Item;
 class PokemonPlayer : public PokemonBase
 {
 private:
+ 
     // 아이템 인벤토리
     // vector<Item*> inventory;
 
@@ -12,6 +13,7 @@ private:
     int expToLevelUp;
     // int inventorySize = 20;
 protected:
+
 public:
     virtual HRESULT Init() override;
     virtual void Release() override;
@@ -27,3 +29,4 @@ public:
     void GainExp(int amount);
     void LevelUp();
 };
+
