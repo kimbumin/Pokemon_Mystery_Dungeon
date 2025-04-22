@@ -1,4 +1,5 @@
 #include "MPlayer.h"
+#include "Camera.h"
 
 #include "KeyManager.h"
 MPlayer::MPlayer() : pos{500, 300}, size{TILE_SIZE, TILE_SIZE}, speed(1)
@@ -28,7 +29,10 @@ void MPlayer::Update()
 
 void MPlayer::Render(HDC hdc)
 {
-    Rectangle(hdc, rect.left, rect.top, rect.right, rect.bottom);
+    POINT camPos = Camera::GetInstance()->GetCameraPos();
+
+    Rectangle(hdc, rect.left - camPos.x, rect.top - camPos.y,
+              rect.right - camPos.x, rect.bottom - camPos.y);
 }
 
 void MPlayer::Move()

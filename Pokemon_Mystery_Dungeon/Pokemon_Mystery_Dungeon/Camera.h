@@ -6,9 +6,9 @@
 class Camera : public Singleton<Camera>
 {
 private:
-    POINT cameraPos;   // 현재 카메라 위치
-    POINT mapSize;     // 전체 맵 크기
-    POINT screenSize;  // 현재 화면 크기 (윈도우 크기)
+    POINT cameraPos;   
+    POINT mapSize;     
+    POINT screenSize;  
 
 public:
     void SetCameraPos(POINT focus);

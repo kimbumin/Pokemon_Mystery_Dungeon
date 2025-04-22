@@ -5,7 +5,6 @@ void Camera::SetCameraPos(POINT focus)
     cameraPos.x = focus.x - screenSize.x / 2;
     cameraPos.y = focus.y - screenSize.y / 2;
 
-    // ¸Ê °æ°è Ã¼Å©
     if (cameraPos.x < 0)
         cameraPos.x = 0;
     if (cameraPos.y < 0)
