@@ -1,11 +1,11 @@
 #pragma once
-#include "GameObject.h"
+#include "Scene.h"
 
 
 class CollisionBoxTool;
 class MPlayer;
 
-class SquareScene : public GameObject
+class SquareScene : public Scene
 {
 public:
 	virtual HRESULT Init() override;

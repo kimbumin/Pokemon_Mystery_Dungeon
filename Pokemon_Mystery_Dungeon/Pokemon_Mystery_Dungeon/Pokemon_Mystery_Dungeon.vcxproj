@@ -167,6 +167,7 @@
     <ClCompile Include="PPHeal.cpp" />
     <ClCompile Include="PokemonPlayer.cpp" />
     <ClCompile Include="RotateAnimState.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SkillInfoUIState.cpp" />
     <ClCompile Include="SkillSelectUIState.cpp" />
@@ -229,6 +230,7 @@
     <ClInclude Include="RotateAnimState.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Room.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="SkillInfoUIState.h" />

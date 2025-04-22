@@ -14,11 +14,6 @@
 HRESULT SquareScene::Init()
 {
 	SetClientRect(g_hWnd, WINSIZE_X, WINSIZE_Y);
-
-	backGround = new Image();
-	redFlower = new Image();
-	yellowFlower = new Image();
-	river = new Image();
 	{
 		//Size : 954, 714
 		backGround = ImageManager::GetInstance()->AddImage(
@@ -128,7 +123,7 @@ void SquareScene::Update()
 	}
 
 	if (collisionBoxTool) {
-//		collisionBoxTool->Update();
+		collisionBoxTool->Update();
 		CollisionManager::GetInstance()->MapPlayerCheck(mPlayer, collisionBoxTool->GetRectBoxes());
 	}
 
@@ -160,7 +155,7 @@ void SquareScene::Render(HDC hdc)
 
 	}
 	if (collisionBoxTool) {
-	//	collisionBoxTool->Render(hdc);
+		collisionBoxTool->Render(hdc);
 	}
 	if (mPlayer) {
 		mPlayer->Render(hdc);

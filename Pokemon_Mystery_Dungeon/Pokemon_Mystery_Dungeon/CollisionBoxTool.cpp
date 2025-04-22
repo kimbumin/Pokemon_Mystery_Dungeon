@@ -113,7 +113,7 @@ void CollisionBoxTool::LoadFromFile()
     }
 
     file.close();
-    MessageBox(g_hWnd, TEXT("충돌박스가 성공적으로 로드되었습니다."), TEXT("완료"), MB_OK);
+ //   MessageBox(g_hWnd, TEXT("충돌박스가 성공적으로 로드되었습니다."), TEXT("완료"), MB_OK);
 }
 
 std::vector<RECT> CollisionBoxTool::GetRectBoxes() const

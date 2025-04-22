@@ -1,7 +1,7 @@
 #pragma once
-#include "GameObject.h"
+#include "Scene.h"
 
-class LoadingScene : public GameObject
+class LoadingScene : public Scene
 {
 public:
     LoadingScene();

@@ -1,12 +1,12 @@
 #pragma once
-#include "GameObject.h"
+#include "Scene.h"
 #include "Map.h"
 
 class Player;
 class MPlayer;
 class Map;
 
-class DungeonScene :public GameObject
+class DungeonScene :public Scene
 {
 public:
 	virtual HRESULT Init() override;

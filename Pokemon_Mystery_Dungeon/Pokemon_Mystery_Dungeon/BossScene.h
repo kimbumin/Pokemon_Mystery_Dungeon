@@ -1,5 +1,8 @@
 #pragma once
-class BossScene
+#include "Scene.h"
+
+class BossScene : public Scene
 {
+
 };
 

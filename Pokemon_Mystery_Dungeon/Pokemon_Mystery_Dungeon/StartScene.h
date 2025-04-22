@@ -1,9 +1,9 @@
 #pragma once
-#include "GameObject.h"
+#include "Scene.h"
 
 class ImageGDIPlus;
 
-class StartScene : public GameObject
+class StartScene : public Scene
 {
 public:
 
