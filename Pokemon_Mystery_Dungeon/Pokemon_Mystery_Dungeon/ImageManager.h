@@ -1,6 +1,8 @@
 #pragma once
 #include "Singleton.h"
+// clang-format off
 #include "config.h"
+// clang-format on
 
 ///*
 //	배열 : 인덱스 -> 데이터

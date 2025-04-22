@@ -1,8 +1,9 @@
 #pragma once
-#include <Windows.h>
-
 #include "Singleton.h"
+// clang-format off
 #include "config.h"
+// clang-format on
+#include <Windows.h>
 
 class CameraManager : public Singleton<CameraManager>
 {

@@ -1,7 +1,9 @@
 // main.cpp
 
 #include "MainGame.h"
+// clang-format off
 #include "config.h"
+// clang-format on
 #include "gdiplus.h"
 #pragma comment(lib, "gdiplus.lib")
 

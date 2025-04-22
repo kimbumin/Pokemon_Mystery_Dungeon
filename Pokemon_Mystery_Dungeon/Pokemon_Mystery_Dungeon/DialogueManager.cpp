@@ -3,7 +3,13 @@
 #undef byte
 
 #include "DialogueManager.h"
+<<<<<<< HEAD
 #include "UIManager.h"
+=======
+// clang-format off
+#include "UIManager.h"
+// clang-format on
+>>>>>>> 420477f2d853bea84d9b717ac003b409f7d69c40
 #include "DialogueTemplate.h"
 #include "DialogueUIState.h"
 
