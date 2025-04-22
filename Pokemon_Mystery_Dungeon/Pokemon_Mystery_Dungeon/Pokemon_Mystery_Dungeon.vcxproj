@@ -132,6 +132,7 @@
     <ClCompile Include="AttackAnimState.cpp" />
     <ClCompile Include="BossScene.cpp" />
     <ClCompile Include="Branch.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="CameraTestScene.cpp" />
     <ClCompile Include="CollisionBoxTool.cpp" />
@@ -204,6 +205,7 @@
     <ClInclude Include="AttackAnimState.h" />
     <ClInclude Include="BossScene.h" />
     <ClInclude Include="Branch.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraManager.h" />
     <ClInclude Include="CameraTestScene.h" />
     <ClInclude Include="CollisionBoxTool.h" />

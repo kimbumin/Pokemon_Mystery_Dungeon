@@ -12,6 +12,8 @@
 #include "TilemapTool.h"
 #include "UIManager.h"
 
+#include "Camera.h"
+
 #define SQUARESIZE_X 954
 #define SQUARESIZE_Y 714
 
@@ -19,10 +21,6 @@ HRESULT SquareScene::Init()
 {
     SetClientRect(g_hWnd, WINSIZE_X, WINSIZE_Y);
 
-    backGround = new Image();
-    redFlower = new Image();
-    yellowFlower = new Image();
-    river = new Image();
     UIManager::GetInstance()->Init();
 
     // Size : 954, 714
@@ -70,10 +68,6 @@ HRESULT SquareScene::Init()
         {341, 611},
     };
 
-    // 카메라 초기화
-    CameraManager::GetInstance()->Init(GameViewSize_X, GameViewSize_Y,
-                                       backGround->GetWidth(),
-                                       backGround->GetHeight());
 
     elapsedTime = 0;
 
@@ -82,6 +76,10 @@ HRESULT SquareScene::Init()
 
     mPlayer = new MPlayer();
     mPlayer->Init();
+
+    Camera::GetInstance()->SetMapSize({SQUARESIZE_X, SQUARESIZE_Y});
+    Camera::GetInstance()->SetScreenSize({500, 400});
+
 
     return S_OK;
 }
@@ -96,10 +94,6 @@ void SquareScene::Release()
 
 void SquareScene::Update()
 {
-    POINT mouse;
-    GetCursorPos(&mouse);
-    ScreenToClient(g_hWnd, &mouse);
-    CameraManager::GetInstance()->SetCameraPos(mouse.x, mouse.y);
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F1))
     {
         SceneManager::GetInstance()->AddScene("TileMapTool", new TilemapTool());
@@ -134,13 +128,14 @@ void SquareScene::Update()
     if (collisionBoxTool)
     {
         collisionBoxTool->Update();
-        CollisionManager::GetInstance()->MapPlayerCheck(
-            mPlayer, collisionBoxTool->GetRectBoxes());
+        CollisionManager::GetInstance()->MapPlayerCheck( mPlayer, collisionBoxTool->GetRectBoxes());
     }
 
     if (mPlayer)
     {
         mPlayer->Update();
+        Camera::GetInstance()->SetCameraPos(mPlayer->GetPos());
+
     }
 
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_TAB))
@@ -165,43 +160,40 @@ void SquareScene::Update()
 
 void SquareScene::Render(HDC hdc)
 {
-    if (backGround)
-    {
-        backGround->RenderBackground(hdc);
-    }
-    if (yellowFlower)
-    {
-        RenderFlowers(hdc, yellowFlower, yellowPositions, currAnimaionFrame);
-    }
-    if (redFlower)
-    {
-        RenderFlowers(hdc, redFlower, redPositions, currAnimaionFrame);
-    }
+    // 카메라 클리핑 처리 (화면 크기: 500x400)
+    HRGN clipRegion = CreateRectRgn(0, 0, 500, 400);
+    SelectClipRgn(hdc, clipRegion);
 
-    RECT cam = CameraManager::GetInstance()->GetViewPos();
+    // --- 카메라 기준으로 렌더링되는 오브젝트 ---
+    if (backGround)
+        backGround->RenderWithCamera(hdc, 0, 0);
+
+    if (yellowFlower)
+        RenderFlowers(hdc, yellowFlower, yellowPositions, currAnimaionFrame);
+
+    if (redFlower)
+        RenderFlowers(hdc, redFlower, redPositions, currAnimaionFrame);
 
     if (river)
     {
-        river->FrameRender(hdc, 64 - cam.left, 54 - cam.top, currAnimaionFrame,
-                           0, 0);
-        river->FrameRender(hdc, 64 - cam.left, 104 - cam.top, currAnimaionFrame,
-                           0, 0);
-        river->FrameRender(hdc, 152 - cam.left, 273 - cam.top,
-                           currAnimaionFrame, 0, 0);
-        river->FrameRender(hdc, 152 - cam.left, 400 - cam.top,
-                           currAnimaionFrame, 0, 0);
-        river->FrameRender(hdc, 152 - cam.left, 460 - cam.top,
-                           currAnimaionFrame, 0, 0);
-    }
-    if (collisionBoxTool)
-    {
-        collisionBoxTool->Render(hdc);
-    }
-    if (mPlayer)
-    {
-        mPlayer->Render(hdc);
+        river->FrameRenderWithCamera(hdc, 64, 54, currAnimaionFrame, 0);
+        river->FrameRenderWithCamera(hdc, 64, 104, currAnimaionFrame, 0);
+        river->FrameRenderWithCamera(hdc, 152, 273, currAnimaionFrame, 0);
+        river->FrameRenderWithCamera(hdc, 152, 400, currAnimaionFrame, 0);
+        river->FrameRenderWithCamera(hdc, 152, 460, currAnimaionFrame, 0);
     }
 
+    if (collisionBoxTool)
+        collisionBoxTool->Render(hdc);
+
+    if (mPlayer)
+        mPlayer->Render(hdc);
+
+    // 클리핑 해제
+    SelectClipRgn(hdc, NULL);
+    DeleteObject(clipRegion);
+
+    // --- UI, 디버그 텍스트 등은 카메라에 영향을 받지 않음 ---
     TimerManager::GetInstance()->Render(hdc);
     UIManager::GetInstance()->Render(hdc);
 
@@ -209,16 +201,10 @@ void SquareScene::Render(HDC hdc)
     TextOut(hdc, 300, 60, szText, wcslen(szText));
 }
 
-void SquareScene::RenderFlowers(HDC hdc, Image* flower,
-                                const std::vector<POINT>& positions,
-                                int currFrame)
+void SquareScene::RenderFlowers(HDC hdc, Image* flower,const std::vector<POINT>& positions, int currFrame)
 {
-    RECT cam = CameraManager::GetInstance()->GetViewPos();
-    for (const auto& pos : positions)
+    for (const POINT& pos : positions)
     {
-        int flowerX = pos.x - cam.left;
-        int flowerY = pos.y - cam.top;
-
-        flower->FrameRender(hdc, flowerX, flowerY, 0, currFrame, 0);
+        flower->FrameRenderWithCamera(hdc, pos.x, pos.y, 0, currFrame, 0);
     }
 }
