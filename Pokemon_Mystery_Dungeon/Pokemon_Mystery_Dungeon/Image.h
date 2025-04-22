@@ -57,6 +57,8 @@ private:
 	bool isTransparent;
 	COLORREF transColor;
 
+	HBITMAP hBitmap = nullptr;
+
 public:
 	// 빈 비트맵 이미지를 만드는 함수
 	HRESULT Init(int width, int height);
@@ -70,10 +72,16 @@ public:
 		int maxFrameX, int maxFrameY,
 		bool isTransparent = FALSE, COLORREF transColor = FALSE);
 
+
+	// 배경 그리기
+	void RenderBackground(HDC hdc);
+
 	// 화면에 출력
 	void Render(HDC hdc, int destX = 0, int destY = 0);
 	void Render(HDC hdc, int destX, int destY, int frameIndex, bool isFlip = false);
 	void FrameRender(HDC hdc, int destX, int destY,
+		int frameX, int frameY, bool isFlip = false, bool isCenter = true);
+	void FrameRenderCamera(HDC hdc, int destX, int destY,
 		int frameX, int frameY, bool isFlip = false, bool isCenter = true);
 
 	// 메모리 해제

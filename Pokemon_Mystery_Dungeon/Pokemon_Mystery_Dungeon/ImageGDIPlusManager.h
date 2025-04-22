@@ -12,7 +12,7 @@ public:
 	void Init();
 	void Release();
 
-	ImageGDIPlus* AddImage(string key, const wchar_t* filePath, int maxFrameX = 1, int maxFrameY = 1);
+	ImageGDIPlus* AddImage(string key, const wchar_t* filePath, int maxFrameX = 1, int maxFrameY = 1, bool asGif = false);
 
 	void DeleteImageGDIPlus(string key);
 	ImageGDIPlus* FindImageGDIPlus(string key);

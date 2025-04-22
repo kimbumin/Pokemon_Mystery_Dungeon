@@ -1,8 +1,12 @@
 #pragma once
+#include "config.h"
 #include <Windows.h>
 #include <gdiplus.h>
-#include "config.h"
+#include <gdiplusimaging.h>
 #pragma comment(lib, "gdiplus.lib")
+
+// 5100은 GIF에서 '프레임 딜레이 정보'를 가져오기 위한 ID임 - 각 프레임이 보여질 시간(딜레이)
+#define PropertyTagFrameDelay 0x5100
 
 class ImageGDIPlus
 {
@@ -16,8 +20,7 @@ public:
 	};
 
 private:
-	Gdiplus::Bitmap* image = nullptr;
-	HBITMAP hBitmap = nullptr;
+	Gdiplus::Image* image = nullptr;
 
 	int width = 0;
 	int height = 0;
@@ -28,13 +31,20 @@ private:
 	int currFrameX = 0;
 	int currFrameY = 0;
 
+	bool isGif = false;
+	GUID gifFrameDimension = {};
+	UINT gifFrameCount = 1;
+	UINT gifCurrentFrame = 0;
+
+	vector<UINT> gifFrameDelay;
+	float gifElapsedTime = 0.0f;
+	float gifSpeedMultiplier = 3.0f;
+
+
 public:
-	HRESULT Init(const wchar_t* filePath, int maxFrameX, int maxFrameY);
+	HRESULT Init(const wchar_t* filePath, int maxFrameX, int maxFrameY, bool ifGif = false);
 	
 	void Release();
-
-	// 카메라 뷰에	맞춰서 그리기
-	void RenderBackground(HDC hdc);
 
 	// x좌표, y좌표, 회전각도, x축 반전 여부, y축 반전 여부, 투명도
 	void Render(HDC hdc, float x, float y, float angle = 0.0f, bool flipX = false, bool flipY = false, float alpha = 1.0f);
@@ -54,6 +64,10 @@ public:
 	// x좌표, y좌표, 어느 비율까지 그릴지 지정(0.0 ~ 1.0), 투명도
 	void RenderLeftToRight(HDC hdc, float x, float y, float percent, float alpha = 1.0f);
 
+	void Update(float deltaTime);
+
+	void SetGifFrame(UINT frameIndex);
+	UINT GetGifFrameCount() const;
 
 	inline int GetWidth() const { return width; }
 	inline int GetHeight() const { return height; }
@@ -63,5 +77,6 @@ public:
 	inline int GetMaxFrameY() const { return maxFrameY; }
 	inline int GetCurrFrameX() const { return currFrameX; }
 	inline int GetCurrFrameY() const { return currFrameY; }
+	void SetGifSpeed(float multiplier) { gifSpeedMultiplier = multiplier; }
 };
 

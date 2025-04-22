@@ -2,33 +2,59 @@
 #include "UIState.h"
 #include "DialogueUIState.h"
 #include "DefaultUIState.h"
+#include "SkillUIState.h"
 #include "SkillInfoUIState.h"
+#include "DungeonUIState.h"
+#include "InfoUIState.h"
+#include "YesOrNoUIState.h"
 
 UIState* UIManager::currentState = nullptr;
 UIState* UIManager::nextState = nullptr;
 
 void UIManager::Init()
 {
+	AddPersistentState(new InfoUIState());
+
+	RegisterAllUIStates();
 }
 
 void UIManager::Release()
 {
-	map<string, UIState*>::iterator iter;
-	for (iter = UiStateMap.begin(); iter != UiStateMap.end(); iter++)
+	for (auto& pair : UiStateMap)
 	{
-		if (iter->second)
+		if (pair.second)
 		{
-			iter->second->Release();
-			delete iter->second;
-			iter->second = nullptr;
+			pair.second->Release();
+			delete pair.second;
 		}
 	}
 	UiStateMap.clear();
+
+	for (auto* state : persistentStates)
+	{
+		delete state;
+	}
+	persistentStates.clear();
+
+	toggleStates.clear();
+
+	currentState = nullptr;
+	currentStateKey.clear();
 	ReleaseInstance();
 }
 
 void UIManager::Update()
 {
+	for (auto& state : persistentStates)
+	{
+		state->Update();
+	}
+
+	for (auto& state : toggleStates)
+	{
+		state->Update();
+	}
+
 	if (currentState)
 	{
 		currentState->Update();
@@ -37,6 +63,17 @@ void UIManager::Update()
 
 void UIManager::Render(HDC hdc)
 {
+	for (auto& state : persistentStates)
+	{
+		state->Render(hdc);
+	}
+
+	for (auto& state : toggleStates)
+	{
+		state->Render(hdc);
+	}
+
+
 	if (currentState)
 	{
 		currentState->Render(hdc);
@@ -45,28 +82,23 @@ void UIManager::Render(HDC hdc)
 
 HRESULT UIManager::ChangeState(string key)
 {
-	auto iter = UiStateMap.find(key);
-	if (iter == UiStateMap.end())
-	{
-		return E_FAIL;
-	}
+	auto it = UiStateMap.find(key);
+	if (it == UiStateMap.end()) return E_FAIL;
 
-	if (iter->second == currentState)
+	if (it->second == currentState) return S_OK;
+
+	if (currentState)
 	{
+		currentState->Release();
+	}
+	currentState = it->second;
+	currentStateKey = key;
+
+	if (currentState)
+	{
+		currentState->Init();
 		return S_OK;
 	}
-
-	if (SUCCEEDED(iter->second->Init()))
-	{
-		if (currentState)
-		{
-			currentState->Release();
-		}
-		currentState = iter->second;
-		nextState = nullptr;
-		return S_OK;
-	}
-
 	return E_FAIL;
 }
 
@@ -88,11 +120,24 @@ UIState* UIManager::AddState(string key, UIState* state)
 	return state;
 }
 
+UIState* UIManager::FindState(const string& key)
+{
+	auto iter = UiStateMap.find(key);
+	if (iter != UiStateMap.end())
+	{
+		return iter->second;
+	}
+	return nullptr;
+}
+
 void UIManager::RegisterAllUIStates()
 {
 	AddState("dialogueBox", new DialogueUIState());
 	AddState("defaultUI", new DefaultUIState());
-	AddState("SkillInfoUI", new SkillInfoUIState());
+	AddState("SkillUI", new SkillUIState());
+	AddState("SkillUseUI", new SkillInfoUIState());
+	AddState("DungeonUI", new DungeonUIState());
+	AddState("YesOrNoUI", new YesOrNoUIState());
 }
 
 void UIManager::OpenUIStateBox(const string& key)
@@ -109,6 +154,43 @@ void UIManager::OpenUIStateBox(const string& key)
 		currentState = nullptr;
 	}
 
+}
+
+void UIManager::CloseUIStateBox(const string& key)
+{
+	if (currentStateKey == key)
+	{
+		currentState = nullptr;
+		currentStateKey = "";
+	}
+}
+
+void UIManager::AddPersistentState(UIState* state)
+{
+	if (state)
+	{
+		state->Init();
+		persistentStates.push_back(state);
+	}
+}
+
+void UIManager::AddToggleState(UIState* state, bool isOpen)
+{
+	auto iter = find(toggleStates.begin(), toggleStates.end(), state);
+	if (isOpen)
+	{
+		if (iter == toggleStates.end())
+		{
+			toggleStates.push_back(state);
+		}
+	}
+	else
+	{
+		if (iter != toggleStates.end())
+		{
+			toggleStates.erase(iter);
+		}
+	}
 }
 
 

@@ -1,6 +1,7 @@
 #include "DefaultUIState.h"
 #include "ImageGDIPlusManager.h"
-#include "Timer.h"
+#include "UIElementImage.h"
+#include "UIElementText.h"
 #include "UIManager.h"
 
 
@@ -26,7 +27,7 @@ HRESULT DefaultUIState::Init()
 
 	// UI 엘리먼트 위치 설정
 	OtherInterfaceInfoBox->SetLocalPos(25, 10);
-	MapInfoBox->SetLocalPos((GameViewSize_X - MapInfoBoxImage->GetWidth()) - 10, 40);
+	MapInfoBox->SetLocalPos((GameViewSize_X - MapInfoBoxImage->GetWidth()) - 25, 40);
 	PokemonInfoBox->SetLocalPos(25, GameViewSize_Y - 170);
 	Cursor->SetLocalPos(25, OffsetY[YIndex]);
 
@@ -36,9 +37,9 @@ HRESULT DefaultUIState::Init()
 	PokemonInfoBox->setAlpha(0.7f);
 
 	// 이미지 크기 좀 조정함
-	OtherInterfaceInfoBox->setScale(0.9f, 0.9f);
-	MapInfoBox->setScale(0.9f, 0.9f);
-	PokemonInfoBox->setScale(1.0f, 0.9f);
+	OtherInterfaceInfoBox->setScale(1.0f, 1.0f);
+	MapInfoBox->setScale(1.0f, 1.0f);
+	PokemonInfoBox->setScale(1.0f, 1.0f);
 
 	// 부모 객체로 설정
 	OtherInterfaceInfoBox->SetParent(this);
@@ -77,9 +78,9 @@ void DefaultUIState::Update()
 
 	Cursor->setAlpha(fadeInTime);
 
-	if (KeyManager::GetInstance()->IsOnceKeyDown(VK_RETURN))
+	if (KeyManager::GetInstance()->IsOnceKeyDown(0x5A))
 	{
-		UIManager::GetInstance()->ChangeState("SkillInfoUI");
+		UIManager::GetInstance()->ChangeState("SkillUI");
 	}
 
 }

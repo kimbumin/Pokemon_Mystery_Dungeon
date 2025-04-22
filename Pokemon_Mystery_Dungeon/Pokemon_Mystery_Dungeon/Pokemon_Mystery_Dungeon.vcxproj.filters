@@ -144,10 +144,7 @@
     <ClCompile Include="TitleUIState.cpp">
       <Filter>Ui\UiState\소스</Filter>
     </ClCompile>
-    <ClCompile Include="SkillSelectUIState.cpp">
-      <Filter>Ui\UiState\소스</Filter>
-    </ClCompile>
-    <ClCompile Include="SkillInfoUIState.cpp">
+    <ClCompile Include="SkillUIState.cpp">
       <Filter>Ui\UiState\소스</Filter>
     </ClCompile>
     <ClCompile Include="InventoryUIState.cpp">
@@ -323,10 +320,10 @@
     <ClInclude Include="UIState.h">
       <Filter>Ui\UiState\헤더</Filter>
     </ClInclude>
-    <ClInclude Include="SkillSelectUIState.h">
+    <ClInclude Include="SkillInfoUIState.h">
       <Filter>Ui\UiState\헤더</Filter>
     </ClInclude>
-    <ClInclude Include="SkillInfoUIState.h">
+    <ClInclude Include="SkillUIState.h">
       <Filter>Ui\UiState\헤더</Filter>
     </ClInclude>
     <ClInclude Include="InventoryUIState.h">

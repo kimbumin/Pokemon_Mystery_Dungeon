@@ -4,7 +4,9 @@
 #include "Timer.h"
 #include "TilemapTool.h"
 #include "SquareScene.h"
+#include "TileMapTestScene.h"
 #include "CameraTestScene.h"
+#include "UIManager.h"
 
 HRESULT MainGame::Init()
 {
@@ -47,12 +49,14 @@ void MainGame::Release()
 void MainGame::Update()
 {
 	SceneManager::GetInstance()->Update();
+	UIManager::GetInstance()->Update();
 	InvalidateRect(g_hWnd, NULL, false);
 }
 
 void MainGame::Render()
 {
 	HDC hBackBufferDC = backBuffer->GetMemDC();
+	PatBlt(hBackBufferDC, 0, 0, WINSIZE_X, WINSIZE_Y, BLACKNESS);
 
 	SceneManager::GetInstance()->Render(hBackBufferDC);
 

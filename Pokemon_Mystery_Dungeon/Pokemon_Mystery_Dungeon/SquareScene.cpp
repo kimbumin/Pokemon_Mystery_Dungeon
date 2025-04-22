@@ -3,6 +3,9 @@
 #include "CommonFunction.h"
 #include "TilemapTool.h"
 #include "DungeonScene.h"
+#include "UIManager.h"
+#include "DialogueManager.h"
+#include "DialogueTemplate.h"
 #include "StartScene.h"
 #include "LoadingScene.h"
 #include "CollisionBoxTool.h"
@@ -14,30 +17,35 @@
 HRESULT SquareScene::Init()
 {
 	SetClientRect(g_hWnd, WINSIZE_X, WINSIZE_Y);
-	{
-		//Size : 954, 714
-		backGround = ImageManager::GetInstance()->AddImage(
-			"±¤Àå¹è°æ", L"Image/SceneImage/Square3.bmp",
-			SQUARESIZE_X, SQUARESIZE_Y, 1, 1,
-			0, RGB(255, 0, 255));
 
-		//210,41
-		river = ImageManager::GetInstance()->AddImage(
-			"°­¹°", L"Image/SceneImage/river.bmp",
-			210, 41, 6, 1,
-			0, RGB(200, 224, 168));
+	backGround = new Image();
+	redFlower = new Image();
+	yellowFlower = new Image();
+	river = new Image();
+	UIManager::GetInstance()->Init();
 
-		//33,144
-		yellowFlower = ImageManager::GetInstance()->AddImage(
-			"³ë¶õ²É", L"Image/SceneImage/YellowFlower.bmp",
-			33, 144, 1, 6,
-			0, RGB(184, 240, 120));
+	//Size : 954, 714
+	backGround = ImageManager::GetInstance()->AddImage(
+		"±¤Àå¹è°æ", L"Image/SceneImage/Square3.bmp", 
+		SQUARESIZE_X, SQUARESIZE_Y, 1,1,
+		0, RGB(255,0,255));
 
-		redFlower = ImageManager::GetInstance()->AddImage(
-			"ºÓÀº²É", L"Image/SceneImage/RedFlower.bmp",
-			33, 144, 1, 6,
-			0, RGB(184, 240, 120));
-	}
+	//210,41
+	river = ImageManager::GetInstance()->AddImage(
+		"°­¹°", L"Image/SceneImage/river.bmp",
+		210, 41, 6, 1,
+		0, RGB(200, 224, 168));
+
+	//33,144
+	yellowFlower = ImageManager::GetInstance()->AddImage(
+		"³ë¶õ²É", L"Image/SceneImage/YellowFlower.bmp", 
+		33, 144, 1,6,
+		0, RGB(184,240,120));
+	
+	redFlower = ImageManager::GetInstance()->AddImage(
+		"ºÓÀº²É", L"Image/SceneImage/RedFlower.bmp", 
+		33, 144, 1,6,
+		0, RGB(184,240,120));
 
 	redPositions = {
 		{545, 128},
@@ -72,6 +80,10 @@ HRESULT SquareScene::Init()
 		{455, 246},
 		{341, 611},
 	};
+
+	// Ä«¸Þ¶ó ÃÊ±âÈ­
+	CameraManager::GetInstance()->Init(GameViewSize_X, GameViewSize_Y, backGround->GetWidth(), backGround->GetHeight());
+
 	elapsedTime = 0;
 
 
@@ -88,11 +100,18 @@ HRESULT SquareScene::Init()
 
 void SquareScene::Release()
 {
-
+	if (UIManager::GetInstance())
+	{
+		UIManager::GetInstance()->Release();
+	}
 }
 
 void SquareScene::Update()
 {
+	POINT mouse;
+	GetCursorPos(&mouse);
+	ScreenToClient(g_hWnd, &mouse);
+	CameraManager::GetInstance()->SetCameraPos(mouse.x, mouse.y);
 	if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F1)) {
 
 		SceneManager::GetInstance()->AddScene("Å¸ÀÏ¸ÊÅø", new TilemapTool());
@@ -130,15 +149,32 @@ void SquareScene::Update()
 	if (mPlayer) {
 		mPlayer->Update();
 	}
-	
-	
+  
+	if (KeyManager::GetInstance()->IsOnceKeyDown(VK_TAB))
+	{
+		UIManager::GetInstance()->OpenUIStateBox("defaultUI");
+	}
+	if (KeyManager::GetInstance()->IsOnceKeyDown(0x49)) // 'I' Å°
+	{
+		DialogueManager::GetInstance()->ShowLine(DialogueTemplate::FoundItem, { {L"itemName", L"Monster Ball"} });
+	}
+
+	if (KeyManager::GetInstance()->IsOnceKeyDown(0x44)) // 'D' Å°
+	{
+		UIManager::GetInstance()->OpenUIStateBox("DungeonUI");
+	}
+	if (KeyManager::GetInstance()->IsOnceKeyDown(0x59)) // 'Y' Å°
+	{
+		UIManager::GetInstance()->OpenUIStateBox("YesOrNoUI");
+	}
+  
 }
 
 
 void SquareScene::Render(HDC hdc)
 {
     if (backGround) {
-        backGround->Render(hdc);
+        backGround->RenderBackground(hdc);
     }
     if (yellowFlower) {
         RenderFlowers(hdc, yellowFlower, yellowPositions, currAnimaionFrame);
@@ -146,13 +182,15 @@ void SquareScene::Render(HDC hdc)
     if (redFlower) {
         RenderFlowers(hdc, redFlower, redPositions, currAnimaionFrame);
     }
-	if (river) {
-		river->FrameRender(hdc, 64, 54, currAnimaionFrame, 0, 0);
-		river->FrameRender(hdc, 64, 104, currAnimaionFrame, 0, 0);
-		river->FrameRender(hdc, 152, 273, currAnimaionFrame, 0, 0);
-		river->FrameRender(hdc, 152, 400, currAnimaionFrame, 0, 0);
-		river->FrameRender(hdc, 152, 460, currAnimaionFrame, 0, 0);
 
+	RECT cam = CameraManager::GetInstance()->GetViewPos();
+
+	if (river) {
+		river->FrameRender(hdc, 64 - cam.left, 54 - cam.top, currAnimaionFrame, 0, 0);
+		river->FrameRender(hdc, 64 - cam.left, 104 - cam.top, currAnimaionFrame, 0, 0);
+		river->FrameRender(hdc, 152 - cam.left, 273 - cam.top, currAnimaionFrame, 0, 0);
+		river->FrameRender(hdc, 152 - cam.left, 400 - cam.top, currAnimaionFrame, 0, 0);
+		river->FrameRender(hdc, 152 - cam.left, 460 - cam.top, currAnimaionFrame, 0, 0);
 	}
 	if (collisionBoxTool) {
 		collisionBoxTool->Render(hdc);
@@ -162,6 +200,7 @@ void SquareScene::Render(HDC hdc)
 	}
 
     TimerManager::GetInstance()->Render(hdc);
+	UIManager::GetInstance()->Render(hdc);
 
     wsprintf(szText, TEXT("Mouse X : %d, Y : %d"), g_ptMouse.x, g_ptMouse.y);
     TextOut(hdc, 300, 60, szText, wcslen(szText));
@@ -169,7 +208,12 @@ void SquareScene::Render(HDC hdc)
 
 
 void SquareScene::RenderFlowers(HDC hdc, Image* flower, const std::vector<POINT>& positions, int currFrame) {
-    for (const auto& pos : positions) {
-        flower->FrameRender(hdc, pos.x, pos.y, 0, currFrame, 0);
+    
+	RECT cam = CameraManager::GetInstance()->GetViewPos();
+	for (const auto& pos : positions) {
+		int flowerX = pos.x - cam.left;
+		int flowerY = pos.y - cam.top;
+
+		flower->FrameRender(hdc, flowerX, flowerY, 0, currFrame, 0);
     }
 }

@@ -1,5 +1,5 @@
 #pragma once
-#include "Config.h"
+#include "config.h"
 
 // UI 공통 인터페이스
 class UIState

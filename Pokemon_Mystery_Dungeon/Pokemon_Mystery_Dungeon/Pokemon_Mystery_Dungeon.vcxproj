@@ -135,7 +135,9 @@
     <ClCompile Include="CameraTestScene.cpp" />
     <ClCompile Include="CollisionBoxTool.cpp" />
     <ClCompile Include="DefaultUIState.cpp" />
+    <ClCompile Include="DialogueManager.cpp" />
     <ClCompile Include="DialogueUIState.cpp" />
+    <ClCompile Include="DungeonUIState.cpp" />
     <ClCompile Include="EmberSkill.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="DungeonScene.cpp" />
@@ -147,6 +149,7 @@
     <ClCompile Include="ImageGDIPlus.cpp" />
     <ClCompile Include="ImageGDIPlusManager.cpp" />
     <ClCompile Include="ImageManager.cpp" />
+    <ClCompile Include="InfoUIState.cpp" />
     <ClCompile Include="InventoryUIState.cpp" />
     <ClCompile Include="ISkill.cpp" />
     <ClCompile Include="ItemManager.cpp" />
@@ -170,21 +173,24 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SkillInfoUIState.cpp" />
-    <ClCompile Include="SkillSelectUIState.cpp" />
+    <ClCompile Include="SkillUIState.cpp" />
     <ClCompile Include="SkillManager.cpp" />
     <ClCompile Include="SquareScene.cpp" />
     <ClCompile Include="SwingAnimState.cpp" />
     <ClCompile Include="StoneShowerSkill.cpp" />
     <ClCompile Include="StartScene.cpp" />
+    <ClCompile Include="TileMapTestScene.cpp" />
     <ClCompile Include="TilemapTool.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="TimerManager.cpp" />
     <ClCompile Include="UIElement.cpp" />
     <ClCompile Include="UIElementImage.cpp" />
     <ClCompile Include="TurnManager.cpp" />
+    <ClCompile Include="UIElementText.cpp" />
     <ClCompile Include="WalkAnimState.cpp" />
     <ClCompile Include="TitleUIState.cpp" />
     <ClCompile Include="UIManager.cpp" />
+    <ClCompile Include="YesOrNoUIState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AttackAnimState.h" />
@@ -194,10 +200,13 @@
     <ClInclude Include="CameraTestScene.h" />
     <ClInclude Include="CollisionBoxTool.h" />
     <ClInclude Include="DefaultUIState.h" />
+    <ClInclude Include="DialogueManager.h" />
+    <ClInclude Include="DialogueTemplate.h" />
     <ClInclude Include="DialogueUIState.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="CommonFunction.h" />
     <ClInclude Include="config.h" />
+    <ClInclude Include="DungeonUIState.h" />
     <ClInclude Include="EmberSkill.h" />
     <ClInclude Include="DungeonScene.h" />
     <ClInclude Include="GameObject.h" />
@@ -211,6 +220,7 @@
     <ClInclude Include="ImageGDIPlus.h" />
     <ClInclude Include="ImageGDIPlusManager.h" />
     <ClInclude Include="ImageManager.h" />
+    <ClInclude Include="InfoUIState.h" />
     <ClInclude Include="InventoryUIState.h" />
     <ClInclude Include="ISkill.h" />
     <ClInclude Include="ItemManager.h" />
@@ -233,14 +243,16 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Singleton.h" />
+    <ClInclude Include="SkillUIState.h" />
     <ClInclude Include="SkillInfoUIState.h" />
-    <ClInclude Include="SkillSelectUIState.h" />
     <ClInclude Include="SkillManager.h" />
     <ClInclude Include="SquareScene.h" />
     <ClInclude Include="SwingAnimState.h" />
+    <ClInclude Include="TileMapTestScene.h" />
     <ClInclude Include="UIElement.h" />
     <ClInclude Include="UIElementImage.h" />
     <ClInclude Include="TurnManager.h" />
+    <ClInclude Include="UIElementText.h" />
     <ClInclude Include="WalkAnimState.h" />
     <ClInclude Include="StoneShowerSkill.h" />
     <ClInclude Include="StartScene.h" />
@@ -250,6 +262,7 @@
     <ClInclude Include="TitleUIState.h" />
     <ClInclude Include="UIManager.h" />
     <ClInclude Include="UIState.h" />
+    <ClInclude Include="YesOrNoUIState.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
