@@ -3,7 +3,7 @@
 #include "CommonFunction.h"
 #include "TilemapTool.h"
 #include "DungeonScene.h"
-#include "UIManager.h""
+#include "UIManager.h"
 #include "DialogueManager.h"
 #include "DialogueTemplate.h"
 #include "StartScene.h"
@@ -26,24 +26,24 @@ HRESULT SquareScene::Init()
 
 	//Size : 954, 714
 	backGround = ImageManager::GetInstance()->AddImage(
-		"ê´‘ìž¥ë°°ê²½", L"Image/SceneImage/Square3.bmp", 
+		"±¤Àå¹è°æ", L"Image/SceneImage/Square3.bmp", 
 		SQUARESIZE_X, SQUARESIZE_Y, 1,1,
 		0, RGB(255,0,255));
 
 	//210,41
 	river = ImageManager::GetInstance()->AddImage(
-		"ê°•ë¬¼", L"Image/SceneImage/river.bmp",
+		"°­¹°", L"Image/SceneImage/river.bmp",
 		210, 41, 6, 1,
 		0, RGB(200, 224, 168));
 
 	//33,144
 	yellowFlower = ImageManager::GetInstance()->AddImage(
-		"ë…¸ëž€ê½ƒ", L"Image/SceneImage/YellowFlower.bmp", 
+		"³ë¶õ²É", L"Image/SceneImage/YellowFlower.bmp", 
 		33, 144, 1,6,
 		0, RGB(184,240,120));
 	
 	redFlower = ImageManager::GetInstance()->AddImage(
-		"ë¶‰ì€ê½ƒ", L"Image/SceneImage/RedFlower.bmp", 
+		"ºÓÀº²É", L"Image/SceneImage/RedFlower.bmp", 
 		33, 144, 1,6,
 		0, RGB(184,240,120));
 
@@ -60,18 +60,18 @@ HRESULT SquareScene::Init()
 		{261,355},
 	};
 	yellowPositions = {
-		// ì¤‘ì•™ ì„¸ë¡œ 3ê°œ
+		// Áß¾Ó ¼¼·Î 3°³
 		{477,  77},
 		{477, 110},
 		{477, 143},
 
-		// ì˜¤ë¥¸ìª½ ì„¸ë¡œ 4ê°œ
+		// ¿À¸¥ÂÊ ¼¼·Î 4°³
 		{545,  95},
 		{545, 128},
 		{545, 161},
 		{545, 194},
 
-		// ê¸°íƒ€ ê°œë³„ ìœ„ì¹˜
+		// ±âÅ¸ °³º° À§Ä¡
 		{353, 578},
 		{388,291},
 		{854, 377},
@@ -81,7 +81,7 @@ HRESULT SquareScene::Init()
 		{341, 611},
 	};
 
-	// ì¹´ë©”ë¼ ì´ˆê¸°í™”
+	// Ä«¸Þ¶ó ÃÊ±âÈ­
 	CameraManager::GetInstance()->Init(GameViewSize_X, GameViewSize_Y, backGround->GetWidth(), backGround->GetHeight());
 
 	elapsedTime = 0;
@@ -114,8 +114,8 @@ void SquareScene::Update()
 	CameraManager::GetInstance()->SetCameraPos(mouse.x, mouse.y);
 	if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F1)) {
 
-		SceneManager::GetInstance()->AddScene("íƒ€ì¼ë§µíˆ´", new TilemapTool());
-		SceneManager::GetInstance()->ChangeScene("íƒ€ì¼ë§µíˆ´");
+		SceneManager::GetInstance()->AddScene("Å¸ÀÏ¸ÊÅø", new TilemapTool());
+		SceneManager::GetInstance()->ChangeScene("Å¸ÀÏ¸ÊÅø");
 	}
 
 	if (yellowFlower && TimerManager::GetInstance())
@@ -132,13 +132,13 @@ void SquareScene::Update()
 		}
 	}
 	if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F6)) {
-		SceneManager::GetInstance()->AddScene("ë˜ì „ì”¬", new DungeonScene());
-		SceneManager::GetInstance()->ChangeScene("ë˜ì „ì”¬", "ë¡œë”©ì”¬");
+		SceneManager::GetInstance()->AddScene("´øÀü¾À", new DungeonScene());
+		SceneManager::GetInstance()->ChangeScene("´øÀü¾À", "·Îµù¾À");
 	}
 	if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F5)) {
-		SceneManager::GetInstance()->AddScene("ìŠ¤íƒ€íŠ¸ì”¬", new StartScene());
-		SceneManager::GetInstance()->AddLoadingScene("ë¡œë”©ì”¬", new LoadingScene());
-		SceneManager::GetInstance()->ChangeScene("ìŠ¤íƒ€íŠ¸ì”¬", "ë¡œë”©ì”¬");
+		SceneManager::GetInstance()->AddScene("½ºÅ¸Æ®¾À", new StartScene());
+		SceneManager::GetInstance()->AddLoadingScene("·Îµù¾À", new LoadingScene());
+		SceneManager::GetInstance()->ChangeScene("½ºÅ¸Æ®¾À", "·Îµù¾À");
 	}
 
 	if (collisionBoxTool) {
@@ -154,16 +154,16 @@ void SquareScene::Update()
 	{
 		UIManager::GetInstance()->OpenUIStateBox("defaultUI");
 	}
-	if (KeyManager::GetInstance()->IsOnceKeyDown(0x49)) // 'I' í‚¤
+	if (KeyManager::GetInstance()->IsOnceKeyDown(0x49)) // 'I' Å°
 	{
 		DialogueManager::GetInstance()->ShowLine(DialogueTemplate::FoundItem, { {L"itemName", L"Monster Ball"} });
 	}
 
-	if (KeyManager::GetInstance()->IsOnceKeyDown(0x44)) // 'D' í‚¤
+	if (KeyManager::GetInstance()->IsOnceKeyDown(0x44)) // 'D' Å°
 	{
 		UIManager::GetInstance()->OpenUIStateBox("DungeonUI");
 	}
-	if (KeyManager::GetInstance()->IsOnceKeyDown(0x59)) // 'Y' í‚¤
+	if (KeyManager::GetInstance()->IsOnceKeyDown(0x59)) // 'Y' Å°
 	{
 		UIManager::GetInstance()->OpenUIStateBox("YesOrNoUI");
 	}

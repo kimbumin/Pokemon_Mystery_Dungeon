@@ -13,13 +13,13 @@ HRESULT DungeonScene::Init()
 	mPlayer = new MPlayer;
 	mPlayer->Init();
 
-	wallTiles = map.GetWallTiles(); //wallTilesì¢Œí‘œ  Pointë¡œ
+	wallTiles = map.GetWallTiles(); //wallTilesÁÂÇ¥  Point·Î
 	CameraManager::GetInstance()->Init(GameViewSize_X, GameViewSize_Y, TILE_X * TILE_SIZE, TILE_Y * TILE_SIZE);
 
 	dungeonFloor = 0;
 
 	GenerateNextFloor();
-	
+
 	return S_OK;
 }
 
@@ -39,21 +39,21 @@ void DungeonScene::Update()
 	ScreenToClient(g_hWnd, &mouse);
 	CameraManager::GetInstance()->SetCameraPos(mouse.x, mouse.y);
 	if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F6)) {
-		//SceneManager::GetInstance()->AddScene("ë˜ì „ì”¬", new DungeonScene());
-		SceneManager::GetInstance()->ChangeScene("ê´‘ìž¥");
+		//SceneManager::GetInstance()->AddScene("´øÀü¾À", new DungeonScene());
+		SceneManager::GetInstance()->ChangeScene("±¤Àå");
 	}
 	if (KeyManager::GetInstance()->IsOnceKeyDown(VK_SPACE)) {
 		GenerateNextFloor();
 	}
 	if (dungeonFloor > 5) {
 		dungeonFloor = 0;
-		SceneManager::GetInstance()->AddScene("ë³´ìŠ¤ì”¬", new BossScene());
-		SceneManager::GetInstance()->ChangeScene("ë³´ìŠ¤ì”¬");
+		SceneManager::GetInstance()->AddScene("º¸½º¾À", new BossScene());
+		SceneManager::GetInstance()->ChangeScene("º¸½º¾À");
 	}
 
 	if (mPlayer) {
 		mPlayer->Update();
-		POINT playerPos = mPlayer->GetPos(); // í”Œë ˆì´ì–´ì˜ íƒ€ì¼ ìœ„ì¹˜ë¥¼ ë°›ì•„ì˜¤ëŠ” í•¨ìˆ˜ í•„ìš”
+		POINT playerPos = mPlayer->GetPos(); // ÇÃ·¹ÀÌ¾îÀÇ Å¸ÀÏ À§Ä¡¸¦ ¹Þ¾Æ¿À´Â ÇÔ¼ö ÇÊ¿ä
 
 		if (IsPlayerOnStair()) {
 			++dungeonFloor;
@@ -61,7 +61,7 @@ void DungeonScene::Update()
 		}
 	}
 
-	
+
 }
 
 void DungeonScene::Render(HDC hdc)
