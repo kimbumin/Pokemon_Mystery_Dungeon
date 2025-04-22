@@ -231,26 +231,20 @@
     <ClCompile Include="PPHeal.cpp">
       <Filter>ItemManager\Item</Filter>
     </ClCompile>
-    <ClCompile Include="TileMapTestScene.cpp">
-      <Filter>Ui</Filter>
+    <ClCompile Include="LoadingScene.cpp">
+      <Filter>Scene\소스</Filter>
     </ClCompile>
-    <ClCompile Include="SkillInfoUIState.cpp">
-      <Filter>Ui\UiState\소스</Filter>
+    <ClCompile Include="CollisionBoxTool.cpp">
+      <Filter>Scene\소스</Filter>
     </ClCompile>
-    <ClCompile Include="DungeonUIState.cpp">
-      <Filter>Ui\UiState\소스</Filter>
+    <ClCompile Include="MPlayer.cpp">
+      <Filter>Scene\소스</Filter>
     </ClCompile>
-    <ClCompile Include="UIElementText.cpp">
-      <Filter>Ui\UiConfig\소스</Filter>
+    <ClCompile Include="BossScene.cpp">
+      <Filter>Scene\소스</Filter>
     </ClCompile>
-    <ClCompile Include="DialogueManager.cpp">
-      <Filter>Ui\UiConfig\소스</Filter>
-    </ClCompile>
-    <ClCompile Include="InfoUIState.cpp">
-      <Filter>Ui\UiState\소스</Filter>
-    </ClCompile>
-    <ClCompile Include="YesOrNoUIState.cpp">
-      <Filter>Ui\UiState\소스</Filter>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Scene\소스</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -431,26 +425,20 @@
     <ClInclude Include="PokemonBase.h">
       <Filter>Pokemon</Filter>
     </ClInclude>
-    <ClInclude Include="TileMapTestScene.h">
-      <Filter>Ui</Filter>
+    <ClInclude Include="LoadingScene.h">
+      <Filter>Scene\헤더</Filter>
     </ClInclude>
-    <ClInclude Include="DungeonUIState.h">
-      <Filter>Ui\UiState\헤더</Filter>
+    <ClInclude Include="CollisionBoxTool.h">
+      <Filter>Scene\헤더</Filter>
     </ClInclude>
-    <ClInclude Include="UIElementText.h">
-      <Filter>Ui\UiConfig\헤더</Filter>
+    <ClInclude Include="MPlayer.h">
+      <Filter>Scene\헤더</Filter>
     </ClInclude>
-    <ClInclude Include="DialogueManager.h">
-      <Filter>Ui\UiConfig\헤더</Filter>
+    <ClInclude Include="BossScene.h">
+      <Filter>Scene\헤더</Filter>
     </ClInclude>
-    <ClInclude Include="DialogueTemplate.h">
-      <Filter>Ui\UiConfig\헤더</Filter>
-    </ClInclude>
-    <ClInclude Include="InfoUIState.h">
-      <Filter>Ui\UiState\헤더</Filter>
-    </ClInclude>
-    <ClInclude Include="YesOrNoUIState.h">
-      <Filter>Ui\UiState\헤더</Filter>
+    <ClInclude Include="Scene.h">
+      <Filter>Scene\헤더</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

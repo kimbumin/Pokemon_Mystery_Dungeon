@@ -129,9 +129,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AttackAnimState.cpp" />
+    <ClCompile Include="BossScene.cpp" />
     <ClCompile Include="Branch.cpp" />
     <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="CameraTestScene.cpp" />
+    <ClCompile Include="CollisionBoxTool.cpp" />
     <ClCompile Include="DefaultUIState.cpp" />
     <ClCompile Include="DialogueManager.cpp" />
     <ClCompile Include="DialogueUIState.cpp" />
@@ -153,10 +155,12 @@
     <ClCompile Include="ItemManager.cpp" />
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="LeppaBerry.cpp" />
+    <ClCompile Include="LoadingScene.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="OranBerry.cpp" />
     <ClCompile Include="MoveActionState.cpp" />
+    <ClCompile Include="MPlayer.cpp" />
     <ClCompile Include="PokemonAnimator.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="PokemonBase.cpp" />
@@ -166,6 +170,7 @@
     <ClCompile Include="PPHeal.cpp" />
     <ClCompile Include="PokemonPlayer.cpp" />
     <ClCompile Include="RotateAnimState.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SkillInfoUIState.cpp" />
     <ClCompile Include="SkillUIState.cpp" />
@@ -189,9 +194,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AttackAnimState.h" />
+    <ClInclude Include="BossScene.h" />
     <ClInclude Include="Branch.h" />
     <ClInclude Include="CameraManager.h" />
     <ClInclude Include="CameraTestScene.h" />
+    <ClInclude Include="CollisionBoxTool.h" />
     <ClInclude Include="DefaultUIState.h" />
     <ClInclude Include="DialogueManager.h" />
     <ClInclude Include="DialogueTemplate.h" />
@@ -219,9 +226,11 @@
     <ClInclude Include="ItemManager.h" />
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="LeppaBerry.h" />
+    <ClInclude Include="LoadingScene.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="OranBerry.h" />
     <ClInclude Include="MoveActionState.h" />
+    <ClInclude Include="MPlayer.h" />
     <ClInclude Include="PokemonAnimator.h" />
     <ClInclude Include="PokemonBase.h" />
     <ClInclude Include="PokemonImageLoader.h" />
@@ -231,6 +240,7 @@
     <ClInclude Include="RotateAnimState.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Room.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="SkillUIState.h" />
