@@ -13,6 +13,8 @@
 #include <set>
 #include <unordered_set>
 #include <vector>
+#include <fstream>
+#include <sstream>
 
 using namespace std;
 
@@ -66,35 +68,42 @@ struct PokemonData {
 
 enum class Direction
 {
-    SOUTH,      // 0,1
-    SOUTHEAST,  // 1,1
-    EAST,       // 1,0
-    NORTHEAST,  // 1,-1
-    NORTH,      // 0,-1
-    NORTHWEST,  // -1,-1
-    WEST,       // -1,0
-    SOUTHWEST,  // -1,1
-    LENGTH,
+	SOUTH,      // 0,1
+	SOUTHEAST,  // 1,1
+	EAST,       // 1,0
+	NORTHEAST,  // 1,-1
+	NORTH,      // 0,-1
+	NORTHWEST,  // -1,-1
+	WEST,       // -1,0
+	SOUTHWEST,  // -1,1
+	LENGTH,
 };
 
 // 배열의 Index에 Direction 넣어서
 constexpr pair<int, int> directionOffsets[8] = {
-    { 0,  1 },  // SOUTH
-    { 1,  1 },  // SOUTHEAST
-    { 1,  0 },  // EAST
-    { 1, -1 },  // NORTHEAST
-    { 0, -1 },  // NORTH
-    {-1, -1 },  // NORTHWEST
-    {-1,  0 },  // WEST
-    {-1,  1 }   // SOUTHWEST
+	{ 0,  1 },  // SOUTH
+	{ 1,  1 },  // SOUTHEAST
+	{ 1,  0 },  // EAST
+	{ 1, -1 },  // NORTHEAST
+	{ 0, -1 },  // NORTH
+	{-1, -1 },  // NORTHWEST
+	{-1,  0 },  // WEST
+	{-1,  1 }   // SOUTHWEST
 };
 
 // 포켓몬 애니메이션 종류들
 const vector<string> animTypes = { "Attack", "Hurt", "Idle", "Rotate", "Swing", "Walk" };
 
+const vector<string> skillElementType =
+{
+	"Normal", "Fire", "Fighting", "Water", "Flying", "Grass", "Poison", "Electric", "Ground",
+	"Psychic", "Rock", "Ice", "Bug", "Dragon", "Ghost"
+};
+
+const vector<string> skillAnimType = {"Normal","Special"};
 /*
-    extern 키워드 : 변수나 함수가 다른 파일에 정의되어 있다 라는
-    사실을 알리는 키워드.
+	extern 키워드 : 변수나 함수가 다른 파일에 정의되어 있다 라는
+	사실을 알리는 키워드.
 */
 extern HWND g_hWnd;
 extern HINSTANCE g_hInstance;
