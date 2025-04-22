@@ -81,6 +81,14 @@ public:
     {
         return animator;
     }
+    inline IAnimState* GetCurrentAnimState()
+    {
+        return currentAnimState;
+    }
+    inline IActionState* GetCurrentActionState()
+    {
+        return currentActionState;
+    }
     inline Direction GetDirection()
     {
         return direction;

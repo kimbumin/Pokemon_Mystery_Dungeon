@@ -4,6 +4,7 @@
 #include "PlayerManager.h"
 #include "PokemonAnimator.h"
 #include "PokemonBuilder.h"
+#include "PokemonEnemy.h"
 #include "PokemonImageLoader.h"
 #include "PokemonPlayer.h"
 #include "PokemonPool.h"
@@ -19,9 +20,9 @@ void DungeonManager::LoadDungeonData()
     // 던전 이름 → 등장 포켓몬 ID + 레벨 범위 + 수
     // 외부 파일로 빼낼생각이 있다
     // 밑에는 예시
-    dungeonSpawnMap["Volcano"] = DungeonSpawnInfo{{4, 5, 37}, 5, 10, 10};
+    dungeonSpawnMap["Volcano"] = DungeonSpawnInfo{{4, 5, 37}, 5, 10, 4};
 
-    dungeonSpawnMap["TinyForest"] = DungeonSpawnInfo{{10, 13, 16}, 3, 6, 8};
+    dungeonSpawnMap["TinyForest"] = DungeonSpawnInfo{{10, 13, 16}, 3, 6, 4};
 }
 
 void DungeonManager::EnterDungeon(string dungeonName)
@@ -31,6 +32,7 @@ void DungeonManager::EnterDungeon(string dungeonName)
 
     builder = new PokemonBuilder();
     builder->SetPool(pool);
+    builder->SetMap(dungeonMap);
 
     if (dungeonSpawnMap.find(dungeonName) == dungeonSpawnMap.end())
     {
@@ -45,10 +47,20 @@ void DungeonManager::EnterDungeon(string dungeonName)
         PokemonImageLoader::GetInstance()->LoadPokemonAnim(id);
     }
 
+    // 플레이어 위치 설정
+    FPOINT playerPos = builder->GetRandomValidPosition();
+    PlayerManager::GetInstance()->GetPlayer()->SetPos(playerPos);
+
     // 적 스폰
     for (int i = 0; i < info.spawnCount; ++i)
     {
-        PokemonBase* enemy = builder->BuildFromDungeonInfo(info);
+        PokemonEnemy* enemy =
+            static_cast<PokemonEnemy*>(builder->BuildFromDungeonInfo(info));
+        // 캐스팅
+        if (enemy)
+        {
+            enemy->SetMap(dungeonMap);
+        }
     }
 
     // 턴 매니저한테 Pool 넘기기

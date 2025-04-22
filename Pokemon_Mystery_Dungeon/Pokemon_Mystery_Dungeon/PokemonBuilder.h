@@ -19,6 +19,7 @@ public:
     int RandomChoice(vector<int>& v);
     int RandomRange(int min, int max);
     FPOINT GetRandomValidPosition();
+    bool IsPositionOccupied(FPOINT pos);
 
     // Setter
     virtual void SetPool(PokemonPool* newPool);

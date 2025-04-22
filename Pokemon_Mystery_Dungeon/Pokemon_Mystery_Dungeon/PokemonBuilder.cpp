@@ -61,15 +61,36 @@ FPOINT PokemonBuilder::GetRandomValidPosition()
     {
         int x = rand() % TILE_X;
         int y = rand() % TILE_Y;
-        if (map == nullptr)
+
+        if (!map || !map->IsPathOrFloor(x, y))
         {
-            break;
+            continue;
         }
-        if (map->IsPathOrFloor(x, y))  // Check
+
+        FPOINT pos = {x * TILE_SIZE * 1.0f, y * TILE_SIZE * 1.0f};
+
+        if (pokemonPool && !IsPositionOccupied(pos))
         {
-            return FPOINT{x * TILE_SIZE * 1.0f, y * TILE_SIZE * 1.0f};
+            return pos;
         }
     }
+}
+
+bool PokemonBuilder::IsPositionOccupied(FPOINT pos)
+{
+    for (auto iter = pokemonPool->begin(); iter != pokemonPool->end(); ++iter)
+    {
+        if ((*iter)->GetIsAlive())
+        {
+            FPOINT otherPos = (*iter)->GetPos();
+            if (abs(pos.x - otherPos.x) < TILE_SIZE &&
+                abs(pos.y - otherPos.y) < TILE_SIZE)
+            {
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 void PokemonBuilder::SetPool(PokemonPool* newPool)

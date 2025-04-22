@@ -62,7 +62,8 @@ void PokemonEnemy::ExecuteTurn()
     this->SetDirection(dirToPlayer);
     if (dist <= 1)
     {
-        ExecuteAttackAction(nullptr);  // 임시로 nullptr, 나중에 Skill1 연결
+        // ExecuteAttackAction(nullptr);  // 나중에 Skill1 연결
+        ExecuteMoveAction();
     }
     else if (dist <= 3)
     {

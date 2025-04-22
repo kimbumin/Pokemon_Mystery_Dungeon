@@ -7,8 +7,7 @@ class PokemonPool;
 enum class TurnState
 {
     WaitingForInput,
-    ExecutingAction,
-    WaitingForAnim,
+    WaitingForCompletion,
     TurnEnd
 };
 
@@ -27,6 +26,7 @@ public:
 
     PokemonBase* GetCurrentPokemon();
     bool IsPlayerTurn();
+    int CountAlive();
     TurnState GetState()
     {
         return state;
