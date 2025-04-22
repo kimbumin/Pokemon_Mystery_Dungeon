@@ -45,7 +45,7 @@ void UIElementText::DrawColoredText(Gdiplus::Graphics& graphics, const std::wstr
 	Gdiplus::FontFamily fontFamily(fontName.c_str());
 	Gdiplus::Font font(&fontFamily, fontSize, Gdiplus::FontStyleBold, Gdiplus::UnitPixel);
 
-	Gdiplus::SolidBrush defaultBrush(Gdiplus::Color(255, 28, 28, 132));   // #1C1C84
+	Gdiplus::SolidBrush defaultBrush((textColor));   // #1C1C84
 	Gdiplus::SolidBrush highlightBrush(Gdiplus::Color(255, 241, 179, 0)); // #F1B300
 
 	bool inHighlight = false;

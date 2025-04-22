@@ -1,15 +1,18 @@
 #include "InfoUIState.h"
 #include "ImageGDIPlusManager.h"
+#include "ImageManager.h"
 #include "UIElementImage.h"
 #include "UIElementText.h"
 
 HRESULT InfoUIState::Init()
 {
-	auto& manager = *ImageGDIPlusManager::GetInstance();
-	auto FirstInfoBoxImage = manager.AddImage("FirstInfoBox", L"Image/UIImage/InfoUIState/ExistsInfoBox.png");
-	auto SecondInfoBoxImage = manager.AddImage("SecondInfoBox", L"Image/UIImage/InfoUIState/NotExistsInfoBox.png");
-	auto ThirdInfoBoxImage = manager.AddImage("ThirdInfoBox", L"Image/UIImage/InfoUIState/NotExistsInfoBox.png");
-	auto FourthInfoBoxImage = manager.AddImage("FourthInfoBox", L"Image/UIImage/InfoUIState/NotExistsInfoBox.png");
+	auto& manager = *ImageManager::GetInstance();
+	auto FirstInfoBoxImage = manager.AddImage("FirstInfoBox", L"Image/UIImage/InfoUIState/ExistsInfoBox.bmp",300,50);
+	auto SecondInfoBoxImage = manager.AddImage("SecondInfoBox", L"Image/UIImage/InfoUIState/NotExistsInfoBox.bmp", 300, 50);
+	auto ThirdInfoBoxImage = manager.AddImage("ThirdInfoBox", L"Image/UIImage/InfoUIState/NotExistsInfoBox.bmp", 300, 50);
+	auto FourthInfoBoxImage = manager.AddImage("FourthInfoBox", L"Image/UIImage/InfoUIState/NotExistsInfoBox.bmp", 300, 50);
+
+	
 
 	// UI 엘리먼트 생성
 	FirstInfoBox = new UIElementImage();
@@ -27,6 +30,20 @@ HRESULT InfoUIState::Init()
 	SecondInfoBox->SetLocalPos(InfoBoxPosX, InfoBoxPosYOffset[1]);
 	ThirdInfoBox->SetLocalPos(InfoBoxPosX, InfoBoxPosYOffset[2]);
 	FourthInfoBox->SetLocalPos(InfoBoxPosX, InfoBoxPosYOffset[3]);
+
+	FirstInfoBox->SetParent(this);
+	SecondInfoBox->SetParent(this);
+	ThirdInfoBox->SetParent(this);
+	FourthInfoBox->SetParent(this);
+
+	// 자식 객체 생성 waterTypeText
+	NameText = new UIElementText();
+	NameText->SetText(L"몬스터 이름");
+	NameText->SetFont(L"Arial", 20);
+	NameText->SetTextColor(28, 28, 132, 255);  // #F1B300
+	NameText->SetLocalPos(50,  0);
+	NameText->SetParent(FirstInfoBox);
+	
 
 	UpdateRealPos();
 
@@ -56,5 +73,6 @@ InfoUIState::~InfoUIState()
 
 void InfoUIState::SetInfoBoxText(int index, const wstring& text)
 {
+
 }
 

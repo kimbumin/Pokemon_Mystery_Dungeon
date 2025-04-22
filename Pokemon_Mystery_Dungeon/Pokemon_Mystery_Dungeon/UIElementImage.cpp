@@ -2,26 +2,35 @@
 
 void UIElementImage::SetSpeed(float speed)
 {
-	if (image)
+	if (imageGDIPlus)
 	{
-		image->SetGifSpeed(speed);
+		imageGDIPlus->SetGifSpeed(speed);
 	}
 }
 
 void UIElementImage::Render(HDC hdc)
 {
-	if (!image) return;
+	if (!imageGDIPlus && !image) return;
+	
 
 	FPOINT pos = GetRealPos();
 
-	image->RenderScale(
-		hdc,
-		pos.x, pos.y,
-		scaleX, scaleY,
-		angle,
-		flipX, flipY,
-		alpha
-	);
+	if (imageGDIPlus) {
+		imageGDIPlus->RenderScale(
+			hdc,
+			pos.x, pos.y,
+			scaleX, scaleY,
+			angle,
+			flipX, flipY,
+			alpha
+		);
+	}
+	else if (image) {
+		image->Render(
+			hdc,
+			pos.x, pos.y
+		);
+	}
 
 	for (auto child : children)
 	{
@@ -31,10 +40,9 @@ void UIElementImage::Render(HDC hdc)
 
 void UIElementImage::Update()
 {
-	if (image)
+	if (imageGDIPlus)
 	{
-		image->Update(TimerManager::GetInstance()->GetDeltaTime());
+		imageGDIPlus->Update(TimerManager::GetInstance()->GetDeltaTime());
 	}
-
 	UIElement::Update();
 }

@@ -1,11 +1,13 @@
 #pragma once
 #include "UIElement.h"
 #include "ImageGDIPlus.h"
+#include "Image.h"
 
 class UIElementImage : public UIElement
 {
 private:
-	ImageGDIPlus* image = nullptr;
+	ImageGDIPlus* imageGDIPlus = nullptr;
+	Image* image = nullptr;
 
 	float scaleX = 1.0f;
 	float scaleY = 1.0f;
@@ -19,14 +21,24 @@ public:
 	UIElementImage() = default;
 	virtual ~UIElementImage() = default;
 
-	void SetImage(ImageGDIPlus* img) { image = img; }
+	void SetImage(ImageGDIPlus* img) { imageGDIPlus = img; image = nullptr; }
+	void SetImage(Image* img) { image = img; imageGDIPlus = nullptr; }
 
 	void setAlpha(float newAlpha) { alpha = newAlpha; }
 	void setScale(float newScaleX, float newScaleY) { scaleX = newScaleX; scaleY = newScaleY; }
 	void SetAngle(float newAngle) { angle = newAngle; }
 	void SetFlip(bool newFlipX, bool newFlipY) { flipX = newFlipX; flipY = newFlipY; }
-	int GetImageWidth() const { return image ? image->GetWidth() : 0; }
-	int GetImageHeight() const { return image ? image->GetHeight() : 0; }
+	int GetImageWidth() const {
+		if (imageGDIPlus) return imageGDIPlus->GetWidth();
+		if (image)        return image->GetWidth();
+		return 0;
+	}
+
+	int GetImageHeight() const {
+		if (imageGDIPlus) return imageGDIPlus->GetHeight();
+		if (image)        return image->GetHeight();
+		return 0;
+	}
 
 	void SetSpeed(float speed);
 

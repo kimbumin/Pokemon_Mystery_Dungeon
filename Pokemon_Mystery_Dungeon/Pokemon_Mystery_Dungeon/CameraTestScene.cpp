@@ -18,8 +18,7 @@ HRESULT CameraTestScene::Init()
 		"±¤Àå¹è°æ", L"Image/SceneImage/Square3.bmp",
 		SQUARESIZE_X, SQUARESIZE_Y, 1, 1,
 		0, RGB(255, 0, 255));
-
-	UIManager::GetInstance()->RegisterAllUIStates();
+	UIManager::GetInstance()->Init();
 
 	CameraManager::GetInstance()->Init(GameViewSize_X, GameViewSize_Y, 1420, 700);
 	UIManager::GetInstance()->AddState("dialogueBox", new DialogueUIState());
@@ -61,8 +60,6 @@ void CameraTestScene::Update()
 
 void CameraTestScene::Render(HDC hdc)
 {
-	RECT cam = CameraManager::GetInstance()->GetViewPos();
-
 	if (backGround) {
 		backGround->RenderBackground(hdc);
 	}

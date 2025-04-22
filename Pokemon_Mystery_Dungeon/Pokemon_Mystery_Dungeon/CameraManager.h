@@ -21,6 +21,7 @@ public:
 	void Init(int camerWidth, int cameraHeight, int tileMapSizeX, int tileMapSizeY);
 	void SetCameraPos(int x, int y);
 
+
 	RECT GetViewPos() const { return viewPos; }
 	POINT GetCameraPos() const { return cameraPos; }
 

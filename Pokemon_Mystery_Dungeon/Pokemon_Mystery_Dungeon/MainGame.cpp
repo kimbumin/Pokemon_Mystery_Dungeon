@@ -23,10 +23,10 @@ HRESULT MainGame::Init()
 			TEXT("¹é¹öÆÛ »ý¼º ½ÇÆÐ"), TEXT("°æ°í"), MB_OK);
 		return E_FAIL;
 	}
-	//SceneManager::GetInstance()->AddScene("±¤Àå", new TileMapTestScene());
-	//SceneManager::GetInstance()->ChangeScene("±¤Àå");
-	SceneManager::GetInstance()->AddScene("TestMap", new CameraTestScene());
-	SceneManager::GetInstance()->ChangeScene("TestMap");
+	SceneManager::GetInstance()->AddScene("±¤Àå", new SquareScene());
+	SceneManager::GetInstance()->ChangeScene("±¤Àå");
+	//SceneManager::GetInstance()->AddScene("TestMap", new CameraTestScene());
+	//SceneManager::GetInstance()->ChangeScene("TestMap");
 	return S_OK;
 }
 
@@ -56,7 +56,7 @@ void MainGame::Update()
 void MainGame::Render()
 {
 	HDC hBackBufferDC = backBuffer->GetMemDC();
-	PatBlt(hBackBufferDC, 0, 0, GameViewSize_X, GameViewSize_Y, BLACKNESS);
+	PatBlt(hBackBufferDC, 0, 0, WINSIZE_X, WINSIZE_Y, BLACKNESS);
 
 	SceneManager::GetInstance()->Render(hBackBufferDC);
 

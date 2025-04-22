@@ -68,7 +68,7 @@ void DialogueUIState::PushDialogueLine(const wstring& text, const map<wstring, w
     newText->RenderDialogue(text, values);  // 템플릿 치환 포함
     newText->SetFont(L"Arial", 20);
     newText->SetTextLine(5.0f);
-    newText->SetTextColor(255, 255, 255, 255);
+	newText->SetTextColor(28, 28, 132, 255); // #1C1C84
     newText->SetLocalPos(20, 30);
     newText->SetParent(dialogueBoxImage);
 }

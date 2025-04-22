@@ -249,6 +249,9 @@
     <ClCompile Include="InfoUIState.cpp">
       <Filter>Ui\UiState\소스</Filter>
     </ClCompile>
+    <ClCompile Include="YesOrNoUIState.cpp">
+      <Filter>Ui\UiState\소스</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="config.h">
@@ -444,6 +447,9 @@
       <Filter>Ui\UiConfig\헤더</Filter>
     </ClInclude>
     <ClInclude Include="InfoUIState.h">
+      <Filter>Ui\UiState\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="YesOrNoUIState.h">
       <Filter>Ui\UiState\헤더</Filter>
     </ClInclude>
   </ItemGroup>

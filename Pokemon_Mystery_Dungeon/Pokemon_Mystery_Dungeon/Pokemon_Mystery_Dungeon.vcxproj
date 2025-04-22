@@ -185,6 +185,7 @@
     <ClCompile Include="WalkAnimState.cpp" />
     <ClCompile Include="TitleUIState.cpp" />
     <ClCompile Include="UIManager.cpp" />
+    <ClCompile Include="YesOrNoUIState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AttackAnimState.h" />
@@ -251,6 +252,7 @@
     <ClInclude Include="TitleUIState.h" />
     <ClInclude Include="UIManager.h" />
     <ClInclude Include="UIState.h" />
+    <ClInclude Include="YesOrNoUIState.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

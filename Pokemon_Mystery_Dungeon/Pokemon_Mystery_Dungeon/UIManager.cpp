@@ -5,13 +5,17 @@
 #include "SkillUIState.h"
 #include "SkillInfoUIState.h"
 #include "DungeonUIState.h"
+#include "InfoUIState.h"
+#include "YesOrNoUIState.h"
 
 UIState* UIManager::currentState = nullptr;
 UIState* UIManager::nextState = nullptr;
 
 void UIManager::Init()
 {
-	
+	AddPersistentState(new InfoUIState());
+
+	RegisterAllUIStates();
 }
 
 void UIManager::Release()
@@ -25,6 +29,15 @@ void UIManager::Release()
 		}
 	}
 	UiStateMap.clear();
+
+	for (auto* state : persistentStates)
+	{
+		delete state;
+	}
+	persistentStates.clear();
+
+	toggleStates.clear();
+
 	currentState = nullptr;
 	currentStateKey.clear();
 	ReleaseInstance();
@@ -124,6 +137,7 @@ void UIManager::RegisterAllUIStates()
 	AddState("SkillUI", new SkillUIState());
 	AddState("SkillUseUI", new SkillInfoUIState());
 	AddState("DungeonUI", new DungeonUIState());
+	AddState("YesOrNoUI", new YesOrNoUIState());
 }
 
 void UIManager::OpenUIStateBox(const string& key)
@@ -155,6 +169,7 @@ void UIManager::AddPersistentState(UIState* state)
 {
 	if (state)
 	{
+		state->Init();
 		persistentStates.push_back(state);
 	}
 }
