@@ -52,8 +52,8 @@ void StartScene::Update()
 
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_SPACE))
     {
-        SceneManager::GetInstance()->AddScene("±¤Àå", new SquareScene);
-        SceneManager::GetInstance()->ChangeScene("±¤Àå");
+        SceneManager::GetInstance()->AddScene("Square", new SquareScene);
+        SceneManager::GetInstance()->ChangeScene("Square");
     }
 }
 

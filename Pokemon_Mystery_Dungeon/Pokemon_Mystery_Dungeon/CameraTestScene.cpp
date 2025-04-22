@@ -16,7 +16,7 @@
 HRESULT CameraTestScene::Init()
 {
     backGround = ImageManager::GetInstance()->AddImage(
-        "±¤Àå¹è°æ", L"Image/SceneImage/Square3.bmp", SQUARESIZE_X, SQUARESIZE_Y,
+        "SquareBackGround", L"Image/SceneImage/Square3.bmp", SQUARESIZE_X, SQUARESIZE_Y,
         1, 1, 0, RGB(255, 0, 255));
     UIManager::GetInstance()->Init();
 

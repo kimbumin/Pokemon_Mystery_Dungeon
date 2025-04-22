@@ -27,21 +27,21 @@ HRESULT SquareScene::Init()
 
     // Size : 954, 714
     backGround = ImageManager::GetInstance()->AddImage(
-        "������", L"Image/SceneImage/Square3.bmp", SQUARESIZE_X, SQUARESIZE_Y,
+        "SquareBackGround", L"Image/SceneImage/Square3.bmp", SQUARESIZE_X, SQUARESIZE_Y,
         1, 1, 0, RGB(255, 0, 255));
 
     // 210,41
     river = ImageManager::GetInstance()->AddImage(
-        "����", L"Image/SceneImage/river.bmp", 210, 41, 6, 1, 0,
+        "river", L"Image/SceneImage/river.bmp", 210, 41, 6, 1, 0,
         RGB(200, 224, 168));
 
     // 33,144
     yellowFlower = ImageManager::GetInstance()->AddImage(
-        "�����", L"Image/SceneImage/YellowFlower.bmp", 33, 144, 1, 6, 0,
+        "yellowFlower", L"Image/SceneImage/YellowFlower.bmp", 33, 144, 1, 6, 0,
         RGB(184, 240, 120));
 
     redFlower = ImageManager::GetInstance()->AddImage(
-        "������", L"Image/SceneImage/RedFlower.bmp", 33, 144, 1, 6, 0,
+        "redFlower", L"Image/SceneImage/RedFlower.bmp", 33, 144, 1, 6, 0,
         RGB(184, 240, 120));
 
     redPositions = {
@@ -102,8 +102,8 @@ void SquareScene::Update()
     CameraManager::GetInstance()->SetCameraPos(mouse.x, mouse.y);
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F1))
     {
-        SceneManager::GetInstance()->AddScene("Ÿ�ϸ���", new TilemapTool());
-        SceneManager::GetInstance()->ChangeScene("Ÿ�ϸ���");
+        SceneManager::GetInstance()->AddScene("TileMapTool", new TilemapTool());
+        SceneManager::GetInstance()->ChangeScene("TileMapTool");
     }
 
     if (yellowFlower && TimerManager::GetInstance())
@@ -121,15 +121,14 @@ void SquareScene::Update()
     }
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F6))
     {
-        SceneManager::GetInstance()->AddScene("������", new DungeonScene());
-        SceneManager::GetInstance()->ChangeScene("������", "�ε���");
+        SceneManager::GetInstance()->AddScene("DungeonScene", new DungeonScene());
+        SceneManager::GetInstance()->ChangeScene("DungeonScene", "LoadingScene");
     }
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F5))
     {
-        SceneManager::GetInstance()->AddScene("��ŸƮ��", new StartScene());
-        SceneManager::GetInstance()->AddLoadingScene("�ε���",
-                                                     new LoadingScene());
-        SceneManager::GetInstance()->ChangeScene("��ŸƮ��", "�ε���");
+        SceneManager::GetInstance()->AddScene("StartScene", new StartScene());
+        SceneManager::GetInstance()->AddLoadingScene("LoadingScene", new LoadingScene());
+        SceneManager::GetInstance()->ChangeScene("StartScene", "LoadingScene");
     }
 
 	elapsedTime += TimerManager::GetInstance()->GetDeltaTime();
