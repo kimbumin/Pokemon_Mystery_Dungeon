@@ -143,6 +143,7 @@
     <ClCompile Include="EmberSkill.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="DungeonScene.cpp" />
+    <ClCompile Include="FireBlastSkill.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="HurtAnimState.cpp" />
     <ClCompile Include="HurtActionState.cpp" />
@@ -182,6 +183,7 @@
     <ClCompile Include="SkillUIState.cpp" />
     <ClCompile Include="SkillManager.cpp" />
     <ClCompile Include="SquareScene.cpp" />
+    <ClCompile Include="StoneShowerSkill.cpp" />
     <ClCompile Include="SwingAnimState.cpp" />
     <ClCompile Include="StartScene.cpp" />
     <ClCompile Include="TileMapTestScene.cpp" />
@@ -216,6 +218,7 @@
     <ClInclude Include="DungeonUIState.h" />
     <ClInclude Include="EmberSkill.h" />
     <ClInclude Include="DungeonScene.h" />
+    <ClInclude Include="FireBlastSkill.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="HurtAnimState.h" />
     <ClInclude Include="HurtActionState.h" />
@@ -260,6 +263,7 @@
     <ClInclude Include="SkillInfoUIState.h" />
     <ClInclude Include="SkillManager.h" />
     <ClInclude Include="SquareScene.h" />
+    <ClInclude Include="StoneShowerSkill.h" />
     <ClInclude Include="SwingAnimState.h" />
     <ClInclude Include="TileMapTestScene.h" />
     <ClInclude Include="UIElement.h" />
