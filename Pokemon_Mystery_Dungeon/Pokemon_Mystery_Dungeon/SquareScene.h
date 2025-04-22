@@ -31,14 +31,4 @@ private:
 	std::vector<POINT> yellowPositions;
     MPlayer* mPlayer;
     CollisionBoxTool* collisionBoxTool;
-
-    int currAnimaionFrame;
-    float elapsedTime;
-
-    wchar_t szText[128];
-    void RenderFlowers(HDC hdc, Image* flower,
-                       const std::vector<POINT>& positions, int currFrame);
-
-    std::vector<POINT> redPositions;
-    std::vector<POINT> yellowPositions;
 };

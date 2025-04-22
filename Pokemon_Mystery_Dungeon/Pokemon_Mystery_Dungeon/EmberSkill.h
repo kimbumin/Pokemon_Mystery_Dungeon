@@ -7,20 +7,21 @@
 
 class Image;
 class PokemonBase;
-class EmberSkill : public ISkill {
+class EmberSkill : public ISkill
+{
 private:
-	Image* image;
-	float elapsedTime;
-	int frameCount;
+    Image* image;
+    float elapsedTime;
+    int frameCount;
 
 public:
-	EmberSkill() = default;
-	EmberSkill(const SkillData& skillData);
+    EmberSkill() = default;
+    EmberSkill(const SkillData& skillData);
 
-	HRESULT Init() override;
-	void Release() override;
-	void Update() override;
-	void Render(HDC hdc) override;
-	void Use(PokemonBase* owner) override;
-	shared_ptr<ISkill> Clone() override;
+    HRESULT Init() override;
+    void Release() override;
+    void Update() override;
+    void Render(HDC hdc) override;
+    void Use(PokemonBase* owner) override;
+    shared_ptr<ISkill> Clone() override;
 };
