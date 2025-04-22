@@ -42,8 +42,7 @@ void DungeonScene::Update()
     CameraManager::GetInstance()->SetCameraPos(mouse.x, mouse.y);
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F6))
     {
-        // SceneManager::GetInstance()->AddScene("´øÀü¾À", new DungeonScene());
-        SceneManager::GetInstance()->ChangeScene("±¤Àå");
+        SceneManager::GetInstance()->ChangeScene("Square");
     }
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_SPACE))
     {
@@ -52,8 +51,8 @@ void DungeonScene::Update()
     if (dungeonFloor > 5)
     {
         dungeonFloor = 0;
-        SceneManager::GetInstance()->AddScene("º¸½º¾À", new BossScene());
-        SceneManager::GetInstance()->ChangeScene("º¸½º¾À");
+        SceneManager::GetInstance()->AddScene("BossScene", new BossScene());
+        SceneManager::GetInstance()->ChangeScene("BossScene");
     }
 
     if (mPlayer)

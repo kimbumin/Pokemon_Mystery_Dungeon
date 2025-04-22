@@ -9,7 +9,7 @@
 HRESULT BossScene::Init()
 {
     collisionBoxTool = new CollisionBoxTool();
-    collisionBoxTool->Init(L"마그마보스방");
+    collisionBoxTool->Init(L"MagmaBossRoom");
 
     backGroundWidth = 432;
     backGroundHeight = 376;
@@ -18,7 +18,7 @@ HRESULT BossScene::Init()
 
     {
         backGround = ImageManager::GetInstance()->AddImage(
-            "보스방", L"Image/SceneImage/MagmaBossMap.bmp", backGroundWidth,
+            "MagmaBossMap", L"Image/SceneImage/MagmaBossMap.bmp", backGroundWidth,
             backGroundHeight, 1, 1, true, RGB(255, 0, 255));
     }
 
@@ -50,7 +50,7 @@ void BossScene::Update()
 {
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F6))
     {
-        SceneManager::GetInstance()->ChangeScene("광장");
+        SceneManager::GetInstance()->ChangeScene("Square");
     }
 
     if (mPlayer)
@@ -59,7 +59,7 @@ void BossScene::Update()
 
     if (BossScene::IsBossDefeated())
     {
-        SceneManager::GetInstance()->ChangeScene("광장");
+        SceneManager::GetInstance()->ChangeScene("Square");
     }
 
     if (collisionBoxTool)
