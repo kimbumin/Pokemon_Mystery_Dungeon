@@ -1,6 +1,8 @@
 #pragma once
 #include "ISkill.h"
+// clang-format off
 #include "config.h"
+// clang-format on
 #include "Image.h"
 
 class Image;

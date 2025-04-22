@@ -21,5 +21,6 @@ public:
     // 외부에서 텍스트 1줄 추가
     void PushDialogueLine(const wstring& text);
 
-    void PushDialogueLine(const wstring& text, const map<wstring, wstring>& values);
+    void PushDialogueLine(const wstring& text,
+                          const map<wstring, wstring>& values);
 };

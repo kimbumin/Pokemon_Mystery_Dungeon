@@ -12,8 +12,9 @@
 	}
 */
 #pragma once
+// clang-format off
 #include "config.h"
-
+// clang-format on
 inline RECT GetRect(int left, int top, int width, int height)
 {
 	RECT rc{ left, top, left + width, top + height };

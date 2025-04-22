@@ -5,11 +5,11 @@ HRESULT KeyManager::Init()
     keyUp.set();
     keyDown.reset();
 
-    //for (int i = 0; i < MAX_KEY_COUNT; i++)
+    // for (int i = 0; i < MAX_KEY_COUNT; i++)
     //{
-    //    keyUp[i] = true;
-    //    keyDown[i] = false;
-    //}
+    //     keyUp[i] = true;
+    //     keyDown[i] = false;
+    // }
 
     return S_OK;
 }
@@ -21,7 +21,7 @@ void KeyManager::Release()
 
 bool KeyManager::IsOnceKeyDown(int key)
 {
-    //GetAsyncKeyState(VK_BACK)
+    // GetAsyncKeyState(VK_BACK)
     /*
         함수 호출 시점에 가상키 (VK_...)가 어떤 상태인지 확인
         1. 0x0000 -> 이전 프레임에 누른적이 없고 호출시점에도 눌려있지 않음
