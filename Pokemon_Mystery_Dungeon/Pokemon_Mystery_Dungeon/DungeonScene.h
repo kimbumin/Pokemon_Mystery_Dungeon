@@ -26,6 +26,8 @@ public:
 private:
     Map map;
     Image* sampleTile;
+    Image* stairImage;
+
     MPlayer* mPlayer;
 
     int dungeonFloor;
