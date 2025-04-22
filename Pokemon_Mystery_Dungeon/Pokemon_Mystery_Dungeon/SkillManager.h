@@ -1,8 +1,9 @@
 #pragma once
 #include "ISkill.h"
 #include "GameObject.h"
+#include "Singleton.h"
 
-class SkillManager {
+class SkillManager :public Singleton<SkillManager>{
 private:
 
 	string line;

@@ -11,24 +11,48 @@ void SkillManager::LoadSkillsFromCSV(const string& filepath)
     }
 
     string line;
+    int lineNumber = 0;
+
     while (getline(file, line))
     {
-        SkillData data;
-        string token;
+        lineNumber++;
+        if (line.empty()) continue; // 빈 줄 무시
+
         istringstream iss(line);
+        string token;
+        SkillData data = {};
 
-        getline(iss, token, ','); data.number = stoi(token);
-        getline(iss, data.name, ',');
-        getline(iss, data.element, ',');
-        getline(iss, data.type, ',');
-        getline(iss, data.animAction, ',');
-        getline(iss, token, ','); data.power = stoi(token);
-        getline(iss, token, ','); data.accuracy = stoi(token);
-        getline(iss, token, ','); data.pp = stoi(token);
+        try {
+            // 순서대로 읽기
+            getline(iss, token, ',');
+            if (token.empty()) throw invalid_argument("Empty Number");
+            data.number = stoi(token);
 
-        // CSV 읽은 SkillData로 EmberSkill 생성
-        skillMap[data.name] = make_shared<EmberSkill>(data);
-        skillMap[data.name]->Init();
+            if (!getline(iss, data.name, ',')) throw invalid_argument("Missing Name");
+            if (!getline(iss, data.element, ',')) throw invalid_argument("Missing Element");
+            if (!getline(iss, data.type, ',')) throw invalid_argument("Missing Type");
+            if (!getline(iss, data.animAction, ',')) data.animAction = "Normal"; // animAction은 기본값
+
+            getline(iss, token, ',');
+            data.power = token.empty() ? 0 : stoi(token);
+
+            getline(iss, token, ',');
+            data.accuracy = token.empty() ? 0 : stoi(token);
+
+            getline(iss, token, ',');
+            data.pp = token.empty() ? 0 : stoi(token);
+
+            if (data.name.empty()) throw invalid_argument("Skill Name is empty");
+
+            // 스킬 등록
+            skillMap[data.name] = make_shared<EmberSkill>(data);
+            skillMap[data.name]->Init();
+        }
+        catch (const exception& e) {
+            string errorMsg = "Error parsing CSV at line " + to_string(lineNumber) + ": " + e.what() + "\n";
+            OutputDebugStringA(errorMsg.c_str());
+            continue; // 문제 있는 줄은 건너뜀
+        }
     }
 
     file.close();
