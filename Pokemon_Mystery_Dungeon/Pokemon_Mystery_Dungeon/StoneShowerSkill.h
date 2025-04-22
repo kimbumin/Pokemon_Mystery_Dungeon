@@ -1,19 +1,27 @@
 #pragma once
 #include "ISkill.h"
-#include "config.h"
 #include "Image.h"
+#include "config.h"
 
 class Image;
-class StoneShowerSkill : public ISkill {
+class StoneShowerSkill : public ISkill
+{
 private:
     Image* image;
 
-    enum class ElementType { ROCK };
-    enum class SkillType { PHYSICS };
+    enum class ElementType
+    {
+        ROCK
+    };
+    enum class SkillType
+    {
+        PHYSICS
+    };
 
     FPOINT pos;
     string name;
-    struct SkillStats {
+    struct SkillStats
+    {
         int power;
         int accuracy;
         int maxPP;
@@ -27,9 +35,24 @@ public:
     void Use() override;
     shared_ptr<ISkill> Clone() const override;
 
-    string GetName() const override { return name; }
-    string GetElement() const override { return "ROCK"; }
-    string GetType() const override { return "PHYSICS"; }
-    int GetPower() const override { return stats.power; }
-    int GetAccuracy() const override { return stats.accuracy; }
+    string GetName() const override
+    {
+        return name;
+    }
+    string GetElement() const override
+    {
+        return "ROCK";
+    }
+    string GetType() const override
+    {
+        return "PHYSICS";
+    }
+    int GetPower() const override
+    {
+        return stats.power;
+    }
+    int GetAccuracy() const override
+    {
+        return stats.accuracy;
+    }
 };

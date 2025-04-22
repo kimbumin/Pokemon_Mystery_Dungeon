@@ -1,19 +1,25 @@
 #pragma once
-#include "config.h"
 #include "Singleton.h"
+#include "config.h"
 
 class PokemonPlayer;
 class PlayerManager : public Singleton<PlayerManager>
 {
 private:
-	PokemonPlayer* player;
+    PokemonPlayer* player;
+
 public:
-	void Init();
-	void Release();
-	void Update();
-	void Render(HDC hdc);
+    void Init();
+    void Release();
+    void Update();
+    void Render(HDC hdc);
 
-	PokemonPlayer* GetPlayer() { return player; }
-	void SetPlayer(PokemonPlayer* player) { this->player = player; }
+    PokemonPlayer* GetPlayer()
+    {
+        return player;
+    }
+    void SetPlayer(PokemonPlayer* player)
+    {
+        this->player = player;
+    }
 };
-

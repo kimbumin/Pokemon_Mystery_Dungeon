@@ -1,7 +1,8 @@
 #pragma once
 #include "config.h"
 
-class ISkill {
+class ISkill
+{
 public:
     virtual void Init() = 0;
     virtual void Release() = 0;
@@ -9,7 +10,6 @@ public:
     virtual void Render(HDC hdc) = 0;
     virtual void Use() = 0;
     virtual shared_ptr<ISkill> Clone() const = 0;
-
 
     virtual string GetName() const = 0;
     virtual string GetElement() const = 0;

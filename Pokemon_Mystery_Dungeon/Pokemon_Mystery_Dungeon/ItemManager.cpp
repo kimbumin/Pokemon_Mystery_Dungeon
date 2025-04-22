@@ -1,4 +1,5 @@
 #include "ItemManager.h"
+
 #include "LeppaBerry.h"
 #include "OranBerry.h"
 
@@ -11,16 +12,15 @@ void ItemManager::SpawnRandomItem()
 
     unique_ptr<IItem> newItem;
 
-
-    //∆—≈‰∏Æ∑Œ πŸ≤‹ ºˆ ¿÷¿Ω
+    // ∆—≈‰∏Æ∑Œ πŸ≤‹ ºˆ ¿÷¿Ω
     switch (randomItem)
     {
-    case 0:
-        newItem = make_unique<LeppaBerry>();
-        break;
-    case 1:
-        newItem = make_unique<OranBerry>();
-        break;
+        case 0:
+            newItem = make_unique<LeppaBerry>();
+            break;
+        case 1:
+            newItem = make_unique<OranBerry>();
+            break;
     }
 
     if (newItem)
@@ -52,7 +52,6 @@ void ItemManager::GetItem(/*Player* player*/)
         }
     }*/
 }
-
 
 void ItemManager::Update()
 {

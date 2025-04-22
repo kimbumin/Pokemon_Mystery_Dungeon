@@ -6,15 +6,16 @@ class ImageGDIPlus;
 class ImageGDIPlusManager : public Singleton<ImageGDIPlusManager>
 {
 private:
-	map<string, ImageGDIPlus*> mapImages;
+    map<string, ImageGDIPlus*> mapImages;
 
 public:
-	void Init();
-	void Release();
+    void Init();
+    void Release();
 
-	ImageGDIPlus* AddImage(string key, const wchar_t* filePath, int maxFrameX = 1, int maxFrameY = 1, bool asGif = false);
+    ImageGDIPlus* AddImage(string key, const wchar_t* filePath,
+                           int maxFrameX = 1, int maxFrameY = 1,
+                           bool asGif = false);
 
-	void DeleteImageGDIPlus(string key);
-	ImageGDIPlus* FindImageGDIPlus(string key);
+    void DeleteImageGDIPlus(string key);
+    ImageGDIPlus* FindImageGDIPlus(string key);
 };
-

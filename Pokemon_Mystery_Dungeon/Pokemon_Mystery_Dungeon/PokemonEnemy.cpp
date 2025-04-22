@@ -1,21 +1,20 @@
 #include "PokemonEnemy.h"
-#include "PokemonBase.h"
 
-#include "IdleAnimState.h"
+#include "AttackActionState.h"
 #include "AttackAnimState.h"
-#include "WalkAnimState.h"
+#include "HurtActionState.h"
+#include "HurtAnimState.h"
+#include "IdleActionState.h"
+#include "IdleAnimState.h"
+#include "MoveActionState.h"
+#include "PokemonBase.h"
 #include "RotateAnimState.h"
 #include "SwingAnimState.h"
-#include "HurtAnimState.h"
-
-#include "MoveActionState.h"
-#include "IdleActionState.h"
-#include "AttackActionState.h"
-#include "HurtActionState.h"
+#include "WalkAnimState.h"
 
 HRESULT PokemonEnemy::Init()
 {
-	return PokemonBase::Init();
+    return PokemonBase::Init();
 }
 
 void PokemonEnemy::Release()
@@ -24,7 +23,6 @@ void PokemonEnemy::Release()
 
 void PokemonEnemy::Update()
 {
-
     if (currentAnimState)
     {
         currentAnimState->Update(this);
@@ -41,5 +39,5 @@ void PokemonEnemy::Update()
 
 void PokemonEnemy::ExecuteTurn()
 {
-    ExecuteMoveAction(); // Test
+    ExecuteMoveAction();  // Test
 }

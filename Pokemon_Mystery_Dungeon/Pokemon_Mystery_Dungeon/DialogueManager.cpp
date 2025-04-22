@@ -2,22 +2,22 @@
 #include <Windows.h>
 #undef byte
 
-
 #include "DialogueManager.h"
-#include "UIManager.h"
-#include "DialogueUIState.h"
 #include "DialogueTemplate.h"
-
+#include "DialogueUIState.h"
+#include "UIManager.h"
 
 // text: 템플릿 문자열 (예: "'아이템명'을 획득했습니다")
 // values: 템플릿에서 치환할 변수 값들 (예: { {"아이템명", "몬스터볼"} })
-void DialogueManager::ShowLine(const wstring& templateText, const map<wstring, wstring>& values)
+void DialogueManager::ShowLine(const wstring& templateText,
+                               const map<wstring, wstring>& values)
 {
     // 대화창 상태로 전환
     UIManager::GetInstance()->ChangeState("dialogueBox");
 
     // 현재 상태를 DialogueUIState로 캐스팅해서 찾음
-    auto* state = dynamic_cast<DialogueUIState*>(UIManager::GetInstance()->FindState("dialogueBox"));
+    auto* state = dynamic_cast<DialogueUIState*>(
+        UIManager::GetInstance()->FindState("dialogueBox"));
     if (state)
     {
         // 텍스트 + 치환 map 전달
@@ -35,11 +35,12 @@ void DialogueManager::ShowLine(const wstring& templateText, const map<wstring, w
     실제 타입이 DialogueUIState인지 확인해서 안전하게 형변환해야 함
     → 그게 dynamic_cast
 
-    dynamic_cast는 "이 UI가 진짜 대화상자 맞아?"라고 체크하고 변환해주는 안전한 도구임
-    안 쓰면 → 타입 안 맞을 때도 실행돼서 크래시 날 수 있음.
+    dynamic_cast는 "이 UI가 진짜 대화상자 맞아?"라고 체크하고 변환해주는 안전한
+도구임 안 쓰면 → 타입 안 맞을 때도 실행돼서 크래시 날 수 있음.
 
 - 예시:
-    auto* state = dynamic_cast<DialogueUIState*>(UIManager::GetInstance()->FindState("dialogueBox"));
+    auto* state =
+dynamic_cast<DialogueUIState*>(UIManager::GetInstance()->FindState("dialogueBox"));
 
 - 내가 원래 하고 싶었던 구조:
     if (I 키를 누르면)

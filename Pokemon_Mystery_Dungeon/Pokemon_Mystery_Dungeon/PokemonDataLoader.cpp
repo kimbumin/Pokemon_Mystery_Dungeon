@@ -1,7 +1,7 @@
 #include "PokemonDataLoader.h"
+
 #include <fstream>
 #include <sstream>
-
 
 void PokemonDataLoader::Init()
 {
@@ -16,12 +16,13 @@ void PokemonDataLoader::Release()
 bool PokemonDataLoader::LoadFromCSV(const string& filepath)
 {
     ifstream file(filepath);
-    if (!file.is_open()) return false;
+    if (!file.is_open())
+        return false;
 
     string line;
-    getline(file, line); // 첫 줄 생략
+    getline(file, line);  // 첫 줄 생략
 
-    while (getline(file, line)) 
+    while (getline(file, line))
     {
         stringstream stream(line);
         string token;
@@ -52,9 +53,11 @@ bool PokemonDataLoader::LoadFromCSV(const string& filepath)
 
         // 타입1, 타입2
         getline(stream, token, ',');
-        if (!token.empty()) data.types.push_back(token);
+        if (!token.empty())
+            data.types.push_back(token);
         getline(stream, token, ',');
-        if (!token.empty()) data.types.push_back(token);
+        if (!token.empty())
+            data.types.push_back(token);
 
         baseDataMap[data.idNumber] = data;
     }

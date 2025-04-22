@@ -1,8 +1,9 @@
 #pragma once
-#include "ISkill.h"
 #include "GameObject.h"
+#include "ISkill.h"
 
-class SkillManager : public GameObject{
+class SkillManager : public GameObject
+{
 private:
     unordered_map<string, shared_ptr<ISkill>> skillMap;
 

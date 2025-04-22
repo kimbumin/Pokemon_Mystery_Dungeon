@@ -1,38 +1,36 @@
 #pragma once
-#include "Scene.h"
 #include "Map.h"
+#include "Scene.h"
 
 class Player;
 class MPlayer;
 class Map;
 
-class DungeonScene :public Scene
+class DungeonScene : public Scene
 {
 public:
-	virtual HRESULT Init() override;
-	virtual void Release() override;
-	virtual void Update() override;
-	virtual void Render(HDC hdc) override;
+    virtual HRESULT Init() override;
+    virtual void Release() override;
+    virtual void Update() override;
+    virtual void Render(HDC hdc) override;
 
-	void GenerateNextFloor();
+    void GenerateNextFloor();
 
-	POINT ConvertToPixel(POINT tilePos);
+    POINT ConvertToPixel(POINT tilePos);
 
-	bool IsPlayerOnStair();
+    bool IsPlayerOnStair();
 
-	DungeonScene() {};
-	virtual ~DungeonScene() {};
-
+    DungeonScene() {};
+    virtual ~DungeonScene() {};
 
 private:
-	Map map;
-	Image* sampleTile;
-	MPlayer* mPlayer;
+    Map map;
+    Image* sampleTile;
+    MPlayer* mPlayer;
 
-	int dungeonFloor;
-	POINT stairPos;
+    int dungeonFloor;
+    POINT stairPos;
 
-	TileType tiles[TILE_Y][TILE_X];
-	std::vector<POINT> wallTiles;
+    TileType tiles[TILE_Y][TILE_X];
+    std::vector<POINT> wallTiles;
 };
-
