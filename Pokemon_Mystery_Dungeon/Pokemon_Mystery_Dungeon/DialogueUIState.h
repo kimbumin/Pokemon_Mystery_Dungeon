@@ -1,20 +1,26 @@
 #pragma once
 #include "UIState.h"
-#include "ImageGDIPlus.h"
+
+class UIElementImage;
 
 class DialogueUIState : public UIState
 {
 private:
-	ImageGDIPlus* dialogueBoxImage = nullptr;
-	int dialogueBoxX = -400;
-	int dialogueBoxY = 240;
-	bool isSlidingIn = true;
+    UIElementImage* dialogueBoxImage = nullptr;
+
+    const int dialogueBoxPosX = 25;
+    const int dialogueBoxPosY = 220;
 
 public:
-	~DialogueUIState();
-	HRESULT Init() override;
-	void Release() override;
-	void Update() override;
-	void Render(HDC hdc) override;
-};
+    HRESULT Init() override;
+    void Release() override;
+    void Update() override;
+    void Render(HDC hdc) override;
+    ~DialogueUIState() override;
 
+    // 외부에서 텍스트 1줄 추가
+    void PushDialogueLine(const wstring& text);
+
+    void PushDialogueLine(const wstring& text,
+                          const map<wstring, wstring>& values);
+};

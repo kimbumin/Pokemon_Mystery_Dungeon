@@ -1,6 +1,8 @@
 #pragma once
 #include "Singleton.h"
+// clang-format off
 #include "config.h"
+// clang-format on
 
 class PokemonDataLoader : public Singleton<PokemonDataLoader>
 {
@@ -9,6 +11,7 @@ private:
 
 public:
     void Init();
+    void Release();
     bool LoadFromCSV(const string& filepath);
 
     // Getter

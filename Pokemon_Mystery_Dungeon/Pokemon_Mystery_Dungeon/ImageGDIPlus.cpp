@@ -1,111 +1,119 @@
 #include "ImageGDIPlus.h"
+
 #include "CameraManager.h"
 
-HRESULT ImageGDIPlus::Init(const wchar_t* filePath, int maxFrameX, int maxFrameY)
+HRESULT ImageGDIPlus::Init(const wchar_t* filePath, int maxFrameX,
+                           int maxFrameY, bool asGif)
 {
-	Release();
+    Release();
 
-	image = new Gdiplus::Bitmap(filePath);
+    image = new Gdiplus::Image(filePath);
 
-	if (!image || image->GetLastStatus() != Gdiplus::Ok)
-	{
-		image = nullptr;
-		return E_FAIL;
-	}
+    if (!image || image->GetLastStatus() != Gdiplus::Ok)
+    {
+        delete image;
+        image = nullptr;
+        return E_FAIL;
+    }
 
-	width = image->GetWidth();
-	height = image->GetHeight();
+    width = image->GetWidth();
+    height = image->GetHeight();
+    this->maxFrameX = maxFrameX;
+    this->maxFrameY = maxFrameY;
+    frameWidth = width / maxFrameX;
+    frameHeight = height / maxFrameY;
+    currFrameX = currFrameY = 0;
 
-	this->maxFrameX = maxFrameX;
-	this->maxFrameY = maxFrameY;
+    isGif = asGif;
 
-	frameWidth = width / maxFrameX;
-	frameHeight = height / maxFrameY;
+    if (isGif)
+    {
+        image->GetFrameDimensionsList(&gifFrameDimension, 1);
+        gifFrameCount = image->GetFrameCount(&gifFrameDimension);
+        gifCurrentFrame = 0;
 
-	currFrameX = currFrameY = 0;
-	
-	if (image->GetHBITMAP(Gdiplus::Color(0, 0, 0, 0), &hBitmap) != Gdiplus::Ok)
-	{
-		return E_FAIL;
-	}
+        UINT size = image->GetPropertyItemSize(PropertyTagFrameDelay);
+        if (size > 0)
+        {
+            Gdiplus::PropertyItem* pItem = (Gdiplus::PropertyItem*)malloc(size);
+            if (image->GetPropertyItem(PropertyTagFrameDelay, size, pItem) ==
+                Gdiplus::Ok)
+            {
+                UINT* delays = (UINT*)pItem->value;
+                gifFrameDelay.resize(gifFrameCount);
+                for (UINT i = 0; i < gifFrameCount; ++i)
+                {
+                    // GDI+는 1/100초 단위 → ms로 환산
+                    gifFrameDelay[i] = delays[i] * 10;
+                    if (gifFrameDelay[i] == 0)
+                        gifFrameDelay[i] = 100;
+                }
+            }
+            free(pItem);
+        }
+    }
 
-	return S_OK;
+    return S_OK;
 }
 
 void ImageGDIPlus::Release()
 {
-	if(image)
-	{
-		delete image;
-		image = nullptr;
-	}
-
-	if (hBitmap)
-	{
-		DeleteObject(hBitmap);
-		hBitmap = nullptr;
-	}
+    if (image)
+    {
+        delete image;
+        image = nullptr;
+    }
+    isGif = false;
+    gifFrameCount = 1;
+    gifCurrentFrame = 0;
 }
 
-void ImageGDIPlus::RenderBackground(HDC hdc)
+void ImageGDIPlus::SetGifFrame(UINT frame)
 {
-	if (!hBitmap)	return;
-	
-	HDC memDC = CreateCompatibleDC(hdc);
-	HBITMAP oldBitmap = (HBITMAP)SelectObject(memDC, hBitmap);
-
-	RECT cam = CameraManager::GetInstance()->GetViewPos();
-	int width = cam.right - cam.left;
-	int height = cam.bottom - cam.top;
-
-	BitBlt(
-		hdc,
-		0, 0,
-		width, height,
-		memDC,
-		cam.left, cam.top,
-		SRCCOPY
-	);
-
-	SelectObject(memDC, oldBitmap);
-	DeleteDC(memDC);
-
+    if (!image || !isGif || frame >= gifFrameCount)
+        return;
+    image->SelectActiveFrame(&gifFrameDimension, frame);
+    gifCurrentFrame = frame;
 }
 
-void ImageGDIPlus::Render(HDC hdc, float x, float y, float angle, bool flipX, bool flipY, float alpha)
+UINT ImageGDIPlus::GetGifFrameCount() const
 {
-	if (!image)	return;
-	Gdiplus::Graphics graphics(hdc);
+    return gifFrameCount;
+}
 
-	// 이미지 보간 설정
-	graphics.SetInterpolationMode(Gdiplus::InterpolationModeHighQualityBicubic);
+void ImageGDIPlus::Render(HDC hdc, float x, float y, float angle, bool flipX,
+                          bool flipY, float alpha)
+{
+    if (!image)
+        return;
 
-	Gdiplus::ColorMatrix colorMatrix = {
-		1, 0, 0, 0, 0,
-		0, 1, 0, 0, 0,
-		0, 0, 1, 0, 0,
-		0, 0, 0, alpha, 0,
-		0, 0, 0, 0, 1
-	};	// RGB 고정, 투명도만 조절
+    if (isGif)
+    {
+        image->SelectActiveFrame(&gifFrameDimension, gifCurrentFrame);
+    }
 
-	// 이미지 속성 객체
-	Gdiplus::ImageAttributes imageAttributes;
-	imageAttributes.SetColorMatrix(&colorMatrix);
+    Gdiplus::Graphics graphics(hdc);
 
-	Gdiplus::RectF destRect(x, y, (float)width, (float)height);
+    // 이미지 보간 설정
+    graphics.SetInterpolationMode(Gdiplus::InterpolationModeHighQualityBicubic);
 
-	graphics.DrawImage(
-		image,
-		destRect,
-		0, 0,
-		(float)width, (float)height,
-		Gdiplus::UnitPixel,
-		&imageAttributes
-	);
+    Gdiplus::ColorMatrix colorMatrix = {
+        1, 0, 0, 0, 0, 0,     1, 0, 0, 0, 0, 0, 1,
+        0, 0, 0, 0, 0, alpha, 0, 0, 0, 0, 0, 1};  // RGB 고정, 투명도만 조절
+
+    // 이미지 속성 객체
+    Gdiplus::ImageAttributes imageAttributes;
+    imageAttributes.SetColorMatrix(&colorMatrix);
+
+    Gdiplus::RectF destRect(x, y, (float)width, (float)height);
+
+    graphics.DrawImage(image, Gdiplus::RectF(x, y, (float)width, (float)height),
+                       0, 0, (float)width, (float)height, Gdiplus::UnitPixel,
+                       &imageAttributes);
 }
 
 // 보류
-//void ImageGDIPlus::RenderScale(HDC hdc, float x, float y, float alpha)
+// void ImageGDIPlus::RenderScale(HDC hdc, float x, float y, float alpha)
 //{
 //	if (!image)	return;
 //
@@ -115,109 +123,114 @@ void ImageGDIPlus::Render(HDC hdc, float x, float y, float angle, bool flipX, bo
 //	float scaleX = (float)(rect.right - rect.left) / (float)GameViewSize_X;
 //	float scaleY = (float)(rect.bottom - rect.top) / (float)GameViewSize_Y;
 //
-//	RenderScale(hdc, x * scaleX, y * scaleY, scaleX, scaleY, 0.0f, false, false, alpha);
+//	RenderScale(hdc, x * scaleX, y * scaleY, scaleX, scaleY, 0.0f, false,
+//false, alpha);
 //
 //}
 
-void ImageGDIPlus::RenderScale(HDC hdc, float x, float y, float scaleX, float scaleY, float angle, bool flipX, bool flipY, float alpha)
+void ImageGDIPlus::RenderScale(HDC hdc, float x, float y, float scaleX,
+                               float scaleY, float angle, bool flipX,
+                               bool flipY, float alpha)
 {
-	if (!image)	return;
-	Gdiplus::Graphics graphics(hdc);
+    if (!image)
+        return;
 
-	// 이미지 보간 설정
-	graphics.SetInterpolationMode(Gdiplus::InterpolationModeHighQualityBicubic);
-	Gdiplus::ColorMatrix colorMatrix = {
-		1, 0, 0, 0, 0,
-		0, 1, 0, 0, 0,
-		0, 0, 1, 0, 0,
-		0, 0, 0, alpha, 0,
-		0, 0, 0, 0, 1
-	};	// RGB 고정, 투명도만 조절
+    if (isGif)
+    {
+        image->SelectActiveFrame(&gifFrameDimension, gifCurrentFrame);
+    }
 
-	// 이미지 속성 객체
-	Gdiplus::ImageAttributes imageAttributes;
-	imageAttributes.SetColorMatrix(&colorMatrix);
+    Gdiplus::Graphics graphics(hdc);
 
-	Gdiplus::RectF destRect(x, y, (float)width * scaleX, (float)height * scaleY);
+    // 이미지 보간 설정
+    graphics.SetInterpolationMode(Gdiplus::InterpolationModeHighQualityBicubic);
+    Gdiplus::ColorMatrix colorMatrix = {
+        1, 0, 0, 0, 0, 0,     1, 0, 0, 0, 0, 0, 1,
+        0, 0, 0, 0, 0, alpha, 0, 0, 0, 0, 0, 1};  // RGB 고정, 투명도만 조절
 
-	graphics.DrawImage(
-		image,
-		destRect,
-		0, 0,
-		(float)width, (float)height,
-		Gdiplus::UnitPixel,
-		&imageAttributes
-	);
+    // 이미지 속성 객체
+    Gdiplus::ImageAttributes imageAttributes;
+    imageAttributes.SetColorMatrix(&colorMatrix);
+
+    Gdiplus::RectF destRect(x, y, (float)width * scaleX,
+                            (float)height * scaleY);
+
+    graphics.DrawImage(image, destRect, 0, 0, (float)width, (float)height,
+                       Gdiplus::UnitPixel, &imageAttributes);
 }
 
-void ImageGDIPlus::RenderFrame(HDC hdc, float x, float y, int frameIndex, float angle, bool flipX, bool flipY, float alpha)
+void ImageGDIPlus::RenderFrame(HDC hdc, float x, float y, int frameIndex,
+                               float angle, bool flipX, bool flipY, float alpha)
 {
-	if (!image)	return;
+    if (!image)
+        return;
 
-	Gdiplus::Graphics graphics(hdc);
+    Gdiplus::Graphics graphics(hdc);
 
-	graphics.SetInterpolationMode(Gdiplus::InterpolationModeHighQualityBicubic);
-	Gdiplus::ColorMatrix colorMatrix = {
-		1, 0, 0, 0, 0,
-		0, 1, 0, 0, 0,
-		0, 0, 1, 0, 0,
-		0, 0, 0, alpha, 0,
-		0, 0, 0, 0, 1
-	};	// RGB 고정, 투명도만 조절
+    graphics.SetInterpolationMode(Gdiplus::InterpolationModeHighQualityBicubic);
+    Gdiplus::ColorMatrix colorMatrix = {
+        1, 0, 0, 0, 0, 0,     1, 0, 0, 0, 0, 0, 1,
+        0, 0, 0, 0, 0, alpha, 0, 0, 0, 0, 0, 1};  // RGB 고정, 투명도만 조절
 
-	Gdiplus::ImageAttributes imageAttributes;
-	imageAttributes.SetColorMatrix(&colorMatrix);
+    Gdiplus::ImageAttributes imageAttributes;
+    imageAttributes.SetColorMatrix(&colorMatrix);
 
-	Gdiplus::RectF destRect(x, y, (float)frameWidth, (float)frameHeight);
+    Gdiplus::RectF destRect(x, y, (float)frameWidth, (float)frameHeight);
 
-	currFrameX = frameIndex % maxFrameX;
-	currFrameY = frameIndex / maxFrameX;
+    currFrameX = frameIndex % maxFrameX;
+    currFrameY = frameIndex / maxFrameX;
 
-	graphics.DrawImage(
-		image,
-		destRect,
-		currFrameX * frameWidth, currFrameY * frameHeight,
-		(float)frameWidth, (float)frameHeight,
-		Gdiplus::UnitPixel,
-		&imageAttributes
-	);
+    graphics.DrawImage(image, destRect, currFrameX * frameWidth,
+                       currFrameY * frameHeight, (float)frameWidth,
+                       (float)frameHeight, Gdiplus::UnitPixel,
+                       &imageAttributes);
 }
 
-void ImageGDIPlus::RenderFrameScale(HDC hdc, float x, float y, float scaleX, float scaleY, int frameIndex, float angle, bool flipX, bool flipY, float alpha)
+void ImageGDIPlus::RenderFrameScale(HDC hdc, float x, float y, float scaleX,
+                                    float scaleY, int frameIndex, float angle,
+                                    bool flipX, bool flipY, float alpha)
 {
-	if (!image)	return;
+    if (!image)
+        return;
 
-	Gdiplus::Graphics graphics(hdc);
+    Gdiplus::Graphics graphics(hdc);
 
-	graphics.SetInterpolationMode(Gdiplus::InterpolationModeHighQualityBicubic);
+    graphics.SetInterpolationMode(Gdiplus::InterpolationModeHighQualityBicubic);
 
-	Gdiplus::ColorMatrix colorMatrix = {
-		1, 0, 0, 0, 0,
-		0, 1, 0, 0, 0,
-		0, 0, 1, 0, 0,
-		0, 0, 0, alpha, 0,
-		0, 0, 0, 0, 1
-	};	// RGB 고정, 투명도만 조절
+    Gdiplus::ColorMatrix colorMatrix = {
+        1, 0, 0, 0, 0, 0,     1, 0, 0, 0, 0, 0, 1,
+        0, 0, 0, 0, 0, alpha, 0, 0, 0, 0, 0, 1};  // RGB 고정, 투명도만 조절
 
-	Gdiplus::ImageAttributes imageAttributes;
-	imageAttributes.SetColorMatrix(&colorMatrix);
+    Gdiplus::ImageAttributes imageAttributes;
+    imageAttributes.SetColorMatrix(&colorMatrix);
 
-	Gdiplus::RectF destRect(x, y, (float)frameWidth * scaleX, (float)frameHeight * scaleY);
+    Gdiplus::RectF destRect(x, y, (float)frameWidth * scaleX,
+                            (float)frameHeight * scaleY);
 
-	currFrameX = frameIndex % maxFrameX;
-	currFrameY = frameIndex / maxFrameX;
+    currFrameX = frameIndex % maxFrameX;
+    currFrameY = frameIndex / maxFrameX;
 
-	graphics.DrawImage(
-		image,
-		destRect,
-		currFrameX * frameWidth, currFrameY * frameHeight,
-		(float)frameWidth, (float)frameHeight,
-		Gdiplus::UnitPixel,
-		&imageAttributes
-	);
+    graphics.DrawImage(image, destRect, currFrameX * frameWidth,
+                       currFrameY * frameHeight, (float)frameWidth,
+                       (float)frameHeight, Gdiplus::UnitPixel,
+                       &imageAttributes);
 }
 
-void ImageGDIPlus::RenderLeftToRight(HDC hdc, float x, float y, float percent, float alpha)
+void ImageGDIPlus::RenderLeftToRight(HDC hdc, float x, float y, float percent,
+                                     float alpha)
 {
+}
 
+void ImageGDIPlus::Update(float deltaTime)
+{
+    if (!isGif || gifFrameCount <= 1 || gifFrameDelay.empty())
+        return;
+
+    gifElapsedTime += deltaTime * 1000.0f * gifSpeedMultiplier;
+
+    if (gifElapsedTime >= gifFrameDelay[gifCurrentFrame])
+    {
+        gifElapsedTime = 0.0f;
+        gifCurrentFrame = (gifCurrentFrame + 1) % gifFrameCount;
+    }
 }

@@ -1,10 +1,12 @@
 #pragma once
 #include <vector>
-#include "CommonFunction.h"
-#include "Room.h"
-#include "GameObject.h"
 
-enum TileType {
+#include "CommonFunction.h"
+#include "GameObject.h"
+#include "Room.h"
+
+enum TileType
+{
     TILE_WALL,
     TILE_FLOOR,
     TILE_PATH,
@@ -12,8 +14,8 @@ enum TileType {
     TYPE_LENGH
 };
 
-
-enum Direction8 {
+enum Direction8
+{
     DIR_LEFT_TOP,
     DIR_TOP,
     DIR_RIGHT_TOP,
@@ -26,24 +28,27 @@ enum Direction8 {
 };
 
 // ¿ÞÀ§, À§, ¿À¸¥ÂÊ, ¿Þ, ¿À, ¿Þ¹Ø,¹Ø,¿À ¼ø¼­
-const int dx[DIR_COUNT] = { -1, 0, 1, -1, 1, -1, 0, 1 };
-const int dy[DIR_COUNT] = { -1, -1, -1, 0, 0, 1, 1, 1 };
+const int dx[DIR_COUNT] = {-1, 0, 1, -1, 1, -1, 0, 1};
+const int dy[DIR_COUNT] = {-1, -1, -1, 0, 0, 1, 1, 1};
 
 using Pattern = vector<bool>;
 using WildPattern = vector<int>;
 
-struct TilePattern {
-    Pattern pattern;           
-    pair<int, int> tileIndex;  //Å¸ÀÏÀÎµ¦½º
+struct TilePattern
+{
+    Pattern pattern;
+    pair<int, int> tileIndex;
 };
 
-struct WildTilePattern {
+struct WildTilePattern
+{
     WildPattern pattern;
     pair<int, int> tileIndex;
 };
 class Image;
 
-class Map : public GameObject {
+class Map : public GameObject
+{
 public:
     Map() {};
     virtual ~Map() {};
@@ -53,27 +58,41 @@ public:
     void Update() override;
     void Render(HDC hdc) override;
 
-
-    void Generate();                    
+    void Generate();
     void Draw(HDC hdc);
 
+    void MiniMapRender(HDC hdc, int drawingX, int drawingY);
     void CreateRoom(const Room& room);
-
     void ConnectRooms(const Room& a, const Room& b);
-
     void ClassifyTiles();
-
+    bool InBounds(int x, int y) const;
+    bool IsPathOrFloor(int x, int y) const;
+    bool MatchPattern(const WildPattern& pattern,
+                      const vector<int>& current) const;
     void TileDesign();
-
     void RandomTileDesign();
 
-    TileType GetTile(int x, int y) const {return tiles[y][x];}
+    TileType GetTile(int x, int y) const
+    {
+        return tiles[y][x];
+    }
+    bool IsFloor(int x, int y) const
+    {
+        return tiles[y][x] == TILE_FLOOR;
+    }
+    vector<POINT> GetWallTiles()
+    {
+        return wallTiles;
+    };
 
-    vector<POINT> GetWallTiles() { return wallTiles; };
+    POINT GetStairPos()
+    {
+        return stairPos;
+    }
+
 private:
     TileType tiles[TILE_Y][TILE_X];
     std::vector<Room> rooms;
-
 
     Image* tileImage;
     Image* sea1;
@@ -85,17 +104,13 @@ private:
     Image* tiniWoods;
     Image* tiniMeadow;
 
-
-
     Image* stairs;
 
     std::vector<POINT> floorTiles;
     std::vector<POINT> wallTiles;
     std::vector<POINT> pathTiles;
 
-
     std::vector<std::vector<std::pair<int, int>>> tileIndex;
 
     POINT stairPos;
-
 };

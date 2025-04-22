@@ -1,40 +1,113 @@
 #include "DungeonScene.h"
-#include "Image.h"
-#include "CommonFunction.h"
 
+#include "BossScene.h"
+#include "CommonFunction.h"
+#include "Image.h"
+#include "MPlayer.h"
+#include "UIManager.h"
 
 HRESULT DungeonScene::Init()
 {
-	SetClientRect(g_hWnd, TILE_SIZE * TILE_X, TILE_SIZE * TILE_Y);
+    SetClientRect(g_hWnd, WINSIZE_X, WINSIZE_Y);
 
-	map.Init();
-	wallTiles = map.GetWallTiles(); //wallTilesÁÂÇ¥  Point·Î
+    mPlayer = new MPlayer;
+    mPlayer->Init();
 
+    wallTiles = map.GetWallTiles();  // wallTilesÁÂÇ¥  Point·Î
+    CameraManager::GetInstance()->Init(GameViewSize_X, GameViewSize_Y,
+                                       TILE_X * TILE_SIZE, TILE_Y * TILE_SIZE);
 
-	return S_OK;
+    dungeonFloor = 0;
+
+    GenerateNextFloor();
+
+    return S_OK;
 }
 
 void DungeonScene::Release()
 {
-
+    if (mPlayer)
+    {
+        mPlayer->Release();
+        delete mPlayer;
+        mPlayer = nullptr;
+    }
 }
 
 void DungeonScene::Update()
 {
-	if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F6)) {
-		//SceneManager::GetInstance()->AddScene("´øÀü¾À", new DungeonScene());
-		SceneManager::GetInstance()->ChangeScene("±¤Àå");
-	}
+    POINT mouse;
+    GetCursorPos(&mouse);
+    ScreenToClient(g_hWnd, &mouse);
+    CameraManager::GetInstance()->SetCameraPos(mouse.x, mouse.y);
+    if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F6))
+    {
+        // SceneManager::GetInstance()->AddScene("´øÀü¾À", new DungeonScene());
+        SceneManager::GetInstance()->ChangeScene("±¤Àå");
+    }
+    if (KeyManager::GetInstance()->IsOnceKeyDown(VK_SPACE))
+    {
+        GenerateNextFloor();
+    }
+    if (dungeonFloor > 5)
+    {
+        dungeonFloor = 0;
+        SceneManager::GetInstance()->AddScene("º¸½º¾À", new BossScene());
+        SceneManager::GetInstance()->ChangeScene("º¸½º¾À");
+    }
 
+    if (mPlayer)
+    {
+        mPlayer->Update();
+        POINT playerPos =
+            mPlayer->GetPos();  // ÇÃ·¹ÀÌ¾îÀÇ Å¸ÀÏ À§Ä¡¸¦ ¹Þ¾Æ¿À´Â ÇÔ¼ö ÇÊ¿ä
+
+        if (IsPlayerOnStair())
+        {
+            ++dungeonFloor;
+            GenerateNextFloor();
+        }
+    }
 }
 
 void DungeonScene::Render(HDC hdc)
 {
-	PatBlt(hdc, 0, 0, 2000, 2000, BLACKNESS);
+    RECT cam = CameraManager::GetInstance()->GetViewPos();
+    PatBlt(hdc, 0, 0, 2000, 2000, BLACKNESS);
 
-	map.Render(hdc);
+    map.Render(hdc);
+    map.MiniMapRender(hdc, 0, 0);
 
-	//for (const POINT& wall : wallTiles) {
-	//	RenderRectAtCenter(hdc, wall.x*TILE_SIZE, wall.y*TILE_SIZE, TILE_SIZE, TILE_SIZE);
-	//}
+    UIManager::GetInstance()->Render(hdc);
+    // for (const POINT& wall : wallTiles) {
+    //	RenderRectAtCenter(hdc, wall.x*TILE_SIZE, wall.y*TILE_SIZE, TILE_SIZE,
+    //TILE_SIZE);
+    // }
+
+    //	map.Draw(hdc);
+    if (mPlayer)
+    {
+        mPlayer->Render(hdc);
+    }
+}
+
+void DungeonScene::GenerateNextFloor()
+{
+    map.Init();
+    wallTiles = map.GetWallTiles();
+    stairPos = ConvertToPixel(map.GetStairPos());
+}
+
+POINT DungeonScene::ConvertToPixel(POINT tilePos)
+{
+    tilePos.x *= TILE_SIZE;
+    tilePos.y *= TILE_SIZE;
+    return tilePos;
+}
+
+bool DungeonScene::IsPlayerOnStair()
+{
+    POINT playerPos = mPlayer->GetPos();
+    return abs(playerPos.x - stairPos.x) <= TILE_SIZE &&
+           abs(playerPos.y - stairPos.y) <= TILE_SIZE;
 }

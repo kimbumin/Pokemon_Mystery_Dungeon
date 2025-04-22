@@ -23,9 +23,12 @@ using namespace std;
 #include "TimerManager.h"
 #include "SceneManager.h"
 #include "CollisionManager.h"
+#include "CameraManager.h"
+#include "ImageGDIPlusManager.h"
+
 
 /*
-	ÄÄÆÄÀÏ·¯¿¡¼­ ÇØ´ç ÄÚµå¸¦ µÚ¿¡ Á¤ÀÇµÈ ÄÚµå·Î º¯°æÇÑ´Ù.
+	ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ ï¿½Úµå¸¦ ï¿½Ú¿ï¿½ ï¿½ï¿½ï¿½Çµï¿½ ï¿½Úµï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
 */
 #define WINSIZE_X	800
 #define WINSIZE_Y	400
@@ -41,14 +44,14 @@ using namespace std;
 #define TILE_SELECT_SIZE 25
 
 
-//´øÀü ¸Ê Å¸ÀÏ Å©±â 25Å¸ÀÏ * 25Å¸ÀÏ  
+//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ Å¸ï¿½ï¿½ Å©ï¿½ï¿½ 25Å¸ï¿½ï¿½ * 25Å¸ï¿½ï¿½  
 #define TILE_X	25
 #define TILE_Y	25
 
 #define DEG_TO_RAD(degree) ((3.14 / 180.0) * degree)
 #define RAD_TO_DEG(radian) ((180.0 / 3.14) * radian)
 
-// IV => °³Ã¼°ª, EV = ³ë·ÂÄ¡
+// IV => ï¿½ï¿½Ã¼ï¿½ï¿½, EV = ï¿½ï¿½ï¿½Ä¡
 #define IV 30
 #define EV 20
 
@@ -58,7 +61,7 @@ typedef struct tagFPOINT
 	float y;
 } FPOINT;
 
-// Æ÷ÄÏ¸ó ±âº» µ¥ÀÌÅÍ
+// ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½âº» ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 struct PokemonData {
 	int idNumber;
 	string name;
@@ -79,7 +82,7 @@ enum class Direction
 	LENGTH,
 };
 
-// ¹è¿­ÀÇ Index¿¡ Direction ³Ö¾î¼­
+// ï¿½è¿­ï¿½ï¿½ Indexï¿½ï¿½ Direction ï¿½Ö¾î¼­
 constexpr pair<int, int> directionOffsets[8] = {
 	{ 0,  1 },  // SOUTH
 	{ 1,  1 },  // SOUTHEAST
@@ -91,7 +94,7 @@ constexpr pair<int, int> directionOffsets[8] = {
 	{-1,  1 }   // SOUTHWEST
 };
 
-// Æ÷ÄÏ¸ó ¾Ö´Ï¸ÞÀÌ¼Ç Á¾·ùµé
+// ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 const vector<string> animTypes = { "Attack", "Hurt", "Idle", "Rotate", "Swing", "Walk" };
 
 const vector<string> skillElementType =
@@ -101,9 +104,18 @@ const vector<string> skillElementType =
 };
 
 const vector<string> skillAnimType = {"Normal","Special"};
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+struct DungeonSpawnInfo
+{
+    vector<int> pokemonIds; // ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½Ï¸ï¿½ï¿½ï¿½ï¿½ ID
+    int minLevel; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    int maxLevel;
+    int spawnCount; // ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+};
+
 /*
-	extern Å°¿öµå : º¯¼ö³ª ÇÔ¼ö°¡ ´Ù¸¥ ÆÄÀÏ¿¡ Á¤ÀÇµÇ¾î ÀÖ´Ù ¶ó´Â
-	»ç½ÇÀ» ¾Ë¸®´Â Å°¿öµå.
+	extern Å°ï¿½ï¿½ï¿½ï¿½ : ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ï¿½ï¿½ ï¿½Ù¸ï¿½ ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ÇµÇ¾ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½
+	ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë¸ï¿½ï¿½ï¿½ Å°ï¿½ï¿½ï¿½ï¿½.
 */
 extern HWND g_hWnd;
 extern HINSTANCE g_hInstance;

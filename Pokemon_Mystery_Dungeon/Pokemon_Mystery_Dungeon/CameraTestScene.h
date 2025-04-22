@@ -2,19 +2,17 @@
 #include "GameObject.h"
 #include "ImageGDIPlus.h"
 
-
+class Image;
 class CameraTestScene : public GameObject
 {
 private:
-	ImageGDIPlus* testMap = nullptr;
+    Image* backGround;
 
-	bool isDialogueBoxOpen = false;
+    bool isDialogueBoxOpen = false;
 
 public:
-	HRESULT Init() override;
-	void Release() override;
-	void Update() override;
-	void Render(HDC hdc) override;
-	
+    HRESULT Init() override;
+    void Release() override;
+    void Update() override;
+    void Render(HDC hdc) override;
 };
-

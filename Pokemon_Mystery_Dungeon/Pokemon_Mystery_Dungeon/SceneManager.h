@@ -1,28 +1,28 @@
 #pragma once
 #include "Singleton.h"
+// clang-format off
 #include "config.h"
-
-class GameObject;
+// clang-format on
+class Scene;
 class SceneManager : public Singleton<SceneManager>
 {
 private:
-	map<string, GameObject*> mapScenes;
-	map<string, GameObject*> mapLoadingScenes;
+    map<string, Scene*> mapScenes;
+    map<string, Scene*> mapLoadingScenes;
 
 public:
-	static GameObject* currentScene;
-	static GameObject* loadingScene;
-	static GameObject* nextScene;
+    static Scene* currentScene;
+    static Scene* loadingScene;
+    static Scene* nextScene;
 
-	void Init();
-	void Release();
-	void Update();
-	void Render(HDC hdc);
+    void Init();
+    void Release();
+    void Update();
+    void Render(HDC hdc);
 
-	HRESULT ChangeScene(string key);
-	HRESULT ChangeScene(string key, string loadingKey);
+    HRESULT ChangeScene(string key);
+    HRESULT ChangeScene(string key, string loadingKey);
 
-	GameObject* AddScene(string key, GameObject* scene);
-	GameObject* AddLoadingScene(string key, GameObject* scene);
+    Scene* AddScene(string key, Scene* scene);
+    Scene* AddLoadingScene(string key, Scene* scene);
 };
-
