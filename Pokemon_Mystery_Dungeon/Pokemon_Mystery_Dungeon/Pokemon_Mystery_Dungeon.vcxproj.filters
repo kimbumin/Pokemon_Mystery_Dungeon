@@ -234,6 +234,21 @@
     <ClCompile Include="PPHeal.cpp">
       <Filter>ItemManager\Item</Filter>
     </ClCompile>
+    <ClCompile Include="LoadingScene.cpp">
+      <Filter>Scene\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionBoxTool.cpp">
+      <Filter>Scene\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="MPlayer.cpp">
+      <Filter>Scene\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="BossScene.cpp">
+      <Filter>Scene\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Scene\소스</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="config.h">
@@ -412,6 +427,21 @@
     </ClInclude>
     <ClInclude Include="PokemonBase.h">
       <Filter>Pokemon</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadingScene.h">
+      <Filter>Scene\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionBoxTool.h">
+      <Filter>Scene\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="MPlayer.h">
+      <Filter>Scene\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="BossScene.h">
+      <Filter>Scene\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Scene\헤더</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

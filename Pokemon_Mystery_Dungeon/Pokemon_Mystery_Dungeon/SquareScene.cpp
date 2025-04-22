@@ -3,6 +3,10 @@
 #include "CommonFunction.h"
 #include "TilemapTool.h"
 #include "DungeonScene.h"
+#include "StartScene.h"
+#include "LoadingScene.h"
+#include "CollisionBoxTool.h"
+#include "MPlayer.h"
 
 #define SQUARESIZE_X 954
 #define SQUARESIZE_Y 714
@@ -10,35 +14,30 @@
 HRESULT SquareScene::Init()
 {
 	SetClientRect(g_hWnd, WINSIZE_X, WINSIZE_Y);
+	{
+		//Size : 954, 714
+		backGround = ImageManager::GetInstance()->AddImage(
+			"±¤Àå¹è°æ", L"Image/SceneImage/Square3.bmp",
+			SQUARESIZE_X, SQUARESIZE_Y, 1, 1,
+			0, RGB(255, 0, 255));
 
-	backGround = new Image();
-	redFlower = new Image();
-	yellowFlower = new Image();
-	river = new Image();
+		//210,41
+		river = ImageManager::GetInstance()->AddImage(
+			"°­¹°", L"Image/SceneImage/river.bmp",
+			210, 41, 6, 1,
+			0, RGB(200, 224, 168));
 
+		//33,144
+		yellowFlower = ImageManager::GetInstance()->AddImage(
+			"³ë¶õ²É", L"Image/SceneImage/YellowFlower.bmp",
+			33, 144, 1, 6,
+			0, RGB(184, 240, 120));
 
-	//Size : 954, 714
-	backGround = ImageManager::GetInstance()->AddImage(
-		"±¤Àå¹è°æ", L"Image/SceneImage/Square3.bmp", 
-		SQUARESIZE_X, SQUARESIZE_Y, 1,1,
-		0, RGB(255,0,255));
-
-	//210,41
-	river = ImageManager::GetInstance()->AddImage(
-		"°­¹°", L"Image/SceneImage/river.bmp",
-		210, 41, 6, 1,
-		0, RGB(200, 224, 168));
-
-	//33,144
-	yellowFlower = ImageManager::GetInstance()->AddImage(
-		"³ë¶õ²É", L"Image/SceneImage/YellowFlower.bmp", 
-		33, 144, 1,6,
-		0, RGB(184,240,120));
-	
-	redFlower = ImageManager::GetInstance()->AddImage(
-		"ºÓÀº²É", L"Image/SceneImage/RedFlower.bmp", 
-		33, 144, 1,6,
-		0, RGB(184,240,120));
+		redFlower = ImageManager::GetInstance()->AddImage(
+			"ºÓÀº²É", L"Image/SceneImage/RedFlower.bmp",
+			33, 144, 1, 6,
+			0, RGB(184, 240, 120));
+	}
 
 	redPositions = {
 		{545, 128},
@@ -74,6 +73,16 @@ HRESULT SquareScene::Init()
 		{341, 611},
 	};
 	elapsedTime = 0;
+
+
+	collisionBoxTool = new CollisionBoxTool();
+	collisionBoxTool->Init(L"Square");
+
+
+	mPlayer = new MPlayer();
+	mPlayer->Init();
+
+
 	return S_OK;
 }
 
@@ -90,22 +99,39 @@ void SquareScene::Update()
 		SceneManager::GetInstance()->ChangeScene("Å¸ÀÏ¸ÊÅø");
 	}
 
-
-	elapsedTime += TimerManager::GetInstance()->GetDeltaTime();
-	if (elapsedTime > 0.3f)
+	if (yellowFlower && TimerManager::GetInstance())
 	{
-		currAnimaionFrame++;
-		if (currAnimaionFrame >= yellowFlower->GetMaxFrameY())
+		elapsedTime += TimerManager::GetInstance()->GetDeltaTime();
+		if (elapsedTime > 0.3f)
 		{
-			currAnimaionFrame = 0;
+			currAnimaionFrame++;
+			if (currAnimaionFrame >= yellowFlower->GetMaxFrameY())
+			{
+				currAnimaionFrame = 0;
+			}
+			elapsedTime = 0;
 		}
-		elapsedTime = 0;
 	}
-
 	if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F6)) {
 		SceneManager::GetInstance()->AddScene("´øÀü¾À", new DungeonScene());
-		SceneManager::GetInstance()->ChangeScene("´øÀü¾À");
+		SceneManager::GetInstance()->ChangeScene("´øÀü¾À", "·Îµù¾À");
 	}
+	if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F5)) {
+		SceneManager::GetInstance()->AddScene("½ºÅ¸Æ®¾À", new StartScene());
+		SceneManager::GetInstance()->AddLoadingScene("·Îµù¾À", new LoadingScene());
+		SceneManager::GetInstance()->ChangeScene("½ºÅ¸Æ®¾À", "·Îµù¾À");
+	}
+
+	if (collisionBoxTool) {
+		collisionBoxTool->Update();
+		CollisionManager::GetInstance()->MapPlayerCheck(mPlayer, collisionBoxTool->GetRectBoxes());
+	}
+
+	if (mPlayer) {
+		mPlayer->Update();
+	}
+	
+	
 }
 
 
@@ -127,6 +153,12 @@ void SquareScene::Render(HDC hdc)
 		river->FrameRender(hdc, 152, 400, currAnimaionFrame, 0, 0);
 		river->FrameRender(hdc, 152, 460, currAnimaionFrame, 0, 0);
 
+	}
+	if (collisionBoxTool) {
+		collisionBoxTool->Render(hdc);
+	}
+	if (mPlayer) {
+		mPlayer->Render(hdc);
 	}
 
     TimerManager::GetInstance()->Render(hdc);
