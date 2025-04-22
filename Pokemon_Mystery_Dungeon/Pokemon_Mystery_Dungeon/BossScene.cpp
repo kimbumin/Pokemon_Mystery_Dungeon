@@ -3,18 +3,24 @@
 #include "CommonFunction.h"
 #include "SceneManager.h"
 #include "KeyManager.h"
+#include "CollisionBoxTool.h"
 
 HRESULT BossScene::Init()
 {
+	collisionBoxTool = new CollisionBoxTool();
+	collisionBoxTool->Init(L"마그마보스방");
+
 	backGroundWidth = 432;
 	backGroundHeight = 376;
 
 	SetClientRect(g_hWnd, backGroundWidth, backGroundHeight);
 
-	backGround = ImageManager::GetInstance()->AddImage(
-		"보스방", L"Image/SceneImage/MagmaBossMap.bmp",
-		backGroundWidth, backGroundHeight, 1, 1,
-		true, RGB(255, 0, 255));
+	{
+		backGround = ImageManager::GetInstance()->AddImage(
+			"보스방", L"Image/SceneImage/MagmaBossMap.bmp",
+			backGroundWidth, backGroundHeight, 1, 1,
+			true, RGB(255, 0, 255));
+	}
 
 
 	mPlayer = new MPlayer;
@@ -53,6 +59,11 @@ void BossScene::Update()
 	if (BossScene::IsBossDefeated()) {
 		SceneManager::GetInstance()->ChangeScene("광장");
 	}
+
+	if (collisionBoxTool) {
+		collisionBoxTool->Update();
+		CollisionManager::GetInstance()->MapPlayerCheck(mPlayer, collisionBoxTool->GetRectBoxes());
+	}
 }
 
 void BossScene::Render(HDC hdc)
@@ -62,6 +73,10 @@ void BossScene::Render(HDC hdc)
 
 	if (mPlayer) mPlayer->Render(hdc);
 	//if (boss) boss->Render(hdc);
+
+	if (collisionBoxTool) {
+		collisionBoxTool->Render(hdc);
+	}
 }
 
 void BossScene::InitBoss()

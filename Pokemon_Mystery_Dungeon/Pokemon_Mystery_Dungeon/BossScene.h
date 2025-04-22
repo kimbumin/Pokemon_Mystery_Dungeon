@@ -3,6 +3,7 @@
 #include "MPlayer.h"
 
 class Boss;
+class CollisionBoxTool;
 
 class BossScene : public Scene
 {
@@ -25,4 +26,7 @@ private:
     int backGroundWidth;
     int backGroundHeight;
     Image* backGround;
+    CollisionBoxTool* collisionBoxTool;
+
+
 };

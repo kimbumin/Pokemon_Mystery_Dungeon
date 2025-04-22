@@ -36,18 +36,13 @@ void DungeonScene::Update()
 		SceneManager::GetInstance()->ChangeScene("±¤Àå");
 	}
 	if (KeyManager::GetInstance()->IsOnceKeyDown(VK_SPACE)) {
-		if (dungeonFloor < 5) {
-			++dungeonFloor;
-			GenerateNextFloor();
-		}
-		else {
-			dungeonFloor = 0;
-			SceneManager::GetInstance()->AddScene("º¸½º¾À", new BossScene());
-			SceneManager::GetInstance()->ChangeScene("º¸½º¾À");
-
-		}
+		GenerateNextFloor();
 	}
-
+	if (dungeonFloor > 5) {
+		dungeonFloor = 0;
+		SceneManager::GetInstance()->AddScene("º¸½º¾À", new BossScene());
+		SceneManager::GetInstance()->ChangeScene("º¸½º¾À");
+	}
 
 	if (mPlayer) {
 		mPlayer->Update();
