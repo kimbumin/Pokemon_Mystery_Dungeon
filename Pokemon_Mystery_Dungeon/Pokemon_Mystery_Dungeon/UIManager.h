@@ -29,6 +29,10 @@ public:
 
     void OpenUIStateBox(const string& key);
     void CloseUIStateBox(const string& key);
+    const string& GetCurrentStateKey() const
+    {
+        return currentStateKey;
+    }
 
     void AddPersistentState(UIState* state);
     void AddToggleState(UIState* state, bool isOpen);

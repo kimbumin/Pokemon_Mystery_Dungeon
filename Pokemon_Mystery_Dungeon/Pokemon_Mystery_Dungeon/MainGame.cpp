@@ -33,6 +33,8 @@ HRESULT MainGame::Init()
     }
     SceneManager::GetInstance()->AddScene("광장", new SquareScene());
     SceneManager::GetInstance()->ChangeScene("광장");
+
+    UIManager::GetInstance()->ChangeState("IdleUI");
     // SceneManager::GetInstance()->AddScene("TestMap", new CameraTestScene());
     // SceneManager::GetInstance()->ChangeScene("TestMap");
     return S_OK;
@@ -57,8 +59,11 @@ void MainGame::Release()
 
 void MainGame::Update()
 {
-    TurnManager::GetInstance()->Update();
-    SceneManager::GetInstance()->Update();
+    if (UIManager::GetInstance()->GetCurrentStateKey() == "IdleUI")
+    {
+        TurnManager::GetInstance()->Update();
+        SceneManager::GetInstance()->Update();
+    }
     UIManager::GetInstance()->Update();
     InvalidateRect(g_hWnd, NULL, false);
 }

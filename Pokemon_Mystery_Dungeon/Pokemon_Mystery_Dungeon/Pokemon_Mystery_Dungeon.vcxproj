@@ -225,6 +225,7 @@
     <ClInclude Include="IAnimState.h" />
     <ClInclude Include="IdleActionState.h" />
     <ClInclude Include="IdleAnimState.h" />
+    <ClInclude Include="IdleUIState.h" />
     <ClInclude Include="IItem.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageGDIPlus.h" />

@@ -11,9 +11,25 @@ private:
     UIElementImage* OtherInterfaceInfoBox = nullptr;
     UIElementImage* PokemonInfoBox = nullptr;
     UIElementImage* MapInfoBox = nullptr;
-
     UIElementImage* Cursor = nullptr;
 
+    //UIElementImage* OtherInterfaceInfoBoxOutline = nullptr;
+    //UIElementImage* PokemonInfoBoxOutline = nullptr;
+    //UIElementImage* MapInfoBoxOutline = nullptr;
+
+
+    // other
+    UIElementText* SkillText = nullptr;
+    UIElementText* ItemText = nullptr;
+    UIElementText* SettingText = nullptr;
+    // map
+    UIElementText* MapNameText = nullptr;
+    // pokemon
+    UIElementText* PokemonNameText = nullptr;
+    UIElementText* PokemonLevelText = nullptr;
+    UIElementText* PokemonHPText = nullptr;
+
+    int fontPosX = 50;
     const int OffsetY[3] = {30, 70, 110};
     int YIndex = 0;
 

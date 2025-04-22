@@ -79,7 +79,7 @@ void SkillUIState::Update()
         }
     }
 
-    if (KeyManager::GetInstance()->IsOnceKeyDown(0x58))
+    if (KeyManager::GetInstance()->IsOnceKeyDown(0x58))  // X
     {
         if (isSkillUseBox)
         {
