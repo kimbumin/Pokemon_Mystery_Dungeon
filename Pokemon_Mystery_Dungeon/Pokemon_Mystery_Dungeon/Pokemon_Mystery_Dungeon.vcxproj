@@ -128,6 +128,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AttackActionState.cpp" />
     <ClCompile Include="AttackAnimState.cpp" />
     <ClCompile Include="BossScene.cpp" />
     <ClCompile Include="Branch.cpp" />
@@ -137,12 +138,14 @@
     <ClCompile Include="DefaultUIState.cpp" />
     <ClCompile Include="DialogueManager.cpp" />
     <ClCompile Include="DialogueUIState.cpp" />
+    <ClCompile Include="DungeonManager.cpp" />
     <ClCompile Include="DungeonUIState.cpp" />
     <ClCompile Include="EmberSkill.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="DungeonScene.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="HurtAnimState.cpp" />
+    <ClCompile Include="HurtActionState.cpp" />
     <ClCompile Include="IdleActionState.cpp" />
     <ClCompile Include="IdleAnimState.cpp" />
     <ClCompile Include="Image.cpp" />
@@ -160,12 +163,16 @@
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="OranBerry.cpp" />
     <ClCompile Include="MoveActionState.cpp" />
+    <ClCompile Include="PlayerManager.cpp" />
     <ClCompile Include="MPlayer.cpp" />
     <ClCompile Include="PokemonAnimator.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="PokemonBase.cpp" />
+    <ClCompile Include="PokemonBuilder.cpp" />
     <ClCompile Include="PokemonDataLoader.cpp" />
+    <ClCompile Include="PokemonEnemy.cpp" />
     <ClCompile Include="PokemonImageLoader.cpp" />
+    <ClCompile Include="PokemonPool.cpp" />
     <ClCompile Include="PPAider.cpp" />
     <ClCompile Include="PPHeal.cpp" />
     <ClCompile Include="PokemonPlayer.cpp" />
@@ -193,6 +200,7 @@
     <ClCompile Include="YesOrNoUIState.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AttackActionState.h" />
     <ClInclude Include="AttackAnimState.h" />
     <ClInclude Include="BossScene.h" />
     <ClInclude Include="Branch.h" />
@@ -206,11 +214,13 @@
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="CommonFunction.h" />
     <ClInclude Include="config.h" />
+    <ClInclude Include="DungeonManager.h" />
     <ClInclude Include="DungeonUIState.h" />
     <ClInclude Include="EmberSkill.h" />
     <ClInclude Include="DungeonScene.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="HurtAnimState.h" />
+    <ClInclude Include="HurtActionState.h" />
     <ClInclude Include="IActionState.h" />
     <ClInclude Include="IAnimState.h" />
     <ClInclude Include="IdleActionState.h" />
@@ -230,10 +240,15 @@
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="OranBerry.h" />
     <ClInclude Include="MoveActionState.h" />
+    <ClInclude Include="PlayerManager.h" />
     <ClInclude Include="MPlayer.h" />
     <ClInclude Include="PokemonAnimator.h" />
     <ClInclude Include="PokemonBase.h" />
+    <ClInclude Include="PokemonBuilder.h" />
+    <ClInclude Include="PokemonDataLoader.h" />
+    <ClInclude Include="PokemonEnemy.h" />
     <ClInclude Include="PokemonImageLoader.h" />
+    <ClInclude Include="PokemonPool.h" />
     <ClInclude Include="PPAider.h" />
     <ClInclude Include="PPHeal.h" />
     <ClInclude Include="PokemonPlayer.h" />

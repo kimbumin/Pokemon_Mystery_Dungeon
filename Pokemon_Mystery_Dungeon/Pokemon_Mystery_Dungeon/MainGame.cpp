@@ -6,6 +6,10 @@
 #include "SquareScene.h"
 #include "TileMapTestScene.h"
 #include "CameraTestScene.h"
+#include "PokemonDataLoader.h"
+#include "PokemonImageLoader.h"
+#include "PlayerManager.h"
+#include "TurnManager.h"
 #include "UIManager.h"
 
 HRESULT MainGame::Init()
@@ -13,18 +17,22 @@ HRESULT MainGame::Init()
 	ImageManager::GetInstance()->Init();
 	KeyManager::GetInstance()->Init();
 	SceneManager::GetInstance()->Init();
+	
+	PokemonDataLoader::GetInstance()->Init();
+	PokemonDataLoader::GetInstance()->LoadFromCSV("Data/PokemonBaseStatus.csv");
 
+	PlayerManager::GetInstance()->Init();
 	hdc = GetDC(g_hWnd);
 
 	backBuffer = new Image();
 	if (FAILED(backBuffer->Init(TILEMAPTOOL_X, TILEMAPTOOL_Y)))
 	{
 		MessageBox(g_hWnd, 
-			TEXT("¹é¹öÆÛ »ý¼º ½ÇÆÐ"), TEXT("°æ°í"), MB_OK);
+			TEXT("ë°±ë²„í¼ ìƒì„± ì‹¤íŒ¨"), TEXT("ê²½ê³ "), MB_OK);
 		return E_FAIL;
 	}
-	SceneManager::GetInstance()->AddScene("±¤Àå", new SquareScene());
-	SceneManager::GetInstance()->ChangeScene("±¤Àå");
+	SceneManager::GetInstance()->AddScene("ê´‘ìž¥", new SquareScene());
+	SceneManager::GetInstance()->ChangeScene("ê´‘ìž¥");
 	//SceneManager::GetInstance()->AddScene("TestMap", new CameraTestScene());
 	//SceneManager::GetInstance()->ChangeScene("TestMap");
 	return S_OK;
@@ -44,10 +52,12 @@ void MainGame::Release()
 	SceneManager::GetInstance()->Release();
 	KeyManager::GetInstance()->Release();
 	ImageManager::GetInstance()->Release();
+	PlayerManager::GetInstance()->Release();
 }
 
 void MainGame::Update()
 {
+	TurnManager::GetInstance()->Update();
 	SceneManager::GetInstance()->Update();
 	UIManager::GetInstance()->Update();
 	InvalidateRect(g_hWnd, NULL, false);
@@ -62,6 +72,7 @@ void MainGame::Render()
 
 	TimerManager::GetInstance()->Render(hBackBufferDC);
 
+	PlayerManager::GetInstance()->Render(hBackBufferDC);
 
 	backBuffer->Render(hdc);
 }

@@ -13,20 +13,21 @@
 
 #include "MoveActionState.h"
 #include "IdleActionState.h"
-
+#include "AttackActionState.h"
+#include "HurtActionState.h"
 
 // Skill
 // UseItem
 
 HRESULT PokemonBase::Init()
 {
-    isAlive = true;
-    baseStatus = PokemonDataLoader::GetInstance()->GetData(151); // 따로 빌더에서 정해줄 것
-
+    // isAlive = false;
+    // baseStatus = PokemonDataLoader::GetInstance()->GetData(0);
     currentStatus = *baseStatus;
-    level = 5; // 따로 빌더에서 정해줄 것
+    // level = 0;
     CalStatus();
     currentHp = currentStatus.hp;
+
     animator = new PokemonAnimator();
 
     walkAnim = new WalkAnimState;
@@ -36,26 +37,18 @@ HRESULT PokemonBase::Init()
     swingAnim = new SwingAnimState;
     rotateAnim = new RotateAnimState;
 
-    //currentAnimState = &idleAnim;
+    moveAction = new MoveActionState;
+    idleAction = new IdleActionState;
+    attackAction = new AttackActionState;
+    hurtAction = new HurtActionState;
+
     currentAnimState = nullptr;
     currentActionState = nullptr;
 
     SetAnimState(idleAnim);
-    SetActionState(new IdleActionState());
+    SetActionState(idleAction);
 
-    string idStr = PokemonImageLoader::GetInstance()->PokemonIdToString(baseStatus->idNumber);
-    for (auto type = animTypes.begin(); type != animTypes.end(); ++type)
-    {
-        string key = idStr + *type;
-        Image* image = ImageManager::GetInstance()->FindImage(key);
-        if (image) 
-        {
-            int frameX = image->GetMaxFrameX();
-            int frameY = image->GetMaxFrameY();
-            float frameTime = 1.f / frameX; //  Check: 재생 속도 하드코딩 개선 사항
-            animator->AddAnimation(*type, image, frameX, frameY, frameTime, *type == "Idle");
-        }
-    }
+    SetAnimator();
     return S_OK;
 }
 
@@ -67,6 +60,7 @@ void PokemonBase::Release()
         delete animator;
         animator = nullptr;
     }
+    // 이거 지우는 거 매크로고려
     if (walkAnim)
     {
         delete walkAnim;
@@ -97,55 +91,60 @@ void PokemonBase::Release()
         delete rotateAnim;
         rotateAnim = nullptr;
     }
+    if (moveAction)
+    {
+        delete moveAction;
+        moveAction = nullptr;
+    }
+    if (idleAction)
+    {
+        delete idleAction;
+        idleAction = nullptr;
+    }
+    if (attackAction)
+    {
+        delete attackAction;
+        attackAction = nullptr;
+    }
+    if (hurtAction)
+    {
+        delete hurtAction;
+        hurtAction = nullptr;
+    }
 }
 
 void PokemonBase::Update()
 {
-    if (currentAnimState->CanOverride())
+   /* if (currentActionState->CanOverride())
     {
         if (KeyManager::GetInstance()->IsOnceKeyDown(VK_UP))
         {
             direction = Direction::NORTH;
-            //SetAnimState(&walkAnim);
-            SetAnimState(walkAnim);
-            SetActionState(new MoveActionState());
+            SetActionState(moveAction);
         }
         if (KeyManager::GetInstance()->IsOnceKeyDown(VK_LEFT))
         {
             direction = Direction::WEST;
-            //SetAnimState(&walkAnim);
-            SetAnimState(walkAnim);
-            SetActionState(new MoveActionState());
+            SetActionState(moveAction);
         }
         if (KeyManager::GetInstance()->IsOnceKeyDown(VK_DOWN))
         {
             direction = Direction::SOUTH;
-            //SetAnimState(&walkAnim);
-            SetAnimState(walkAnim);
-            SetActionState(new MoveActionState());
+            SetActionState(moveAction);
         }
         if (KeyManager::GetInstance()->IsOnceKeyDown(VK_RIGHT))
         {
             direction = Direction::EAST;
-            //SetAnimState(&walkAnim);
-            SetAnimState(walkAnim);
-            SetActionState(new MoveActionState());
+            SetActionState(moveAction);
         }
-    }
-
-    if (currentAnimState && currentAnimState->IsFinished())
-    {
-        //SetAnimState(&idleAnim);
-        SetAnimState(idleAnim);
-    }
+    }*/
     if (currentAnimState)
     {
         currentAnimState->Update(this);
     }
-
     if (currentActionState && currentActionState->IsFinished())
     {
-        SetActionState(nullptr);
+        SetActionState(idleAction);
     }
     if (currentActionState)
     {
@@ -174,6 +173,12 @@ int PokemonBase::CalStat(int value)
     return (value + IV + EV + 100) * level / 100;
 }
 
+void PokemonBase::TakeDamage()
+{
+    // 데미지 입는 것을 입는 관점에서 or 주는 관점에서
+    // 입히는 데미지를 전투 시스템에서 전달하고 전투시스템에서 계산 때리고 그 결과를 이걸로 적용하는 구조
+}
+
 void PokemonBase::SetAnimState(IAnimState* newState)
 {
     if (currentAnimState && !currentAnimState->CanOverride())
@@ -195,14 +200,12 @@ void PokemonBase::SetActionState(IActionState* newState)
 {
     if (currentActionState && !currentActionState->CanOverride())
     {
-        delete newState;
         return;
     }
 
     if (currentActionState)
     {
         currentActionState->Exit(this);
-        delete currentActionState;
     }
     currentActionState = newState;
     if (currentActionState)
@@ -211,33 +214,66 @@ void PokemonBase::SetActionState(IActionState* newState)
     }
 }
 
-void PokemonBase::PlayWalkAnim() 
+void PokemonBase::SetAnimator()
+{
+    string idStr = PokemonImageLoader::GetInstance()->PokemonIdToString(baseStatus->idNumber);
+    for (auto type = animTypes.begin(); type != animTypes.end(); ++type)
+    {
+        string key = idStr + *type;
+        Image* image = ImageManager::GetInstance()->FindImage(key);
+        if (image)
+        {
+            int frameX = image->GetMaxFrameX();
+            int frameY = image->GetMaxFrameY();
+            float frameTime = 1.f / frameX; //  Check: 재생 속도 하드코딩 개선 사항 (CSV에 있는 데이터로 매 프레임마다 재생속도도 다르게 할 수 있다)
+            animator->AddAnimation(*type, image, frameX, frameY, frameTime, *type == "Idle");
+            // 반복되는 애니메이션은 Idle만 있어서
+        }
+    }
+}
+
+void PokemonBase::PlayWalkAnim()
 { 
-   // SetAnimState(&walkAnim); 
     SetAnimState(walkAnim); 
 }
 void PokemonBase::PlayIdleAnim() 
 { 
-    //SetAnimState(&idleAnim); 
     SetAnimState(idleAnim); 
 }
 void PokemonBase::PlayAttackAnim() 
 { 
-    //SetAnimState(&attackAnim); 
     SetAnimState(attackAnim); 
 }
 void PokemonBase::PlayHurtAnim() 
 { 
-   // SetAnimState(&hurtAnim); 
     SetAnimState(hurtAnim); 
 }
 void PokemonBase::PlaySwingAnim() 
 { 
-    //SetAnimState(&swingAnim); 
     SetAnimState(swingAnim); 
 }
 void PokemonBase::PlayRotateAnim() 
 { 
-    //SetAnimState(&rotateAnim); 
     SetAnimState(rotateAnim); 
+}
+
+void PokemonBase::ExecuteMoveAction()
+{
+    SetActionState(moveAction);
+}
+
+void PokemonBase::ExecuteIdleAction()
+{
+    SetActionState(idleAction);
+}
+
+void PokemonBase::ExecuteAttackAction(ISkill* skill)
+{
+    attackAction->SelectSkill(skill);
+    SetActionState(attackAction);
+}
+
+void PokemonBase::ExecuteHurtAction()
+{
+    SetActionState(hurtAction);
 }

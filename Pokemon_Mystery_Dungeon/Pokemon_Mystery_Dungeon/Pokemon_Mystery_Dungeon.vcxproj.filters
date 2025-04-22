@@ -425,6 +425,7 @@
     <ClInclude Include="PokemonBase.h">
       <Filter>Pokemon</Filter>
     </ClInclude>
+
     <ClInclude Include="LoadingScene.h">
       <Filter>Scene\헤더</Filter>
     </ClInclude>
