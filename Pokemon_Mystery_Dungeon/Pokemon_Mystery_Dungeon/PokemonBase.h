@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include "ISkill.h"
 
 //#include "IdleAnimState.h"
 //#include "AttackAnimState.h"
@@ -55,6 +56,7 @@ protected:
 
 
 public:
+    shared_ptr<ISkill> currentSkill;
     virtual HRESULT Init() override;
     virtual void Release() override;
     virtual void Update() override;

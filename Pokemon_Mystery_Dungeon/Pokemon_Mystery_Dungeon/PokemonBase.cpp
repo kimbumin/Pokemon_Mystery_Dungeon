@@ -13,7 +13,7 @@
 
 #include "MoveActionState.h"
 #include "IdleActionState.h"
-
+#include "SkillManager.h"
 
 // Skill
 // UseItem
@@ -21,7 +21,8 @@
 HRESULT PokemonBase::Init()
 {
     isAlive = true;
-    baseStatus = PokemonDataLoader::GetInstance()->GetData(151); // 따로 빌더에서 정해줄 것
+    baseStatus = PokemonDataLoader::GetInstance()->GetData(1); // 따로 빌더에서 정해줄 것
+    currentSkill = SkillManager::GetInstance()->CreateSkill("Ember");
 
     currentStatus = *baseStatus;
     level = 5; // 따로 빌더에서 정해줄 것
