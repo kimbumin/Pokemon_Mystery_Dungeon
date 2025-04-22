@@ -7,7 +7,7 @@ EmberSkill::EmberSkill(const SkillData& skillData)
 {
 	data = skillData;
 }
-
+   
 HRESULT EmberSkill::Init()
 {
 	pos = { 0,0 };
@@ -15,7 +15,7 @@ HRESULT EmberSkill::Init()
 	frameCount = 0;
 	elapsedTime = 0.0f;
 	image = ImageManager::GetInstance()->AddImage(
-		"Ember", TEXT("Image/SkillImage/FireBlast.bmp"), 1856 * 2, 61 * 2, 29, 1,
+		"Ember", TEXT("Image/SkillImage/FireBlast.bmp"), 1856/2, 61/2, 29, 1,
 		true, RGB(255, 0, 255));
 
 	return S_OK;
@@ -26,7 +26,6 @@ void EmberSkill::Release()
 
 }
 
-// EmberSkill::Update() 안 예시
 void EmberSkill::Update()
 {
 	if (isActive)
@@ -66,10 +65,12 @@ void EmberSkill::Use(PokemonBase* owner)
 	pos = owner->GetPos();
 	auto dirIndex = static_cast<size_t>(direction);
 
-	pos.x += directionOffsets[dirIndex].first;
-	pos.y += directionOffsets[dirIndex].second;
+	// 여기 수정
+	pos.x += directionOffsets[dirIndex].first * 24;
+	pos.y += directionOffsets[dirIndex].second * 24;
 
 	isActive = true;
+
 }
 
 
