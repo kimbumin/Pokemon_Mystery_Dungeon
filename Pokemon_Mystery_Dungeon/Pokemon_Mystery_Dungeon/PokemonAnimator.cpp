@@ -3,10 +3,12 @@
 
 void PokemonAnimator::Init()
 {
+    Clear();
 }
 
 void PokemonAnimator::Release()
 {
+    Clear();
 }
 
 void PokemonAnimator::Update() 
@@ -80,4 +82,10 @@ bool PokemonAnimator::IsFinished(const string& name){
         return it->second.isFinished;
     }
     return false;
+}
+
+void PokemonAnimator::Clear()
+{
+    animations.clear();
+    currentAnim.clear();
 }

@@ -16,10 +16,7 @@ void PokemonPlayer::Release()
 void PokemonPlayer::Update()
 {
 	PokemonBase::Update();
-	if (exp > expToLevelUp)
-	{
-		LevelUp();
-	}
+
 }
 
 bool PokemonPlayer::CanPickUpItem() const
@@ -45,6 +42,10 @@ void PokemonPlayer::UseItem(Item* item)
 void PokemonPlayer::GainExp(int amount)
 {
 	exp += amount;
+	if (exp > expToLevelUp)
+	{
+		LevelUp();
+	}
 }
 
 void PokemonPlayer::LevelUp()

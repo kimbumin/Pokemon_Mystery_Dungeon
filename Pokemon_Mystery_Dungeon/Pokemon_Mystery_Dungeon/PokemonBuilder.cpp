@@ -16,8 +16,8 @@ PokemonBase* PokemonBuilder::Build(int id, int level, FPOINT pos)
     {
         return nullptr;
     }
-
-    pokemon->SetStatus(*baseData);
+    
+    pokemon->SetStatus(baseData);
     pokemon->SetLevel(level);
     pokemon->SetPos(pos);
     pokemon->SetIsAlive(true);

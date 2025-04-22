@@ -6,6 +6,7 @@
 #include "PlayerManager.h"
 #include "PokemonPlayer.h"
 #include "CommonFunction.h"
+#include "PokemonAnimator.h"
 
 void DungeonManager::Init()
 {
@@ -65,9 +66,13 @@ void DungeonManager::EnterDungeon(string dungeonName)
 void DungeonManager::ExitDungeon()
 {
     PokemonImageLoader::GetInstance()->ClearPokemonImage();
-    int playerId = PlayerManager::GetInstance()->GetPlayer()->GetCurrentPokemonData().idNumber;
-    PokemonImageLoader::GetInstance()->LoadPokemonAnim(playerId);
 
+    int playerId = PlayerManager::GetInstance()->GetPlayer()->GetCurrentPokemonData().idNumber;
+    
+    PlayerManager::GetInstance()->GetPlayer()->GetAnimator()->Clear();
+    PokemonImageLoader::GetInstance()->LoadPokemonAnim(playerId);
+    PlayerManager::GetInstance()->GetPlayer()->SetAnimator();
+    PlayerManager::GetInstance()->GetPlayer()->PlayIdleAnim();
     if (pool)
     {
         pool->Release();

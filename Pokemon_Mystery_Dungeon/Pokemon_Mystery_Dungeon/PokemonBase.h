@@ -81,7 +81,7 @@ public:
     inline bool GetIsAlive() { return isAlive; }
 
     //Setter
-    inline void SetStatus(PokemonData baseStatus) { this->baseStatus = &baseStatus; }
+    inline void SetStatus(const PokemonData* baseStatus) { this->baseStatus = baseStatus; }
     inline void SetDirection(Direction direction) { this->direction = direction; }
     inline void SetPos(FPOINT pos) { this->pos = pos; }
     inline void SetLevel(int level) { this->level = level; }
@@ -102,6 +102,8 @@ public:
     void ExecuteIdleAction();
     void ExecuteAttackAction(ISkill* skill);
     void ExecuteHurtAction();
+
+    // virtual void ExecuteTurn() = 0;
 
     PokemonBase() {};
     virtual ~PokemonBase() {};

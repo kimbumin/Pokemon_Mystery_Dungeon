@@ -7,8 +7,12 @@ HRESULT PokemonPool::Init()
 {
 	pokemonPool.resize(20);
 	pokemonPool[0] = PlayerManager::GetInstance()->GetPlayer();
-	for (iterPokemonPool = begin() + 1; iterPokemonPool != end(); ++iterPokemonPool)
+	for (iterPokemonPool = begin(); iterPokemonPool != end(); ++iterPokemonPool)
 	{
+		if (iterPokemonPool == begin())
+		{
+			continue;
+		}
 		(*iterPokemonPool) = new PokemonBase;
 		(*iterPokemonPool)->SetIsAlive(false);
 	}
@@ -19,6 +23,10 @@ void PokemonPool::Release()
 {
 	for (iterPokemonPool = begin() + 1; iterPokemonPool != end(); ++iterPokemonPool)
 	{
+		if (iterPokemonPool == begin())
+		{
+			continue;
+		}
 		delete (*iterPokemonPool);
 		(*iterPokemonPool) = nullptr;
 	}
@@ -26,7 +34,7 @@ void PokemonPool::Release()
 
 void PokemonPool::Update()
 {
-	for (iterPokemonPool = begin() + 1; iterPokemonPool != end(); ++iterPokemonPool)
+	for (iterPokemonPool = begin(); iterPokemonPool != end(); ++iterPokemonPool)
 	{
 		if ((*iterPokemonPool)->GetIsAlive())
 		{
@@ -37,7 +45,7 @@ void PokemonPool::Update()
 
 void PokemonPool::Render(HDC hdc)
 {
-	for (iterPokemonPool = begin() + 1; iterPokemonPool != end(); ++iterPokemonPool)
+	for (iterPokemonPool = begin(); iterPokemonPool != end(); ++iterPokemonPool)
 	{
 		if ((*iterPokemonPool)->GetIsAlive())
 		{

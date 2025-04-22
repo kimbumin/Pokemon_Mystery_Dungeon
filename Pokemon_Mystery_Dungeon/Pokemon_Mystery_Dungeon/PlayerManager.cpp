@@ -8,7 +8,7 @@ void PlayerManager::Init()
 	player = new PokemonPlayer();
 	PokemonImageLoader::GetInstance()->LoadPokemonAnim(4);
 	player->SetIsAlive(true);
-	player->SetStatus(*(PokemonDataLoader::GetInstance()->GetData(4)));
+	player->SetStatus((PokemonDataLoader::GetInstance()->GetData(4)));
 	player->SetLevel(6);
 
 	player->Init();

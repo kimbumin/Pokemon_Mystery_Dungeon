@@ -36,5 +36,5 @@ public:
     void AddAnimation(const string& name, Image* image, int frameCountX, int frameCountY, float frameDuration, bool loop);
     void Play(const string& name, Direction direction);
     bool IsFinished(const string& name);
-
+    void Clear();
 };
