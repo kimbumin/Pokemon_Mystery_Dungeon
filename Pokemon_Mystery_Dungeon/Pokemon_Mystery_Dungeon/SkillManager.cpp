@@ -1,4 +1,6 @@
 #include "SkillManager.h"
+#include "EmberSkill.h"
+
 
 void SkillManager::LoadSkillsFromCSV(const string& filepath)
 {
@@ -11,23 +13,28 @@ void SkillManager::LoadSkillsFromCSV(const string& filepath)
     string line;
     while (getline(file, line))
     {
+        SkillData data;
+        string token;
         istringstream iss(line);
+
         getline(iss, token, ','); data.number = stoi(token);
         getline(iss, data.name, ',');
         getline(iss, data.element, ',');
         getline(iss, data.type, ',');
-        getline(iss, data.animAction, ','); 
+        getline(iss, data.animAction, ',');
         getline(iss, token, ','); data.power = stoi(token);
         getline(iss, token, ','); data.accuracy = stoi(token);
         getline(iss, token, ','); data.pp = stoi(token);
 
-
-        auto skill = make_shared<ISkill>(data);
-        skillMap[data.name] = skill; // 이름 기반으로 저장
+        // CSV 읽은 SkillData로 EmberSkill 생성
+        skillMap[data.name] = make_shared<EmberSkill>(data);
+        skillMap[data.name]->Init();
     }
 
     file.close();
 }
+
+
 
 shared_ptr<ISkill> SkillManager::CreateSkill(const string& name)
 {
