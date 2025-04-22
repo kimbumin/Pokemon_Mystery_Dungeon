@@ -137,7 +137,6 @@
     <ClCompile Include="EmberSkill.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="DungeonScene.cpp" />
-    <ClCompile Include="EnemyBumin.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="HurtAnimState.cpp" />
     <ClCompile Include="IdleActionState.cpp" />
@@ -147,7 +146,6 @@
     <ClCompile Include="ImageGDIPlusManager.cpp" />
     <ClCompile Include="ImageManager.cpp" />
     <ClCompile Include="InventoryUIState.cpp" />
-    <ClCompile Include="ISkill.cpp" />
     <ClCompile Include="ItemManager.cpp" />
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="LeppaBerry.cpp" />
@@ -155,7 +153,6 @@
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="OranBerry.cpp" />
     <ClCompile Include="MoveActionState.cpp" />
-    <ClCompile Include="PlayerBumin.cpp" />
     <ClCompile Include="PokemonAnimator.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="PokemonBase.cpp" />
@@ -171,7 +168,6 @@
     <ClCompile Include="SkillManager.cpp" />
     <ClCompile Include="SquareScene.cpp" />
     <ClCompile Include="SwingAnimState.cpp" />
-    <ClCompile Include="StoneShowerSkill.cpp" />
     <ClCompile Include="StartScene.cpp" />
     <ClCompile Include="TilemapTool.cpp" />
     <ClCompile Include="Timer.cpp" />
@@ -195,7 +191,6 @@
     <ClInclude Include="config.h" />
     <ClInclude Include="EmberSkill.h" />
     <ClInclude Include="DungeonScene.h" />
-    <ClInclude Include="EnemyBumin.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="HurtAnimState.h" />
     <ClInclude Include="IActionState.h" />
@@ -215,7 +210,6 @@
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="OranBerry.h" />
     <ClInclude Include="MoveActionState.h" />
-    <ClInclude Include="PlayerBumin.h" />
     <ClInclude Include="PokemonAnimator.h" />
     <ClInclude Include="PokemonBase.h" />
     <ClInclude Include="PokemonImageLoader.h" />
@@ -236,7 +230,6 @@
     <ClInclude Include="UIElementImage.h" />
     <ClInclude Include="TurnManager.h" />
     <ClInclude Include="WalkAnimState.h" />
-    <ClInclude Include="StoneShowerSkill.h" />
     <ClInclude Include="StartScene.h" />
     <ClInclude Include="TilemapTool.h" />
     <ClInclude Include="Timer.h" />
