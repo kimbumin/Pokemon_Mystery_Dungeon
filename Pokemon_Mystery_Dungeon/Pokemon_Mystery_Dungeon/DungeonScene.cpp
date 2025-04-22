@@ -7,8 +7,6 @@ HRESULT DungeonScene::Init()
 {
 	SetClientRect(g_hWnd, TILE_SIZE * TILE_X, TILE_SIZE * TILE_Y);
 
-	map.Init();
-
 	mPlayer = new MPlayer;
 	mPlayer->Init();
 
@@ -16,16 +14,18 @@ HRESULT DungeonScene::Init()
 
 	dungeonFloor = 0;
 
-	stairPos = map.GetStairPos();
-	stairPos.x *= TILE_SIZE;
-	stairPos.y *= TILE_SIZE;
-
+	GenerateNextFloor();
+	
 	return S_OK;
 }
 
 void DungeonScene::Release()
 {
-
+	if (mPlayer) {
+		mPlayer->Release();
+		delete mPlayer;
+		mPlayer = nullptr;
+	}
 }
 
 void DungeonScene::Update()
@@ -35,12 +35,8 @@ void DungeonScene::Update()
 		SceneManager::GetInstance()->ChangeScene("광장");
 	}
 	if (KeyManager::GetInstance()->IsOnceKeyDown(VK_SPACE)) {
-		map.Init();
-		wallTiles = map.GetWallTiles();
-		stairPos = map.GetStairPos();
-		stairPos.x *= TILE_SIZE;
-		stairPos.y *= TILE_SIZE;
 		++dungeonFloor;
+		GenerateNextFloor();
 	}
 
 
@@ -48,13 +44,9 @@ void DungeonScene::Update()
 		mPlayer->Update();
 		POINT playerPos = mPlayer->GetPos(); // 플레이어의 타일 위치를 받아오는 함수 필요
 
-		if (abs(playerPos.x - stairPos.x) <= 25 && abs(playerPos.y - stairPos.y) <= 25) {
-			map.Init();
-			wallTiles = map.GetWallTiles();
-			stairPos = map.GetStairPos();
-			stairPos.x *= TILE_SIZE;
-			stairPos.y *= TILE_SIZE;
+		if (IsPlayerOnStair()) {
 			++dungeonFloor;
+			GenerateNextFloor();
 		}
 	}
 
@@ -71,10 +63,31 @@ void DungeonScene::Render(HDC hdc)
 	//for (const POINT& wall : wallTiles) {
 	//	RenderRectAtCenter(hdc, wall.x*TILE_SIZE, wall.y*TILE_SIZE, TILE_SIZE, TILE_SIZE);
 	//}
-	
-//	map.Draw(hdc);
+
+	//	map.Draw(hdc);
 	if (mPlayer) {
 		mPlayer->Render(hdc);
 	}
 
+}
+
+void DungeonScene::GenerateNextFloor()
+{
+	map.Init();
+	wallTiles = map.GetWallTiles();
+	stairPos = ConvertToPixel(map.GetStairPos());
+}
+
+POINT DungeonScene::ConvertToPixel(POINT tilePos)
+{
+	tilePos.x *= TILE_SIZE;
+	tilePos.y *= TILE_SIZE;
+	return tilePos;
+}
+
+bool DungeonScene::IsPlayerOnStair()
+{
+	POINT playerPos = mPlayer->GetPos();
+	return abs(playerPos.x - stairPos.x) <= TILE_SIZE &&
+		abs(playerPos.y - stairPos.y) <= TILE_SIZE;
 }

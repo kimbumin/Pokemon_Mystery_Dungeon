@@ -14,6 +14,12 @@ public:
 	virtual void Update() override;
 	virtual void Render(HDC hdc) override;
 
+	void GenerateNextFloor();
+
+	POINT ConvertToPixel(POINT tilePos);
+
+	bool IsPlayerOnStair();
+
 	DungeonScene() {};
 	virtual ~DungeonScene() {};
 
