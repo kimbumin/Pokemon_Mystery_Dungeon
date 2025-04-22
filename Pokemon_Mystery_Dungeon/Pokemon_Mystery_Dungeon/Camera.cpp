@@ -17,5 +17,28 @@ void Camera::SetCameraPos(POINT focus)
 
 POINT Camera::GetCameraPos() const
 {
-    return cameraPos;
+    return {cameraPos.x + shakeOffset.x, cameraPos.y + shakeOffset.y};
+}
+
+void Camera::Update(float deltaTime)
+{
+    if (shakeDuration > 0.0f)
+    {
+        shakeDuration -= deltaTime;
+
+        int offsetX = (rand() % (shakeMagnitude * 2 + 1)) - shakeMagnitude;
+        int offsetY = (rand() % (shakeMagnitude * 2 + 1)) - shakeMagnitude;
+
+        shakeOffset = {offsetX, offsetY};
+    }
+    else
+    {
+        shakeOffset = {0, 0};
+    }
+}
+
+void Camera::Shake(float duration, int magnitude)
+{
+    shakeDuration = duration;
+    shakeMagnitude = magnitude;
 }

@@ -21,6 +21,7 @@ HRESULT DungeonScene::Init()
     wallTiles = map.GetWallTiles();  // wallTilesÁÂÇ¥  Point·Î
 
     dungeonFloor = 0;
+    elapsedTime = 0.f;
 
     GenerateNextFloor();
 
@@ -64,6 +65,15 @@ void DungeonScene::Update()
             ++dungeonFloor;
             GenerateNextFloor();
         }
+    }
+    elapsedTime += TimerManager::GetInstance()->GetDeltaTime();
+    if (elapsedTime > 0.016f)
+    {
+        Camera::GetInstance()->Update(elapsedTime);
+        elapsedTime = 0;
+    }
+    if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F9)){
+        Camera::GetInstance()->Shake(0.3f, 10);
     }
 }
 

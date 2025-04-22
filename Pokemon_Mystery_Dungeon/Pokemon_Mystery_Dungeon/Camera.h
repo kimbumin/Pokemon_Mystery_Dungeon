@@ -10,6 +10,11 @@ private:
     POINT mapSize;     
     POINT screenSize;  
 
+    POINT shakeOffset = {0, 0};
+    float shakeDuration = 0.0f;  
+    int shakeMagnitude = 0;      
+
+
 public:
     void SetCameraPos(POINT focus);
     POINT GetCameraPos() const;
@@ -22,4 +27,6 @@ public:
     {
         screenSize = size;
     }
+    void Update(float deltaTime);              
+    void Shake(float duration, int magnitude); 
 };
