@@ -70,8 +70,10 @@ void CollisionBoxTool::Render(HDC hdc)
 
     if (isDragging)
     {
+        POINT worldMousePos = {g_ptMouse.x + camPos.x, g_ptMouse.y + camPos.y};
+
         Rectangle(hdc, startPoint.x - camPos.x, startPoint.y - camPos.y,
-                  g_ptMouse.x - camPos.x, g_ptMouse.y - camPos.y);
+                  worldMousePos.x - camPos.x, worldMousePos.y - camPos.y);
     }
 
     SelectObject(hdc, oldPen);
