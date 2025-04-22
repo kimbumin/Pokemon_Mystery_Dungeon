@@ -1,6 +1,7 @@
 #pragma once
+// clang-format off
 #include "config.h"
-
+// clang-format on
 class Timer
 {
 private:

@@ -1,10 +1,12 @@
 #pragma once
+// clang-format off
+#include "UIElement.h"
+// clang-format on
+
 #include <gdiplus.h>
 
 #include <map>
 #include <string>
-
-#include "UIElement.h"
 
 #pragma comment(lib, "gdiplus.lib")
 

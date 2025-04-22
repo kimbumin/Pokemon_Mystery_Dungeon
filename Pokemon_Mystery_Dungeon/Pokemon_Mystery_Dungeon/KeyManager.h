@@ -1,6 +1,8 @@
 #pragma once
 #include "Singleton.h"
+// clang-format off
 #include "config.h"
+// clang-format on
 
 #define MAX_KEY_COUNT 256
 using namespace std;

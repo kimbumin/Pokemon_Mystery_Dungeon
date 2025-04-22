@@ -1,7 +1,8 @@
 #pragma once
 #include "Singleton.h"
+// clang-format off
 #include "config.h"
-
+// clang-format on
 class Scene;
 class SceneManager : public Singleton<SceneManager>
 {

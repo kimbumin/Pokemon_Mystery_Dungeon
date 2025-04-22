@@ -1,6 +1,8 @@
 #pragma once
-#include "Singleton.h"
+// clang-format off
 #include "config.h"
+// clang-format on
+#include "Singleton.h"
 
 class PokemonPlayer;
 class PlayerManager : public Singleton<PlayerManager>

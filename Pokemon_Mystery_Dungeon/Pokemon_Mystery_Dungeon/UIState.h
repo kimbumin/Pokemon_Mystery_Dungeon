@@ -1,5 +1,7 @@
 #pragma once
+// clang-format off
 #include "config.h"
+// clang-format on
 
 // UI 공통 인터페이스
 class UIState

@@ -1,9 +1,10 @@
 #pragma once
+// clang-format off
+#include "config.h"
+// clang-format on
 #include <Windows.h>
 #include <gdiplus.h>
 #include <gdiplusimaging.h>
-
-#include "config.h"
 #pragma comment(lib, "gdiplus.lib")
 
 // 5100은 GIF에서 '프레임 딜레이 정보'를 가져오기 위한 ID임 - 각 프레임이 보여질

@@ -1,9 +1,10 @@
 #pragma once
+// clang-format off
+#include "config.h"
+// clang-format on
 #include <Windows.h>
 
 #include <vector>
-
-#include "config.h"
 
 class UIElement
 {

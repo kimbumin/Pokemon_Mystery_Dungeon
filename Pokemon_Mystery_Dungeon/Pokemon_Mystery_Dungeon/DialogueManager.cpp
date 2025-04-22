@@ -2,10 +2,13 @@
 #include <Windows.h>
 #undef byte
 
+
 #include "DialogueManager.h"
+// clang-format off
+#include "UIManager.h"
+// clang-format on
 #include "DialogueTemplate.h"
 #include "DialogueUIState.h"
-#include "UIManager.h"
 
 // text: 템플릿 문자열 (예: "'아이템명'을 획득했습니다")
 // values: 템플릿에서 치환할 변수 값들 (예: { {"아이템명", "몬스터볼"} })
