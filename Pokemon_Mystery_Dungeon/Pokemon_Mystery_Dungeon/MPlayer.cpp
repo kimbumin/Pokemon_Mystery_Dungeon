@@ -1,6 +1,7 @@
 #include "MPlayer.h"
+
 #include "KeyManager.h"
-MPlayer::MPlayer(): pos{ 500, 300 }, size{ TILE_SIZE, TILE_SIZE }, speed(1)
+MPlayer::MPlayer() : pos{500, 300}, size{TILE_SIZE, TILE_SIZE}, speed(1)
 {
     UpdateRect();
 }
@@ -32,10 +33,14 @@ void MPlayer::Render(HDC hdc)
 
 void MPlayer::Move()
 {
-    if (KeyManager::GetInstance()->IsStayKeyDown(VK_LEFT))  pos.x -= speed;
-    if (KeyManager::GetInstance()->IsStayKeyDown(VK_RIGHT)) pos.x += speed;
-    if (KeyManager::GetInstance()->IsStayKeyDown(VK_UP))    pos.y -= speed;
-    if (KeyManager::GetInstance()->IsStayKeyDown(VK_DOWN))  pos.y += speed;
+    if (KeyManager::GetInstance()->IsStayKeyDown(VK_LEFT))
+        pos.x -= speed;
+    if (KeyManager::GetInstance()->IsStayKeyDown(VK_RIGHT))
+        pos.x += speed;
+    if (KeyManager::GetInstance()->IsStayKeyDown(VK_UP))
+        pos.y -= speed;
+    if (KeyManager::GetInstance()->IsStayKeyDown(VK_DOWN))
+        pos.y += speed;
 }
 
 void MPlayer::UpdateRect()

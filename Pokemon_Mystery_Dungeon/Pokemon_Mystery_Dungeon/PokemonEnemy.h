@@ -4,9 +4,7 @@
 class PokemonEnemy : public PokemonBase
 {
 private:
-
 protected:
-
 public:
     virtual HRESULT Init() override;
     virtual void Release() override;
@@ -16,6 +14,4 @@ public:
 
     PokemonEnemy() {};
     virtual ~PokemonEnemy() {};
-
 };
-

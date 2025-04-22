@@ -8,11 +8,13 @@ HRESULT Image::Init(int width, int height)
     imageInfo->resID = 0;
     imageInfo->hMemDC = CreateCompatibleDC(hdc);
     imageInfo->hBitmap = CreateCompatibleBitmap(hdc, width, height);
-    imageInfo->hOldBit = (HBITMAP)SelectObject(imageInfo->hMemDC, imageInfo->hBitmap);
+    imageInfo->hOldBit =
+        (HBITMAP)SelectObject(imageInfo->hMemDC, imageInfo->hBitmap);
 
     imageInfo->hTempDC = CreateCompatibleDC(hdc);
     imageInfo->hTempBit = CreateCompatibleBitmap(hdc, width, height);
-    imageInfo->hOldTemp = (HBITMAP)SelectObject(imageInfo->hTempDC, imageInfo->hTempBit);
+    imageInfo->hOldTemp =
+        (HBITMAP)SelectObject(imageInfo->hTempDC, imageInfo->hTempBit);
 
     imageInfo->width = width;
     imageInfo->height = height;
@@ -26,24 +28,26 @@ HRESULT Image::Init(int width, int height)
         return E_FAIL;
     }
 
-    return S_OK;   // S_OK, E_FAIL
+    return S_OK;  // S_OK, E_FAIL
 }
 
-HRESULT Image::Init(const wchar_t* filePath, int width, int height, 
-    bool isTransparent, COLORREF transColor)
+HRESULT Image::Init(const wchar_t* filePath, int width, int height,
+                    bool isTransparent, COLORREF transColor)
 {
     HDC hdc = GetDC(g_hWnd);
 
     imageInfo = new IMAGE_INFO();
     imageInfo->resID = 0;
     imageInfo->hMemDC = CreateCompatibleDC(hdc);
-    imageInfo->hBitmap = (HBITMAP)LoadImage(
-        g_hInstance, filePath, IMAGE_BITMAP, width, height, LR_LOADFROMFILE);
-    imageInfo->hOldBit = (HBITMAP)SelectObject(imageInfo->hMemDC, imageInfo->hBitmap);
+    imageInfo->hBitmap = (HBITMAP)LoadImage(g_hInstance, filePath, IMAGE_BITMAP,
+                                            width, height, LR_LOADFROMFILE);
+    imageInfo->hOldBit =
+        (HBITMAP)SelectObject(imageInfo->hMemDC, imageInfo->hBitmap);
 
     imageInfo->hTempDC = CreateCompatibleDC(hdc);
     imageInfo->hTempBit = CreateCompatibleBitmap(hdc, width, height);
-    imageInfo->hOldTemp = (HBITMAP)SelectObject(imageInfo->hTempDC, imageInfo->hTempBit);
+    imageInfo->hOldTemp =
+        (HBITMAP)SelectObject(imageInfo->hTempDC, imageInfo->hTempBit);
 
     imageInfo->width = width;
     imageInfo->height = height;
@@ -66,19 +70,22 @@ HRESULT Image::Init(const wchar_t* filePath, int width, int height,
     this->isTransparent = isTransparent;
     this->transColor = transColor;
 
-    return S_OK;   // S_OK, E_FAIL
+    return S_OK;  // S_OK, E_FAIL
 }
 
-HRESULT Image::Init(const wchar_t* filePath, int width, int height, int maxFrameX, int maxFrameY, bool isTransparent, COLORREF transColor)
+HRESULT Image::Init(const wchar_t* filePath, int width, int height,
+                    int maxFrameX, int maxFrameY, bool isTransparent,
+                    COLORREF transColor)
 {
     HDC hdc = GetDC(g_hWnd);
 
     imageInfo = new IMAGE_INFO();
     imageInfo->resID = 0;
     imageInfo->hMemDC = CreateCompatibleDC(hdc);
-    imageInfo->hBitmap = (HBITMAP)LoadImage(
-        g_hInstance, filePath, IMAGE_BITMAP, width, height, LR_LOADFROMFILE);
-    imageInfo->hOldBit = (HBITMAP)SelectObject(imageInfo->hMemDC, imageInfo->hBitmap);
+    imageInfo->hBitmap = (HBITMAP)LoadImage(g_hInstance, filePath, IMAGE_BITMAP,
+                                            width, height, LR_LOADFROMFILE);
+    imageInfo->hOldBit =
+        (HBITMAP)SelectObject(imageInfo->hMemDC, imageInfo->hBitmap);
 
     imageInfo->width = width;
     imageInfo->height = height;
@@ -92,7 +99,8 @@ HRESULT Image::Init(const wchar_t* filePath, int width, int height, int maxFrame
 
     imageInfo->hTempDC = CreateCompatibleDC(hdc);
     imageInfo->hTempBit = CreateCompatibleBitmap(hdc, width, height);
-    imageInfo->hOldTemp = (HBITMAP)SelectObject(imageInfo->hTempDC, imageInfo->hTempBit);
+    imageInfo->hOldTemp =
+        (HBITMAP)SelectObject(imageInfo->hTempDC, imageInfo->hTempBit);
 
     ReleaseDC(g_hWnd, hdc);
 
@@ -105,38 +113,28 @@ HRESULT Image::Init(const wchar_t* filePath, int width, int height, int maxFrame
     this->isTransparent = isTransparent;
     this->transColor = transColor;
 
-    return S_OK;   // S_OK, E_FAIL
+    return S_OK;  // S_OK, E_FAIL
 }
 
 void Image::RenderBackground(HDC hdc)
 {
-    if (!imageInfo || !imageInfo->hMemDC) return;
+    if (!imageInfo || !imageInfo->hMemDC)
+        return;
 
     RECT cam = CameraManager::GetInstance()->GetViewPos();
 
     int width = cam.right - cam.left;
     int height = cam.bottom - cam.top;
 
-    if (isTransparent) {
-        GdiTransparentBlt(
-            hdc,
-            0, 0,
-            width, height,
-            imageInfo->hMemDC,
-            cam.left, cam.top,
-            width, height,
-            transColor
-        );
+    if (isTransparent)
+    {
+        GdiTransparentBlt(hdc, 0, 0, width, height, imageInfo->hMemDC, cam.left,
+                          cam.top, width, height, transColor);
     }
-    else {
-        BitBlt(
-            hdc,
-            0, 0,
-            width, height,
-            imageInfo->hMemDC,
-            cam.left, cam.top,
-            SRCCOPY
-        );
+    else
+    {
+        BitBlt(hdc, 0, 0, width, height, imageInfo->hMemDC, cam.left, cam.top,
+               SRCCOPY);
     }
 }
 
@@ -144,24 +142,19 @@ void Image::Render(HDC hdc, int destX, int destY)
 {
     if (isTransparent)
     {
-        GdiTransparentBlt(hdc,
-            destX, destY,
-            imageInfo->width, imageInfo->height,
-            imageInfo->hMemDC,
-            0, 0,
-            imageInfo->width, imageInfo->height,
-            transColor);
+        GdiTransparentBlt(hdc, destX, destY, imageInfo->width,
+                          imageInfo->height, imageInfo->hMemDC, 0, 0,
+                          imageInfo->width, imageInfo->height, transColor);
     }
     else
     {
-        BitBlt(
-            hdc,                // 복사 목적지 DC
-            destX, destY,       // 복사 목적지 위치
-            imageInfo->width,   // 원본에서 복사될 가로크기
-            imageInfo->height,  // 원본에서 복사될 세로크기
-            imageInfo->hMemDC,  // 원본 DC
-            0, 0,               // 원본 복사 시작 위치
-            SRCCOPY             // 복사 옵션
+        BitBlt(hdc,                // 복사 목적지 DC
+               destX, destY,       // 복사 목적지 위치
+               imageInfo->width,   // 원본에서 복사될 가로크기
+               imageInfo->height,  // 원본에서 복사될 세로크기
+               imageInfo->hMemDC,  // 원본 DC
+               0, 0,               // 원본 복사 시작 위치
+               SRCCOPY             // 복사 옵션
         );
     }
 }
@@ -172,52 +165,38 @@ void Image::Render(HDC hdc, int destX, int destY, int frameIndex, bool isFlip)
 
     if (isFlip && isTransparent)
     {
-        StretchBlt(imageInfo->hTempDC, 0, 0,
-            imageInfo->frameWidth, imageInfo->frameHeight,
-            imageInfo->hMemDC,
-            (imageInfo->frameWidth * imageInfo->currFrameX) + (imageInfo->frameWidth - 1),
-            imageInfo->frameHeight * imageInfo->currFrameY,
-            -imageInfo->frameWidth, imageInfo->frameHeight,
-            SRCCOPY
-        );
+        StretchBlt(imageInfo->hTempDC, 0, 0, imageInfo->frameWidth,
+                   imageInfo->frameHeight, imageInfo->hMemDC,
+                   (imageInfo->frameWidth * imageInfo->currFrameX) +
+                       (imageInfo->frameWidth - 1),
+                   imageInfo->frameHeight * imageInfo->currFrameY,
+                   -imageInfo->frameWidth, imageInfo->frameHeight, SRCCOPY);
 
-        GdiTransparentBlt(hdc,
-            destX, destY,
-            imageInfo->frameWidth, imageInfo->frameHeight,
+        GdiTransparentBlt(hdc, destX, destY, imageInfo->frameWidth,
+                          imageInfo->frameHeight,
 
-            imageInfo->hTempDC,
-            0, 0,
-            imageInfo->frameWidth, imageInfo->frameHeight,
-            transColor);
+                          imageInfo->hTempDC, 0, 0, imageInfo->frameWidth,
+                          imageInfo->frameHeight, transColor);
     }
     else if (isTransparent)
     {
-        GdiTransparentBlt(hdc,
-            destX, destY,
-            imageInfo->frameWidth, imageInfo->frameHeight,
+        GdiTransparentBlt(
+            hdc, destX, destY, imageInfo->frameWidth, imageInfo->frameHeight,
 
-            imageInfo->hMemDC,
-            imageInfo->frameWidth * imageInfo->currFrameX,
+            imageInfo->hMemDC, imageInfo->frameWidth * imageInfo->currFrameX,
             imageInfo->frameHeight * imageInfo->currFrameY,
-            imageInfo->frameWidth, imageInfo->frameHeight,
-            transColor);
+            imageInfo->frameWidth, imageInfo->frameHeight, transColor);
     }
     else
     {
-        BitBlt(
-            hdc,
-            destX, destY,
-            imageInfo->width / 9,
-            imageInfo->height,
-            imageInfo->hMemDC,
-            imageInfo->width / 9 * frameIndex, 0,
-            SRCCOPY
-        );
+        BitBlt(hdc, destX, destY, imageInfo->width / 9, imageInfo->height,
+               imageInfo->hMemDC, imageInfo->width / 9 * frameIndex, 0,
+               SRCCOPY);
     }
 }
 
-void Image::FrameRender(HDC hdc, int destX, int destY,
-    int frameX, int frameY, bool isFlip, bool isCenter)
+void Image::FrameRender(HDC hdc, int destX, int destY, int frameX, int frameY,
+                        bool isFlip, bool isCenter)
 {
     int x = destX;
     int y = destY;
@@ -232,53 +211,38 @@ void Image::FrameRender(HDC hdc, int destX, int destY,
 
     if (isFlip && isTransparent)
     {
-        StretchBlt(imageInfo->hTempDC, 0, 0,
-            imageInfo->frameWidth, imageInfo->frameHeight,
-            imageInfo->hMemDC,
-            (imageInfo->frameWidth * imageInfo->currFrameX) + (imageInfo->frameWidth - 1),
-            imageInfo->frameHeight * imageInfo->currFrameY,
-            -imageInfo->frameWidth, imageInfo->frameHeight,
-            SRCCOPY
-        );
+        StretchBlt(imageInfo->hTempDC, 0, 0, imageInfo->frameWidth,
+                   imageInfo->frameHeight, imageInfo->hMemDC,
+                   (imageInfo->frameWidth * imageInfo->currFrameX) +
+                       (imageInfo->frameWidth - 1),
+                   imageInfo->frameHeight * imageInfo->currFrameY,
+                   -imageInfo->frameWidth, imageInfo->frameHeight, SRCCOPY);
 
-        GdiTransparentBlt(hdc,
-            x, y,
-            imageInfo->frameWidth, imageInfo->frameHeight,
+        GdiTransparentBlt(hdc, x, y, imageInfo->frameWidth,
+                          imageInfo->frameHeight,
 
-            imageInfo->hTempDC,
-            0, 0,
-            imageInfo->frameWidth, imageInfo->frameHeight,
-            transColor);
+                          imageInfo->hTempDC, 0, 0, imageInfo->frameWidth,
+                          imageInfo->frameHeight, transColor);
     }
     else if (isTransparent)
     {
-        GdiTransparentBlt(hdc,
-            x, y,
-            imageInfo->frameWidth, imageInfo->frameHeight,
+        GdiTransparentBlt(
+            hdc, x, y, imageInfo->frameWidth, imageInfo->frameHeight,
 
-            imageInfo->hMemDC,
-            imageInfo->frameWidth * imageInfo->currFrameX,
+            imageInfo->hMemDC, imageInfo->frameWidth * imageInfo->currFrameX,
             imageInfo->frameHeight * imageInfo->currFrameY,
-            imageInfo->frameWidth, imageInfo->frameHeight,
-            transColor);
+            imageInfo->frameWidth, imageInfo->frameHeight, transColor);
     }
     else
     {
-        BitBlt(
-            hdc,
-            x, y,
-            imageInfo->frameWidth,
-            imageInfo->frameHeight,
-            imageInfo->hMemDC,
-            imageInfo->frameWidth * imageInfo->currFrameX,
-            imageInfo->frameHeight * imageInfo->currFrameY,
-            SRCCOPY
-        );
+        BitBlt(hdc, x, y, imageInfo->frameWidth, imageInfo->frameHeight,
+               imageInfo->hMemDC, imageInfo->frameWidth * imageInfo->currFrameX,
+               imageInfo->frameHeight * imageInfo->currFrameY, SRCCOPY);
     }
 }
 
-void Image::FrameRenderCamera(HDC hdc, int destX, int destY,
-    int frameX, int frameY, bool isFlip, bool isCenter)
+void Image::FrameRenderCamera(HDC hdc, int destX, int destY, int frameX,
+                              int frameY, bool isFlip, bool isCenter)
 {
     RECT cam = CameraManager::GetInstance()->GetViewPos();
     int x = destX - cam.left;
@@ -295,48 +259,33 @@ void Image::FrameRenderCamera(HDC hdc, int destX, int destY,
 
     if (isFlip && isTransparent)
     {
-        StretchBlt(imageInfo->hTempDC, 0, 0,
-            imageInfo->frameWidth, imageInfo->frameHeight,
-            imageInfo->hMemDC,
-            (imageInfo->frameWidth * imageInfo->currFrameX) + (imageInfo->frameWidth - 1),
-            imageInfo->frameHeight * imageInfo->currFrameY,
-            -imageInfo->frameWidth, imageInfo->frameHeight,
-            SRCCOPY
-        );
+        StretchBlt(imageInfo->hTempDC, 0, 0, imageInfo->frameWidth,
+                   imageInfo->frameHeight, imageInfo->hMemDC,
+                   (imageInfo->frameWidth * imageInfo->currFrameX) +
+                       (imageInfo->frameWidth - 1),
+                   imageInfo->frameHeight * imageInfo->currFrameY,
+                   -imageInfo->frameWidth, imageInfo->frameHeight, SRCCOPY);
 
-        GdiTransparentBlt(hdc,
-            x, y,
-            imageInfo->frameWidth, imageInfo->frameHeight,
+        GdiTransparentBlt(hdc, x, y, imageInfo->frameWidth,
+                          imageInfo->frameHeight,
 
-            imageInfo->hTempDC,
-            0, 0,
-            imageInfo->frameWidth, imageInfo->frameHeight,
-            transColor);
+                          imageInfo->hTempDC, 0, 0, imageInfo->frameWidth,
+                          imageInfo->frameHeight, transColor);
     }
     else if (isTransparent)
     {
-        GdiTransparentBlt(hdc,
-            x, y,
-            imageInfo->frameWidth, imageInfo->frameHeight,
+        GdiTransparentBlt(
+            hdc, x, y, imageInfo->frameWidth, imageInfo->frameHeight,
 
-            imageInfo->hMemDC,
-            imageInfo->frameWidth * imageInfo->currFrameX,
+            imageInfo->hMemDC, imageInfo->frameWidth * imageInfo->currFrameX,
             imageInfo->frameHeight * imageInfo->currFrameY,
-            imageInfo->frameWidth, imageInfo->frameHeight,
-            transColor);
+            imageInfo->frameWidth, imageInfo->frameHeight, transColor);
     }
     else
     {
-        BitBlt(
-            hdc,
-            x, y,
-            imageInfo->frameWidth,
-            imageInfo->frameHeight,
-            imageInfo->hMemDC,
-            imageInfo->frameWidth * imageInfo->currFrameX,
-            imageInfo->frameHeight * imageInfo->currFrameY,
-            SRCCOPY
-        );
+        BitBlt(hdc, x, y, imageInfo->frameWidth, imageInfo->frameHeight,
+               imageInfo->hMemDC, imageInfo->frameWidth * imageInfo->currFrameX,
+               imageInfo->frameHeight * imageInfo->currFrameY, SRCCOPY);
     }
 }
 
