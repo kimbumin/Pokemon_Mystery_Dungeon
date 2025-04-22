@@ -1,8 +1,5 @@
 #pragma once
 #include "GameObject.h"
-#include "PlayerBumin.h"
-#include "EnemyBumin.h"
-#include "EmberSkill.h"
 
 class SquareScene : public GameObject
 {
@@ -22,10 +19,6 @@ private:
 	Image* redFlower;
 	Image* yellowFlower;
 	Image* river;
-
-	PlayerBumin* player; // 플레이어
-	EnemyBumin* enemy;   // 적
-	EmberSkill* emberSkill; // 스킬
 
 	int currAnimaionFrame;
 	float elapsedTime;
