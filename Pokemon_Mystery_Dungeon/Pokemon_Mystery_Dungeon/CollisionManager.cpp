@@ -1,8 +1,11 @@
 #include "CollisionManager.h"
+#include "MPlayer.h"
+#include "CommonFunction.h"
+#include "CollisionBoxTool.h"
 
 HRESULT CollisionManager::Init()
 {
-	return E_NOTIMPL;
+	return S_OK;
 }
 
 void CollisionManager::Release()
@@ -10,15 +13,18 @@ void CollisionManager::Release()
 	ReleaseInstance();
 
 }
+void CollisionManager::MapPlayerCheck(MPlayer* mPlayer, std::vector<RECT> rcBoxes)
+{
+    if (!mPlayer) return;
 
-//void CollisionManager::MissileCollisionCheck(IMissile* attacker, Minion* defender)
-//{
-//    if (attacker->GetState() == MissileState::MOVING && defender->GetIsAlive()) {
-//        if (RectInRect(attacker->GetCollisionBox(), defender->GetCollisionBox()) && !defender->GetIsCollison()) {
-//
-//            attacker->SetState(MissileState::COLLIDED);
-//            defender->SetImage("MinionDead");
-//            defender->SetIsCollision(true);
-//        };
-//    }
-//}
+    RECT playerRect = mPlayer->GetRect();
+
+    for (const RECT& rc : rcBoxes)
+    {
+        if (RectInRect(playerRect, rc))
+        {
+            mPlayer->UndoMove();
+            break;
+        }
+    }
+}

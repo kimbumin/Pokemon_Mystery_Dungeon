@@ -108,6 +108,38 @@ HRESULT Image::Init(const wchar_t* filePath, int width, int height, int maxFrame
     return S_OK;   // S_OK, E_FAIL
 }
 
+void Image::RenderBackground(HDC hdc)
+{
+    if (!imageInfo || !imageInfo->hMemDC) return;
+
+    RECT cam = CameraManager::GetInstance()->GetViewPos();
+
+    int width = cam.right - cam.left;
+    int height = cam.bottom - cam.top;
+
+    if (isTransparent) {
+        GdiTransparentBlt(
+            hdc,
+            0, 0,
+            width, height,
+            imageInfo->hMemDC,
+            cam.left, cam.top,
+            width, height,
+            transColor
+        );
+    }
+    else {
+        BitBlt(
+            hdc,
+            0, 0,
+            width, height,
+            imageInfo->hMemDC,
+            cam.left, cam.top,
+            SRCCOPY
+        );
+    }
+}
+
 void Image::Render(HDC hdc, int destX, int destY)
 {
     if (isTransparent)
@@ -184,16 +216,16 @@ void Image::Render(HDC hdc, int destX, int destY, int frameIndex, bool isFlip)
     }
 }
 
-void Image::FrameRender(HDC hdc, int destX, int destY, 
+void Image::FrameRender(HDC hdc, int destX, int destY,
     int frameX, int frameY, bool isFlip, bool isCenter)
 {
     int x = destX;
-	int y = destY;
-	if (isCenter)
-	{
+    int y = destY;
+    if (isCenter)
+    {
         x = destX - (imageInfo->frameWidth / 2);
         y = destY - (imageInfo->frameHeight / 2);
-	}
+    }
 
     imageInfo->currFrameX = frameX;
     imageInfo->currFrameY = frameY;
@@ -238,7 +270,70 @@ void Image::FrameRender(HDC hdc, int destX, int destY,
             imageInfo->frameWidth,
             imageInfo->frameHeight,
             imageInfo->hMemDC,
-            imageInfo->frameWidth * imageInfo->currFrameX, 
+            imageInfo->frameWidth * imageInfo->currFrameX,
+            imageInfo->frameHeight * imageInfo->currFrameY,
+            SRCCOPY
+        );
+    }
+}
+
+void Image::FrameRenderCamera(HDC hdc, int destX, int destY,
+    int frameX, int frameY, bool isFlip, bool isCenter)
+{
+    RECT cam = CameraManager::GetInstance()->GetViewPos();
+    int x = destX - cam.left;
+    int y = destY - cam.top;
+
+    if (isCenter)
+    {
+        x -= imageInfo->frameWidth / 2;
+        y -= imageInfo->frameHeight / 2;
+    }
+
+    imageInfo->currFrameX = frameX;
+    imageInfo->currFrameY = frameY;
+
+    if (isFlip && isTransparent)
+    {
+        StretchBlt(imageInfo->hTempDC, 0, 0,
+            imageInfo->frameWidth, imageInfo->frameHeight,
+            imageInfo->hMemDC,
+            (imageInfo->frameWidth * imageInfo->currFrameX) + (imageInfo->frameWidth - 1),
+            imageInfo->frameHeight * imageInfo->currFrameY,
+            -imageInfo->frameWidth, imageInfo->frameHeight,
+            SRCCOPY
+        );
+
+        GdiTransparentBlt(hdc,
+            x, y,
+            imageInfo->frameWidth, imageInfo->frameHeight,
+
+            imageInfo->hTempDC,
+            0, 0,
+            imageInfo->frameWidth, imageInfo->frameHeight,
+            transColor);
+    }
+    else if (isTransparent)
+    {
+        GdiTransparentBlt(hdc,
+            x, y,
+            imageInfo->frameWidth, imageInfo->frameHeight,
+
+            imageInfo->hMemDC,
+            imageInfo->frameWidth * imageInfo->currFrameX,
+            imageInfo->frameHeight * imageInfo->currFrameY,
+            imageInfo->frameWidth, imageInfo->frameHeight,
+            transColor);
+    }
+    else
+    {
+        BitBlt(
+            hdc,
+            x, y,
+            imageInfo->frameWidth,
+            imageInfo->frameHeight,
+            imageInfo->hMemDC,
+            imageInfo->frameWidth * imageInfo->currFrameX,
             imageInfo->frameHeight * imageInfo->currFrameY,
             SRCCOPY
         );

@@ -1,7 +1,11 @@
 #pragma once
-#include "GameObject.h"
+#include "Scene.h"
 
-class SquareScene : public GameObject
+
+class CollisionBoxTool;
+class MPlayer;
+
+class SquareScene : public Scene
 {
 public:
 	virtual HRESULT Init() override;
@@ -19,6 +23,9 @@ private:
 	Image* redFlower;
 	Image* yellowFlower;
 	Image* river;
+
+	MPlayer* mPlayer;
+	CollisionBoxTool* collisionBoxTool;
 
 
 	int currAnimaionFrame;

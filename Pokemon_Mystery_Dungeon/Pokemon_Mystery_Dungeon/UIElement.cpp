@@ -28,6 +28,15 @@ void UIElement::UpdateRealPos()
 	}
 }
 
+UIElement::~UIElement()
+{
+	for (auto child : children)
+	{
+		delete child;
+	}
+	children.clear();
+}
+
 void UIElement::Update()
 {
 }

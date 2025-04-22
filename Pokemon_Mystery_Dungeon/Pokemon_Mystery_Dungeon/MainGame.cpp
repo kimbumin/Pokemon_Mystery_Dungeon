@@ -4,11 +4,13 @@
 #include "Timer.h"
 #include "TilemapTool.h"
 #include "SquareScene.h"
+#include "TileMapTestScene.h"
 #include "CameraTestScene.h"
 #include "PokemonDataLoader.h"
 #include "PokemonImageLoader.h"
 #include "PlayerManager.h"
 #include "TurnManager.h"
+#include "UIManager.h"
 
 HRESULT MainGame::Init()
 {
@@ -26,11 +28,11 @@ HRESULT MainGame::Init()
 	if (FAILED(backBuffer->Init(TILEMAPTOOL_X, TILEMAPTOOL_Y)))
 	{
 		MessageBox(g_hWnd, 
-			TEXT("¹é¹öÆÛ »ý¼º ½ÇÆÐ"), TEXT("°æ°í"), MB_OK);
+			TEXT("ë°±ë²„í¼ ìƒì„± ì‹¤íŒ¨"), TEXT("ê²½ê³ "), MB_OK);
 		return E_FAIL;
 	}
-	SceneManager::GetInstance()->AddScene("±¤Àå", new SquareScene());
-	SceneManager::GetInstance()->ChangeScene("±¤Àå");
+	SceneManager::GetInstance()->AddScene("ê´‘ìž¥", new SquareScene());
+	SceneManager::GetInstance()->ChangeScene("ê´‘ìž¥");
 	//SceneManager::GetInstance()->AddScene("TestMap", new CameraTestScene());
 	//SceneManager::GetInstance()->ChangeScene("TestMap");
 	return S_OK;
@@ -57,13 +59,14 @@ void MainGame::Update()
 {
 	TurnManager::GetInstance()->Update();
 	SceneManager::GetInstance()->Update();
-	PlayerManager::GetInstance()->Update();
+	UIManager::GetInstance()->Update();
 	InvalidateRect(g_hWnd, NULL, false);
 }
 
 void MainGame::Render()
 {
 	HDC hBackBufferDC = backBuffer->GetMemDC();
+	PatBlt(hBackBufferDC, 0, 0, WINSIZE_X, WINSIZE_Y, BLACKNESS);
 
 	SceneManager::GetInstance()->Render(hBackBufferDC);
 

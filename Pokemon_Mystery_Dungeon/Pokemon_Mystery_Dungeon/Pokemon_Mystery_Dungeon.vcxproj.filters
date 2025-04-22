@@ -144,10 +144,7 @@
     <ClCompile Include="TitleUIState.cpp">
       <Filter>Ui\UiState\소스</Filter>
     </ClCompile>
-    <ClCompile Include="SkillSelectUIState.cpp">
-      <Filter>Ui\UiState\소스</Filter>
-    </ClCompile>
-    <ClCompile Include="SkillInfoUIState.cpp">
+    <ClCompile Include="SkillUIState.cpp">
       <Filter>Ui\UiState\소스</Filter>
     </ClCompile>
     <ClCompile Include="InventoryUIState.cpp">
@@ -234,26 +231,20 @@
     <ClCompile Include="PPHeal.cpp">
       <Filter>ItemManager\Item</Filter>
     </ClCompile>
-    <ClCompile Include="HurtActionState.cpp">
-      <Filter>Pokemon\Action</Filter>
+    <ClCompile Include="LoadingScene.cpp">
+      <Filter>Scene\소스</Filter>
     </ClCompile>
-    <ClCompile Include="AttackActionState.cpp">
-      <Filter>Pokemon\Action</Filter>
+    <ClCompile Include="CollisionBoxTool.cpp">
+      <Filter>Scene\소스</Filter>
     </ClCompile>
-    <ClCompile Include="PokemonEnemy.cpp">
-      <Filter>Pokemon</Filter>
+    <ClCompile Include="MPlayer.cpp">
+      <Filter>Scene\소스</Filter>
     </ClCompile>
-    <ClCompile Include="DungeonManager.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="BossScene.cpp">
+      <Filter>Scene\소스</Filter>
     </ClCompile>
-    <ClCompile Include="PokemonPool.cpp">
-      <Filter>Pokemon</Filter>
-    </ClCompile>
-    <ClCompile Include="PokemonBuilder.cpp">
-      <Filter>Pokemon</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerManager.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Scene\소스</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -329,10 +320,10 @@
     <ClInclude Include="UIState.h">
       <Filter>Ui\UiState\헤더</Filter>
     </ClInclude>
-    <ClInclude Include="SkillSelectUIState.h">
+    <ClInclude Include="SkillInfoUIState.h">
       <Filter>Ui\UiState\헤더</Filter>
     </ClInclude>
-    <ClInclude Include="SkillInfoUIState.h">
+    <ClInclude Include="SkillUIState.h">
       <Filter>Ui\UiState\헤더</Filter>
     </ClInclude>
     <ClInclude Include="InventoryUIState.h">
@@ -434,29 +425,21 @@
     <ClInclude Include="PokemonBase.h">
       <Filter>Pokemon</Filter>
     </ClInclude>
-    <ClInclude Include="HurtActionState.h">
-      <Filter>Pokemon\Action</Filter>
+
+    <ClInclude Include="LoadingScene.h">
+      <Filter>Scene\헤더</Filter>
     </ClInclude>
-    <ClInclude Include="AttackActionState.h">
-      <Filter>Pokemon\Action</Filter>
+    <ClInclude Include="CollisionBoxTool.h">
+      <Filter>Scene\헤더</Filter>
     </ClInclude>
-    <ClInclude Include="PokemonEnemy.h">
-      <Filter>Pokemon</Filter>
+    <ClInclude Include="MPlayer.h">
+      <Filter>Scene\헤더</Filter>
     </ClInclude>
-    <ClInclude Include="DungeonManager.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="BossScene.h">
+      <Filter>Scene\헤더</Filter>
     </ClInclude>
-    <ClInclude Include="PokemonPool.h">
-      <Filter>Pokemon</Filter>
-    </ClInclude>
-    <ClInclude Include="PokemonBuilder.h">
-      <Filter>Pokemon</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerManager.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="PokemonDataLoader.h">
-      <Filter>Pokemon\Data</Filter>
+    <ClInclude Include="Scene.h">
+      <Filter>Scene\헤더</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
