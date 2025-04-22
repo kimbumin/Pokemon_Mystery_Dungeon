@@ -14,8 +14,8 @@ HRESULT EmberSkill::Init()
     frameCount = 0;
     elapsedTime = 0.0f;
     image = ImageManager::GetInstance()->AddImage(
-        "Ember", TEXT("Image/SkillImage/FireBlast.bmp"), 1856 / 2, 61 / 2, 29,
-        1, true, RGB(255, 0, 255));
+        "Ember", TEXT("Image/SkillImage/FireBlast.bmp"), 190, 19, 10, 1, true,
+        RGB(255, 0, 255));
 
     return S_OK;
 }
@@ -28,12 +28,12 @@ void EmberSkill::Update()
 {
     if (isActive)
     {
-        elapsedTime += TimerManager::GetInstance()->GetDeltaTime();  // 누적
+        elapsedTime += TimerManager::GetInstance()->GetDeltaTime();
 
-        if (elapsedTime >= 0.02f)  // 0.2초마다 실행
+        if (elapsedTime >= 0.02f)
         {
             frameCount++;
-            elapsedTime = 0.0f;  // 다시 0으로 초기화
+            elapsedTime = 0.0f;
         }
 
         if (frameCount >= image->GetMaxFrameX())
@@ -62,7 +62,6 @@ void EmberSkill::Use(PokemonBase* owner)
     pos = owner->GetPos();
     auto dirIndex = static_cast<size_t>(direction);
 
-    // 여기 수정
     pos.x += directionOffsets[dirIndex].first * 24;
     pos.y += directionOffsets[dirIndex].second * 24;
 

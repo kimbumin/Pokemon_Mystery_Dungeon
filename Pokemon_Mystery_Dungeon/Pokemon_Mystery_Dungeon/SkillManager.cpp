@@ -1,6 +1,7 @@
 #include "SkillManager.h"
 
 #include "EmberSkill.h"
+#include "FireBlastSkill.h"
 
 void SkillManager::LoadSkillsFromCSV(const string& filepath)
 {
@@ -19,7 +20,7 @@ void SkillManager::LoadSkillsFromCSV(const string& filepath)
     {
         lineNumber++;
         if (line.empty())
-            continue;  // 빈 줄 무시
+            continue;
 
         istringstream iss(line);
         string token;
@@ -27,20 +28,13 @@ void SkillManager::LoadSkillsFromCSV(const string& filepath)
 
         try
         {
-            // 순서대로 읽기
             getline(iss, token, ',');
             if (token.empty())
                 throw invalid_argument("Empty Number");
             data.number = stoi(token);
 
-            if (!getline(iss, data.name, ','))
-                throw invalid_argument("Missing Name");
-            if (!getline(iss, data.element, ','))
-                throw invalid_argument("Missing Element");
-            if (!getline(iss, data.type, ','))
-                throw invalid_argument("Missing Type");
-            if (!getline(iss, data.animAction, ','))
-                data.animAction = "Normal";  // animAction은 기본값
+            getline(iss, token, ',');
+            data.name = token;  // ★ 이름 읽기
 
             getline(iss, token, ',');
             data.power = token.empty() ? 0 : stoi(token);
@@ -54,8 +48,23 @@ void SkillManager::LoadSkillsFromCSV(const string& filepath)
             if (data.name.empty())
                 throw invalid_argument("Skill Name is empty");
 
-            // 스킬 등록
-            skillMap[data.name] = make_shared<EmberSkill>(data);
+            // 등록된 스킬이면 복제, 아니면 power 기준으로 생성
+            auto it = skillMap.find(data.name);
+            if (it != skillMap.end())
+            {
+                skillMap[data.name] = it->second->Clone();
+            }
+            else
+            {
+                if (data.power >= 70)
+                {
+                    // skillMap[data.name] = make_shared<SwingSkill>(data);
+                }
+                else
+                {
+                    // skillMap[data.name] = make_shared<AttackSkill>(data);
+                }
+            }
             skillMap[data.name]->Init();
         }
         catch (const exception& e)
@@ -63,7 +72,7 @@ void SkillManager::LoadSkillsFromCSV(const string& filepath)
             string errorMsg = "Error parsing CSV at line " +
                               to_string(lineNumber) + ": " + e.what() + "\n";
             OutputDebugStringA(errorMsg.c_str());
-            continue;  // 문제 있는 줄은 건너뜀
+            continue;
         }
     }
 
@@ -75,7 +84,7 @@ shared_ptr<ISkill> SkillManager::CreateSkill(const string& name)
     auto it = skillMap.find(name);
     if (it != skillMap.end())
     {
-        return it->second->Clone();  // 복제해서 새 인스턴스 반환
+        return it->second->Clone();
     }
     return nullptr;
 }
