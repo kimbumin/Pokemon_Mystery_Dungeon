@@ -1,46 +1,53 @@
-#pragma once
 #include "SkillManager.h"
 
-// 스킬 등록 (이름과 스킬 객체를 등록)
-void SkillManager::RegisterSkill(const string& name, shared_ptr<ISkill> skill)
+void SkillManager::LoadSkillsFromCSV(const string& filepath)
 {
-	skillMap[name] = skill;
+    ifstream file(filepath);
+    if (!file.is_open()) {
+        OutputDebugStringA(("Failed to open CSV file: " + filepath + "\n").c_str());
+        return;
+    }
+
+    string line;
+    while (getline(file, line))
+    {
+        istringstream iss(line);
+        getline(iss, token, ','); data.number = stoi(token);
+        getline(iss, data.name, ',');
+        getline(iss, data.element, ',');
+        getline(iss, data.type, ',');
+        getline(iss, data.animAction, ','); 
+        getline(iss, token, ','); data.power = stoi(token);
+        getline(iss, token, ','); data.accuracy = stoi(token);
+        getline(iss, token, ','); data.pp = stoi(token);
+
+
+        auto skill = make_shared<ISkill>(data);
+        skillMap[data.name] = skill; // 이름 기반으로 저장
+    }
+
+    file.close();
 }
 
-// 스킬 사용 (사용자와 대상에게 스킬 사용)
-void SkillManager::UseSkill(const string& skillName, PlayerBumin* user, EnemyBumin* target)
+shared_ptr<ISkill> SkillManager::CreateSkill(const string& name)
 {
-	auto it = skillMap.find(skillName);
-	if (it != skillMap.end())
-	{
-		it->second->Use(user, target);
-	}
+    auto it = skillMap.find(name);
+    if (it != skillMap.end()) {
+        return it->second->Clone(); // 복제해서 새 인스턴스 반환
+    }
+    return nullptr;
+}
+
+shared_ptr<ISkill> SkillManager::FindSkill(const string& name)
+{
+    auto it = skillMap.find(name);
+    if (it != skillMap.end()) {
+        return it->second;
+    }
+    return nullptr;
 }
 
 void SkillManager::Release()
 {
-	skillMap.clear();
+    skillMap.clear();
 }
-
-// 스킬 생성 (여기선 이미 등록된 스킬을 반환)
-shared_ptr<ISkill> SkillManager::CreateSkill(const string& name)
-{
-	auto it = skillMap.find(name);
-	if (it != skillMap.end())
-	{
-		return it->second->Clone();  // 스킬 복제본을 반환
-	}
-	return nullptr;
-}
-
-// 스킬 찾기 (이름으로 스킬 반환)
-shared_ptr<ISkill> SkillManager::FindSkill(const string& name)
-{
-	auto it = skillMap.find(name);
-	if (it != skillMap.end())
-	{
-		return it->second;  // 스킬 객체 반환
-	}
-	return nullptr;
-}
-
