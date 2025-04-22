@@ -68,7 +68,7 @@ public:
     void RandomTileDesign();
 
     TileType GetTile(int x, int y) const {return tiles[y][x];}
-
+    bool IsFloor(int x, int y) const { return tiles[y][x] == TILE_FLOOR; }
     vector<POINT> GetWallTiles() { return wallTiles; };
 
     POINT GetStairPos() { return stairPos; }
