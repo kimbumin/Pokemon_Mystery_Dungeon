@@ -213,6 +213,31 @@ void PokemonBase::SetActionState(IActionState* newState)
     }
 }
 
+void PokemonBase::ExecuteTurn()
+{
+
+}
+
+Direction PokemonBase::CalculateDirection(FPOINT& targetPos)
+{
+    int dx = static_cast<int>(targetPos.x - pos.x);
+    int dy = static_cast<int>(targetPos.y - pos.y);
+
+    dx /= TILE_SIZE;
+    dy /= TILE_SIZE;
+
+    if (dx == 0 && dy > 0) return Direction::SOUTH;
+    if (dx > 0 && dy > 0) return Direction::SOUTHEAST;
+    if (dx > 0 && dy == 0) return Direction::EAST;
+    if (dx > 0 && dy < 0) return Direction::NORTHEAST;
+    if (dx == 0 && dy < 0) return Direction::NORTH;
+    if (dx < 0 && dy < 0) return Direction::NORTHWEST;
+    if (dx < 0 && dy == 0) return Direction::WEST;
+    if (dx < 0 && dy > 0) return Direction::SOUTHWEST;
+
+    return Direction::SOUTH;
+}
+
 void PokemonBase::SetAnimator()
 {
     string idStr = PokemonImageLoader::GetInstance()->PokemonIdToString(

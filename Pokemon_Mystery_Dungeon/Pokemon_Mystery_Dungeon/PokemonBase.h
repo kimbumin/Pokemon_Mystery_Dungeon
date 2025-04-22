@@ -69,6 +69,9 @@ public:
     void SetAnimState(IAnimState* newState);
     void SetActionState(IActionState* newState);
 
+    virtual void ExecuteTurn();
+    Direction CalculateDirection(FPOINT& targetPos);
+
     // Getter
     inline PokemonData GetCurrentPokemonData()
     {

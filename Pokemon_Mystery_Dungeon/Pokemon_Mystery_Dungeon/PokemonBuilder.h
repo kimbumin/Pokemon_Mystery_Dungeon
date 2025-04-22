@@ -5,12 +5,13 @@
 
 class PokemonPool;
 class PokemonBase;
+class Map;
 class PokemonBuilder
 {
 private:
 protected:
     PokemonPool* pokemonPool;
-
+    Map* map;
 public:
     PokemonBase* Build(int id, int level, FPOINT pos);
     PokemonBase* BuildFromDungeonInfo(DungeonSpawnInfo& info);
@@ -21,7 +22,7 @@ public:
 
     // Setter
     virtual void SetPool(PokemonPool* newPool);
-
+    virtual void SetMap(Map* map);
     PokemonBuilder() {};
     virtual ~PokemonBuilder() {};
 };

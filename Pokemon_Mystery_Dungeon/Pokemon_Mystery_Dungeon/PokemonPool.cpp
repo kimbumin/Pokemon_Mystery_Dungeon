@@ -3,6 +3,7 @@
 #include "PlayerManager.h"
 #include "PokemonBase.h"
 #include "PokemonPlayer.h"
+#include "PokemonEnemy.h"
 
 HRESULT PokemonPool::Init()
 {
@@ -14,7 +15,7 @@ HRESULT PokemonPool::Init()
         {
             continue;
         }
-        (*iterPokemonPool) = new PokemonBase;
+        (*iterPokemonPool) = new PokemonEnemy;
         (*iterPokemonPool)->SetIsAlive(false);
     }
     return S_OK;

@@ -2,6 +2,7 @@
 
 #include "PokemonBase.h"
 #include "PokemonPool.h"
+#include "PokemonEnemy.h"
 
 void TurnManager::InitTurnOrder(PokemonPool* pokemonPool)
 {
@@ -75,7 +76,7 @@ void TurnManager::Update()
             else
             {
                 // AI 행동 결정
-                current->ExecuteMoveAction();
+                current->ExecuteTurn();
                 state = TurnState::ExecutingAction;
             }
 
