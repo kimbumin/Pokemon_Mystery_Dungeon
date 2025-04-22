@@ -1,14 +1,8 @@
 #include "EmberSkill.h"
+#include "PokemonBase.h"
 
 HRESULT EmberSkill::Init()
 {
-	pos.x = 100;
-	pos.y = 100;
-	name = "Ember";
-	stats.power = 40;
-	stats.accuracy = 100;
-	stats.maxPP = 25;
-
 	isActive = false;
 	frameCount = 0;
 	elapsedTime = 0.0f;
@@ -21,6 +15,7 @@ HRESULT EmberSkill::Init()
 
 void EmberSkill::Release()
 {
+
 }
 
 // EmberSkill::Update() 안 예시
@@ -57,22 +52,19 @@ void EmberSkill::Render(HDC hdc)
 	}
 }
 
-
-void EmberSkill::Use(PlayerBumin* user, EnemyBumin* target)
+void EmberSkill::Use(PokemonBase* owner) const
 {
-	pos.x = target->GetX();
-	pos.y = target->GetY();
-	int emberDamage = 10; //fix 데미지 계산 식 수정 필요
+	//direction = static_cast<int>(owner->GetDirection());
+	//pos = owner->GetPos();
 
-	int newHP = target->GetHP() - emberDamage;
-	if (newHP < 0)
-		newHP = 0;
+	//auto dirIndex = static_cast<size_t>(direction);
+	//pos.x += directionOffsets[dirIndex].first;
+	//pos.y += directionOffsets[dirIndex].second;
 
-	target->SetHP(newHP);
-
-	// 스킬 효과 활성화
-	isActive = true;
+	//isActive = true;
 }
+
+
 
 
 shared_ptr<ISkill> EmberSkill::Clone() const
