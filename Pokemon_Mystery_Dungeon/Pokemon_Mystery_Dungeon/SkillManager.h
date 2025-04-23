@@ -6,10 +6,12 @@
 class SkillManager : public Singleton<SkillManager>
 {
 private:
-    string line;
-    SkillData data;
-    string token;
     map<string, shared_ptr<ISkill>> skillMap;
+    shared_ptr<ISkill> skill;  // 등록할 스킬 결정
+    string token;
+    SkillData data;
+    string line;
+    int lineNumber;
 
 public:
     void LoadSkillsFromCSV(const string& filepath);

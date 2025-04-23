@@ -1,7 +1,10 @@
 #include "SkillManager.h"
 
+#include "AttackSkill.h"
 #include "EmberSkill.h"
 #include "FireBlastSkill.h"
+#include "StoneShowerSkill.h"
+#include "SwingSkill.h"
 
 void SkillManager::LoadSkillsFromCSV(const string& filepath)
 {
@@ -12,60 +15,59 @@ void SkillManager::LoadSkillsFromCSV(const string& filepath)
             ("Failed to open CSV file: " + filepath + "\n").c_str());
         return;
     }
-
-    string line;
-    int lineNumber = 0;
-
+    lineNumber = 0;
     while (getline(file, line))
     {
         lineNumber++;
         if (line.empty())
+        {
             continue;
-
+        }
         istringstream iss(line);
-        string token;
-        SkillData data = {};
-
         try
         {
             getline(iss, token, ',');
-            if (token.empty())
-                throw invalid_argument("Empty Number");
             data.number = stoi(token);
-
             getline(iss, token, ',');
-            data.name = token;  // ★ 이름 읽기
-
+            data.name = token;
+            getline(iss, token, ',');
+            data.element = token;
+            getline(iss, token, ',');
+            data.type = token;
             getline(iss, token, ',');
             data.power = token.empty() ? 0 : stoi(token);
-
             getline(iss, token, ',');
             data.accuracy = token.empty() ? 0 : stoi(token);
-
             getline(iss, token, ',');
             data.pp = token.empty() ? 0 : stoi(token);
 
             if (data.name.empty())
                 throw invalid_argument("Skill Name is empty");
 
-            // 등록된 스킬이면 복제, 아니면 power 기준으로 생성
-            auto it = skillMap.find(data.name);
-            if (it != skillMap.end())
+            if (data.name == "Ember")
             {
-                skillMap[data.name] = it->second->Clone();
+                skill = make_shared<EmberSkill>(data);
             }
-            else
+            else if (data.name == "FireBlast")
             {
-                if (data.power >= 70)
-                {
-                    // skillMap[data.name] = make_shared<SwingSkill>(data);
-                }
-                else
-                {
-                    // skillMap[data.name] = make_shared<AttackSkill>(data);
-                }
+                skill = make_shared<FireBlastSkill>(data);
             }
-            skillMap[data.name]->Init();
+            else if (data.name == "StoneShower")
+            {
+                skill = make_shared<StoneShowerSkill>(data);
+            }
+            else if (data.power >= 70)
+            {
+                skill = make_shared<SwingSkill>(data);
+            }
+            else if (data.power < 70)
+            {
+                skill = make_shared<AttackSkill>(data);
+            }
+            skill->Init();
+            skillMap[data.name] = skill;
+            OutputDebugStringA(
+                ("Registered Skill: " + data.name + "\n").c_str());
         }
         catch (const exception& e)
         {
