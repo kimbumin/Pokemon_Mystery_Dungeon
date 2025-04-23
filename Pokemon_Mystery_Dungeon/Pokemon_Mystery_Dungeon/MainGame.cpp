@@ -12,7 +12,8 @@
 #include "Timer.h"
 #include "TurnManager.h"
 #include "UIManager.h"
-
+#include "DongminScene.h"
+#include "SkillManager.h"
 HRESULT MainGame::Init()
 {
     ImageManager::GetInstance()->Init();
@@ -21,7 +22,8 @@ HRESULT MainGame::Init()
     UIManager::GetInstance()->Init();
     PokemonDataLoader::GetInstance()->Init();
     PokemonDataLoader::GetInstance()->LoadFromCSV("Data/PokemonBaseStatus.csv");
-
+    SkillManager::GetInstance()->LoadSkillsFromCSV(
+        "Data/PokemonSkill_English.csv");
     PlayerManager::GetInstance()->Init();
     hdc = GetDC(g_hWnd);
 
@@ -34,6 +36,8 @@ HRESULT MainGame::Init()
     //UIManager::GetInstance()->ChangeState("IdleUI");
     SceneManager::GetInstance()->AddScene("Square", new SquareScene);
     SceneManager::GetInstance()->ChangeScene("Square");
+    SceneManager::GetInstance()->AddScene("t", new DongminScene);
+    SceneManager::GetInstance()->ChangeScene("t");
     // SceneManager::GetInstance()->AddScene("TestMap", new CameraTestScene());
     // SceneManager::GetInstance()->ChangeScene("TestMap");
     return S_OK;

@@ -43,6 +43,20 @@ void DialogueUIState::Update()
     }
 }
 
+void DialogueUIState::Update(float dt)
+{
+    if (dialogueBoxImage)
+        dialogueBoxImage->Update(dt);
+
+
+
+    if (KeyManager::GetInstance()->IsOnceKeyDown(0x58))  // 'X'
+    {
+        UIManager::GetInstance()->CloseUIStateBox("dialogueBox");
+        UIManager::GetInstance()->ChangeState("IdleUI");
+    }
+}
+
 void DialogueUIState::Render(HDC hdc)
 {
     if (dialogueBoxImage)
@@ -64,6 +78,8 @@ void DialogueUIState::PushDialogueLine(const wstring& text,
 {
     auto* newText = new UIElementText();
     newText->RenderDialogue(text, values);  // 템플릿 치환 포함
+    newText->TypeEffect(text, 0.05f);
+
     newText->SetFont(L"Arial", 20);
     newText->SetTextLine(5.0f);
     newText->SetTextColor(28, 28, 132, 255);  // #1C1C84

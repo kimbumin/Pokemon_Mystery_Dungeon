@@ -49,6 +49,7 @@ void UIManager::Release()
 
 void UIManager::Update()
 {
+    float dt = TimerManager::GetInstance()->GetDeltaTime();
     for (auto& state : persistentStates)
     {
         state->Update();
@@ -61,9 +62,10 @@ void UIManager::Update()
 
     if (currentState)
     {
-        currentState->Update();
+        currentState->Update(dt);
     }
 }
+
 
 void UIManager::Render(HDC hdc)
 {

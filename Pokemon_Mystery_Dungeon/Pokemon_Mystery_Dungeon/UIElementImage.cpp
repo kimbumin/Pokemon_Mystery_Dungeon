@@ -39,3 +39,12 @@ void UIElementImage::Update()
     }
     UIElement::Update();
 }
+
+void UIElementImage::Update(float dt)
+{
+    if (imageGDIPlus)
+    {
+        imageGDIPlus->Update(dt);
+    }
+    UIElement::Update(dt);
+}

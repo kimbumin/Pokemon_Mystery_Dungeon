@@ -4,7 +4,7 @@
 
 void UIElementText::Render(HDC hdc)
 {
-    if (text.empty())
+    if (fullText.empty())
         return;
 
     Gdiplus::Graphics graphics(hdc);
@@ -13,7 +13,10 @@ void UIElementText::Render(HDC hdc)
     FPOINT pos = GetRealPos();
     float lineHeight = fontSize + textLine;
 
-    wstringstream lineStream(text);
+    wstring visibleText =
+        isTyping ? fullText.substr(0, visibleTextLength) : fullText;
+
+    wstringstream lineStream(visibleText);
     std::wstring currLine;
     int lineIndex = 0;
 
@@ -29,18 +32,19 @@ void UIElementText::Render(HDC hdc)
 void UIElementText::RenderDialogue(const wstring& txt,
                                    const map<wstring, wstring>& values)
 {
-    text = txt;
-
+    fullText = txt;
     for (const auto& [key, value] : values)
     {
-        std::wstring placeHolder = L"¡´" + key + L"¡µ";
-        size_t pos = text.find(placeHolder);
-        while (pos != std::wstring::npos)
+        wstring placeHolder = L"¡´" + key + L"¡µ";
+        size_t pos = fullText.find(placeHolder);
+        while (pos != wstring::npos)
         {
-            text.replace(pos, placeHolder.length(), L"¡´" + value + L"¡µ");
-            pos = text.find(placeHolder);
+            fullText.replace(pos, placeHolder.length(), L"¡´" + value + L"¡µ");
+            pos = fullText.find(placeHolder);
         }
     }
+
+    text = fullText;
 }
 
 void UIElementText::DrawColoredText(Gdiplus::Graphics& graphics,
@@ -105,5 +109,36 @@ void UIElementText::DrawColoredText(Gdiplus::Graphics& graphics,
         Gdiplus::SolidBrush& brush =
             inHighlight ? highlightBrush : defaultBrush;
         graphics.DrawString(segment.c_str(), -1, &font, point, nullptr, &brush);
+    }
+}
+
+void UIElementText::TypeEffect(const wstring& txt, float interval)
+{
+    fullText = txt;
+    visibleTextLength = 0;
+    elapsedTime = 0.0f;
+    charInterval = interval;
+    isTyping = true;
+}
+
+void UIElementText::SkipTyping()
+{
+    if (isTyping)
+    {
+        visibleTextLength = fullText.length();
+        isTyping = false;
+    }
+}
+
+void UIElementText::Update(float dt)
+{
+    if (isTyping && visibleTextLength < static_cast<int>(fullText.length()))
+    {
+        elapsedTime += dt;
+        while (elapsedTime >= charInterval)
+        {
+            elapsedTime -= charInterval;
+            visibleTextLength++;
+        }
     }
 }

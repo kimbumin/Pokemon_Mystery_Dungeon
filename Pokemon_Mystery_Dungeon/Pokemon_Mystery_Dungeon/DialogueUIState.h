@@ -15,6 +15,7 @@ public:
     HRESULT Init() override;
     void Release() override;
     void Update() override;
+    void Update(float dt) override;
     void Render(HDC hdc) override;
     ~DialogueUIState() override;
 
