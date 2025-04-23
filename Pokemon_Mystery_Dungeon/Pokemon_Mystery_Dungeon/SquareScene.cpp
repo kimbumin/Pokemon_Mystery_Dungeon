@@ -200,11 +200,11 @@ void SquareScene::Render(HDC hdc)
 
     if (river)
     {
-        river->FrameRenderWithCamera(hdc, 64, 54, currAnimaionFrame, 0);
-        river->FrameRenderWithCamera(hdc, 64, 104, currAnimaionFrame, 0);
-        river->FrameRenderWithCamera(hdc, 152, 273, currAnimaionFrame, 0);
-        river->FrameRenderWithCamera(hdc, 152, 400, currAnimaionFrame, 0);
-        river->FrameRenderWithCamera(hdc, 152, 460, currAnimaionFrame, 0);
+        river->FrameRenderWithCamera(hdc, 64, 54, currAnimaionFrame, 0,0,1);
+        river->FrameRenderWithCamera(hdc, 64, 104, currAnimaionFrame, 0, 0, 1);
+        river->FrameRenderWithCamera(hdc, 152, 273, currAnimaionFrame, 0, 0, 1);
+        river->FrameRenderWithCamera(hdc, 152, 400, currAnimaionFrame, 0, 0, 1);
+        river->FrameRenderWithCamera(hdc, 152, 460, currAnimaionFrame, 0, 0, 1);
     }
 
     if (collisionBoxTool)
@@ -230,6 +230,6 @@ void SquareScene::RenderFlowers(HDC hdc, Image* flower,const std::vector<POINT>&
 {
     for (const POINT& pos : positions)
     {
-        flower->FrameRenderWithCamera(hdc, pos.x, pos.y, 0, currFrame, 0);
+        flower->FrameRenderWithCamera(hdc, pos.x, pos.y, 0, currFrame,0, 1);
     }
 }
