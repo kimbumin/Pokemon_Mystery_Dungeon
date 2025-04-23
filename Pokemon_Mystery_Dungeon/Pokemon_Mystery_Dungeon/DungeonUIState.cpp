@@ -9,10 +9,10 @@ HRESULT DungeonUIState::Init()
     auto& manager = *ImageGDIPlusManager::GetInstance();
     auto DungeonInfoBoxImage = manager.AddImage(
         "DungeonInfoBox", L"Image/UIImage/DungeonUIState/DungeonInfoBox.png");
-    auto WaterTypeGifImage = manager.AddImage(
-        "WaterType", L"Image/UIImage/DungeonUIState/waterType.gif", 1, 1, true);
-    auto FireTypeGifImage = manager.AddImage(
-        "FireType", L"Image/UIImage/DungeonUIState/fireType.gif", 1, 1, true);
+    //auto WaterTypeGifImage = manager.AddImage(
+    //    "WaterType", L"Image/UIImage/DungeonUIState/waterType.gif", 1, 1, true);
+    //auto FireTypeGifImage = manager.AddImage(
+    //    "FireType", L"Image/UIImage/DungeonUIState/fireType.gif", 1, 1, true);
 
     // UI 郡府刚飘 积己
     DungeonInfoBox = new UIElementImage();
@@ -24,34 +24,41 @@ HRESULT DungeonUIState::Init()
     int parentWidth = DungeonInfoBox->GetImageWidth();
 
     // 磊侥 按眉 积己 waterType
-    WaterType = new UIElementImage();
-    WaterType->SetImage(WaterTypeGifImage);
-    WaterType->SetLocalPos(parentWidth - 120, OffsetY[0]);
-    WaterType->setAlpha(0.5f);
-    WaterType->SetSpeed(0.5f);
-    WaterType->setScale(0.17f, 0.17f);
-    WaterType->SetParent(DungeonInfoBox);
+    //WaterType = new UIElementImage();
+    //WaterType->SetImage(WaterTypeGifImage);
+    //WaterType->SetLocalPos(parentWidth - 120, OffsetY[0]);
+    //WaterType->setAlpha(0.5f);
+    //WaterType->SetSpeed(0.5f);
+    //WaterType->setScale(0.17f, 0.17f);
+    //WaterType->SetParent(DungeonInfoBox);
 
     // 磊侥 按眉 积己 waterTypeText
-    WaterTypeText = new UIElementText();
-    WaterTypeText->SetText(L"Water Dungeon");
-    WaterTypeText->SetLocalPos(50, OffsetY[0] + 20);
-    WaterTypeText->SetParent(DungeonInfoBox);
+    IceTypeText = new UIElementText();
+    IceTypeText->SetText(L"Water Dungeon");
+    IceTypeText->SetLocalPos(50, OffsetY[0]);
+    IceTypeText->SetParent(DungeonInfoBox);
 
     // 磊侥 按眉 积己 fireType
-    FireType = new UIElementImage();
-    FireType->SetImage(FireTypeGifImage);
-    FireType->SetLocalPos(parentWidth - 120, OffsetY[1]);
-    FireType->setAlpha(0.5f);
-    FireType->SetSpeed(0.5f);
-    FireType->setScale(0.17f, 0.17f);
-    FireType->SetParent(DungeonInfoBox);
+    //FireType = new UIElementImage();
+    //FireType->SetImage(FireTypeGifImage);
+    //FireType->SetLocalPos(parentWidth - 120, OffsetY[1]);
+    //FireType->setAlpha(0.5f);
+    //FireType->SetSpeed(0.5f);
+    //FireType->setScale(0.17f, 0.17f);
+    //FireType->SetParent(DungeonInfoBox);
 
     // 磊侥 按眉 积己 fireTypeText
-    FireTypeText = new UIElementText();
-    FireTypeText->SetText(L"Fire Dungeon");
-    FireTypeText->SetLocalPos(50, OffsetY[1] + 20);
-    FireTypeText->SetParent(DungeonInfoBox);
+    MagmaTypeText = new UIElementText();
+    MagmaTypeText->SetText(L"Fire Dungeon");
+    MagmaTypeText->SetLocalPos(50, OffsetY[1]);
+    MagmaTypeText->SetParent(DungeonInfoBox);
+
+    // 磊侥 按眉 积己 forestTypeText
+    ForestTypeText = new UIElementText();
+    ForestTypeText->SetText(L"Forest Dungeon");
+    ForestTypeText->SetLocalPos(50, OffsetY[2]);
+    ForestTypeText->SetParent(DungeonInfoBox);
+
 
     UpdateRealPos();
     return S_OK;

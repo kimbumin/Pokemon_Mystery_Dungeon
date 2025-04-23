@@ -171,6 +171,14 @@ void SquareScene::Update()
     if (KeyManager::GetInstance()->IsOnceKeyDown(0x44))  // 'D' 키
     {
         UIManager::GetInstance()->OpenUIStateBox("DungeonUI");
+        
+
+        //SetDugeonType이런 거 만들어 줘야되고,
+        //DungeonScene이동,
+        // 
+
+
+
     }
     if (KeyManager::GetInstance()->IsOnceKeyDown(0x59))  // 'Y' 키
     {

@@ -69,6 +69,14 @@ struct PokemonData {
 	vector<string> types;
 };
 
+enum DungeonType
+{
+	ICE,
+	MAGMA,
+    FOREST,
+	LENGTH,
+};
+
 enum class Direction
 {
 	SOUTH,      // 0,1
