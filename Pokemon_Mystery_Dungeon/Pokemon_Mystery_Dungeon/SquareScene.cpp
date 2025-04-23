@@ -92,10 +92,6 @@ void SquareScene::Release()
 {
     SkillManager::GetInstance()->ReleaseInstance();
 
-    if (UIManager::GetInstance())
-    {
-        UIManager::GetInstance()->Release();
-    }
 }
 
 void SquareScene::Update()

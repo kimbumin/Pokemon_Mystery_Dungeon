@@ -20,7 +20,7 @@ HRESULT DungeonUIState::Init()
     DungeonInfoBox = new UIElementImage();
     DungeonInfoBox->SetImage(DungeonInfoBoxImage);
     DungeonInfoBox->SetLocalPos(25, 100);
-    DungeonInfoBox->setAlpha(0.7f);
+    DungeonInfoBox->setAlpha(0.95f);
     DungeonInfoBox->SetParent(this);
 
     Cursor = new UIElementImage();

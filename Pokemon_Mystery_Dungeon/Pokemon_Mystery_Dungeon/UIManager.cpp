@@ -10,6 +10,7 @@
 #include "YesOrNoUIState.h"
 #include "IdleUIState.h"
 
+
 UIState* UIManager::currentState = nullptr;
 UIState* UIManager::nextState = nullptr;
 
