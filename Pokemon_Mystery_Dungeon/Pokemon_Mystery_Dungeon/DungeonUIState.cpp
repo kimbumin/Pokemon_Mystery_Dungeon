@@ -9,6 +9,8 @@ HRESULT DungeonUIState::Init()
     auto& manager = *ImageGDIPlusManager::GetInstance();
     auto DungeonInfoBoxImage = manager.AddImage(
         "DungeonInfoBox", L"Image/UIImage/DungeonUIState/DungeonInfoBox.png");
+    auto CursorImage =
+        manager.AddImage("Cursor", L"Image/UIImage/DungeonUIState/Cursor.png");
     //auto WaterTypeGifImage = manager.AddImage(
     //    "WaterType", L"Image/UIImage/DungeonUIState/waterType.gif", 1, 1, true);
     //auto FireTypeGifImage = manager.AddImage(
@@ -20,6 +22,11 @@ HRESULT DungeonUIState::Init()
     DungeonInfoBox->SetLocalPos(25, 100);
     DungeonInfoBox->setAlpha(0.7f);
     DungeonInfoBox->SetParent(this);
+
+    Cursor = new UIElementImage();
+    Cursor->SetImage(CursorImage);
+    Cursor->SetLocalPos(30, OffsetY[0]);
+    Cursor->SetParent(DungeonInfoBox);
 
     int parentWidth = DungeonInfoBox->GetImageWidth();
 
@@ -70,14 +77,38 @@ void DungeonUIState::Release()
 
 void DungeonUIState::Update()
 {
-    if (WaterType)
+    if(KeyManager::GetInstance()->IsOnceKeyDown(VK_DOWN))
     {
-        WaterType->Update();
+        YIndex = (YIndex + 1) % 3;
+        Cursor->SetLocalPos(25, OffsetY[YIndex]);
+        Cursor->UpdateRealPos();
     }
-    if (FireType)
+    else if (KeyManager::GetInstance()->IsOnceKeyDown(VK_UP))
     {
-        FireType->Update();
+        YIndex = (YIndex - 1 + 3) % 3;
+        Cursor->SetLocalPos(25, OffsetY[YIndex]);
+        Cursor->UpdateRealPos();
     }
+
+    if (KeyManager::GetInstance()->IsOnceKeyDown(0x5A)) // zŰ
+    {
+        if (YIndex == 0)
+        {
+            UIManager::GetInstance()->SetDungeonType(DUNGEON_TYPE_ICE);
+            UIManager::GetInstance()->ChangeState("IdleUI");
+        }
+        else if (YIndex == 1)
+        {
+            UIManager::GetInstance()->SetDungeonType(DUNGEON_TYPE_MAGMA);
+            UIManager::GetInstance()->ChangeState("IdleUI");
+        }
+        else if (YIndex == 2)
+        {
+            UIManager::GetInstance()->SetDungeonType(DUNGEON_TYPE_FOREST);
+            UIManager::GetInstance()->ChangeState("IdleUI");
+        }
+    }
+
 }
 
 void DungeonUIState::Render(HDC hdc)

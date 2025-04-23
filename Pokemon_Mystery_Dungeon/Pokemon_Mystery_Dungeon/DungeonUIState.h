@@ -18,6 +18,9 @@ private:
     UIElementText* ForestTypeText = nullptr;
 
     const int OffsetY[3] = {30, 60, 90};
+    int YIndex = 0;
+
+
 
 public:
     HRESULT Init() override;

@@ -71,10 +71,10 @@ struct PokemonData {
 
 enum DungeonType
 {
-	ICE,
-	MAGMA,
-    FOREST,
-	LENGTH,
+	DUNGEON_TYPE_ICE,
+    DUNGEON_TYPE_MAGMA,
+    DUNGEON_TYPE_FOREST,
+    DUNGEON_TYPE_LENGTH,
 };
 
 enum class Direction

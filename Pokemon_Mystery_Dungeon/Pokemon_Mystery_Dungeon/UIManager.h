@@ -17,6 +17,8 @@ private:
     vector<UIState*> persistentStates;
     vector<UIState*> toggleStates;
 
+    DungeonType dungeonType = DungeonType::DUNGEON_TYPE_ICE;
+
 public:
     void Init();
     void Release();
@@ -36,4 +38,11 @@ public:
 
     void AddPersistentState(UIState* state);
     void AddToggleState(UIState* state, bool isOpen);
+    
+    void GetDungeonType(DungeonType type){ dungeonType = type;}
+    void SetDungeonType(DungeonType type)
+    {
+        dungeonType = type;
+    }
+
 };
