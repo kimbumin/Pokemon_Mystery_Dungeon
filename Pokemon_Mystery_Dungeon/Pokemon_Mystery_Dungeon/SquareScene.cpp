@@ -25,7 +25,7 @@ HRESULT SquareScene::Init()
 {
     SetClientRect(g_hWnd, WINSIZE_X, WINSIZE_Y);
 
-    UIManager::GetInstance()->Init();
+    
 
     // Size : 954, 714
     backGround = ImageManager::GetInstance()->AddImage(
@@ -92,10 +92,6 @@ void SquareScene::Release()
 {
     SkillManager::GetInstance()->ReleaseInstance();
 
-    if (UIManager::GetInstance())
-    {
-        UIManager::GetInstance()->Release();
-    }
 }
 
 void SquareScene::Update()
@@ -171,10 +167,22 @@ void SquareScene::Update()
     if (KeyManager::GetInstance()->IsOnceKeyDown(0x44))  // 'D' 키
     {
         UIManager::GetInstance()->OpenUIStateBox("DungeonUI");
+        
+
+        //SetDugeonType이런 거 만들어 줘야되고,
+        //DungeonScene이동,
+        // 
+
+
+
     }
     if (KeyManager::GetInstance()->IsOnceKeyDown(0x59))  // 'Y' 키
     {
         UIManager::GetInstance()->OpenUIStateBox("YesOrNoUI");
+    }
+    if (KeyManager::GetInstance()->IsOnceKeyDown(0x4D))  // 'M' 키
+    {
+        UIManager::GetInstance()->OpenUIStateBox("DownStairUI");
     }
 }
 

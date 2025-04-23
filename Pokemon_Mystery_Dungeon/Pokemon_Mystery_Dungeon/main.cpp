@@ -48,8 +48,6 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
     ULONG_PTR gdiplusToken;
     GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
 
-    // font Ãß°¡
-    AddFontResourceEx(L"Font/DungGeunMo.ttf", FR_PRIVATE, NULL);
 
     WNDCLASSEX wndClass;
     wndClass.cbSize = sizeof(WNDCLASSEX);

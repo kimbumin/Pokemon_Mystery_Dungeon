@@ -30,7 +30,7 @@ void EmberSkill::Update()
     {
         elapsedTime += TimerManager::GetInstance()->GetDeltaTime();
 
-        if (elapsedTime >= 0.02f)
+        if (elapsedTime >= (1.f / image->GetMaxFrameX()))
         {
             frameCount++;
             elapsedTime = 0.0f;

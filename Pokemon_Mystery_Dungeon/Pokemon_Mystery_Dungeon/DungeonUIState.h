@@ -11,10 +11,16 @@ private:
     UIElementImage* WaterType = nullptr;
     UIElementImage* FireType = nullptr;
 
-    UIElementText* WaterTypeText = nullptr;
-    UIElementText* FireTypeText = nullptr;
+    UIElementImage* Cursor = nullptr;
 
-    const int OffsetY[2] = {30, 110};
+    UIElementText* IceTypeText = nullptr;
+    UIElementText* MagmaTypeText = nullptr;
+    UIElementText* ForestTypeText = nullptr;
+
+    const int OffsetY[3] = {30, 60, 90};
+    int YIndex = 0;
+
+
 
 public:
     HRESULT Init() override;

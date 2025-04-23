@@ -2,14 +2,15 @@
 
 #include "IActionState.h"
 #include "IAnimState.h"
+#include "ISkill.h"
 #include "Map.h"
+#include "PlayerManager.h"
 #include "PokemonBase.h"
 #include "PokemonEnemy.h"
-#include "PokemonPool.h"
-#include "ISkill.h"
-#include "PlayerManager.h"
 #include "PokemonPlayer.h"
-
+#include "PokemonPool.h"
+#include "SkillUIState.h"
+#include "UIManager.h"
 void TurnManager::InitTurnOrder(PokemonPool* pokemonPool)
 {
     turnOrder = pokemonPool;
@@ -77,172 +78,175 @@ void TurnManager::Update()
                 Direction inputDir;
                 bool hasInput = false;
                 // Check UI
-                if (KeyManager::GetInstance()->IsOnceKeyDown('Q'))
+                if (UIManager::GetInstance()->FindState("SkillUI"))
                 {
-                    shared_ptr<ISkill> selectedSkill = PlayerManager::GetInstance()->GetPlayer()->GetSkill(0);
-                    current->ExecuteAttackAction(selectedSkill);
-                    state = TurnState::WaitingForCompletion;
-                }
-                if (KeyManager::GetInstance()->IsOnceKeyDown('W'))
-                {
-                    shared_ptr<ISkill> selectedSkill = PlayerManager::GetInstance()->GetPlayer()->GetSkill(1);
-                    current->ExecuteAttackAction(selectedSkill);
-                    state = TurnState::WaitingForCompletion;
-                }
-                if (KeyManager::GetInstance()->IsOnceKeyDown('E'))
-                {
-                    shared_ptr<ISkill> selectedSkill = PlayerManager::GetInstance()->GetPlayer()->GetSkill(2);
-                    current->ExecuteAttackAction(selectedSkill);
-                    state = TurnState::WaitingForCompletion;
-                }
-                if (KeyManager::GetInstance()->IsOnceKeyDown('R'))
-                {
-                    shared_ptr<ISkill> selectedSkill = PlayerManager::GetInstance()->GetPlayer()->GetSkill(3);
-                    current->ExecuteAttackAction(selectedSkill);
-                    state = TurnState::WaitingForCompletion;
-                }
-                // 버퍼 중이 아닌 상태에서 첫 입력 감지
-                if (!waitingForDiagonal)
-                {
-                    if (KeyManager::GetInstance()->IsOnceKeyDown(VK_UP))
+                    SkillUIState* skillUI = static_cast<SkillUIState*>(
+                        UIManager::GetInstance()->FindState("SkillUI"));
+                    int index = skillUI->GetSelectedSkillIndex();
+                    if (index >= 0 && index < 4)
                     {
-                        bufferedDir = Direction::NORTH;
-                        waitingForDiagonal = true;
-                        bufferElapsed = 0.f;
-                    }
-                    else if (KeyManager::GetInstance()->IsOnceKeyDown(VK_DOWN))
-                    {
-                        bufferedDir = Direction::SOUTH;
-                        waitingForDiagonal = true;
-                        bufferElapsed = 0.f;
-                    }
-                    else if (KeyManager::GetInstance()->IsOnceKeyDown(VK_LEFT))
-                    {
-                        bufferedDir = Direction::WEST;
-                        waitingForDiagonal = true;
-                        bufferElapsed = 0.f;
-                    }
-                    else if (KeyManager::GetInstance()->IsOnceKeyDown(VK_RIGHT))
-                    {
-                        bufferedDir = Direction::EAST;
-                        waitingForDiagonal = true;
-                        bufferElapsed = 0.f;
+                        shared_ptr<ISkill> selectedSkill =
+                            PlayerManager::GetInstance()->GetPlayer()->GetSkill(
+                                index);
+                        current->ExecuteAttackAction(selectedSkill);
+                        skillUI->SetSelectedSkillIndex(-1);
+                        state = TurnState::WaitingForCompletion;
                     }
                 }
 
-                // 버퍼 중일 때 대각선 확인
-                if (waitingForDiagonal)
+                if (UIManager::GetInstance()->GetCurrentStateKey() == "IdleUI")
                 {
-                    bufferElapsed +=
-                        TimerManager::GetInstance()->GetDeltaTime();
-
-                    // 대각선 조합 감지
-                    if (bufferedDir == Direction::NORTH)
+                    // 버퍼 중이 아닌 상태에서 첫 입력 감지
+                    if (!waitingForDiagonal)
                     {
-                        if (KeyManager::GetInstance()->IsStayKeyDown(VK_RIGHT))
+                        if (KeyManager::GetInstance()->IsOnceKeyDown(VK_UP))
                         {
-                            inputDir = Direction::NORTHEAST;
-                            hasInput = true;
-                            waitingForDiagonal = false;
+                            bufferedDir = Direction::NORTH;
+                            waitingForDiagonal = true;
+                            bufferElapsed = 0.f;
                         }
-                        else if (KeyManager::GetInstance()->IsStayKeyDown(
-                                     VK_LEFT))
-                        {
-                            inputDir = Direction::NORTHWEST;
-                            hasInput = true;
-                            waitingForDiagonal = false;
-                        }
-                    }
-                    else if (bufferedDir == Direction::SOUTH)
-                    {
-                        if (KeyManager::GetInstance()->IsStayKeyDown(VK_RIGHT))
-                        {
-                            inputDir = Direction::SOUTHEAST;
-                            hasInput = true;
-                            waitingForDiagonal = false;
-                        }
-                        else if (KeyManager::GetInstance()->IsStayKeyDown(
-                                     VK_LEFT))
-                        {
-                            inputDir = Direction::SOUTHWEST;
-                            hasInput = true;
-                            waitingForDiagonal = false;
-                        }
-                    }
-                    else if (bufferedDir == Direction::EAST)
-                    {
-                        if (KeyManager::GetInstance()->IsStayKeyDown(VK_UP))
-                        {
-                            inputDir = Direction::NORTHEAST;
-                            hasInput = true;
-                            waitingForDiagonal = false;
-                        }
-                        else if (KeyManager::GetInstance()->IsStayKeyDown(
+                        else if (KeyManager::GetInstance()->IsOnceKeyDown(
                                      VK_DOWN))
                         {
-                            inputDir = Direction::SOUTHEAST;
+                            bufferedDir = Direction::SOUTH;
+                            waitingForDiagonal = true;
+                            bufferElapsed = 0.f;
+                        }
+                        else if (KeyManager::GetInstance()->IsOnceKeyDown(
+                                     VK_LEFT))
+                        {
+                            bufferedDir = Direction::WEST;
+                            waitingForDiagonal = true;
+                            bufferElapsed = 0.f;
+                        }
+                        else if (KeyManager::GetInstance()->IsOnceKeyDown(
+                                     VK_RIGHT))
+                        {
+                            bufferedDir = Direction::EAST;
+                            waitingForDiagonal = true;
+                            bufferElapsed = 0.f;
+                        }
+                    }
+
+                    // 버퍼 중일 때 대각선 확인
+                    if (waitingForDiagonal)
+                    {
+                        bufferElapsed +=
+                            TimerManager::GetInstance()->GetDeltaTime();
+
+                        // 대각선 조합 감지
+                        if (bufferedDir == Direction::NORTH)
+                        {
+                            if (KeyManager::GetInstance()->IsStayKeyDown(
+                                    VK_RIGHT))
+                            {
+                                inputDir = Direction::NORTHEAST;
+                                hasInput = true;
+                                waitingForDiagonal = false;
+                            }
+                            else if (KeyManager::GetInstance()->IsStayKeyDown(
+                                         VK_LEFT))
+                            {
+                                inputDir = Direction::NORTHWEST;
+                                hasInput = true;
+                                waitingForDiagonal = false;
+                            }
+                        }
+                        else if (bufferedDir == Direction::SOUTH)
+                        {
+                            if (KeyManager::GetInstance()->IsStayKeyDown(
+                                    VK_RIGHT))
+                            {
+                                inputDir = Direction::SOUTHEAST;
+                                hasInput = true;
+                                waitingForDiagonal = false;
+                            }
+                            else if (KeyManager::GetInstance()->IsStayKeyDown(
+                                         VK_LEFT))
+                            {
+                                inputDir = Direction::SOUTHWEST;
+                                hasInput = true;
+                                waitingForDiagonal = false;
+                            }
+                        }
+                        else if (bufferedDir == Direction::EAST)
+                        {
+                            if (KeyManager::GetInstance()->IsStayKeyDown(VK_UP))
+                            {
+                                inputDir = Direction::NORTHEAST;
+                                hasInput = true;
+                                waitingForDiagonal = false;
+                            }
+                            else if (KeyManager::GetInstance()->IsStayKeyDown(
+                                         VK_DOWN))
+                            {
+                                inputDir = Direction::SOUTHEAST;
+                                hasInput = true;
+                                waitingForDiagonal = false;
+                            }
+                        }
+                        else if (bufferedDir == Direction::WEST)
+                        {
+                            if (KeyManager::GetInstance()->IsStayKeyDown(VK_UP))
+                            {
+                                inputDir = Direction::NORTHWEST;
+                                hasInput = true;
+                                waitingForDiagonal = false;
+                            }
+                            else if (KeyManager::GetInstance()->IsStayKeyDown(
+                                         VK_DOWN))
+                            {
+                                inputDir = Direction::SOUTHWEST;
+                                hasInput = true;
+                                waitingForDiagonal = false;
+                            }
+                        }
+
+                        // 버퍼 초과 시 일반 방향 처리
+                        if (bufferElapsed >= inputBufferTime && !hasInput)
+                        {
+                            inputDir = bufferedDir;
                             hasInput = true;
                             waitingForDiagonal = false;
                         }
                     }
-                    else if (bufferedDir == Direction::WEST)
+
+                    // 방향 입력 완료 후 이동 처리
+                    if (hasInput)
                     {
-                        if (KeyManager::GetInstance()->IsStayKeyDown(VK_UP))
+                        current->SetDirection(inputDir);
+
+                        FPOINT currentPos = current->GetPos();
+                        auto [dx, dy] =
+                            directionOffsets[static_cast<int>(inputDir)];
+                        int nextX =
+                            static_cast<int>(currentPos.x / TILE_SIZE) + dx;
+                        int nextY =
+                            static_cast<int>(currentPos.y / TILE_SIZE) + dy;
+
+                        if (map && map->IsPathOrFloor(nextX, nextY))
                         {
-                            inputDir = Direction::NORTHWEST;
-                            hasInput = true;
-                            waitingForDiagonal = false;
-                        }
-                        else if (KeyManager::GetInstance()->IsStayKeyDown(
-                                     VK_DOWN))
-                        {
-                            inputDir = Direction::SOUTHWEST;
-                            hasInput = true;
-                            waitingForDiagonal = false;
-                        }
-                    }
+                            FPOINT nextPos = {nextX * TILE_SIZE * 1.0f,
+                                              nextY * TILE_SIZE * 1.0f};
 
-                    // 버퍼 초과 시 일반 방향 처리
-                    if (bufferElapsed >= inputBufferTime && !hasInput)
-                    {
-                        inputDir = bufferedDir;
-                        hasInput = true;
-                        waitingForDiagonal = false;
-                    }
-                }
-
-                // 방향 입력 완료 후 이동 처리
-                if (hasInput)
-                {
-                    current->SetDirection(inputDir);
-
-                    FPOINT currentPos = current->GetPos();
-                    auto [dx, dy] =
-                        directionOffsets[static_cast<int>(inputDir)];
-                    int nextX = static_cast<int>(currentPos.x / TILE_SIZE) + dx;
-                    int nextY = static_cast<int>(currentPos.y / TILE_SIZE) + dy;
-
-                    if (map && map->IsPathOrFloor(nextX, nextY))
-                    {
-                        FPOINT nextPos = {nextX * TILE_SIZE * 1.0f,
-                                          nextY * TILE_SIZE * 1.0f};
-
-                        if (!pool->IsPositionBlocked(nextPos))
-                        {
-                            current->ExecuteMoveAction();
-                            state = TurnState::WaitingForCompletion;
+                            if (!pool->IsPositionBlocked(nextPos))
+                            {
+                                current->ExecuteMoveAction();
+                                state = TurnState::WaitingForCompletion;
+                            }
+                            else
+                            {
+                                current->ExecuteIdleAction();
+                            }
                         }
                         else
                         {
                             current->ExecuteIdleAction();
                         }
                     }
-                    else
-                    {
-                        current->ExecuteIdleAction();
-                    }
                 }
             }
+
             else  // AI 턴
             {
                 current->ExecuteTurn();

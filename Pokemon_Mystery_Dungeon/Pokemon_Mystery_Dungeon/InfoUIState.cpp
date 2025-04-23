@@ -44,12 +44,12 @@ HRESULT InfoUIState::Init()
     FourthInfoBox->SetParent(this);
 
     // 자식 객체 생성 waterTypeText
-    NameText = new UIElementText();
-    NameText->SetText(L"몬스터 이름");
-    NameText->SetFont(L"Arial", 20);
-    NameText->SetTextColor(255, 255, 255, 255);  // 흰색
-    NameText->SetLocalPos(50, 0);
-    NameText->SetParent(FirstInfoBox);
+    SkillNameText = new UIElementText();
+    SkillNameText->SetText(L"몬스터 이름");
+    SkillNameText->SetFont(L"Arial", 20);
+    SkillNameText->SetTextColor(255, 255, 255, 255);  // 흰색
+    SkillNameText->SetLocalPos(50, 0);
+    SkillNameText->SetParent(FirstInfoBox);
 
     UpdateRealPos();
 

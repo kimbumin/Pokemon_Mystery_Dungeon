@@ -2,6 +2,7 @@
 #include "Singleton.h"
 #include "UIState.h"
 
+class UIState;
 class UIManager : public Singleton<UIManager>
 {
     friend class Singleton<UIManager>;
@@ -16,6 +17,8 @@ private:
 
     vector<UIState*> persistentStates;
     vector<UIState*> toggleStates;
+
+    DungeonType dungeonType = DungeonType::DUNGEON_TYPE_ICE;
 
 public:
     void Init();
@@ -36,4 +39,15 @@ public:
 
     void AddPersistentState(UIState* state);
     void AddToggleState(UIState* state, bool isOpen);
+    
+    DungeonType GetDungeonType(DungeonType type)
+    {
+        return dungeonType;
+    }
+    void SetDungeonType(DungeonType type)
+    {
+        dungeonType = type;
+    }
+
+
 };

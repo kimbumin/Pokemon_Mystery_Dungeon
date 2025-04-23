@@ -13,11 +13,12 @@ private:
     UIElementImage* ThirdInfoBox = nullptr;
     UIElementImage* FourthInfoBox = nullptr;
 
-    UIElementText* NameText = nullptr;
+    UIElementText* SkillNameText = nullptr;
     UIElementText* LevelText = nullptr;
     UIElementText* HPText = nullptr;
 
     const int InfoBoxPosX = 500;
+
     const int InfoBoxPosYOffset[4] = {0, 50, 100, 150};
 
 public:

@@ -18,7 +18,7 @@ HRESULT MainGame::Init()
     ImageManager::GetInstance()->Init();
     KeyManager::GetInstance()->Init();
     SceneManager::GetInstance()->Init();
-
+    UIManager::GetInstance()->Init();
     PokemonDataLoader::GetInstance()->Init();
     PokemonDataLoader::GetInstance()->LoadFromCSV("Data/PokemonBaseStatus.csv");
 
