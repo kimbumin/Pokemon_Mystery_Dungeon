@@ -152,6 +152,7 @@ void SkillUIState::Update()
                 case 0:  // 스킬 사용
                     // 스킬 사용 로직 추가
                     isSkillUseBox = false;
+                    SetSelectedSkillIndex(YIndex);
                     UIManager::GetInstance()->ChangeState("IdleUI");
                     break;
                 case 1:  // 스킬 정보
@@ -227,6 +228,8 @@ void SkillUIState::UseSkill(int index)
     {
         return;
     }
+
+
 }
 
 SkillUIState::~SkillUIState()

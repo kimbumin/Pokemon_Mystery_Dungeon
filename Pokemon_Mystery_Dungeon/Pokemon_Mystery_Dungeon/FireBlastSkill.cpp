@@ -30,7 +30,7 @@ void FireBlastSkill::Update()
     {
         elapsedTime += TimerManager::GetInstance()->GetDeltaTime();  // 누적
 
-        if (elapsedTime >= 0.02f)  // 0.2초마다 실행
+        if (elapsedTime >= (1.f) / image->GetMaxFrameX())  // 0.2초마다 실행
         {
             frameCount++;
             elapsedTime = 0.0f;  // 다시 0으로 초기화

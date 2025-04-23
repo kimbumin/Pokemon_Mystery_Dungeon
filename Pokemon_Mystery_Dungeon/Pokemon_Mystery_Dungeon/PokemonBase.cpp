@@ -255,7 +255,7 @@ void PokemonBase::SetAnimator()
             }
             else
             {
-                frameTime = 1.f / frameX;
+                frameTime = 0.5f / frameX;
                 //  Check: 재생 속도 하드코딩 개선 사항 (CSV에
                 //  있는 데이터로 매 프레임마다 재생속도도 다르게
                 //  할 수는 있다)

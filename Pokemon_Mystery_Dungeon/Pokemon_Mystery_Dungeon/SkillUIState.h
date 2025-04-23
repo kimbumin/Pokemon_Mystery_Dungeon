@@ -46,6 +46,9 @@ private:
     const int SubOffsetY[3] = {25, 55, 85};
     const wstring subMenu[3] = {L"Use Skill", L"Info Skill", L"Cancle Skill"};
 
+    
+    int SelectedSkillIndex = -1;
+
 public:
     HRESULT Init() override;
     void Release() override;
@@ -55,6 +58,14 @@ public:
     void SetSkills(const vector<SkillDisplayData>& data);
 
     void UseSkill(int index);
+    void SetSelectedSkillIndex(int index)
+    {
+        SelectedSkillIndex = index;
+    }
+    int GetSelectedSkillIndex() const
+    {
+        return SelectedSkillIndex;
+    }
 
     ~SkillUIState() override;
 };
