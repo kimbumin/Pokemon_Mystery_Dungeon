@@ -130,6 +130,7 @@
   <ItemGroup>
     <ClCompile Include="AttackActionState.cpp" />
     <ClCompile Include="AttackAnimState.cpp" />
+    <ClCompile Include="AttackSkill.cpp" />
     <ClCompile Include="BossScene.cpp" />
     <ClCompile Include="Branch.cpp" />
     <ClCompile Include="CameraManager.cpp" />
@@ -186,6 +187,7 @@
     <ClCompile Include="StoneShowerSkill.cpp" />
     <ClCompile Include="SwingAnimState.cpp" />
     <ClCompile Include="StartScene.cpp" />
+    <ClCompile Include="SwingSkill.cpp" />
     <ClCompile Include="TileMapTestScene.cpp" />
     <ClCompile Include="TilemapTool.cpp" />
     <ClCompile Include="Timer.cpp" />
@@ -202,6 +204,7 @@
   <ItemGroup>
     <ClInclude Include="AttackActionState.h" />
     <ClInclude Include="AttackAnimState.h" />
+    <ClInclude Include="AttackSkill.h" />
     <ClInclude Include="BossScene.h" />
     <ClInclude Include="Branch.h" />
     <ClInclude Include="CameraManager.h" />
@@ -265,6 +268,7 @@
     <ClInclude Include="SquareScene.h" />
     <ClInclude Include="StoneShowerSkill.h" />
     <ClInclude Include="SwingAnimState.h" />
+    <ClInclude Include="SwingSkill.h" />
     <ClInclude Include="TileMapTestScene.h" />
     <ClInclude Include="UIElement.h" />
     <ClInclude Include="UIElementImage.h" />
