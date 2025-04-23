@@ -25,7 +25,7 @@ HRESULT SquareScene::Init()
 {
     SetClientRect(g_hWnd, WINSIZE_X, WINSIZE_Y);
 
-    UIManager::GetInstance()->Init();
+    
 
     // Size : 954, 714
     backGround = ImageManager::GetInstance()->AddImage(
@@ -179,6 +179,10 @@ void SquareScene::Update()
     if (KeyManager::GetInstance()->IsOnceKeyDown(0x59))  // 'Y' 키
     {
         UIManager::GetInstance()->OpenUIStateBox("YesOrNoUI");
+    }
+    if (KeyManager::GetInstance()->IsOnceKeyDown(0x4D))  // 'M' 키
+    {
+        UIManager::GetInstance()->OpenUIStateBox("DownStairUI");
     }
 }
 

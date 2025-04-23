@@ -8,6 +8,8 @@ HRESULT DownStairUIState::Init()
 {
     auto manager = *ImageGDIPlusManager::GetInstance();
     auto DownStairBoxImage = manager.AddImage("DownStairBox", L"Image/UIImage/DownStairUIState/DownStairBox.png");
+    auto YesOrNoBoxImage = manager.AddImage(
+        "YesOrNoBox", L"Image/UIImage/DownStairUIState/YesOrNoBox.png");
     auto CursorImage = manager.AddImage("Cursor", L"Image/UIImage/DownStairUIState/Cursor.png");
 
     DownStairBox = new UIElementImage();
@@ -16,15 +18,21 @@ HRESULT DownStairUIState::Init()
     DownStairBox->setAlpha(0.95f);
     DownStairBox->SetParent(this);
 
+    YesOrNoBox = new UIElementImage();
+    YesOrNoBox->SetImage(YesOrNoBoxImage);
+    YesOrNoBox->SetLocalPos(DownStairBox->GetImageWidth() - 80, 0);
+    YesOrNoBox->setAlpha(0.95f);
+    YesOrNoBox->SetParent(DownStairBox);
+
     Cursor = new UIElementImage();
     Cursor->SetImage(CursorImage);
     Cursor->SetLocalPos(25, OffsetY[0]);
-    Cursor->SetParent(DownStairBox);
+    Cursor->SetParent(YesOrNoBox);
     Cursor->setAlpha(0.95f);
 
     // 자식 객체 생성
     IsDownText = new UIElementText();
-    IsDownText->SetText(L"Would you like to go down the stairs?");
+    IsDownText->SetText(L"Would you like to go down \n the stairs?");
     IsDownText->SetFont(L"Arial", 18);
     IsDownText->SetTextLine(5.0f);
     IsDownText->SetLocalPos(50, OffsetY[0]);
@@ -35,14 +43,14 @@ HRESULT DownStairUIState::Init()
     YesText->SetFont(L"Arial", 18);
     YesText->SetTextLine(5.0f);
     YesText->SetLocalPos(50, OffsetY[0]);
-    YesText->SetParent(DownStairBox);
+    YesText->SetParent(YesOrNoBox);
 
     NoText = new UIElementText();
     NoText->SetText(L"No");
     NoText->SetFont(L"Arial", 18);
     NoText->SetTextLine(5.0f);
     NoText->SetLocalPos(50, OffsetY[1]);
-    NoText->SetParent(DownStairBox);
+    NoText->SetParent(YesOrNoBox);
 
 
 
@@ -55,6 +63,29 @@ void DownStairUIState::Release()
 
 void DownStairUIState::Update()
 {
+    if (KeyManager::GetInstance()->IsOnceKeyDown(VK_DOWN))
+    {
+        YIndex = (YIndex + 1) % 2;
+        Cursor->SetLocalPos(25, OffsetY[YIndex]);
+        Cursor->UpdateRealPos();
+    }
+    else if (KeyManager::GetInstance()->IsOnceKeyDown(VK_UP))
+    {
+        YIndex = (YIndex - 1 + 2) % 2;
+        Cursor->SetLocalPos(25, OffsetY[YIndex]);
+        Cursor->UpdateRealPos();
+    }
+    if (KeyManager::GetInstance()->IsOnceKeyDown(0x5A))  // z키
+    {
+        if (YIndex == 0)
+        {
+            UIManager::GetInstance()->ChangeState("IdleUI");
+        }
+        else if (YIndex == 1)
+        {
+            UIManager::GetInstance()->ChangeState("IdleUI");
+        }
+    }
 }
 
 void DownStairUIState::Render(HDC hdc)

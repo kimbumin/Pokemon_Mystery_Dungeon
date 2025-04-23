@@ -8,6 +8,7 @@ class DownStairUIState : public UIState, public UIElement
 {
 private:
     UIElementImage* DownStairBox = nullptr;
+    UIElementImage* YesOrNoBox = nullptr;
 
     UIElementImage* Cursor = nullptr;
 
@@ -16,6 +17,7 @@ private:
     UIElementText* NoText = nullptr;
 
     const int OffsetY[2] = {30, 60};
+
     int YIndex = 0;
 
 public:

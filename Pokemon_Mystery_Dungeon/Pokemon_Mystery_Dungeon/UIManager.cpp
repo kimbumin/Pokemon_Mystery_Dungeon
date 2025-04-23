@@ -9,6 +9,7 @@
 #include "UIState.h"
 #include "YesOrNoUIState.h"
 #include "IdleUIState.h"
+#include "DownStairUIState.h"
 
 
 UIState* UIManager::currentState = nullptr;
@@ -143,6 +144,7 @@ void UIManager::RegisterAllUIStates()
     AddState("SkillUseUI", new SkillInfoUIState());
     AddState("DungeonUI", new DungeonUIState());
     AddState("YesOrNoUI", new YesOrNoUIState());
+    AddState("DownStairUI", new DownStairUIState());
 }
 
 void UIManager::OpenUIStateBox(const string& key)
