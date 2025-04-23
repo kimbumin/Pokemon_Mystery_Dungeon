@@ -1,22 +1,19 @@
 #pragma once
 #include "ISkill.h"
-// clang-format off
-#include "config.h"
-// clang-format on
-#include "Image.h"
 
-class Image;
-class PokemonBase;
-class EmberSkill : public ISkill
+class SwingSkill : public ISkill
 {
 private:
-    Image* image;
-    float elapsedTime;
+    FPOINT pos;
+    bool isActive;
     int frameCount;
+    float elapsedTime;
+    Image* image;
+    int direction;
 
 public:
-    EmberSkill() = default;
-    EmberSkill(const SkillData& skillData);
+    SwingSkill() = default;
+    SwingSkill(const SkillData& skillData);
 
     HRESULT Init() override;
     void Release() override;

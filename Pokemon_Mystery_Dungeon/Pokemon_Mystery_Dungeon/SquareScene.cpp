@@ -8,6 +8,10 @@
 #include "Image.h"
 #include "LoadingScene.h"
 #include "MPlayer.h"
+#include "PokemonBase.h"
+#include "PokemonDataLoader.h"
+#include "PokemonImageLoader.h"
+#include "SkillManager.h"
 #include "StartScene.h"
 #include "TilemapTool.h"
 #include "UIManager.h"
@@ -25,8 +29,8 @@ HRESULT SquareScene::Init()
 
     // Size : 954, 714
     backGround = ImageManager::GetInstance()->AddImage(
-        "SquareBackGround", L"Image/SceneImage/Square3.bmp", SQUARESIZE_X, SQUARESIZE_Y,
-        1, 1, 0, RGB(255, 0, 255));
+        "SquareBackGround", L"Image/SceneImage/Square3.bmp", SQUARESIZE_X,
+        SQUARESIZE_Y, 1, 1, 0, RGB(255, 0, 255));
 
     // 210,41
     river = ImageManager::GetInstance()->AddImage(
@@ -47,18 +51,18 @@ HRESULT SquareScene::Init()
         {85, 266},  {320, 589}, {856, 443}, {76, 293}, {261, 355},
     };
     yellowPositions = {
-        // Áß¾Ó ¼¼·Î 3°³
+        // å ìŒ©ì–µì˜™ å ì™ì˜™å ì™ì˜™ 3å ì™ì˜™
         {477, 77},
         {477, 110},
         {477, 143},
 
-        // ¿À¸¥ÂÊ ¼¼·Î 4°³
+        // å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™ 4å ì™ì˜™
         {545, 95},
         {545, 128},
         {545, 161},
         {545, 194},
 
-        // ±âÅ¸ °³º° À§Ä¡
+        // å ì™ì˜™íƒ€ å ì™ì˜™å ì™ì˜™ å ì™ì˜™ì¹˜
         {353, 578},
         {388, 291},
         {854, 377},
@@ -86,6 +90,8 @@ HRESULT SquareScene::Init()
 
 void SquareScene::Release()
 {
+    SkillManager::GetInstance()->ReleaseInstance();
+
     if (UIManager::GetInstance())
     {
         UIManager::GetInstance()->Release();
@@ -99,6 +105,7 @@ void SquareScene::Update()
         SceneManager::GetInstance()->AddScene("TileMapTool", new TilemapTool());
         SceneManager::GetInstance()->ChangeScene("TileMapTool");
     }
+
 
     if (yellowFlower && TimerManager::GetInstance())
     {
@@ -115,16 +122,29 @@ void SquareScene::Update()
     }
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F6))
     {
-        SceneManager::GetInstance()->AddScene("DungeonScene", new DungeonScene());
-        SceneManager::GetInstance()->ChangeScene("DungeonScene", "LoadingScene");
+        SceneManager::GetInstance()->AddScene("DungeonScene",
+                                              new DungeonScene());
+        SceneManager::GetInstance()->ChangeScene("DungeonScene",
+                                                 "LoadingScene");
     }
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F5))
     {
         SceneManager::GetInstance()->AddScene("StartScene", new StartScene());
-        SceneManager::GetInstance()->AddLoadingScene("LoadingScene", new LoadingScene());
+        SceneManager::GetInstance()->AddLoadingScene("LoadingScene",
+                                                     new LoadingScene());
         SceneManager::GetInstance()->ChangeScene("StartScene", "LoadingScene");
     }
 
+    elapsedTime += TimerManager::GetInstance()->GetDeltaTime();
+    if (elapsedTime > 0.3f)
+    {
+        currAnimaionFrame++;
+        if (currAnimaionFrame >= yellowFlower->GetMaxFrameY())
+        {
+            currAnimaionFrame = 0;
+        }
+        elapsedTime = 0;
+    }
     if (collisionBoxTool)
     {
         collisionBoxTool->Update();
@@ -142,17 +162,17 @@ void SquareScene::Update()
     {
         UIManager::GetInstance()->OpenUIStateBox("defaultUI");
     }
-    if (KeyManager::GetInstance()->IsOnceKeyDown(0x49))  // 'I' Å°
+    if (KeyManager::GetInstance()->IsOnceKeyDown(0x49))  // 'I' í‚¤
     {
         DialogueManager::GetInstance()->ShowLine(
             DialogueTemplate::FoundItem, {{L"itemName", L"Monster Ball"}});
     }
 
-    if (KeyManager::GetInstance()->IsOnceKeyDown(0x44))  // 'D' Å°
+    if (KeyManager::GetInstance()->IsOnceKeyDown(0x44))  // 'D' í‚¤
     {
         UIManager::GetInstance()->OpenUIStateBox("DungeonUI");
     }
-    if (KeyManager::GetInstance()->IsOnceKeyDown(0x59))  // 'Y' Å°
+    if (KeyManager::GetInstance()->IsOnceKeyDown(0x59))  // 'Y' í‚¤
     {
         UIManager::GetInstance()->OpenUIStateBox("YesOrNoUI");
     }
@@ -160,11 +180,11 @@ void SquareScene::Update()
 
 void SquareScene::Render(HDC hdc)
 {
-    // Ä«¸Þ¶ó Å¬¸®ÇÎ Ã³¸® (È­¸é Å©±â: 500x400)
+    // ì¹´ë©”ë¼ í´ë¦¬í•‘ ì²˜ë¦¬ (í™”ë©´ í¬ê¸°: 500x400)
     HRGN clipRegion = CreateRectRgn(0, 0, 500, 400);
     SelectClipRgn(hdc, clipRegion);
 
-    // --- Ä«¸Þ¶ó ±âÁØÀ¸·Î ·»´õ¸µµÇ´Â ¿ÀºêÁ§Æ® ---
+    // --- ì¹´ë©”ë¼ ê¸°ì¤€ìœ¼ë¡œ ë Œë”ë§ë˜ëŠ” ì˜¤ë¸Œì íŠ¸ ---
     if (backGround)
         backGround->RenderWithCamera(hdc, 0, 0);
 
@@ -189,16 +209,17 @@ void SquareScene::Render(HDC hdc)
     if (mPlayer)
         mPlayer->Render(hdc);
 
-    // Å¬¸®ÇÎ ÇØÁ¦
+    // í´ë¦¬í•‘ í•´ì œ
     SelectClipRgn(hdc, NULL);
     DeleteObject(clipRegion);
 
-    // --- UI, µð¹ö±× ÅØ½ºÆ® µîÀº Ä«¸Þ¶ó¿¡ ¿µÇâÀ» ¹ÞÁö ¾ÊÀ½ ---
+    // --- UI, ë””ë²„ê·¸ í…ìŠ¤íŠ¸ ë“±ì€ ì¹´ë©”ë¼ì— ì˜í–¥ì„ ë°›ì§€ ì•ŠìŒ ---
     TimerManager::GetInstance()->Render(hdc);
     UIManager::GetInstance()->Render(hdc);
 
     wsprintf(szText, TEXT("Mouse X : %d, Y : %d"), g_ptMouse.x, g_ptMouse.y);
     TextOut(hdc, 300, 60, szText, wcslen(szText));
+
 }
 
 void SquareScene::RenderFlowers(HDC hdc, Image* flower,const std::vector<POINT>& positions, int currFrame)

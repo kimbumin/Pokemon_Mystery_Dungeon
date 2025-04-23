@@ -1,15 +1,21 @@
 #pragma once
-#include "ISkill.h"
 #include "GameObject.h"
+#include "ISkill.h"
+#include "Singleton.h"
 
-class SkillManager : public GameObject{
+class SkillManager : public Singleton<SkillManager>
+{
 private:
-    unordered_map<string, shared_ptr<ISkill>> skillMap;
+    map<string, shared_ptr<ISkill>> skillMap;
+    shared_ptr<ISkill> skill;  // 등록할 스킬 결정
+    string token;
+    SkillData data;
+    string line;
+    int lineNumber;
 
 public:
-    void RegisterSkill(const string& name, shared_ptr<ISkill> skill);
-    void Release();
-
+    void LoadSkillsFromCSV(const string& filepath);
     shared_ptr<ISkill> CreateSkill(const string& name);
     shared_ptr<ISkill> FindSkill(const string& name);
+    void Release();
 };

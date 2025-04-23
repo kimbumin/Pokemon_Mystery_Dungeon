@@ -1,39 +1,39 @@
-#include "EmberSkill.h"
+#include "FireBlastSkill.h"
 
 #include "PokemonBase.h"
 
-EmberSkill::EmberSkill(const SkillData& skillData)
+FireBlastSkill::FireBlastSkill(const SkillData& skillData)
 {
     data = skillData;
 }
 
-HRESULT EmberSkill::Init()
+HRESULT FireBlastSkill::Init()
 {
     pos = {0, 0};
     isActive = false;
     frameCount = 0;
     elapsedTime = 0.0f;
     image = ImageManager::GetInstance()->AddImage(
-        "Ember", TEXT("Image/SkillImage/Ember.bmp"), 190, 19, 10, 1, true,
-        RGB(255, 0, 255));
+        "FireBlast", TEXT("Image/SkillImage/FireBlast.bmp"), 1856 / 2, 61 / 2, 29,
+        1, true, RGB(255, 0, 255));
 
     return S_OK;
 }
 
-void EmberSkill::Release()
+void FireBlastSkill::Release()
 {
 }
 
-void EmberSkill::Update()
+void FireBlastSkill::Update()
 {
     if (isActive)
     {
-        elapsedTime += TimerManager::GetInstance()->GetDeltaTime();
+        elapsedTime += TimerManager::GetInstance()->GetDeltaTime();  // 누적
 
-        if (elapsedTime >= 0.02f)
+        if (elapsedTime >= 0.02f)  // 0.2초마다 실행
         {
             frameCount++;
-            elapsedTime = 0.0f;
+            elapsedTime = 0.0f;  // 다시 0으로 초기화
         }
 
         if (frameCount >= image->GetMaxFrameX())
@@ -44,7 +44,7 @@ void EmberSkill::Update()
     }
 }
 
-void EmberSkill::Render(HDC hdc)
+void FireBlastSkill::Render(HDC hdc)
 {
     if (isActive && image)
     {
@@ -56,19 +56,20 @@ void EmberSkill::Render(HDC hdc)
     }
 }
 
-void EmberSkill::Use(PokemonBase* owner)
+void FireBlastSkill::Use(PokemonBase* owner)
 {
     direction = static_cast<int>(owner->GetDirection());
     pos = owner->GetPos();
     auto dirIndex = static_cast<size_t>(direction);
 
+    // 여기 수정
     pos.x += directionOffsets[dirIndex].first * 24;
     pos.y += directionOffsets[dirIndex].second * 24;
 
     isActive = true;
 }
 
-shared_ptr<ISkill> EmberSkill::Clone()
+shared_ptr<ISkill> FireBlastSkill::Clone()
 {
-    return make_shared<EmberSkill>(*this);  // 스킬을 복제하여 반환
+    return make_shared<FireBlastSkill>(*this);  // 스킬을 복제하여 반환
 }

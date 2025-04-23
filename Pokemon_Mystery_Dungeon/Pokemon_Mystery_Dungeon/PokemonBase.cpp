@@ -12,6 +12,7 @@
 #include "PokemonDataLoader.h"
 #include "PokemonImageLoader.h"
 #include "RotateAnimState.h"
+#include "SkillManager.h"
 #include "SwingAnimState.h"
 #include "WalkAnimState.h"
 
@@ -20,8 +21,10 @@
 
 HRESULT PokemonBase::Init()
 {
-    // isAlive = false;
-    // baseStatus = PokemonDataLoader::GetInstance()->GetData(0);
+    isAlive = true;
+    baseStatus = PokemonDataLoader::GetInstance()->GetData(
+        1);  
+    currentSkill = SkillManager::GetInstance()->CreateSkill("StoneShower");
     currentStatus = *baseStatus;
     // level = 0;
     CalStatus();
@@ -59,7 +62,7 @@ void PokemonBase::Release()
         delete animator;
         animator = nullptr;
     }
-    // ÀÌ°Å Áö¿ì´Â °Å ¸ÅÅ©·Î°í·Á
+
     if (walkAnim)
     {
         delete walkAnim;
@@ -135,12 +138,12 @@ void PokemonBase::Render(HDC hdc)
 
 void PokemonBase::CalStatus()
 {
-    currentStatus.hp = CalStat(baseStatus->hp) + 10 /*º¸Á¤°ª*/;
-    currentStatus.atk = CalStat(baseStatus->atk) + 5 /*º¸Á¤°ª*/;
-    currentStatus.def = CalStat(baseStatus->def) + 5 /*º¸Á¤°ª*/;
-    currentStatus.spAtk = CalStat(baseStatus->spAtk) + 5 /*º¸Á¤°ª*/;
-    currentStatus.spDef = CalStat(baseStatus->spDef) + 5 /*º¸Á¤°ª*/;
-    currentStatus.speed = CalStat(baseStatus->speed) + 5 /*º¸Á¤°ª*/;
+    currentStatus.hp = CalStat(baseStatus->hp) + 10;
+    currentStatus.atk = CalStat(baseStatus->atk) + 5;
+    currentStatus.def = CalStat(baseStatus->def) + 5;
+    currentStatus.spAtk = CalStat(baseStatus->spAtk) + 5;
+    currentStatus.spDef = CalStat(baseStatus->spDef) + 5;
+    currentStatus.speed = CalStat(baseStatus->speed) + 5;
 }
 
 int PokemonBase::CalStat(int value)
@@ -150,9 +153,6 @@ int PokemonBase::CalStat(int value)
 
 void PokemonBase::TakeDamage()
 {
-    // µ¥¹ÌÁö ÀÔ´Â °ÍÀ» ÀÔ´Â °üÁ¡¿¡¼­ or ÁÖ´Â °üÁ¡¿¡¼­
-    // ÀÔÈ÷´Â µ¥¹ÌÁö¸¦ ÀüÅõ ½Ã½ºÅÛ¿¡¼­ Àü´ÞÇÏ°í ÀüÅõ½Ã½ºÅÛ¿¡¼­ °è»ê ¶§¸®°í ±×
-    // °á°ú¸¦ ÀÌ°É·Î Àû¿ëÇÏ´Â ±¸Á¶
 }
 
 void PokemonBase::SetAnimState(IAnimState* newState)
@@ -192,7 +192,7 @@ void PokemonBase::SetActionState(IActionState* newState)
 
 void PokemonBase::ExecuteTurn()
 {
-    // µ¿·á¿Í Enemy È®ÀåÀ» À§ÇØ ³²°ÜÁÜ
+    // ë™ë£Œì™€ Enemy í™•ìž¥ì„ ìœ„í•´ ë‚¨ê²¨ì¤Œ
 }
 
 Direction PokemonBase::CalculateDirection(FPOINT& targetPos)
@@ -243,16 +243,15 @@ void PokemonBase::SetAnimator()
             else
             {
                 frameTime = 1.f / frameX;
-                //  Check: Àç»ý ¼Óµµ ÇÏµåÄÚµù °³¼± »çÇ× (CSV¿¡
-                //  ÀÖ´Â µ¥ÀÌÅÍ·Î ¸Å ÇÁ·¹ÀÓ¸¶´Ù Àç»ý¼Óµµµµ ´Ù¸£°Ô
-                //  ÇÒ ¼ö´Â ÀÖ´Ù)
+                //  Check: ìž¬ìƒ ì†ë„ í•˜ë“œì½”ë”© ê°œì„  ì‚¬í•­ (CSVì—
+                //  ìžˆëŠ” ë°ì´í„°ë¡œ ë§¤ í”„ë ˆìž„ë§ˆë‹¤ ìž¬ìƒì†ë„ë„ ë‹¤ë¥´ê²Œ
+                //  í•  ìˆ˜ëŠ” ìžˆë‹¤)
                 // Improvements to hard-coding playback speed (with data in CSV,
                 // playback speed can be different for each frame)
             }
-
             animator->AddAnimation(*type, image, frameX, frameY, frameTime,
                                    *type == "Idle");
-            // ¹Ýº¹µÇ´Â ¾Ö´Ï¸ÞÀÌ¼ÇÀº Idle¸¸ ÀÖ¾î¼­
+            // å ìŒ¥ë¸ì˜™å ì‹¤ëŒì˜™ å ìŒë‹ˆëªŒì˜™å ì‹±ì‡½ì˜™å ì™ì˜™ Idleå ì™ì˜™ å ìŒì–´ì„œ
         }
     }
 }

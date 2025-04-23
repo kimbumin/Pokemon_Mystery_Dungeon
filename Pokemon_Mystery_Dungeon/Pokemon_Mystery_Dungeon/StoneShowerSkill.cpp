@@ -1,17 +1,23 @@
 #include "StoneShowerSkill.h"
 
-void StoneShowerSkill::Init()
-{
-	pos.x = 0;
-	pos.y = 0;
-	name = "StoneShower";
-	stats.power = 75;
-	stats.accuracy = 90;
-	stats.maxPP = 10;
+#include "PokemonBase.h"
 
-	image = ImageManager::GetInstance()->AddImage(
-		"StoneShower", TEXT("Image/rocktype1.bmp"), 312, 54, 8, 1,
-		true, RGB(255, 0, 255));
+StoneShowerSkill::StoneShowerSkill(const SkillData& skillData)
+{
+    data = skillData;
+}
+
+HRESULT StoneShowerSkill::Init()
+{
+    pos = {0, 0};
+    isActive = false;
+    frameCount = 0;
+    elapsedTime = 0.0f;
+    image = ImageManager::GetInstance()->AddImage(
+        "StoneShower", TEXT("Image/SkillImage/StoneShower.bmp"), 312, 54, 8,
+        1, true, RGB(255, 0, 255));
+
+    return S_OK;
 }
 
 void StoneShowerSkill::Release()
@@ -20,22 +26,49 @@ void StoneShowerSkill::Release()
 
 void StoneShowerSkill::Update()
 {
+    if (isActive)
+    {
+        elapsedTime += TimerManager::GetInstance()->GetDeltaTime();  // 누적
+
+        if (elapsedTime >= 0.02f)  // 0.2초마다 실행
+        {
+            frameCount++;
+            elapsedTime = 0.0f;  // 다시 0으로 초기화
+        }
+
+        if (frameCount >= image->GetMaxFrameX())
+        {
+            isActive = false;
+            frameCount = 0;
+        }
+    }
 }
 
 void StoneShowerSkill::Render(HDC hdc)
 {
-	image = ImageManager::GetInstance()->FindImage("StoneShower");
-	if (image)
-	{
-		image->FrameRender(hdc, pos.x, pos.y, 0, 0);
-	}
+    if (isActive && image)
+    {
+        int frameX = frameCount;
+        if (frameX >= image->GetMaxFrameX())
+            frameX = image->GetMaxFrameX() - 1;
+
+        image->FrameRender(hdc, pos.x, pos.y, frameX, 0);
+    }
 }
 
-void StoneShowerSkill::Use()
+void StoneShowerSkill::Use(PokemonBase* owner)
 {
+    direction = static_cast<int>(owner->GetDirection());
+    pos = owner->GetPos();
+    auto dirIndex = static_cast<size_t>(direction);
+
+    pos.x += directionOffsets[dirIndex].first * 24;
+    pos.y += directionOffsets[dirIndex].second * 24;
+
+    isActive = true;
 }
 
-shared_ptr<ISkill> StoneShowerSkill::Clone() const
+shared_ptr<ISkill> StoneShowerSkill::Clone()
 {
-	return make_shared<StoneShowerSkill>(*this);	//스킬을 복제하여 반환
+    return make_shared<StoneShowerSkill>(*this);  // 스킬을 복제하여 반환
 }

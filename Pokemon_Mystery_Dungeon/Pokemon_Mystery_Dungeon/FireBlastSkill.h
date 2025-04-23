@@ -7,7 +7,7 @@
 
 class Image;
 class PokemonBase;
-class EmberSkill : public ISkill
+class FireBlastSkill : public ISkill
 {
 private:
     Image* image;
@@ -15,8 +15,8 @@ private:
     int frameCount;
 
 public:
-    EmberSkill() = default;
-    EmberSkill(const SkillData& skillData);
+    FireBlastSkill() = default;
+    FireBlastSkill(const SkillData& skillData);
 
     HRESULT Init() override;
     void Release() override;

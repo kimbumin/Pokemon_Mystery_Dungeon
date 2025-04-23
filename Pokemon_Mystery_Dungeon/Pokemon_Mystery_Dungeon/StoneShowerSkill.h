@@ -1,35 +1,27 @@
 #pragma once
 #include "ISkill.h"
+// clang-format off
 #include "config.h"
+// clang-format on
 #include "Image.h"
 
 class Image;
-class StoneShowerSkill : public ISkill {
+class PokemonBase;
+class StoneShowerSkill : public ISkill
+{
 private:
     Image* image;
-
-    enum class ElementType { ROCK };
-    enum class SkillType { PHYSICS };
-
-    FPOINT pos;
-    string name;
-    struct SkillStats {
-        int power;
-        int accuracy;
-        int maxPP;
-    } stats;
+    float elapsedTime;
+    int frameCount;
 
 public:
-    void Init() override;
+    StoneShowerSkill() = default;
+    StoneShowerSkill(const SkillData& skillData);
+
+    HRESULT Init() override;
     void Release() override;
     void Update() override;
     void Render(HDC hdc) override;
-    void Use() override;
-    shared_ptr<ISkill> Clone() const override;
-
-    string GetName() const override { return name; }
-    string GetElement() const override { return "ROCK"; }
-    string GetType() const override { return "PHYSICS"; }
-    int GetPower() const override { return stats.power; }
-    int GetAccuracy() const override { return stats.accuracy; }
+    void Use(PokemonBase* owner) override;
+    shared_ptr<ISkill> Clone() override;
 };

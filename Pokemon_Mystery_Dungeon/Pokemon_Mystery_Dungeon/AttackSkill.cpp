@@ -1,30 +1,30 @@
-#include "EmberSkill.h"
+#include "AttackSkill.h"
 
 #include "PokemonBase.h"
 
-EmberSkill::EmberSkill(const SkillData& skillData)
+AttackSkill::AttackSkill(const SkillData& skillData)
 {
     data = skillData;
 }
 
-HRESULT EmberSkill::Init()
+HRESULT AttackSkill::Init()
 {
     pos = {0, 0};
     isActive = false;
     frameCount = 0;
     elapsedTime = 0.0f;
     image = ImageManager::GetInstance()->AddImage(
-        "Ember", TEXT("Image/SkillImage/Ember.bmp"), 190, 19, 10, 1, true,
+        "Attack", TEXT("Image/SkillImage/Attack.bmp"), 190, 19, 10, 1, true,
         RGB(255, 0, 255));
 
     return S_OK;
 }
 
-void EmberSkill::Release()
+void AttackSkill::Release()
 {
 }
 
-void EmberSkill::Update()
+void AttackSkill::Update()
 {
     if (isActive)
     {
@@ -44,7 +44,7 @@ void EmberSkill::Update()
     }
 }
 
-void EmberSkill::Render(HDC hdc)
+void AttackSkill::Render(HDC hdc)
 {
     if (isActive && image)
     {
@@ -56,7 +56,7 @@ void EmberSkill::Render(HDC hdc)
     }
 }
 
-void EmberSkill::Use(PokemonBase* owner)
+void AttackSkill::Use(PokemonBase* owner)
 {
     direction = static_cast<int>(owner->GetDirection());
     pos = owner->GetPos();
@@ -68,7 +68,7 @@ void EmberSkill::Use(PokemonBase* owner)
     isActive = true;
 }
 
-shared_ptr<ISkill> EmberSkill::Clone()
+shared_ptr<ISkill> AttackSkill::Clone()
 {
-    return make_shared<EmberSkill>(*this);  // 스킬을 복제하여 반환
+    return make_shared<AttackSkill>(*this);
 }

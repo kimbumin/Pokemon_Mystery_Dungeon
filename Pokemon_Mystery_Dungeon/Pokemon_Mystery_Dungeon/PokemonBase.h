@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include "ISkill.h"
 
 class PokemonAnimator;
 class IAnimState;
@@ -57,6 +58,7 @@ protected:
     // GetSelectedSkillIndex로, TurnManager에서 GetSkillList로 Seleted
 
 public:
+    shared_ptr<ISkill> currentSkill;
     virtual HRESULT Init() override;
     virtual void Release() override;
     virtual void Update() override;
