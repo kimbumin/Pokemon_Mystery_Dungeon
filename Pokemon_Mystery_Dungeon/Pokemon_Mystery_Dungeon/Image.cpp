@@ -316,5 +316,7 @@ void Image::RenderWithCamera(HDC hdc, int x, int y)
 void Image::FrameRenderWithCamera(HDC hdc, int x, int y, int frameX, int frameY,int transparent, bool isCenter)
 {
     POINT cam = Camera::GetInstance()->GetCameraPos();
+
+
     this->FrameRender(hdc, x - cam.x, y - cam.y, frameX, frameY, transparent,isCenter);
 }
