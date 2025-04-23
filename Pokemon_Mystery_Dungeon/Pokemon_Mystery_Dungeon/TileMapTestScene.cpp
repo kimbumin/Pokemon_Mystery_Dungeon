@@ -20,12 +20,12 @@ HRESULT TileMapTestScene::Init()
 
     // Size : 954, 714
     backGround = ImageManager::GetInstance()->AddImage(
-        "±¤Àå¹è°æ", L"Image/SceneImage/Square3.bmp", SQUARESIZE_X, SQUARESIZE_Y,
+        "SquareBackGround", L"Image/SceneImage/Square3.bmp", SQUARESIZE_X, SQUARESIZE_Y,
         1, 1, 0, RGB(255, 0, 255));
 
     // 210,41
     river = ImageManager::GetInstance()->AddImage(
-        "°­¹°", L"Image/SceneImage/river.bmp", 210, 41, 6, 1, 0,
+        "river", L"Image/SceneImage/river.bmp", 210, 41, 6, 1, 0,
         RGB(200, 224, 168));
 
     // 33,144
@@ -94,8 +94,8 @@ void TileMapTestScene::Update()
 
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F1))
     {
-        SceneManager::GetInstance()->AddScene("Å¸ÀÏ¸ÊÅø", new TilemapTool());
-        SceneManager::GetInstance()->ChangeScene("Å¸ÀÏ¸ÊÅø");
+        SceneManager::GetInstance()->AddScene("TileMapTool", new TilemapTool());
+        SceneManager::GetInstance()->ChangeScene("TileMapTool");
     }
 
     elapsedTime += TimerManager::GetInstance()->GetDeltaTime();
@@ -111,8 +111,8 @@ void TileMapTestScene::Update()
 
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F6))
     {
-        SceneManager::GetInstance()->AddScene("´øÀü¾À", new DungeonScene());
-        SceneManager::GetInstance()->ChangeScene("´øÀü¾À");
+        SceneManager::GetInstance()->AddScene("DungeonScene", new DungeonScene());
+        SceneManager::GetInstance()->ChangeScene("DungeonScene");
     }
 }
 

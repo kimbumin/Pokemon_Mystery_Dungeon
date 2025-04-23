@@ -1,4 +1,5 @@
 #include "Image.h"
+#include "Camera.h"
 
 HRESULT Image::Init(int width, int height)
 {
@@ -304,4 +305,18 @@ void Image::Release()
         delete imageInfo;
         imageInfo = nullptr;
     }
+}
+
+void Image::RenderWithCamera(HDC hdc, int x, int y)
+{
+    POINT cam = Camera::GetInstance()->GetCameraPos();
+    this->Render(hdc, x - cam.x, y - cam.y);
+}
+
+void Image::FrameRenderWithCamera(HDC hdc, int x, int y, int frameX, int frameY,int transparent, bool isCenter)
+{
+    POINT cam = Camera::GetInstance()->GetCameraPos();
+
+
+    this->FrameRender(hdc, x - cam.x, y - cam.y, frameX, frameY, transparent,isCenter);
 }

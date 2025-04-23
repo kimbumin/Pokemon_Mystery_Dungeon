@@ -58,6 +58,7 @@ public:
     void Update() override;
     void Render(HDC hdc) override;
 
+    void RenderWithCamera(HDC hdc);
     void Generate();
     void Draw(HDC hdc);
 
