@@ -18,6 +18,7 @@ class IdleActionState;
 class AttackActionState;
 class HurtActionState;
 
+class Map;
 class ISkill;
 class PokemonBase : public GameObject
 {
@@ -45,6 +46,7 @@ protected:
     HurtActionState* hurtAction;
 
     FPOINT pos = {240, 240};
+    Map* dungeonMap;
     int level;
     int currentHp;
     bool isAlive;
@@ -71,6 +73,9 @@ public:
     void SetAnimState(IAnimState* newState);
     void SetActionState(IActionState* newState);
 
+    virtual void ExecuteTurn();
+    Direction CalculateDirection(FPOINT& targetPos);
+
     // Getter
     inline PokemonData GetCurrentPokemonData()
     {
@@ -80,6 +85,14 @@ public:
     {
         return animator;
     }
+    inline IAnimState* GetCurrentAnimState()
+    {
+        return currentAnimState;
+    }
+    inline IActionState* GetCurrentActionState()
+    {
+        return currentActionState;
+    }
     inline Direction GetDirection()
     {
         return direction;
@@ -87,6 +100,10 @@ public:
     inline FPOINT GetPos()
     {
         return pos;
+    }
+    inline Map* GetMap()
+    {
+        return dungeonMap;
     }
     inline int GetLevel()
     {
@@ -109,6 +126,10 @@ public:
     inline void SetPos(FPOINT pos)
     {
         this->pos = pos;
+    }
+    inline void SetMap(Map* newMap)
+    {
+        dungeonMap = newMap;
     }
     inline void SetLevel(int level)
     {

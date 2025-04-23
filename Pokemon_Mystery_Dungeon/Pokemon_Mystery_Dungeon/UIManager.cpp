@@ -8,6 +8,7 @@
 #include "SkillUIState.h"
 #include "UIState.h"
 #include "YesOrNoUIState.h"
+#include "IdleUIState.h"
 
 UIState* UIManager::currentState = nullptr;
 UIState* UIManager::nextState = nullptr;
@@ -134,6 +135,7 @@ UIState* UIManager::FindState(const string& key)
 
 void UIManager::RegisterAllUIStates()
 {
+    AddState("IdleUI", new IdleUIState());
     AddState("dialogueBox", new DialogueUIState());
     AddState("defaultUI", new DefaultUIState());
     AddState("SkillUI", new SkillUIState());

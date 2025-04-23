@@ -26,6 +26,8 @@ public:
 private:
     Map map;
     Image* sampleTile;
+    Image* stairImage;
+
     MPlayer* mPlayer;
 
     int dungeonFloor;
@@ -33,4 +35,7 @@ private:
 
     TileType tiles[TILE_Y][TILE_X];
     std::vector<POINT> wallTiles;
+
+    float elapsedTime;
+
 };

@@ -18,7 +18,10 @@ public:
     void Release();
     void Update();
     void Render(HDC hdc);
-
+    void SetPos(POINT pos)
+    {
+        this->pos = pos;   
+    }
     void Move();        // 방향키 입력 처리
     void UpdateRect();  // RECT 갱신
     void SavePrevPos()

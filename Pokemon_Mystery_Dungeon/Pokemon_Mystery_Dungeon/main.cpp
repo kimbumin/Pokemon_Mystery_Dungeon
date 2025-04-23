@@ -40,13 +40,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam,
 
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
                      LPSTR lpszCmdParam, int nCmdShow)
-{
+{   
     g_hInstance = hInstance;
 
     // GDI+ 초기화
     GdiplusStartupInput gdiplusStartupInput;
     ULONG_PTR gdiplusToken;
     GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
+
+    // font 추가
+    AddFontResourceEx(L"Font/DungGeunMo.ttf", FR_PRIVATE, NULL);
 
     WNDCLASSEX wndClass;
     wndClass.cbSize = sizeof(WNDCLASSEX);

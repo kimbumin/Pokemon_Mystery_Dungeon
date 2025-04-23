@@ -5,6 +5,8 @@
 #include "Image.h"
 #include "MPlayer.h"
 #include "UIManager.h"
+#include "Camera.h"
+
 
 HRESULT DungeonScene::Init()
 {
@@ -13,11 +15,13 @@ HRESULT DungeonScene::Init()
     mPlayer = new MPlayer;
     mPlayer->Init();
 
+    Camera::GetInstance()->SetMapSize({TILE_X * TILE_SIZE, TILE_Y * TILE_SIZE});
+    Camera::GetInstance()->SetScreenSize({500, 400});
+
     wallTiles = map.GetWallTiles();  // wallTiles좌표  Point로
-    CameraManager::GetInstance()->Init(GameViewSize_X, GameViewSize_Y,
-                                       TILE_X * TILE_SIZE, TILE_Y * TILE_SIZE);
 
     dungeonFloor = 0;
+    elapsedTime = 0.f;
 
     GenerateNextFloor();
 
@@ -36,10 +40,6 @@ void DungeonScene::Release()
 
 void DungeonScene::Update()
 {
-    POINT mouse;
-    GetCursorPos(&mouse);
-    ScreenToClient(g_hWnd, &mouse);
-    CameraManager::GetInstance()->SetCameraPos(mouse.x, mouse.y);
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F6))
     {
         SceneManager::GetInstance()->ChangeScene("Square");
@@ -58,8 +58,7 @@ void DungeonScene::Update()
     if (mPlayer)
     {
         mPlayer->Update();
-        POINT playerPos =
-            mPlayer->GetPos();  // 플레이어의 타일 위치를 받아오는 함수 필요
+        Camera::GetInstance()->SetCameraPos(mPlayer->GetPos());
 
         if (IsPlayerOnStair())
         {
@@ -67,27 +66,36 @@ void DungeonScene::Update()
             GenerateNextFloor();
         }
     }
+    elapsedTime += TimerManager::GetInstance()->GetDeltaTime();
+    if (elapsedTime > 0.016f)
+    {
+        Camera::GetInstance()->Update(elapsedTime);
+        elapsedTime = 0;
+    }
+    if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F9)){
+        Camera::GetInstance()->Shake(0.3f, 10);
+    }
 }
 
 void DungeonScene::Render(HDC hdc)
 {
-    RECT cam = CameraManager::GetInstance()->GetViewPos();
-    PatBlt(hdc, 0, 0, 2000, 2000, BLACKNESS);
+    HRGN clipRegion = CreateRectRgn(0, 0, 500, 400);
+    SelectClipRgn(hdc, clipRegion);
 
-    map.Render(hdc);
+    map.RenderWithCamera(hdc);
     map.MiniMapRender(hdc, 0, 0);
 
-    UIManager::GetInstance()->Render(hdc);
-    // for (const POINT& wall : wallTiles) {
-    //	RenderRectAtCenter(hdc, wall.x*TILE_SIZE, wall.y*TILE_SIZE, TILE_SIZE,
-    //TILE_SIZE);
-    // }
 
-    //	map.Draw(hdc);
     if (mPlayer)
     {
         mPlayer->Render(hdc);
     }
+    SelectClipRgn(hdc, NULL);
+    DeleteObject(clipRegion);
+
+
+    //UI등 clip영역 밖에 추가하실거면 이 밑에 두세요 --
+    UIManager::GetInstance()->Render(hdc);
 }
 
 void DungeonScene::GenerateNextFloor()

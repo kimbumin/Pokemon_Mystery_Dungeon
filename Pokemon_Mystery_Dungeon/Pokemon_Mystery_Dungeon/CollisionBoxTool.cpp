@@ -5,6 +5,7 @@
 #include "CommonFunction.h"
 #include "ImageManager.h"
 #include "KeyManager.h"
+#include "Camera.h"
 
 HRESULT CollisionBoxTool::Init(wstring mapName)
 {
@@ -22,17 +23,22 @@ void CollisionBoxTool::Release()
 
 void CollisionBoxTool::Update()
 {
+    POINT camPos = Camera::GetInstance()->GetCameraPos();
+    POINT worldMousePos = {g_ptMouse.x + camPos.x, g_ptMouse.y + camPos.y};
+
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_LBUTTON))
     {
         isDragging = true;
-        startPoint = g_ptMouse;
+        startPoint = worldMousePos;  // 월드 기준으로 저장
     }
     else if (KeyManager::GetInstance()->IsOnceKeyUp(VK_LBUTTON))
     {
         isDragging = false;
-        RECT rect = {
-            min(startPoint.x, g_ptMouse.x), min(startPoint.y, g_ptMouse.y),
-            max(startPoint.x, g_ptMouse.x), max(startPoint.y, g_ptMouse.y)};
+
+        RECT rect = {min(startPoint.x, worldMousePos.x),
+                     min(startPoint.y, worldMousePos.y),
+                     max(startPoint.x, worldMousePos.x),
+                     max(startPoint.y, worldMousePos.y)};
         boxes.push_back({rect, L"Default"});
     }
 
@@ -49,6 +55,8 @@ void CollisionBoxTool::Update()
 
 void CollisionBoxTool::Render(HDC hdc)
 {
+    POINT camPos = Camera::GetInstance()->GetCameraPos();
+
     HBRUSH brush = (HBRUSH)GetStockObject(NULL_BRUSH);
     HPEN pen = CreatePen(PS_SOLID, 1, RGB(255, 0, 0));
     HGDIOBJ oldPen = SelectObject(hdc, pen);
@@ -56,13 +64,16 @@ void CollisionBoxTool::Render(HDC hdc)
 
     for (const auto& box : boxes)
     {
-        Rectangle(hdc, box.rect.left, box.rect.top, box.rect.right,
-                  box.rect.bottom);
+        Rectangle(hdc, box.rect.left - camPos.x, box.rect.top - camPos.y,
+                  box.rect.right - camPos.x, box.rect.bottom - camPos.y);
     }
 
     if (isDragging)
     {
-        Rectangle(hdc, startPoint.x, startPoint.y, g_ptMouse.x, g_ptMouse.y);
+        POINT worldMousePos = {g_ptMouse.x + camPos.x, g_ptMouse.y + camPos.y};
+
+        Rectangle(hdc, startPoint.x - camPos.x, startPoint.y - camPos.y,
+                  worldMousePos.x - camPos.x, worldMousePos.y - camPos.y);
     }
 
     SelectObject(hdc, oldPen);

@@ -7,8 +7,7 @@ class PokemonPool;
 enum class TurnState
 {
     WaitingForInput,
-    ExecutingAction,
-    WaitingForAnim,
+    WaitingForCompletion,
     TurnEnd
 };
 
@@ -20,6 +19,12 @@ private:
     TurnState state = TurnState::WaitingForInput;
     float elapsedTime = 0.f;
 
+    // input buffer
+    float inputBufferTime = 0.1f;  // 100ms
+    float bufferElapsed = 0.f;
+    bool waitingForDiagonal = false;
+    Direction bufferedDir;
+
 public:
     void InitTurnOrder(PokemonPool* pokemonPool);
     void Release();
@@ -27,8 +32,13 @@ public:
 
     PokemonBase* GetCurrentPokemon();
     bool IsPlayerTurn();
+    int CountAlive();
     TurnState GetState()
     {
         return state;
+    }
+    PokemonPool* GetPool()
+    {
+        return turnOrder;
     }
 };

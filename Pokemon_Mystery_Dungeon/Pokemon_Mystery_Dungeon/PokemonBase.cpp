@@ -26,7 +26,7 @@
 HRESULT PokemonBase::Init()
 {
     isAlive = true;
-    baseStatus = PokemonDataLoader::GetInstance()->GetData(1); // ���� �������� ������ ��
+    baseStatus = PokemonDataLoader::GetInstance()->GetData(1); // 占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙
     currentSkill = SkillManager::GetInstance()->CreateSkill("StoneShower");
     currentStatus = *baseStatus;
     // level = 0;
@@ -65,7 +65,7 @@ void PokemonBase::Release()
         delete animator;
         animator = nullptr;
     }
-    // �̰� ����� �� ��ũ�ΰ���
+    // 占싱곤옙 占쏙옙占쏙옙占 占쏙옙 占쏙옙크占싸곤옙占쏙옙
     if (walkAnim)
     {
         delete walkAnim;
@@ -120,29 +120,6 @@ void PokemonBase::Release()
 
 void PokemonBase::Update()
 {
-    /* if (currentActionState->CanOverride())
-     {
-         if (KeyManager::GetInstance()->IsOnceKeyDown(VK_UP))
-         {
-             direction = Direction::NORTH;
-             SetActionState(moveAction);
-         }
-         if (KeyManager::GetInstance()->IsOnceKeyDown(VK_LEFT))
-         {
-             direction = Direction::WEST;
-             SetActionState(moveAction);
-         }
-         if (KeyManager::GetInstance()->IsOnceKeyDown(VK_DOWN))
-         {
-             direction = Direction::SOUTH;
-             SetActionState(moveAction);
-         }
-         if (KeyManager::GetInstance()->IsOnceKeyDown(VK_RIGHT))
-         {
-             direction = Direction::EAST;
-             SetActionState(moveAction);
-         }
-     }*/
     if (currentAnimState)
     {
         currentAnimState->Update(this);
@@ -164,12 +141,12 @@ void PokemonBase::Render(HDC hdc)
 
 void PokemonBase::CalStatus()
 {
-    currentStatus.hp = CalStat(baseStatus->hp) + 10 /*������*/;
-    currentStatus.atk = CalStat(baseStatus->atk) + 5 /*������*/;
-    currentStatus.def = CalStat(baseStatus->def) + 5 /*������*/;
-    currentStatus.spAtk = CalStat(baseStatus->spAtk) + 5 /*������*/;
-    currentStatus.spDef = CalStat(baseStatus->spDef) + 5 /*������*/;
-    currentStatus.speed = CalStat(baseStatus->speed) + 5 /*������*/;
+    currentStatus.hp = CalStat(baseStatus->hp) + 10 /*占쏙옙占쏙옙占쏙옙*/;
+    currentStatus.atk = CalStat(baseStatus->atk) + 5 /*占쏙옙占쏙옙占쏙옙*/;
+    currentStatus.def = CalStat(baseStatus->def) + 5 /*占쏙옙占쏙옙占쏙옙*/;
+    currentStatus.spAtk = CalStat(baseStatus->spAtk) + 5 /*占쏙옙占쏙옙占쏙옙*/;
+    currentStatus.spDef = CalStat(baseStatus->spDef) + 5 /*占쏙옙占쏙옙占쏙옙*/;
+    currentStatus.speed = CalStat(baseStatus->speed) + 5 /*占쏙옙占쏙옙占쏙옙*/;
 }
 
 int PokemonBase::CalStat(int value)
@@ -179,9 +156,9 @@ int PokemonBase::CalStat(int value)
 
 void PokemonBase::TakeDamage()
 {
-    // ������ �Դ� ���� �Դ� �������� or �ִ� ��������
-    // ������ �������� ���� �ý��ۿ��� �����ϰ� �����ý��ۿ��� ��� ������ ��
-    // ����� �̰ɷ� �����ϴ� ����
+    // 占쏙옙占쏙옙占쏙옙 占쌉댐옙 占쏙옙占쏙옙 占쌉댐옙 占쏙옙占쏙옙占쏙옙占쏙옙 or 占쌍댐옙 占쏙옙占쏙옙占쏙옙占쏙옙
+    // 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙 占시쏙옙占쌜울옙占쏙옙 占쏙옙占쏙옙占싹곤옙 占쏙옙占쏙옙占시쏙옙占쌜울옙占쏙옙 占쏙옙占 占쏙옙占쏙옙占쏙옙 占쏙옙
+    // 占쏙옙占쏙옙占 占싱걸뤄옙 占쏙옙占쏙옙占싹댐옙 占쏙옙占쏙옙
 }
 
 void PokemonBase::SetAnimState(IAnimState* newState)
@@ -219,6 +196,39 @@ void PokemonBase::SetActionState(IActionState* newState)
     }
 }
 
+void PokemonBase::ExecuteTurn()
+{
+    // 동료와 Enemy 확장을 위해 남겨줌
+}
+
+Direction PokemonBase::CalculateDirection(FPOINT& targetPos)
+{
+    int dx = static_cast<int>(targetPos.x - pos.x);
+    int dy = static_cast<int>(targetPos.y - pos.y);
+
+    dx /= TILE_SIZE;
+    dy /= TILE_SIZE;
+
+    if (dx == 0 && dy > 0)
+        return Direction::SOUTH;
+    if (dx > 0 && dy > 0)
+        return Direction::SOUTHEAST;
+    if (dx > 0 && dy == 0)
+        return Direction::EAST;
+    if (dx > 0 && dy < 0)
+        return Direction::NORTHEAST;
+    if (dx == 0 && dy < 0)
+        return Direction::NORTH;
+    if (dx < 0 && dy < 0)
+        return Direction::NORTHWEST;
+    if (dx < 0 && dy == 0)
+        return Direction::WEST;
+    if (dx < 0 && dy > 0)
+        return Direction::SOUTHWEST;
+
+    return Direction::SOUTH;
+}
+
 void PokemonBase::SetAnimator()
 {
     string idStr = PokemonImageLoader::GetInstance()->PokemonIdToString(
@@ -231,13 +241,23 @@ void PokemonBase::SetAnimator()
         {
             int frameX = image->GetMaxFrameX();
             int frameY = image->GetMaxFrameY();
-            float frameTime =
-                1.f / frameX;  //  Check: ��� �ӵ� �ϵ��ڵ� ���� ���� (CSV��
-                               //  �ִ� �����ͷ� �� �����Ӹ��� ����ӵ��� �ٸ���
-                               //  �� �� �ִ�)
+            float frameTime;
+            if (*type == "Walk")
+            {
+                frameTime = 0.2f / frameX;
+            }
+            else
+            {
+                frameTime = 1.f / frameX;
+                //  Check: 재생 속도 하드코딩 개선 사항 (CSV에
+                //  있는 데이터로 매 프레임마다 재생속도도 다르게
+                //  할 수는 있다)
+                // Improvements to hard-coding playback speed (with data in CSV,
+                // playback speed can be different for each frame)
+            }
             animator->AddAnimation(*type, image, frameX, frameY, frameTime,
                                    *type == "Idle");
-            // �ݺ��Ǵ� �ִϸ��̼��� Idle�� �־
+            // 占쌥븝옙占실댐옙 占쌍니몌옙占싱쇽옙占쏙옙 Idle占쏙옙 占쌍어서
         }
     }
 }

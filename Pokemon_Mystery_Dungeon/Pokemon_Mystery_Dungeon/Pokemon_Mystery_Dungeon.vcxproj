@@ -102,7 +102,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;_HAS_STD_BYTE=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
@@ -133,12 +133,14 @@
     <ClCompile Include="AttackSkill.cpp" />
     <ClCompile Include="BossScene.cpp" />
     <ClCompile Include="Branch.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="CameraTestScene.cpp" />
     <ClCompile Include="CollisionBoxTool.cpp" />
     <ClCompile Include="DefaultUIState.cpp" />
     <ClCompile Include="DialogueManager.cpp" />
     <ClCompile Include="DialogueUIState.cpp" />
+    <ClCompile Include="DongminScene.cpp" />
     <ClCompile Include="DungeonManager.cpp" />
     <ClCompile Include="DungeonUIState.cpp" />
     <ClCompile Include="EmberSkill.cpp" />
@@ -207,6 +209,7 @@
     <ClInclude Include="AttackSkill.h" />
     <ClInclude Include="BossScene.h" />
     <ClInclude Include="Branch.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraManager.h" />
     <ClInclude Include="CameraTestScene.h" />
     <ClInclude Include="CollisionBoxTool.h" />
@@ -217,6 +220,7 @@
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="CommonFunction.h" />
     <ClInclude Include="config.h" />
+    <ClInclude Include="DongminScene.h" />
     <ClInclude Include="DungeonManager.h" />
     <ClInclude Include="DungeonUIState.h" />
     <ClInclude Include="EmberSkill.h" />
@@ -229,6 +233,7 @@
     <ClInclude Include="IAnimState.h" />
     <ClInclude Include="IdleActionState.h" />
     <ClInclude Include="IdleAnimState.h" />
+    <ClInclude Include="IdleUIState.h" />
     <ClInclude Include="IItem.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageGDIPlus.h" />

@@ -86,6 +86,9 @@ public:
                            int frameY, bool isFlip = false,
                            bool isCenter = true);
 
+    void RenderWithCamera(HDC hdc, int x, int y);
+    void FrameRenderWithCamera(HDC hdc, int x, int y, int frameX, int frameY,
+                               int transparent = 0, bool isCenter = 0);
     // 메모리 해제
     void Release();
 

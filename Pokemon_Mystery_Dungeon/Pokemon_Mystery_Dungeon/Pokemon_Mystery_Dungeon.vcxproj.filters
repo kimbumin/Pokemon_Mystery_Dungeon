@@ -240,48 +240,6 @@
     <ClCompile Include="Scene.cpp">
       <Filter>Scene\소스</Filter>
     </ClCompile>
-    <ClCompile Include="AttackActionState.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="DialogueManager.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="DungeonManager.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="DungeonUIState.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="HurtActionState.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="InfoUIState.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerManager.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="PokemonBuilder.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="PokemonEnemy.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="PokemonPool.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="SkillInfoUIState.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="TileMapTestScene.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="UIElementText.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="YesOrNoUIState.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="FireBlastSkill.cpp">
       <Filter>Skill\SkillList</Filter>
     </ClCompile>
@@ -293,6 +251,51 @@
     </ClCompile>
     <ClCompile Include="SwingSkill.cpp">
       <Filter>Skill\SkillList</Filter>
+    </ClCompile>
+    <ClCompile Include="DungeonManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="TileMapTestScene.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerManager.cpp">
+      <Filter>Pokemon</Filter>
+    </ClCompile>
+    <ClCompile Include="PokemonBuilder.cpp">
+      <Filter>Pokemon</Filter>
+    </ClCompile>
+    <ClCompile Include="PokemonEnemy.cpp">
+      <Filter>Pokemon</Filter>
+    </ClCompile>
+    <ClCompile Include="PokemonPool.cpp">
+      <Filter>Pokemon</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackActionState.cpp">
+      <Filter>Pokemon\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="HurtActionState.cpp">
+      <Filter>Pokemon\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="InfoUIState.cpp">
+      <Filter>Ui\UiState\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillInfoUIState.cpp">
+      <Filter>Ui\UiState\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="DungeonUIState.cpp">
+      <Filter>Ui\UiState\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="UIElementText.cpp">
+      <Filter>Ui\UiConfig\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="DialogueManager.cpp">
+      <Filter>Ui\UiConfig\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="YesOrNoUIState.cpp">
+      <Filter>Ui\UiState\소스</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -485,62 +488,53 @@
     <ClInclude Include="Scene.h">
       <Filter>Scene\헤더</Filter>
     </ClInclude>
-    <ClInclude Include="AttackActionState.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="DialogueManager.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="DialogueTemplate.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="DungeonManager.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="DungeonUIState.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="HurtActionState.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="InfoUIState.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerManager.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="PokemonBuilder.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="PokemonDataLoader.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="PokemonEnemy.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="PokemonPool.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="TileMapTestScene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="UIElementText.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="Camera.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerManager.h">
+      <Filter>Pokemon</Filter>
+    </ClInclude>
+    <ClInclude Include="PokemonBuilder.h">
+      <Filter>Pokemon</Filter>
+    </ClInclude>
+    <ClInclude Include="PokemonEnemy.h">
+      <Filter>Pokemon</Filter>
+    </ClInclude>
+    <ClInclude Include="PokemonPool.h">
+      <Filter>Pokemon</Filter>
+    </ClInclude>
+    <ClInclude Include="HurtActionState.h">
+      <Filter>Pokemon\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackActionState.h">
+      <Filter>Pokemon\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="PokemonDataLoader.h">
+      <Filter>Pokemon\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="DungeonUIState.h">
+      <Filter>Ui\UiState\헤더</Filter>
     </ClInclude>
     <ClInclude Include="YesOrNoUIState.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Ui\UiState\헤더</Filter>
     </ClInclude>
-    <ClInclude Include="FireBlastSkill.h">
-      <Filter>Skill\SkillList</Filter>
+    <ClInclude Include="UIElementText.h">
+      <Filter>Ui\UiConfig\헤더</Filter>
     </ClInclude>
-    <ClInclude Include="StoneShowerSkill.h">
-      <Filter>Skill\SkillList</Filter>
+    <ClInclude Include="InfoUIState.h">
+      <Filter>Ui\UiState\헤더</Filter>
     </ClInclude>
-    <ClInclude Include="AttackSkill.h">
-      <Filter>Skill\SkillList</Filter>
+    <ClInclude Include="DialogueManager.h">
+      <Filter>Ui\UiConfig\헤더</Filter>
     </ClInclude>
-    <ClInclude Include="SwingSkill.h">
-      <Filter>Skill\SkillList</Filter>
+    <ClInclude Include="DialogueTemplate.h">
+      <Filter>Ui\UiConfig\헤더</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

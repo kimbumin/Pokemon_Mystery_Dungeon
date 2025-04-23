@@ -5,6 +5,7 @@
 #include "Image.h"
 #include "KeyManager.h"
 #include "SceneManager.h"
+#include "Camera.h"
 
 HRESULT BossScene::Init()
 {
@@ -14,7 +15,7 @@ HRESULT BossScene::Init()
     backGroundWidth = 432;
     backGroundHeight = 376;
 
-    SetClientRect(g_hWnd, backGroundWidth, backGroundHeight);
+    SetClientRect(g_hWnd, WINSIZE_X, WINSIZE_Y);
 
     {
         backGround = ImageManager::GetInstance()->AddImage(
@@ -24,6 +25,10 @@ HRESULT BossScene::Init()
 
     mPlayer = new MPlayer;
     mPlayer->Init();
+    mPlayer->SetPos({180,160});
+
+    Camera::GetInstance()->SetMapSize({TILE_X * TILE_SIZE, TILE_Y * TILE_SIZE});
+    Camera::GetInstance()->SetScreenSize({500, 400});
 
     InitBoss();
 
@@ -54,7 +59,10 @@ void BossScene::Update()
     }
 
     if (mPlayer)
+    {
         mPlayer->Update();
+        Camera::GetInstance()->SetCameraPos(mPlayer->GetPos());
+    }
     // if (boss) boss->Update();
 
     if (BossScene::IsBossDefeated())
@@ -72,17 +80,21 @@ void BossScene::Update()
 
 void BossScene::Render(HDC hdc)
 {
-    PatBlt(hdc, 0, 0, 2000, 2000, BLACKNESS);
-    backGround->Render(hdc, 0, 0);
+    HRGN clipRegion = CreateRectRgn(0, 0, 500, 400);
+    SelectClipRgn(hdc, clipRegion);
+
+    backGround->RenderWithCamera(hdc, 0, 0);
 
     if (mPlayer)
         mPlayer->Render(hdc);
     // if (boss) boss->Render(hdc);
-
     if (collisionBoxTool)
     {
         collisionBoxTool->Render(hdc);
     }
+    SelectClipRgn(hdc, NULL);
+    DeleteObject(clipRegion);
+
 }
 
 void BossScene::InitBoss()
