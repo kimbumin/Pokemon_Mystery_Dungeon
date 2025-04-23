@@ -106,20 +106,6 @@ void SquareScene::Update()
         SceneManager::GetInstance()->ChangeScene("TileMapTool");
     }
 
-    pokemon->Update();
-
-    if (pokemon && pokemon->currentSkill)
-    {
-        pokemon->currentSkill->Update();
-    }
-
-    if (KeyManager::GetInstance()->IsOnceKeyDown('Z'))
-    {
-        if (pokemon && pokemon->currentSkill)
-        {
-            pokemon->currentSkill->Use(pokemon);
-        }
-    }
 
     if (yellowFlower && TimerManager::GetInstance())
     {
@@ -234,11 +220,6 @@ void SquareScene::Render(HDC hdc)
     wsprintf(szText, TEXT("Mouse X : %d, Y : %d"), g_ptMouse.x, g_ptMouse.y);
     TextOut(hdc, 300, 60, szText, wcslen(szText));
 
-    pokemon->Render(hdc);
-    if (pokemon && pokemon->currentSkill)
-    {
-        pokemon->currentSkill->Render(hdc);
-    }
 }
 
 void SquareScene::RenderFlowers(HDC hdc, Image* flower,const std::vector<POINT>& positions, int currFrame)

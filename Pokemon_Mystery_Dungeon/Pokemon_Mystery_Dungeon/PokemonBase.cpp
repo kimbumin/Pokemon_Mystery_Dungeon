@@ -12,12 +12,8 @@
 #include "PokemonDataLoader.h"
 #include "PokemonImageLoader.h"
 #include "RotateAnimState.h"
-#include "SwingAnimState.h"
-#include "HurtAnimState.h"
-
-#include "MoveActionState.h"
-#include "IdleActionState.h"
 #include "SkillManager.h"
+#include "SwingAnimState.h"
 #include "WalkAnimState.h"
 
 // Skill
@@ -26,7 +22,8 @@
 HRESULT PokemonBase::Init()
 {
     isAlive = true;
-    baseStatus = PokemonDataLoader::GetInstance()->GetData(1); // 占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙
+    baseStatus = PokemonDataLoader::GetInstance()->GetData(
+        1);  
     currentSkill = SkillManager::GetInstance()->CreateSkill("StoneShower");
     currentStatus = *baseStatus;
     // level = 0;
@@ -65,7 +62,7 @@ void PokemonBase::Release()
         delete animator;
         animator = nullptr;
     }
-    // 占싱곤옙 占쏙옙占쏙옙占 占쏙옙 占쏙옙크占싸곤옙占쏙옙
+
     if (walkAnim)
     {
         delete walkAnim;
@@ -141,12 +138,12 @@ void PokemonBase::Render(HDC hdc)
 
 void PokemonBase::CalStatus()
 {
-    currentStatus.hp = CalStat(baseStatus->hp) + 10 /*占쏙옙占쏙옙占쏙옙*/;
-    currentStatus.atk = CalStat(baseStatus->atk) + 5 /*占쏙옙占쏙옙占쏙옙*/;
-    currentStatus.def = CalStat(baseStatus->def) + 5 /*占쏙옙占쏙옙占쏙옙*/;
-    currentStatus.spAtk = CalStat(baseStatus->spAtk) + 5 /*占쏙옙占쏙옙占쏙옙*/;
-    currentStatus.spDef = CalStat(baseStatus->spDef) + 5 /*占쏙옙占쏙옙占쏙옙*/;
-    currentStatus.speed = CalStat(baseStatus->speed) + 5 /*占쏙옙占쏙옙占쏙옙*/;
+    currentStatus.hp = CalStat(baseStatus->hp) + 10;
+    currentStatus.atk = CalStat(baseStatus->atk) + 5;
+    currentStatus.def = CalStat(baseStatus->def) + 5;
+    currentStatus.spAtk = CalStat(baseStatus->spAtk) + 5;
+    currentStatus.spDef = CalStat(baseStatus->spDef) + 5;
+    currentStatus.speed = CalStat(baseStatus->speed) + 5;
 }
 
 int PokemonBase::CalStat(int value)
@@ -156,9 +153,6 @@ int PokemonBase::CalStat(int value)
 
 void PokemonBase::TakeDamage()
 {
-    // 占쏙옙占쏙옙占쏙옙 占쌉댐옙 占쏙옙占쏙옙 占쌉댐옙 占쏙옙占쏙옙占쏙옙占쏙옙 or 占쌍댐옙 占쏙옙占쏙옙占쏙옙占쏙옙
-    // 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙 占시쏙옙占쌜울옙占쏙옙 占쏙옙占쏙옙占싹곤옙 占쏙옙占쏙옙占시쏙옙占쌜울옙占쏙옙 占쏙옙占 占쏙옙占쏙옙占쏙옙 占쏙옙
-    // 占쏙옙占쏙옙占 占싱걸뤄옙 占쏙옙占쏙옙占싹댐옙 占쏙옙占쏙옙
 }
 
 void PokemonBase::SetAnimState(IAnimState* newState)
