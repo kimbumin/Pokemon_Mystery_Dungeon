@@ -14,7 +14,7 @@ HRESULT EmberSkill::Init()
     frameCount = 0;
     elapsedTime = 0.0f;
     image = ImageManager::GetInstance()->AddImage(
-        "Ember", TEXT("Image/SkillImage/FireBlast.bmp"), 190, 19, 10, 1, true,
+        "Ember", TEXT("Image/SkillImage/Ember.bmp"), 190, 19, 10, 1, true,
         RGB(255, 0, 255));
 
     return S_OK;

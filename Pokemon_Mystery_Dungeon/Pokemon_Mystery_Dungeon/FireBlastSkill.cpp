@@ -14,7 +14,7 @@ HRESULT FireBlastSkill::Init()
     frameCount = 0;
     elapsedTime = 0.0f;
     image = ImageManager::GetInstance()->AddImage(
-        "Ember", TEXT("Image/SkillImage/FireBlast.bmp"), 1856 / 2, 61 / 2, 29,
+        "FireBlast", TEXT("Image/SkillImage/FireBlast.bmp"), 1856 / 2, 61 / 2, 29,
         1, true, RGB(255, 0, 255));
 
     return S_OK;
