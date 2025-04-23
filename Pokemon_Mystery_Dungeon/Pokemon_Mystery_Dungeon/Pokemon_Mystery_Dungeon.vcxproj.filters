@@ -288,6 +288,12 @@
     <ClCompile Include="StoneShowerSkill.cpp">
       <Filter>Skill\SkillList</Filter>
     </ClCompile>
+    <ClCompile Include="AttackSkill.cpp">
+      <Filter>Skill\SkillList</Filter>
+    </ClCompile>
+    <ClCompile Include="SwingSkill.cpp">
+      <Filter>Skill\SkillList</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="config.h">
@@ -528,6 +534,12 @@
       <Filter>Skill\SkillList</Filter>
     </ClInclude>
     <ClInclude Include="StoneShowerSkill.h">
+      <Filter>Skill\SkillList</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackSkill.h">
+      <Filter>Skill\SkillList</Filter>
+    </ClInclude>
+    <ClInclude Include="SwingSkill.h">
       <Filter>Skill\SkillList</Filter>
     </ClInclude>
   </ItemGroup>
