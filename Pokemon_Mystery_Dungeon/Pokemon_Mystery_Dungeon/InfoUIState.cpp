@@ -47,7 +47,7 @@ HRESULT InfoUIState::Init()
     NameText = new UIElementText();
     NameText->SetText(L"몬스터 이름");
     NameText->SetFont(L"Arial", 20);
-    NameText->SetTextColor(28, 28, 132, 255);  // #F1B300
+    NameText->SetTextColor(255, 255, 255, 255);  // 흰색
     NameText->SetLocalPos(50, 0);
     NameText->SetParent(FirstInfoBox);
 
