@@ -253,6 +253,10 @@ void PokemonBase::SetAnimator()
             {
                 frameTime = 0.2f / frameX;
             }
+            else if (*type == "Idle")
+            {
+                frameTime = 1.f / frameX;
+            }
             else
             {
                 frameTime = 0.5f / frameX;

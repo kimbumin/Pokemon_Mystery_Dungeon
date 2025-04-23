@@ -28,4 +28,10 @@ public:
     // 레벨 관련
     void GainExp(int amount);
     void LevelUp();
+    void PrintLevelUpSummaryDialogue(const PokemonData& prevStatus,
+                                     const PokemonData& newStatus);
+
+    // 진화 관련
+    void TryEvolve();
+    void EvolveTo(int newPokemonId);
 };
