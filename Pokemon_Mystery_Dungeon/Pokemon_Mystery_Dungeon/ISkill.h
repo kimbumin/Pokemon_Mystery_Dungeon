@@ -62,6 +62,13 @@ public:
     {
         return data;
     }
-
-    virtual ~ISkill() = default;
+    inline bool IsActive()
+    {
+        return isActive;
+    }
+    inline FPOINT GetPos()
+    {
+        return pos;
+    }
+    virtual ~ISkill() {};
 };

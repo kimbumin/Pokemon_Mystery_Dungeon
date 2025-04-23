@@ -22,9 +22,7 @@
 HRESULT PokemonBase::Init()
 {
     isAlive = true;
-    baseStatus = PokemonDataLoader::GetInstance()->GetData(
-        1);  
-    currentSkill = SkillManager::GetInstance()->CreateSkill("StoneShower");
+    learnedSkill.resize(4, nullptr);
     currentStatus = *baseStatus;
     // level = 0;
     CalStatus();
@@ -129,11 +127,26 @@ void PokemonBase::Update()
     {
         currentActionState->Update(this);
     }
+    for (size_t i = 0; i < learnedSkill.size(); ++i)
+    {
+        if (learnedSkill[i] && learnedSkill[i]->IsActive())
+        {
+            learnedSkill[i]->Update();
+        }
+    }
 }
 
 void PokemonBase::Render(HDC hdc)
 {
     animator->Render(hdc, pos.x, pos.y);
+
+    for (size_t i = 0; i < learnedSkill.size(); ++i)
+    {
+        if (learnedSkill[i] && learnedSkill[i]->IsActive())
+        {
+            learnedSkill[i]->Render(hdc);
+        }
+    }
 }
 
 void PokemonBase::CalStatus()
@@ -291,7 +304,7 @@ void PokemonBase::ExecuteIdleAction()
     SetActionState(idleAction);
 }
 
-void PokemonBase::ExecuteAttackAction(ISkill* skill)
+void PokemonBase::ExecuteAttackAction(shared_ptr<ISkill> skill)
 {
     attackAction->SelectSkill(skill);
     SetActionState(attackAction);
