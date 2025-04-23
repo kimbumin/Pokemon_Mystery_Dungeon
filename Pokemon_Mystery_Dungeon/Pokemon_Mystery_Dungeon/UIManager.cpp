@@ -17,6 +17,7 @@ UIState* UIManager::nextState = nullptr;
 
 void UIManager::Init()
 {
+    AddFontResourceEx(L"Font\\DungGeunMo.ttf", FR_PRIVATE, 0);
     AddPersistentState(new InfoUIState());
 
     RegisterAllUIStates();
@@ -49,15 +50,15 @@ void UIManager::Release()
 
 void UIManager::Update()
 {
-    float dt = TimerManager::GetInstance()->GetDeltaTime();
+     float dt = TimerManager::GetInstance()->GetDeltaTime();
     for (auto& state : persistentStates)
     {
-        state->Update();
+        state->Update(dt);
     }
 
     for (auto& state : toggleStates)
     {
-        state->Update();
+        state->Update(dt);
     }
 
     if (currentState)

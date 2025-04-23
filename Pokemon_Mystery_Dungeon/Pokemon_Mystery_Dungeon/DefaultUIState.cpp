@@ -1,5 +1,4 @@
 #include "DefaultUIState.h"
-
 #include "ImageGDIPlusManager.h"
 #include "SkillUIState.h"
 #include "UIElementImage.h"
@@ -41,47 +40,46 @@ HRESULT DefaultUIState::Init()
     /*--------------- 텍스트 설정 ---------------*/
     // otherBox
     SkillText->SetText(L"Skill");
-    SkillText->SetFont(L"DungGeunMo", 18);
+    SkillText->SetFont(18);
     SkillText->SetTextLine(5.0f);
     SkillText->SetLocalPos(fontPosX, OffsetY[0]);
     SkillText->SetParent(OtherInterfaceInfoBox);
 
     ItemText->SetText(L"Item");
-    ItemText->SetFont(L"Arial", 18);
+    ItemText->SetFont(18);
     ItemText->SetTextLine(5.0f);
     ItemText->SetLocalPos(fontPosX, OffsetY[1]);
     ItemText->SetParent(OtherInterfaceInfoBox);
 
     SettingText->SetText(L"Setting");
-    SettingText->SetFont(L"Arial", 18);
+    SettingText->SetFont(18);
     SettingText->SetTextLine(5.0f);
     SettingText->SetLocalPos(fontPosX, OffsetY[2]);
     SettingText->SetParent(OtherInterfaceInfoBox);
 
     // mapBox
     MapNameText->SetText(L"Map Name");
-    MapNameText->SetFont(L"Arial", 18);
+    MapNameText->SetFont(18);
     MapNameText->SetTextLine(5.0f);
     MapNameText->SetLocalPos(50, MapInfoBox->GetImageHeight() / 2 - 10);
     MapNameText->SetParent(MapInfoBox);
 
     // pokemonInfoBox
     PokemonNameText->SetText(L"Pokemon Name");
-    PokemonNameText->SetFont(L"Arial", 18);
+    PokemonNameText->SetFont(18);
     PokemonNameText->SetTextLine(5.0f);
-    PokemonNameText->SetTextColor(241, 179, 0, 255);
+    PokemonNameText->SetTextColorRGB(241, 179, 0);  // #F1B300
     PokemonNameText->SetLocalPos(50, PokemonInfoBox->GetImageHeight() / 2 - 10);
     PokemonNameText->SetParent(PokemonInfoBox);
 
     PokemonLevelText->SetText(L"Level 1");
-    PokemonLevelText->SetFont(L"Arial", 18);
+    PokemonLevelText->SetFont(18);
     PokemonLevelText->SetTextLine(5.0f);
-    PokemonLevelText->SetLocalPos(50,
-                                  PokemonInfoBox->GetImageHeight() / 2 + 20);
+    PokemonLevelText->SetLocalPos(50,PokemonInfoBox->GetImageHeight() / 2 + 20);
     PokemonLevelText->SetParent(PokemonInfoBox);
 
     PokemonHPText->SetText(L"HP 100 / 100");
-    PokemonHPText->SetFont(L"Arial", 18);
+    PokemonHPText->SetFont(18);
     PokemonHPText->SetTextLine(5.0f);
     PokemonHPText->SetLocalPos(50, PokemonInfoBox->GetImageHeight() / 2 + 40);
     PokemonHPText->SetParent(PokemonInfoBox);

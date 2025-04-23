@@ -7,9 +7,6 @@ void UIElementText::Render(HDC hdc)
     if (fullText.empty())
         return;
 
-    Gdiplus::Graphics graphics(hdc);
-    graphics.SetInterpolationMode(Gdiplus::InterpolationModeHighQualityBicubic);
-
     FPOINT pos = GetRealPos();
     float lineHeight = fontSize + textLine;
 
@@ -17,13 +14,13 @@ void UIElementText::Render(HDC hdc)
         isTyping ? fullText.substr(0, visibleTextLength) : fullText;
 
     wstringstream lineStream(visibleText);
-    std::wstring currLine;
+    wstring currLine;
     int lineIndex = 0;
 
     while (getline(lineStream, currLine, L'\n'))
     {
-        DrawColoredText(graphics, currLine, pos.x,
-                        pos.y + (lineHeight * lineIndex));
+        DrawColoredText(hdc, currLine, (int)pos.x,
+                        (int)(pos.y + lineHeight * lineIndex));
         lineIndex++;
     }
 }
@@ -47,16 +44,19 @@ void UIElementText::RenderDialogue(const wstring& txt,
     text = fullText;
 }
 
-void UIElementText::DrawColoredText(Gdiplus::Graphics& graphics,
+void UIElementText::DrawColoredText(HDC hdc,
                                     const std::wstring& line, float x, float y)
 {
-    Gdiplus::FontFamily fontFamily(fontName.c_str());
-    Gdiplus::Font font(&fontFamily, fontSize, Gdiplus::FontStyleBold,
-                       Gdiplus::UnitPixel);
+    LOGFONT lf = {};
+    lf.lfHeight = -fontSize;
+    wcscpy_s(lf.lfFaceName, fontName.c_str());
 
-    Gdiplus::SolidBrush defaultBrush((textColor));  // #1C1C84
-    Gdiplus::SolidBrush highlightBrush(
-        Gdiplus::Color(255, 241, 179, 0));  // #F1B300
+    HFONT hFont = CreateFontIndirect(&lf);
+    HFONT oldFont = (HFONT)SelectObject(hdc, hFont);
+    SetBkMode(hdc, TRANSPARENT);
+
+    COLORREF normalColor = textColor;
+    COLORREF highlightColor = RGB(241, 179, 0);
 
     bool inHighlight = false;
     std::wstring segment;
@@ -68,31 +68,28 @@ void UIElementText::DrawColoredText(Gdiplus::Graphics& graphics,
         {
             if (!segment.empty())
             {
-                Gdiplus::PointF point(drawX, y);
-                graphics.DrawString(segment.c_str(), -1, &font, point, nullptr,
-                                    &defaultBrush);
-
-                Gdiplus::RectF size;
-                graphics.MeasureString(segment.c_str(), -1, &font, point,
-                                       nullptr, &size);
-                drawX += size.Width;
+                SetTextColor(hdc, inHighlight ? highlightColor : normalColor);
+                TextOut(hdc, drawX, y, segment.c_str(), segment.length());
+                SIZE sz;
+                GetTextExtentPoint32(hdc, segment.c_str(), segment.length(),
+                                     &sz);
+                drawX += sz.cx;
                 segment.clear();
             }
             inHighlight = true;
             continue;
         }
+
         if (ch == L'〉')
         {
             if (!segment.empty())
             {
-                Gdiplus::PointF point(drawX, y);
-                graphics.DrawString(segment.c_str(), -1, &font, point, nullptr,
-                                    &highlightBrush);
-
-                Gdiplus::RectF size;
-                graphics.MeasureString(segment.c_str(), -1, &font, point,
-                                       nullptr, &size);
-                drawX += size.Width;
+                SetTextColor(hdc, inHighlight ? highlightColor : normalColor);
+                TextOut(hdc, drawX, y, segment.c_str(), segment.length());
+                SIZE sz;
+                GetTextExtentPoint32(hdc, segment.c_str(), segment.length(),
+                                     &sz);
+                drawX += sz.cx;
                 segment.clear();
             }
             inHighlight = false;
@@ -102,14 +99,37 @@ void UIElementText::DrawColoredText(Gdiplus::Graphics& graphics,
         segment += ch;
     }
 
-    // 남은 글자 출력
     if (!segment.empty())
     {
-        Gdiplus::PointF point(drawX, y);
-        Gdiplus::SolidBrush& brush =
-            inHighlight ? highlightBrush : defaultBrush;
-        graphics.DrawString(segment.c_str(), -1, &font, point, nullptr, &brush);
+        SetTextColor(hdc, inHighlight ? highlightColor : normalColor);
+        TextOut(hdc, drawX, y, segment.c_str(), segment.length());
     }
+
+    SelectObject(hdc, oldFont);
+    DeleteObject(hFont);
+}
+
+void UIElementText::SetText(const std::wstring& txt)
+{
+    text = txt;
+    fullText = txt;
+    visibleTextLength = (int)txt.length();
+    isTyping = false;
+}
+
+void UIElementText::SetTextLine(float line)
+{
+    textLine = line;
+}
+
+void UIElementText::SetFont(int size)
+{
+    fontSize = size;
+}
+
+void UIElementText::SetTextColorRGB(int r, int g, int b)
+{
+    textColor = RGB(r, g, b);
 }
 
 void UIElementText::TypeEffect(const wstring& txt, float interval)

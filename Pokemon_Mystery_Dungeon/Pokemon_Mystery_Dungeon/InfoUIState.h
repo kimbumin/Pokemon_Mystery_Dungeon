@@ -13,7 +13,7 @@ private:
     UIElementImage* ThirdInfoBox = nullptr;
     UIElementImage* FourthInfoBox = nullptr;
 
-    UIElementText* SkillNameText = nullptr;
+    UIElementText* NameText = nullptr;
     UIElementText* LevelText = nullptr;
     UIElementText* HPText = nullptr;
 

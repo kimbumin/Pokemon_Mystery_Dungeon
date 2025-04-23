@@ -120,6 +120,11 @@ void DungeonUIState::Update()
         }
     }
 
+    if (KeyManager::GetInstance()->IsOnceKeyDown(0x58))  // 'X' Ű
+    {
+        UIManager::GetInstance()->ChangeState("IdleUI");
+    }
+
 }
 
 void DungeonUIState::Render(HDC hdc)

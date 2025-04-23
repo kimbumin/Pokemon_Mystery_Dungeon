@@ -67,7 +67,7 @@ void DialogueUIState::PushDialogueLine(const wstring& text)
 {
     auto* newText = new UIElementText();
     newText->SetText(text);
-    newText->SetFont(L"Arial", 18);
+    newText->SetFont(18);
     newText->SetTextLine(5.0f);
     newText->SetLocalPos(10, 10);
     newText->SetParent(dialogueBoxImage);
@@ -80,9 +80,9 @@ void DialogueUIState::PushDialogueLine(const wstring& text,
     newText->RenderDialogue(text, values);  // 템플릿 치환 포함
     newText->TypeEffect(text, 0.05f);
 
-    newText->SetFont(L"Arial", 20);
+    newText->SetFont(20);
     newText->SetTextLine(5.0f);
-    newText->SetTextColor(28, 28, 132, 255);  // #1C1C84
+    newText->SetTextColorRGB(28, 28, 132);
     newText->SetLocalPos(20, 30);
     newText->SetParent(dialogueBoxImage);
 }

@@ -33,21 +33,21 @@ HRESULT DownStairUIState::Init()
     // 자식 객체 생성
     IsDownText = new UIElementText();
     IsDownText->SetText(L"Would you like to go down \n the stairs?");
-    IsDownText->SetFont(L"Arial", 18);
+    IsDownText->SetFont(18);
     IsDownText->SetTextLine(5.0f);
     IsDownText->SetLocalPos(50, OffsetY[0]);
     IsDownText->SetParent(DownStairBox);
 
     YesText = new UIElementText();
     YesText->SetText(L"Yes");
-    YesText->SetFont(L"Arial", 18);
+    YesText->SetFont(18);
     YesText->SetTextLine(5.0f);
     YesText->SetLocalPos(50, OffsetY[0]);
     YesText->SetParent(YesOrNoBox);
 
     NoText = new UIElementText();
     NoText->SetText(L"No");
-    NoText->SetFont(L"Arial", 18);
+    NoText->SetFont(18);
     NoText->SetTextLine(5.0f);
     NoText->SetLocalPos(50, OffsetY[1]);
     NoText->SetParent(YesOrNoBox);

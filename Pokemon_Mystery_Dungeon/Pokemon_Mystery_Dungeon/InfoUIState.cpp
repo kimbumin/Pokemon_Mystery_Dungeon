@@ -43,13 +43,29 @@ HRESULT InfoUIState::Init()
     ThirdInfoBox->SetParent(this);
     FourthInfoBox->SetParent(this);
 
-    // 자식 객체 생성 waterTypeText
-    SkillNameText = new UIElementText();
-    SkillNameText->SetText(L"몬스터 이름");
-    SkillNameText->SetFont(L"Arial", 20);
-    SkillNameText->SetTextColor(255, 255, 255, 255);  // 흰색
-    SkillNameText->SetLocalPos(50, 0);
-    SkillNameText->SetParent(FirstInfoBox);
+    // 이름
+    NameText = new UIElementText();
+    NameText->SetText(L"Name");
+    NameText->SetFont(12);
+    NameText->SetTextColorRGB(255, 204, 0);  // 노란색 느낌
+    NameText->SetLocalPos(80, 5);
+    NameText->SetParent(FirstInfoBox);
+
+    // 레벨
+    LevelText = new UIElementText();
+    LevelText->SetText(L"Level");
+    LevelText->SetFont(12);
+    LevelText->SetTextColorRGB(255, 255, 255);  // 흰색
+    LevelText->SetLocalPos(100,20);
+    LevelText->SetParent(FirstInfoBox);
+
+    // HP
+    HPText = new UIElementText();
+    HPText->SetText(L"HP");
+    HPText->SetFont(12);
+    HPText->SetTextColorRGB(241, 179, 0);  // 주황 강조색
+    HPText->SetLocalPos(160, 20);
+    HPText->SetParent(FirstInfoBox);
 
     UpdateRealPos();
 
