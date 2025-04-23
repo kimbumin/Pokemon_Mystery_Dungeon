@@ -5,25 +5,30 @@
 #include "Image.h"
 #include "KeyManager.h"
 #include "SceneManager.h"
+#include "Camera.h"
 
 HRESULT BossScene::Init()
 {
     collisionBoxTool = new CollisionBoxTool();
-    collisionBoxTool->Init(L"마그마보스방");
+    collisionBoxTool->Init(L"MagmaBossRoom");
 
     backGroundWidth = 432;
     backGroundHeight = 376;
 
-    SetClientRect(g_hWnd, backGroundWidth, backGroundHeight);
+    SetClientRect(g_hWnd, WINSIZE_X, WINSIZE_Y);
 
     {
         backGround = ImageManager::GetInstance()->AddImage(
-            "보스방", L"Image/SceneImage/MagmaBossMap.bmp", backGroundWidth,
+            "MagmaBossMap", L"Image/SceneImage/MagmaBossMap.bmp", backGroundWidth,
             backGroundHeight, 1, 1, true, RGB(255, 0, 255));
     }
 
     mPlayer = new MPlayer;
     mPlayer->Init();
+    mPlayer->SetPos({180,160});
+
+    Camera::GetInstance()->SetMapSize({TILE_X * TILE_SIZE, TILE_Y * TILE_SIZE});
+    Camera::GetInstance()->SetScreenSize({500, 400});
 
     InitBoss();
 
@@ -50,16 +55,19 @@ void BossScene::Update()
 {
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F6))
     {
-        SceneManager::GetInstance()->ChangeScene("광장");
+        SceneManager::GetInstance()->ChangeScene("Square");
     }
 
     if (mPlayer)
+    {
         mPlayer->Update();
+        Camera::GetInstance()->SetCameraPos(mPlayer->GetPos());
+    }
     // if (boss) boss->Update();
 
     if (BossScene::IsBossDefeated())
     {
-        SceneManager::GetInstance()->ChangeScene("광장");
+        SceneManager::GetInstance()->ChangeScene("Square");
     }
 
     if (collisionBoxTool)
@@ -72,17 +80,21 @@ void BossScene::Update()
 
 void BossScene::Render(HDC hdc)
 {
-    PatBlt(hdc, 0, 0, 2000, 2000, BLACKNESS);
-    backGround->Render(hdc, 0, 0);
+    HRGN clipRegion = CreateRectRgn(0, 0, 500, 400);
+    SelectClipRgn(hdc, clipRegion);
+
+    backGround->RenderWithCamera(hdc, 0, 0);
 
     if (mPlayer)
         mPlayer->Render(hdc);
     // if (boss) boss->Render(hdc);
-
     if (collisionBoxTool)
     {
         collisionBoxTool->Render(hdc);
     }
+    SelectClipRgn(hdc, NULL);
+    DeleteObject(clipRegion);
+
 }
 
 void BossScene::InitBoss()
