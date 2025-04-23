@@ -12,6 +12,9 @@ private:
     const int dialogueBoxPosX = 25;
     const int dialogueBoxPosY = 220;
 
+    float closeTimer = 0.0f;
+    bool dialogueFullyShown = false;
+
 public:
     HRESULT Init() override;
     void Release() override;

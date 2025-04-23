@@ -48,3 +48,12 @@ void UIElementImage::Update(float dt)
     }
     UIElement::Update(dt);
 }
+
+void UIElementImage::RenderPartial(HDC hdc, int width, int height)
+{
+    if (image)
+    {
+        FPOINT pos = GetRealPos(); 
+        image->RenderPartial(hdc, pos.x, pos.y, width, height);
+    }
+}

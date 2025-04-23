@@ -4,6 +4,7 @@
 #include "ImageManager.h"
 #include "UIElementImage.h"
 #include "UIElementText.h"
+#include "Image.h"
 
 HRESULT InfoUIState::Init()
 {
@@ -21,16 +22,27 @@ HRESULT InfoUIState::Init()
         "FourthInfoBox", L"Image/UIImage/InfoUIState/NotExistsInfoBox.bmp", 300,
         50);
 
+    auto CurrHpBarImage = manager.AddImage(
+        "CurrHpBar", L"Image/UIImage/InfoUIState/CurrHpBar.bmp", 94, 20);
+    auto MaxHpBarImage = manager.AddImage(
+        "MaxHpBar", L"Image/UIImage/InfoUIState/MaxHpBar.bmp", 103, 26);
+
     // UI 엘리먼트 생성
     FirstInfoBox = new UIElementImage();
     SecondInfoBox = new UIElementImage();
     ThirdInfoBox = new UIElementImage();
     FourthInfoBox = new UIElementImage();
 
+    CurrHpBar = new UIElementImage();
+    MaxHpBar = new UIElementImage();
+
     FirstInfoBox->SetImage(FirstInfoBoxImage);
     SecondInfoBox->SetImage(SecondInfoBoxImage);
     ThirdInfoBox->SetImage(ThirdInfoBoxImage);
     FourthInfoBox->SetImage(FourthInfoBoxImage);
+
+    CurrHpBar->SetImage(CurrHpBarImage);
+    MaxHpBar->SetImage(MaxHpBarImage);
 
     // UI 엘리먼트 위치 설정
     FirstInfoBox->SetLocalPos(InfoBoxPosX, InfoBoxPosYOffset[0]);
@@ -38,10 +50,17 @@ HRESULT InfoUIState::Init()
     ThirdInfoBox->SetLocalPos(InfoBoxPosX, InfoBoxPosYOffset[2]);
     FourthInfoBox->SetLocalPos(InfoBoxPosX, InfoBoxPosYOffset[3]);
 
+    MaxHpBar->SetLocalPos(680, 20);
+    CurrHpBar->SetLocalPos(680, 20);
+
     FirstInfoBox->SetParent(this);
     SecondInfoBox->SetParent(this);
     ThirdInfoBox->SetParent(this);
     FourthInfoBox->SetParent(this);
+
+    MaxHpBar->SetParent(nullptr);
+    CurrHpBar->SetParent(nullptr);
+
 
     // 이름
     NameText = new UIElementText();
@@ -78,14 +97,23 @@ void InfoUIState::Release()
 
 void InfoUIState::Update()
 {
+    // hp update 
+    barWidth = (int)(CurrHpBar->GetImageWidth() * percent);
+    barHeight = CurrHpBar->GetImageHeight();
 }
 
 void InfoUIState::Render(HDC hdc)
 {
+
     FirstInfoBox->Render(hdc);
     SecondInfoBox->Render(hdc);
     ThirdInfoBox->Render(hdc);
     FourthInfoBox->Render(hdc);
+
+    MaxHpBar->Render(hdc);
+    CurrHpBar->RenderPartial(hdc,  barWidth, barHeight);
+    
+
     // 텍스트 렌더링
 }
 

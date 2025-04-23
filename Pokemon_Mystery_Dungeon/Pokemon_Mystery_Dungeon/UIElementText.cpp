@@ -166,10 +166,17 @@ void UIElementText::Update(float dt)
     if (isTyping && visibleTextLength < static_cast<int>(fullText.length()))
     {
         elapsedTime += dt;
-        while (elapsedTime >= charInterval)
+        while (elapsedTime >= charInterval &&
+               visibleTextLength < static_cast<int>(fullText.length()))
         {
             elapsedTime -= charInterval;
             visibleTextLength++;
         }
     }
+
+    if (isTyping && visibleTextLength >= static_cast<int>(fullText.length()))
+    {
+        isTyping = false;
+    }
+
 }

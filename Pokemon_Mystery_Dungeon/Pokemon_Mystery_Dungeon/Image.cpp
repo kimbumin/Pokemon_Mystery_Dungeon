@@ -320,3 +320,21 @@ void Image::FrameRenderWithCamera(HDC hdc, int x, int y, int frameX, int frameY,
 
     this->FrameRender(hdc, x - cam.x, y - cam.y, frameX, frameY, transparent,isCenter);
 }
+
+
+void Image::RenderPartial(HDC hdc, int destX, int destY, int width, int height)
+{
+    if (!imageInfo || !imageInfo->hMemDC)
+        return;
+
+    if (isTransparent)
+    {
+        GdiTransparentBlt(hdc, destX, destY, width, height, imageInfo->hMemDC,
+                          0, 0, width, height, transColor);
+    }
+    else
+    {
+        BitBlt(hdc, destX, destY, width, height, imageInfo->hMemDC, 0, 0,
+               SRCCOPY);
+    }
+}

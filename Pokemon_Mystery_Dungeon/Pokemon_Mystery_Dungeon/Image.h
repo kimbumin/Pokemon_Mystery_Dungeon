@@ -92,6 +92,8 @@ public:
     // 메모리 해제
     void Release();
 
+    void RenderPartial(HDC hdc, int destX, int destY, int width, int height);
+
     inline HDC GetMemDC()
     {
         if (imageInfo)

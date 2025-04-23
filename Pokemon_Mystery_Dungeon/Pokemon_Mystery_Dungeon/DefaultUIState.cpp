@@ -19,6 +19,7 @@ HRESULT DefaultUIState::Init()
     auto CursorImage =
         manager.AddImage("Cursor", L"Image/UIImage/DefaultUIState/Cursor.png");
 
+
     // UI 엘리먼트 생성
     OtherInterfaceInfoBox = new UIElementImage();
     PokemonInfoBox = new UIElementImage();
@@ -69,19 +70,19 @@ HRESULT DefaultUIState::Init()
     PokemonNameText->SetFont(18);
     PokemonNameText->SetTextLine(5.0f);
     PokemonNameText->SetTextColorRGB(241, 179, 0);  // #F1B300
-    PokemonNameText->SetLocalPos(50, PokemonInfoBox->GetImageHeight() / 2 - 10);
+    PokemonNameText->SetLocalPos(50, 30);
     PokemonNameText->SetParent(PokemonInfoBox);
 
     PokemonLevelText->SetText(L"Level 1");
     PokemonLevelText->SetFont(18);
     PokemonLevelText->SetTextLine(5.0f);
-    PokemonLevelText->SetLocalPos(50,PokemonInfoBox->GetImageHeight() / 2 + 20);
+    PokemonLevelText->SetLocalPos(80,60);
     PokemonLevelText->SetParent(PokemonInfoBox);
 
     PokemonHPText->SetText(L"HP 100 / 100");
     PokemonHPText->SetFont(18);
     PokemonHPText->SetTextLine(5.0f);
-    PokemonHPText->SetLocalPos(50, PokemonInfoBox->GetImageHeight() / 2 + 40);
+    PokemonHPText->SetLocalPos(80, 90);
     PokemonHPText->SetParent(PokemonInfoBox);
     /*--------------- 텍스트 설정 끝 ---------------*/
 

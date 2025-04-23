@@ -12,12 +12,23 @@ private:
     UIElementImage* SecondInfoBox = nullptr;
     UIElementImage* ThirdInfoBox = nullptr;
     UIElementImage* FourthInfoBox = nullptr;
+    
+    UIElementImage* CurrHpBar = nullptr;
+    UIElementImage* MaxHpBar = nullptr;
 
     UIElementText* NameText = nullptr;
     UIElementText* LevelText = nullptr;
     UIElementText* HPText = nullptr;
 
     const int InfoBoxPosX = 500;
+
+    int currentHP = 50;
+    int maxHP = 100;
+
+    float percent = (float)currentHP / maxHP;
+
+    int barWidth;
+    int barHeight;
 
     const int InfoBoxPosYOffset[4] = {0, 50, 100, 150};
 

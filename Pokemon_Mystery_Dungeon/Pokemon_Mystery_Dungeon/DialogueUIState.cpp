@@ -55,6 +55,8 @@ void DialogueUIState::Update(float dt)
     if (dialogueBoxImage)
         dialogueBoxImage->Update(dt);
 
+    if (mainText)
+        mainText->Update(dt);
 
 
     if (KeyManager::GetInstance()->IsOnceKeyDown(0x58))  // 'X'
@@ -62,6 +64,28 @@ void DialogueUIState::Update(float dt)
         UIManager::GetInstance()->CloseUIStateBox("dialogueBox");
         UIManager::GetInstance()->ChangeState("IdleUI");
     }
+
+    
+
+    if (mainText && !dialogueFullyShown && mainText->IsTypingFinished())
+    {
+        dialogueFullyShown = true;
+        closeTimer = 0.0f;  
+    }
+
+    if (dialogueFullyShown)
+    {
+        closeTimer += dt;
+        if (closeTimer >= 2.0f)
+        {
+            UIManager::GetInstance()->CloseUIStateBox("dialogueBox");
+            UIManager::GetInstance()->ChangeState("IdleUI");
+            dialogueFullyShown = false;
+            closeTimer = 0.0f;
+        }
+    }
+
+    
 }
 
 void DialogueUIState::Render(HDC hdc)
@@ -88,4 +112,9 @@ void DialogueUIState::PushDialogueLine(const wstring& text,
 
     const wstring& replaced = mainText->RenderDialogue(text, values);
     mainText->TypeEffect(replaced, 0.05f);
+
+    dialogueFullyShown = false;
+    closeTimer = 0.0f;
+
 }
+

@@ -44,4 +44,8 @@ public:
     void TypeEffect(const wstring& txt, float interval = 0.05f);
     void SkipTyping();
     void Update(float dt);
+    bool IsTypingFinished() const
+    {
+        return !isTyping;
+    }
 };
