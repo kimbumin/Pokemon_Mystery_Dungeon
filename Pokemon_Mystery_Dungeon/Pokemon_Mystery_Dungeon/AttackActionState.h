@@ -9,7 +9,7 @@ private:
 
     Direction direction;
 
-    ISkill* selectedSkill;
+    shared_ptr<ISkill> selectedSkill;
 
     float duration;
     float elapsed;
@@ -21,7 +21,7 @@ public:
     virtual bool IsFinished();
     virtual bool CanOverride();
 
-    void SelectSkill(ISkill* newSkill);
+    void SelectSkill(shared_ptr<ISkill> newSkill);
 
     AttackActionState();
     virtual ~AttackActionState() {};
