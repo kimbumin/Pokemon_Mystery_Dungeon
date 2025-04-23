@@ -63,7 +63,6 @@ void MainGame::Release()
 
 void MainGame::Update()
 {
-    TurnManager::GetInstance()->Update();
     SceneManager::GetInstance()->Update();
     UIManager::GetInstance()->Update();
     InvalidateRect(g_hWnd, NULL, false);
