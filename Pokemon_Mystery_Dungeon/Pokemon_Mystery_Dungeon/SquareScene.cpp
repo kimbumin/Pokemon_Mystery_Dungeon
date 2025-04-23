@@ -8,6 +8,10 @@
 #include "Image.h"
 #include "LoadingScene.h"
 #include "MPlayer.h"
+#include "PokemonBase.h"
+#include "PokemonDataLoader.h"
+#include "PokemonImageLoader.h"
+#include "SkillManager.h"
 #include "StartScene.h"
 #include "TilemapTool.h"
 #include "UIManager.h"
@@ -27,8 +31,8 @@ HRESULT SquareScene::Init()
 
     // Size : 954, 714
     backGround = ImageManager::GetInstance()->AddImage(
-        "SquareBackGround", L"Image/SceneImage/Square3.bmp", SQUARESIZE_X, SQUARESIZE_Y,
-        1, 1, 0, RGB(255, 0, 255));
+        "SquareBackGround", L"Image/SceneImage/Square3.bmp", SQUARESIZE_X,
+        SQUARESIZE_Y, 1, 1, 0, RGB(255, 0, 255));
 
     // 210,41
     river = ImageManager::GetInstance()->AddImage(
@@ -83,11 +87,23 @@ HRESULT SquareScene::Init()
     mPlayer = new MPlayer();
     mPlayer->Init();
 
+    PokemonDataLoader::GetInstance()->Init();
+    PokemonDataLoader::GetInstance()->LoadFromCSV("Data/PokemonBaseStatus.csv");
+    PokemonImageLoader::GetInstance()->LoadPokemonAnim(1);
+
+    SkillManager::GetInstance()->LoadSkillsFromCSV(
+        "Data/PokemonSkill_English.csv");
+
+    pokemon = new PokemonBase();
+    pokemon->Init();
+
     return S_OK;
 }
 
 void SquareScene::Release()
 {
+    SkillManager::GetInstance()->ReleaseInstance();
+
     if (UIManager::GetInstance())
     {
         UIManager::GetInstance()->Release();
@@ -106,6 +122,21 @@ void SquareScene::Update()
         SceneManager::GetInstance()->ChangeScene("TileMapTool");
     }
 
+    pokemon->Update();
+
+    if (pokemon && pokemon->currentSkill)
+    {
+        pokemon->currentSkill->Update();
+    }
+
+    if (KeyManager::GetInstance()->IsOnceKeyDown('Z'))
+    {
+        if (pokemon && pokemon->currentSkill)
+        {
+            pokemon->currentSkill->Use(pokemon);
+        }
+    }
+
     if (yellowFlower && TimerManager::GetInstance())
     {
         elapsedTime += TimerManager::GetInstance()->GetDeltaTime();
@@ -121,26 +152,29 @@ void SquareScene::Update()
     }
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F6))
     {
-        SceneManager::GetInstance()->AddScene("DungeonScene", new DungeonScene());
-        SceneManager::GetInstance()->ChangeScene("DungeonScene", "LoadingScene");
+        SceneManager::GetInstance()->AddScene("DungeonScene",
+                                              new DungeonScene());
+        SceneManager::GetInstance()->ChangeScene("DungeonScene",
+                                                 "LoadingScene");
     }
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F5))
     {
         SceneManager::GetInstance()->AddScene("StartScene", new StartScene());
-        SceneManager::GetInstance()->AddLoadingScene("LoadingScene", new LoadingScene());
+        SceneManager::GetInstance()->AddLoadingScene("LoadingScene",
+                                                     new LoadingScene());
         SceneManager::GetInstance()->ChangeScene("StartScene", "LoadingScene");
     }
 
-	elapsedTime += TimerManager::GetInstance()->GetDeltaTime();
-	if (elapsedTime > 0.3f)
-	{
-		currAnimaionFrame++;
-		if (currAnimaionFrame >= yellowFlower->GetMaxFrameY())
-		{
-			currAnimaionFrame = 0;
-		}
-		elapsedTime = 0;
-	}
+    elapsedTime += TimerManager::GetInstance()->GetDeltaTime();
+    if (elapsedTime > 0.3f)
+    {
+        currAnimaionFrame++;
+        if (currAnimaionFrame >= yellowFlower->GetMaxFrameY())
+        {
+            currAnimaionFrame = 0;
+        }
+        elapsedTime = 0;
+    }
     if (collisionBoxTool)
     {
         collisionBoxTool->Update();
@@ -217,6 +251,12 @@ void SquareScene::Render(HDC hdc)
 
     wsprintf(szText, TEXT("Mouse X : %d, Y : %d"), g_ptMouse.x, g_ptMouse.y);
     TextOut(hdc, 300, 60, szText, wcslen(szText));
+
+    pokemon->Render(hdc);
+    if (pokemon && pokemon->currentSkill)
+    {
+        pokemon->currentSkill->Render(hdc);
+    }
 }
 
 void SquareScene::RenderFlowers(HDC hdc, Image* flower,

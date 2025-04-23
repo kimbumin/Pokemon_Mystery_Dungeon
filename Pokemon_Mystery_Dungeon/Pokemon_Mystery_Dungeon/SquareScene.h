@@ -3,6 +3,8 @@
 
 class CollisionBoxTool;
 class MPlayer;
+class PokemonBase;
+class SkillManager;
 
 class SquareScene : public Scene
 {
@@ -20,6 +22,8 @@ private:
     Image* redFlower;
     Image* yellowFlower;
     Image* river;
+    PokemonBase* pokemon;
+    SkillManager* skillManager;
 
 	int currAnimaionFrame;
 	float elapsedTime;

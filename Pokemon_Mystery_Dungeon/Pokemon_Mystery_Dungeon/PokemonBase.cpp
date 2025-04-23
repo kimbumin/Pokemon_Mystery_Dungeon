@@ -27,7 +27,7 @@ HRESULT PokemonBase::Init()
 {
     isAlive = true;
     baseStatus = PokemonDataLoader::GetInstance()->GetData(1); // ���� �������� ������ ��
-    currentSkill = SkillManager::GetInstance()->CreateSkill("Ember");
+    currentSkill = SkillManager::GetInstance()->CreateSkill("StoneShower");
     currentStatus = *baseStatus;
     // level = 0;
     CalStatus();
