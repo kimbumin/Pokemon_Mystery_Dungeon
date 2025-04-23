@@ -114,29 +114,6 @@ void PokemonBase::Release()
 
 void PokemonBase::Update()
 {
-    /* if (currentActionState->CanOverride())
-     {
-         if (KeyManager::GetInstance()->IsOnceKeyDown(VK_UP))
-         {
-             direction = Direction::NORTH;
-             SetActionState(moveAction);
-         }
-         if (KeyManager::GetInstance()->IsOnceKeyDown(VK_LEFT))
-         {
-             direction = Direction::WEST;
-             SetActionState(moveAction);
-         }
-         if (KeyManager::GetInstance()->IsOnceKeyDown(VK_DOWN))
-         {
-             direction = Direction::SOUTH;
-             SetActionState(moveAction);
-         }
-         if (KeyManager::GetInstance()->IsOnceKeyDown(VK_RIGHT))
-         {
-             direction = Direction::EAST;
-             SetActionState(moveAction);
-         }
-     }*/
     if (currentAnimState)
     {
         currentAnimState->Update(this);
@@ -213,6 +190,39 @@ void PokemonBase::SetActionState(IActionState* newState)
     }
 }
 
+void PokemonBase::ExecuteTurn()
+{
+    // 동료와 Enemy 확장을 위해 남겨줌
+}
+
+Direction PokemonBase::CalculateDirection(FPOINT& targetPos)
+{
+    int dx = static_cast<int>(targetPos.x - pos.x);
+    int dy = static_cast<int>(targetPos.y - pos.y);
+
+    dx /= TILE_SIZE;
+    dy /= TILE_SIZE;
+
+    if (dx == 0 && dy > 0)
+        return Direction::SOUTH;
+    if (dx > 0 && dy > 0)
+        return Direction::SOUTHEAST;
+    if (dx > 0 && dy == 0)
+        return Direction::EAST;
+    if (dx > 0 && dy < 0)
+        return Direction::NORTHEAST;
+    if (dx == 0 && dy < 0)
+        return Direction::NORTH;
+    if (dx < 0 && dy < 0)
+        return Direction::NORTHWEST;
+    if (dx < 0 && dy == 0)
+        return Direction::WEST;
+    if (dx < 0 && dy > 0)
+        return Direction::SOUTHWEST;
+
+    return Direction::SOUTH;
+}
+
 void PokemonBase::SetAnimator()
 {
     string idStr = PokemonImageLoader::GetInstance()->PokemonIdToString(
@@ -225,10 +235,21 @@ void PokemonBase::SetAnimator()
         {
             int frameX = image->GetMaxFrameX();
             int frameY = image->GetMaxFrameY();
-            float frameTime =
-                1.f / frameX;  //  Check: 재생 속도 하드코딩 개선 사항 (CSV에
-                               //  있는 데이터로 매 프레임마다 재생속도도 다르게
-                               //  할 수 있다)
+            float frameTime;
+            if (*type == "Walk")
+            {
+                frameTime = 0.2f / frameX;
+            }
+            else
+            {
+                frameTime = 1.f / frameX;
+                //  Check: 재생 속도 하드코딩 개선 사항 (CSV에
+                //  있는 데이터로 매 프레임마다 재생속도도 다르게
+                //  할 수는 있다)
+                // Improvements to hard-coding playback speed (with data in CSV,
+                // playback speed can be different for each frame)
+            }
+
             animator->AddAnimation(*type, image, frameX, frameY, frameTime,
                                    *type == "Idle");
             // 반복되는 애니메이션은 Idle만 있어서

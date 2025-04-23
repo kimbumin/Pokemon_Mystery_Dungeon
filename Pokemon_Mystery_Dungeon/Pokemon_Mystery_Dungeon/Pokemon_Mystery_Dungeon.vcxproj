@@ -139,6 +139,7 @@
     <ClCompile Include="DefaultUIState.cpp" />
     <ClCompile Include="DialogueManager.cpp" />
     <ClCompile Include="DialogueUIState.cpp" />
+    <ClCompile Include="DongminScene.cpp" />
     <ClCompile Include="DungeonManager.cpp" />
     <ClCompile Include="DungeonUIState.cpp" />
     <ClCompile Include="EmberSkill.cpp" />
@@ -216,6 +217,7 @@
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="CommonFunction.h" />
     <ClInclude Include="config.h" />
+    <ClInclude Include="DongminScene.h" />
     <ClInclude Include="DungeonManager.h" />
     <ClInclude Include="DungeonUIState.h" />
     <ClInclude Include="EmberSkill.h" />

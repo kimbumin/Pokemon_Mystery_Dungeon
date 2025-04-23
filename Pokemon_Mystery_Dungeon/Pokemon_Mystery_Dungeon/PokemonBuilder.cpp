@@ -1,5 +1,6 @@
 #include "PokemonBuilder.h"
 
+#include "Map.h"
 #include "PokemonBase.h"
 #include "PokemonDataLoader.h"
 #include "PokemonPool.h"
@@ -61,15 +62,43 @@ FPOINT PokemonBuilder::GetRandomValidPosition()
         int x = rand() % TILE_X;
         int y = rand() % TILE_Y;
 
-        // if (IsWalkable(x, y)) // Check
-        if (1)
+        if (!map || !map->IsPathOrFloor(x, y))
         {
-            return FPOINT{x * TILE_SIZE * 1.0f, y * TILE_SIZE * 1.0f};
+            continue;
+        }
+
+        FPOINT pos = {x * TILE_SIZE * 1.0f, y * TILE_SIZE * 1.0f};
+
+        if (pokemonPool && !IsPositionOccupied(pos))
+        {
+            return pos;
         }
     }
+}
+
+bool PokemonBuilder::IsPositionOccupied(FPOINT pos)
+{
+    for (auto iter = pokemonPool->begin(); iter != pokemonPool->end(); ++iter)
+    {
+        if ((*iter)->GetIsAlive())
+        {
+            FPOINT otherPos = (*iter)->GetPos();
+            if (abs(pos.x - otherPos.x) < TILE_SIZE &&
+                abs(pos.y - otherPos.y) < TILE_SIZE)
+            {
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 void PokemonBuilder::SetPool(PokemonPool* newPool)
 {
     pokemonPool = newPool;
+}
+
+void PokemonBuilder::SetMap(Map* map)
+{
+    this->map = map;
 }

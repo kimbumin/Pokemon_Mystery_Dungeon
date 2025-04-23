@@ -1,6 +1,10 @@
 #include "TurnManager.h"
 
+#include "IActionState.h"
+#include "IAnimState.h"
+#include "Map.h"
 #include "PokemonBase.h"
+#include "PokemonEnemy.h"
 #include "PokemonPool.h"
 
 void TurnManager::InitTurnOrder(PokemonPool* pokemonPool)
@@ -53,46 +57,174 @@ void TurnManager::Update()
 
     PokemonBase* current = GetCurrentPokemon();
 
+    if (!current)
+    {
+        return;
+    }
+
+    Map* map = current->GetMap();
+    PokemonPool* pool = turnOrder;
+
     switch (state)
     {
         case TurnState::WaitingForInput:
 
             if (IsPlayerTurn())
             {
-                if (KeyManager::GetInstance()->IsOnceKeyDown(
-                        VK_UP))  // UI가 어떤 상태이고 그거에 맞는 입력이
-                                 // 들어오면(이거도 switch문으로 표현해야할지도)
-                {
-                    // 플레이어 행동 결정
-                    current->ExecuteMoveAction();
-                    state = TurnState::ExecutingAction;
-                }
-                else
-                {
-                    return;
-                }
-            }
-            else
-            {
-                // AI 행동 결정
-                current->ExecuteMoveAction();
-                state = TurnState::ExecutingAction;
-            }
+                Direction inputDir;
+                bool hasInput = false;
 
+                // 버퍼 중이 아닌 상태에서 첫 입력 감지
+                if (!waitingForDiagonal)
+                {
+                    if (KeyManager::GetInstance()->IsOnceKeyDown(VK_UP))
+                    {
+                        bufferedDir = Direction::NORTH;
+                        waitingForDiagonal = true;
+                        bufferElapsed = 0.f;
+                    }
+                    else if (KeyManager::GetInstance()->IsOnceKeyDown(VK_DOWN))
+                    {
+                        bufferedDir = Direction::SOUTH;
+                        waitingForDiagonal = true;
+                        bufferElapsed = 0.f;
+                    }
+                    else if (KeyManager::GetInstance()->IsOnceKeyDown(VK_LEFT))
+                    {
+                        bufferedDir = Direction::WEST;
+                        waitingForDiagonal = true;
+                        bufferElapsed = 0.f;
+                    }
+                    else if (KeyManager::GetInstance()->IsOnceKeyDown(VK_RIGHT))
+                    {
+                        bufferedDir = Direction::EAST;
+                        waitingForDiagonal = true;
+                        bufferElapsed = 0.f;
+                    }
+                }
+
+                // 버퍼 중일 때 대각선 확인
+                if (waitingForDiagonal)
+                {
+                    bufferElapsed +=
+                        TimerManager::GetInstance()->GetDeltaTime();
+
+                    // 대각선 조합 감지
+                    if (bufferedDir == Direction::NORTH)
+                    {
+                        if (KeyManager::GetInstance()->IsStayKeyDown(VK_RIGHT))
+                        {
+                            inputDir = Direction::NORTHEAST;
+                            hasInput = true;
+                            waitingForDiagonal = false;
+                        }
+                        else if (KeyManager::GetInstance()->IsStayKeyDown(
+                                     VK_LEFT))
+                        {
+                            inputDir = Direction::NORTHWEST;
+                            hasInput = true;
+                            waitingForDiagonal = false;
+                        }
+                    }
+                    else if (bufferedDir == Direction::SOUTH)
+                    {
+                        if (KeyManager::GetInstance()->IsStayKeyDown(VK_RIGHT))
+                        {
+                            inputDir = Direction::SOUTHEAST;
+                            hasInput = true;
+                            waitingForDiagonal = false;
+                        }
+                        else if (KeyManager::GetInstance()->IsStayKeyDown(
+                                     VK_LEFT))
+                        {
+                            inputDir = Direction::SOUTHWEST;
+                            hasInput = true;
+                            waitingForDiagonal = false;
+                        }
+                    }
+                    else if (bufferedDir == Direction::EAST)
+                    {
+                        if (KeyManager::GetInstance()->IsStayKeyDown(VK_UP))
+                        {
+                            inputDir = Direction::NORTHEAST;
+                            hasInput = true;
+                            waitingForDiagonal = false;
+                        }
+                        else if (KeyManager::GetInstance()->IsStayKeyDown(
+                                     VK_DOWN))
+                        {
+                            inputDir = Direction::SOUTHEAST;
+                            hasInput = true;
+                            waitingForDiagonal = false;
+                        }
+                    }
+                    else if (bufferedDir == Direction::WEST)
+                    {
+                        if (KeyManager::GetInstance()->IsStayKeyDown(VK_UP))
+                        {
+                            inputDir = Direction::NORTHWEST;
+                            hasInput = true;
+                            waitingForDiagonal = false;
+                        }
+                        else if (KeyManager::GetInstance()->IsStayKeyDown(
+                                     VK_DOWN))
+                        {
+                            inputDir = Direction::SOUTHWEST;
+                            hasInput = true;
+                            waitingForDiagonal = false;
+                        }
+                    }
+
+                    // 버퍼 초과 시 일반 방향 처리
+                    if (bufferElapsed >= inputBufferTime && !hasInput)
+                    {
+                        inputDir = bufferedDir;
+                        hasInput = true;
+                        waitingForDiagonal = false;
+                    }
+                }
+
+                // 방향 입력 완료 후 이동 처리
+                if (hasInput)
+                {
+                    current->SetDirection(inputDir);
+
+                    FPOINT currentPos = current->GetPos();
+                    auto [dx, dy] =
+                        directionOffsets[static_cast<int>(inputDir)];
+                    int nextX = static_cast<int>(currentPos.x / TILE_SIZE) + dx;
+                    int nextY = static_cast<int>(currentPos.y / TILE_SIZE) + dy;
+
+                    if (map && map->IsPathOrFloor(nextX, nextY))
+                    {
+                        FPOINT nextPos = {nextX * TILE_SIZE * 1.0f,
+                                          nextY * TILE_SIZE * 1.0f};
+
+                        if (!pool->IsPositionBlocked(nextPos))
+                        {
+                            current->ExecuteMoveAction();
+                            state = TurnState::WaitingForCompletion;
+                        }
+                        else
+                        {
+                            current->ExecuteIdleAction();
+                        }
+                    }
+                    else
+                    {
+                        current->ExecuteIdleAction();
+                    }
+                }
+            }
+            else  // AI 턴
+            {
+                current->ExecuteTurn();
+                state = TurnState::WaitingForCompletion;
+            }
             break;
 
-        case TurnState::ExecutingAction:
-            if (!IsPlayerTurn())
-            {
-                state = TurnState::TurnEnd;
-                break;
-            }
-            state = TurnState::WaitingForAnim;
-            break;
-
-        case TurnState::WaitingForAnim:
-            elapsedTime += TimerManager::GetInstance()->GetDeltaTime();
-            if (elapsedTime >= 1.0f)  // Check 고정 시간 대기
+        case TurnState::WaitingForCompletion:
+            if (current->GetCurrentActionState()->IsFinished())
             {
                 state = TurnState::TurnEnd;
             }
@@ -100,20 +232,25 @@ void TurnManager::Update()
 
         case TurnState::TurnEnd:
             ++currentIndex;
-            int total = 0;
-            for (auto it = turnOrder->begin(); it != turnOrder->end(); ++it)
-            {
-                if ((*it)->GetIsAlive())
-                {
-                    ++total;
-                }
-            }
+            int total = CountAlive();
             if (currentIndex >= total)
             {
                 currentIndex = 0;
             }
+
             state = TurnState::WaitingForInput;
-            elapsedTime = 0.0f;
             break;
     }
+}
+int TurnManager::CountAlive()
+{
+    int count = 0;
+    for (auto it = turnOrder->begin(); it != turnOrder->end(); ++it)
+    {
+        if ((*it)->GetIsAlive())
+        {
+            ++count;
+        }
+    }
+    return count;
 }

@@ -22,6 +22,7 @@ public:
     void ReturnEnemies();
 
     bool IsEmpty();
+    bool IsPositionBlocked(FPOINT pos);
 
     vector<PokemonBase*>::iterator begin()
     {

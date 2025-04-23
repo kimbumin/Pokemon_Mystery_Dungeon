@@ -5,7 +5,8 @@ class IdleActionState : public IActionState
 {
 private:
     bool isFinished;
-
+    float elapsed ;
+    float duration;
 public:
     virtual void Enter(PokemonBase* owner);
     virtual void Update(PokemonBase* owner);
