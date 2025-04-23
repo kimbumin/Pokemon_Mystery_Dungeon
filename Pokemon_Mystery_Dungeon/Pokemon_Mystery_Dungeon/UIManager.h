@@ -40,7 +40,8 @@ public:
     void AddPersistentState(UIState* state);
     void AddToggleState(UIState* state, bool isOpen);
     
-    DungeonType GetDungeonType(DungeonType type)
+
+    DungeonType GetDungeonType()
     {
         return dungeonType;
     }
