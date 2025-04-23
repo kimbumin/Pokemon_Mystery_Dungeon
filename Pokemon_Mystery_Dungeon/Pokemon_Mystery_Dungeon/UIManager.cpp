@@ -10,6 +10,7 @@
 #include "YesOrNoUIState.h"
 #include "IdleUIState.h"
 #include "DownStairUIState.h"
+#include "InventoryUIState.h"
 
 
 UIState* UIManager::currentState = nullptr;
@@ -148,6 +149,7 @@ void UIManager::RegisterAllUIStates()
     AddState("DungeonUI", new DungeonUIState());
     AddState("YesOrNoUI", new YesOrNoUIState());
     AddState("DownStairUI", new DownStairUIState());
+    AddState("InventoryUI", new InventoryUIState());
 }
 
 void UIManager::OpenUIStateBox(const string& key)

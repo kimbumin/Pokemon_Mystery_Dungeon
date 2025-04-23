@@ -147,7 +147,7 @@ void DefaultUIState::Update()
         }
         else if (YIndex == 1)
         {
-            UIManager::GetInstance()->ChangeState("ItemUI");
+            UIManager::GetInstance()->ChangeState("InventoryUI");
         }
         else if (YIndex == 2)
         {
