@@ -45,7 +45,7 @@ protected:
     AttackActionState* attackAction;
     HurtActionState* hurtAction;
 
-    FPOINT pos = {240, 240};
+    FPOINT pos = {500, 300};
     Map* dungeonMap;
     int level;
     int currentHp;
