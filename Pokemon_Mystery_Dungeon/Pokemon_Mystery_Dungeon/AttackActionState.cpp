@@ -10,19 +10,18 @@ void AttackActionState::Enter(PokemonBase* owner)
     direction = owner->GetDirection();
 
     // Check 이거 함수화 할 필요 있어보임. 조금 길다
-    //if (selectedSkill->GetType() == "SPECIAL")
-    //{
-    //    owner->PlayRotateAnim();
-    //}
-    //else if (selectedSkill->GetType() == "PHYSICS")
-    //{
-    //    owner->PlayAttackAnim();
-    //}
-    //else
-    //{
-    //    owner->PlaySwingAnim();
-    //}
-    owner->PlayRotateAnim();
+    if (selectedSkill->GetAnimType() == "Rotate")
+    {
+        owner->PlayRotateAnim();
+    }
+    else if (selectedSkill->GetAnimType() == "Attack")
+    {
+        owner->PlayAttackAnim();
+    }
+    else
+    {
+        owner->PlaySwingAnim();
+    }
 
     selectedSkill->Use(owner);
     duration = 1.f;
@@ -30,7 +29,7 @@ void AttackActionState::Enter(PokemonBase* owner)
     // (PokemonBase에서도 AddAnimation 할때 하드 코딩 되어있음)
     elapsed = 0.f;
 
- /*   selectedSkill->Use();*/
+    /*   selectedSkill->Use();*/
 }
 
 void AttackActionState::Update(PokemonBase* owner)
