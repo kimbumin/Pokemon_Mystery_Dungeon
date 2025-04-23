@@ -5,8 +5,6 @@ class Map;
 class PokemonEnemy : public PokemonBase
 {
 private:
-    Map* learnedMap;
-
 protected:
 public:
     virtual HRESULT Init() override;
@@ -20,12 +18,10 @@ public:
     float Heuristic(int x1, int y1, int x2, int y2);
 
     vector<FPOINT> ReconstructPath(
-        map<pair<int, int>, pair<int, int>>& cameFrom, int goalX, int goalY);
+        map<pair<int, int>, pair<int, int>>& cameFrom, int goalX, int goalY,
+        int startX, int startY);
 
-    Direction GetRandomWalkableDirection();
-
-    // Setter
-    inline void SetMap(Map* newMap) { learnedMap = newMap; }
+        Direction GetRandomWalkableDirection();
 
     PokemonEnemy() {};
     virtual ~PokemonEnemy() {};

@@ -5,11 +5,25 @@
 void IdleActionState::Enter(PokemonBase* owner)
 {
     isFinished = false;
+    elapsed = 0.f;
+    duration - 1.f;
     owner->PlayIdleAnim();
 }
 
 void IdleActionState::Update(PokemonBase* owner)
 {
+    if (isFinished)
+    {
+        return;
+    }
+
+    elapsed += TimerManager::GetInstance()->GetDeltaTime();
+
+    if (elapsed >= duration)
+    {
+        isFinished = true;
+        return;
+    }
 }
 
 void IdleActionState::Exit(PokemonBase* owner)
@@ -18,7 +32,7 @@ void IdleActionState::Exit(PokemonBase* owner)
 
 bool IdleActionState::IsFinished()
 {
-    return isFinished;
+    return true;
 }
 
 bool IdleActionState::CanOverride()

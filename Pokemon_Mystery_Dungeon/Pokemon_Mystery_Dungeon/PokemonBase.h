@@ -17,6 +17,7 @@ class IdleActionState;
 class AttackActionState;
 class HurtActionState;
 
+class Map;
 class ISkill;
 class PokemonBase : public GameObject
 {
@@ -44,6 +45,7 @@ protected:
     HurtActionState* hurtAction;
 
     FPOINT pos = {240, 240};
+    Map* dungeonMap;
     int level;
     int currentHp;
     bool isAlive;
@@ -97,6 +99,10 @@ public:
     {
         return pos;
     }
+    inline Map* GetMap()
+    {
+        return dungeonMap;
+    }
     inline int GetLevel()
     {
         return level;
@@ -118,6 +124,10 @@ public:
     inline void SetPos(FPOINT pos)
     {
         this->pos = pos;
+    }
+    inline void SetMap(Map* newMap)
+    {
+        dungeonMap = newMap;
     }
     inline void SetLevel(int level)
     {

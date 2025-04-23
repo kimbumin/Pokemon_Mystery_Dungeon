@@ -50,7 +50,7 @@ void DungeonManager::EnterDungeon(string dungeonName)
     // 플레이어 위치 설정
     FPOINT playerPos = builder->GetRandomValidPosition();
     PlayerManager::GetInstance()->GetPlayer()->SetPos(playerPos);
-
+    PlayerManager::GetInstance()->GetPlayer()->SetMap(dungeonMap);
     // 적 스폰
     for (int i = 0; i < info.spawnCount; ++i)
     {

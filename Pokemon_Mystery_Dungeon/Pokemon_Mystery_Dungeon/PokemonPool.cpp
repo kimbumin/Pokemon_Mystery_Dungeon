@@ -2,8 +2,8 @@
 
 #include "PlayerManager.h"
 #include "PokemonBase.h"
-#include "PokemonPlayer.h"
 #include "PokemonEnemy.h"
+#include "PokemonPlayer.h"
 
 HRESULT PokemonPool::Init()
 {
@@ -98,6 +98,23 @@ bool PokemonPool::IsEmpty()
         }
     }
     return true;
+}
+
+bool PokemonPool::IsPositionBlocked(FPOINT pos)
+{
+    for (auto iter = pokemonPool.begin(); iter != pokemonPool.end(); ++iter)
+    {
+        if ((*iter)->GetIsAlive())
+        {
+            FPOINT otherPos = (*iter)->GetPos();
+            if (abs(pos.x - otherPos.x) < TILE_SIZE &&
+                abs(pos.y - otherPos.y) < TILE_SIZE)
+            {
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 // 동료가 생기는 상황에서는 구조 개편이 많이 필요할것 같다
