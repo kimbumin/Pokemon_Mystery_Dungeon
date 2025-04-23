@@ -52,7 +52,7 @@ void FireBlastSkill::Render(HDC hdc)
         if (frameX >= image->GetMaxFrameX())
             frameX = image->GetMaxFrameX() - 1;
 
-        image->FrameRender(hdc, pos.x, pos.y, frameX, 0);
+        image->FrameRenderWithCamera(hdc, pos.x, pos.y, frameX, 0, 0, true);
     }
 }
 

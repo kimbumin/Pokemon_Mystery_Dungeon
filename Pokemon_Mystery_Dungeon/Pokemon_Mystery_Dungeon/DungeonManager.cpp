@@ -23,6 +23,8 @@ void DungeonManager::LoadDungeonData()
     dungeonSpawnMap["Volcano"] = DungeonSpawnInfo{{4, 5, 37}, 5, 10, 4};
 
     dungeonSpawnMap["TinyForest"] = DungeonSpawnInfo{{10, 13, 16}, 3, 6, 4};
+
+    dungeonSpawnMap["IceCave"] = DungeonSpawnInfo{ {4, 5, 37}, 5, 10, 4 };
 }
 
 void DungeonManager::EnterDungeon(string dungeonName)
