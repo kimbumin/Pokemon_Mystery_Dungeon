@@ -2,17 +2,18 @@
 
 void Camera::SetCameraPos(POINT focus)
 {
-    cameraPos.x = focus.x - screenSize.x / 2;
-    cameraPos.y = focus.y - screenSize.y / 2;
+    int halfScreenX = static_cast<int>((screenSize.x / zoom) / 2);
+    int halfScreenY = static_cast<int>((screenSize.y / zoom) / 2);
+    
+    cameraPos.x = focus.x - halfScreenX;
+    cameraPos.y = focus.y - halfScreenY;
 
-    if (cameraPos.x < 0)
-        cameraPos.x = 0;
-    if (cameraPos.y < 0)
-        cameraPos.y = 0;
-    if (cameraPos.x + screenSize.x > mapSize.x)
-        cameraPos.x = mapSize.x - screenSize.x;
-    if (cameraPos.y + screenSize.y > mapSize.y)
-        cameraPos.y = mapSize.y - screenSize.y;
+
+    int maxX = static_cast<int>(mapSize.x - screenSize.x / zoom);
+    int maxY = static_cast<int>(mapSize.y - screenSize.y / zoom);
+
+    cameraPos.x = max(0, min(cameraPos.x, maxX));
+    cameraPos.y = max(0, min(cameraPos.y, maxY));
 }
 
 POINT Camera::GetCameraPos() const
@@ -41,4 +42,22 @@ void Camera::Shake(float duration, int magnitude)
 {
     shakeDuration = duration;
     shakeMagnitude = magnitude;
+}
+
+void Camera::ZoomIn()
+{
+    zoom += 0.1f;
+    if (zoom > maxZoom)
+    {
+        zoom = maxZoom;
+    }
+}
+
+void Camera::ZoomOut()
+{
+    zoom -= 0.1f;
+    if (zoom < minZoom)
+    {
+        zoom = minZoom;
+    }
 }

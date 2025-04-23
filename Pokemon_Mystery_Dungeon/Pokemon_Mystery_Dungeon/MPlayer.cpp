@@ -25,14 +25,26 @@ void MPlayer::Update()
     SavePrevPos();
     Move();
     UpdateRect();
+
+    if (KeyManager::GetInstance()->IsOnceKeyDown(VK_OEM_PLUS))  // + Ű
+        Camera::GetInstance()->ZoomIn();
+    if (KeyManager::GetInstance()->IsOnceKeyDown(VK_OEM_MINUS))  // - Ű
+        Camera::GetInstance()->ZoomOut();
+
+    Camera::GetInstance()->SetCameraPos(pos);
 }
 
 void MPlayer::Render(HDC hdc)
 {
     POINT camPos = Camera::GetInstance()->GetCameraPos();
+    float zoom = Camera::GetInstance()->GetZoom();
 
-    Rectangle(hdc, rect.left - camPos.x, rect.top - camPos.y,
-              rect.right - camPos.x, rect.bottom - camPos.y);
+    int left = static_cast<int>((rect.left - camPos.x) * zoom);
+    int top = static_cast<int>((rect.top - camPos.y) * zoom);
+    int right = static_cast<int>((rect.right - camPos.x) * zoom);
+    int bottom = static_cast<int>((rect.bottom - camPos.y) * zoom);
+
+    Rectangle(hdc, left, top, right, bottom);
 }
 
 void MPlayer::Move()

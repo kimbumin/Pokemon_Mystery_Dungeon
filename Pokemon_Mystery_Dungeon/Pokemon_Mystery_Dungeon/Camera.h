@@ -14,6 +14,9 @@ private:
     float shakeDuration = 0.0f;  
     int shakeMagnitude = 0;      
 
+    float zoom = 1.0f;
+    const float minZoom = 0.5f;
+    const float maxZoom = 2.0f;
 
 public:
     void SetCameraPos(POINT focus);
@@ -29,4 +32,9 @@ public:
     }
     void Update(float deltaTime);              
     void Shake(float duration, int magnitude); 
+
+   void ZoomIn();
+   void ZoomOut();
+   float GetZoom() const{ return zoom;}
+
 };
