@@ -5,7 +5,7 @@ FadeManager::FadeManager()
     : alpha(0.0f),
       isFading(false),
       fadeOut(true),
-      fadeSpeed(1.0f),
+      fadeSpeed(5.0f),
       fadeColor(RGB(0, 0, 0))  
 {
 }

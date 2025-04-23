@@ -37,7 +37,7 @@ HRESULT DungeonScene::Init()
     elapsedTime = 0.f;
 
     GenerateNextFloor();
-
+    FadeManager::GetInstance()->StartFadeIn();
     return S_OK;
 }
 
