@@ -2,6 +2,7 @@
 #include "PokemonBase.h"
 
 class Item;
+class ISkill;
 class PokemonPlayer : public PokemonBase
 {
 private:
@@ -11,6 +12,7 @@ private:
     int exp = 0;
     int expToLevelUp;
     // int inventorySize = 20;
+
 protected:
 public:
     virtual HRESULT Init() override;

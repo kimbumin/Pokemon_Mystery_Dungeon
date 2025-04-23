@@ -56,9 +56,9 @@ protected:
     // 배운 스킬 리스트
     // UI에서 SkillIndex를 TurnManager로 전달 or *** TurnManager에서
     // GetSelectedSkillIndex로, TurnManager에서 GetSkillList로 Seleted
+    vector<shared_ptr<ISkill>> learnedSkill;
 
 public:
-    shared_ptr<ISkill> currentSkill;
     virtual HRESULT Init() override;
     virtual void Release() override;
     virtual void Update() override;
@@ -113,6 +113,10 @@ public:
     {
         return isAlive;
     }
+    shared_ptr<ISkill> GetSkill(int index)
+    {
+        return learnedSkill[index];
+    }
 
     // Setter
     inline void SetStatus(const PokemonData* baseStatus)
@@ -153,8 +157,11 @@ public:
     // Rapper Action Function
     void ExecuteMoveAction();
     void ExecuteIdleAction();
-    void ExecuteAttackAction(ISkill* skill);
+    void ExecuteAttackAction(shared_ptr<ISkill> skill);
     void ExecuteHurtAction();
+
+    // Rapper Skill Render
+    void SkillRender(HDC hdc, ISkill* skill);
 
     // virtual void ExecuteTurn() = 0;
 

@@ -14,9 +14,7 @@ HRESULT SwingSkill::Init()
     isActive = false;
     frameCount = 0;
     elapsedTime = 0.0f;
-    image = ImageManager::GetInstance()->AddImage(
-        "Swing", TEXT("Image/SkillImage/Swing.bmp"), 190, 19, 10, 1, true,
-        RGB(255, 0, 255));
+    image = nullptr;
 
     return S_OK;
 }
@@ -31,16 +29,10 @@ void SwingSkill::Update()
     {
         elapsedTime += TimerManager::GetInstance()->GetDeltaTime();
 
-        if (elapsedTime >= 0.02f)
-        {
-            frameCount++;
-            elapsedTime = 0.0f;
-        }
-
-        if (frameCount >= image->GetMaxFrameX())
+        if (elapsedTime >= 1.f)
         {
             isActive = false;
-            frameCount = 0;
+            elapsedTime = 0;
         }
     }
 }

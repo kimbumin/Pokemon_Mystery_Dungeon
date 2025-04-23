@@ -7,7 +7,7 @@ struct SkillData
     string name;
     string element;
     string type;
-    string animAction;
+    string animType;
     int power;
     int accuracy;
     int pp;
@@ -46,9 +46,9 @@ public:
     {
         return data.type;
     }
-    inline string GetAnimAction() const
+    inline string GetAnimType() const
     {
-        return data.animAction;
+        return data.animType;
     }
     inline int GetPower() const
     {
@@ -62,6 +62,13 @@ public:
     {
         return data;
     }
-
-    virtual ~ISkill() = default;
+    inline bool IsActive()
+    {
+        return isActive;
+    }
+    inline FPOINT GetPos()
+    {
+        return pos;
+    }
+    virtual ~ISkill() {};
 };
