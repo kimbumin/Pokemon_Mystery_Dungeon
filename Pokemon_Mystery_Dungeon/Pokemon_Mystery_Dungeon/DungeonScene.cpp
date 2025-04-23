@@ -6,19 +6,31 @@
 #include "MPlayer.h"
 #include "UIManager.h"
 #include "Camera.h"
-
+#include "PokemonPool.h"
+#include "TurnManager.h"
+#include "DungeonManager.h"
+#include "Map.h"
+#include "PlayerManager.h"
+#include "PokemonPlayer.h"
+#include "DialogueManager.h"
+#include "DialogueTemplate.h"
 
 HRESULT DungeonScene::Init()
 {
     SetClientRect(g_hWnd, WINSIZE_X, WINSIZE_Y);
 
-    mPlayer = new MPlayer;
-    mPlayer->Init();
+    dungeonMap = new Map();
+    dungeonMap->Init();
+
+    dungeonManager = new DungeonManager();
+    dungeonManager->Init();
+    dungeonManager->SetDungeonMap(dungeonMap);
+    EnterDungeonType();
 
     Camera::GetInstance()->SetMapSize({TILE_X * TILE_SIZE, TILE_Y * TILE_SIZE});
     Camera::GetInstance()->SetScreenSize({500, 400});
 
-    wallTiles = map.GetWallTiles();  // wallTiles좌표  Point로
+    wallTiles = dungeonMap->GetWallTiles();  // wallTiles좌표  Point로
 
     dungeonFloor = 0;
     elapsedTime = 0.f;
@@ -30,16 +42,60 @@ HRESULT DungeonScene::Init()
 
 void DungeonScene::Release()
 {
-    if (mPlayer)
+    if (dungeonManager)
     {
-        mPlayer->Release();
-        delete mPlayer;
-        mPlayer = nullptr;
+        dungeonManager->ExitDungeon();
+        delete dungeonManager;
+        dungeonManager = nullptr;
     }
+    if (dungeonMap)
+    {
+        delete dungeonMap;
+        dungeonMap = nullptr;
+    }
+
 }
 
 void DungeonScene::Update()
 {
+    if (dungeonMap)
+    {
+        dungeonMap->Update();
+    }
+    if (pool)
+    {
+        pool->Update();
+    }
+
+    if (KeyManager::GetInstance()->IsOnceKeyDown(VK_TAB))
+    {
+        UIManager::GetInstance()->OpenUIStateBox("defaultUI");
+    }
+    if (KeyManager::GetInstance()->IsOnceKeyDown(0x49))  // 'I' 키
+    {
+        DialogueManager::GetInstance()->ShowLine(
+            DialogueTemplate::FoundItem, { {L"itemName", L"Monster Ball"} });
+    }
+
+    if (KeyManager::GetInstance()->IsOnceKeyDown(0x44))  // 'D' 키
+    {
+        UIManager::GetInstance()->OpenUIStateBox("DungeonUI");
+
+        // SetDugeonType이런 거 만들어 줘야되고,
+        // DungeonScene이동,
+        //
+    }
+    if (KeyManager::GetInstance()->IsOnceKeyDown(0x59))  // 'Y' 키
+    {
+        UIManager::GetInstance()->OpenUIStateBox("YesOrNoUI");
+    }
+    if (KeyManager::GetInstance()->IsOnceKeyDown(0x4D))  // 'M' 키
+    {
+        UIManager::GetInstance()->OpenUIStateBox("DownStairUI");
+    }
+
+    TurnManager::GetInstance()->Update();
+
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F6))
     {
         SceneManager::GetInstance()->ChangeScene("Square");
@@ -55,17 +111,6 @@ void DungeonScene::Update()
         SceneManager::GetInstance()->ChangeScene("BossScene");
     }
 
-    if (mPlayer)
-    {
-        mPlayer->Update();
-        Camera::GetInstance()->SetCameraPos(mPlayer->GetPos());
-
-        if (IsPlayerOnStair())
-        {
-            ++dungeonFloor;
-            GenerateNextFloor();
-        }
-    }
     elapsedTime += TimerManager::GetInstance()->GetDeltaTime();
     if (elapsedTime > 0.016f)
     {
@@ -82,14 +127,17 @@ void DungeonScene::Render(HDC hdc)
     HRGN clipRegion = CreateRectRgn(0, 0, 500, 400);
     SelectClipRgn(hdc, clipRegion);
 
-    map.RenderWithCamera(hdc);
-    map.MiniMapRender(hdc, 0, 0);
 
-
-    if (mPlayer)
+    if (dungeonMap)
     {
-        mPlayer->Render(hdc);
+        dungeonMap->RenderWithCamera(hdc);
+        dungeonMap->MiniMapRender(hdc, 0, 0);
     }
+    if (pool)
+    {
+        pool->Render(hdc);
+    }
+
     SelectClipRgn(hdc, NULL);
     DeleteObject(clipRegion);
 
@@ -100,9 +148,10 @@ void DungeonScene::Render(HDC hdc)
 
 void DungeonScene::GenerateNextFloor()
 {
-    map.Init();
-    wallTiles = map.GetWallTiles();
-    stairPos = ConvertToPixel(map.GetStairPos());
+    dungeonMap->Init();
+    EnterDungeonType();
+    wallTiles = dungeonMap->GetWallTiles();
+    stairPos = ConvertToPixel(dungeonMap->GetStairPos());
 }
 
 POINT DungeonScene::ConvertToPixel(POINT tilePos)
@@ -114,7 +163,30 @@ POINT DungeonScene::ConvertToPixel(POINT tilePos)
 
 bool DungeonScene::IsPlayerOnStair()
 {
-    POINT playerPos = mPlayer->GetPos();
+    FPOINT playerPos = PlayerManager::GetInstance()->GetPlayer()->GetPos();
     return abs(playerPos.x - stairPos.x) <= TILE_SIZE &&
            abs(playerPos.y - stairPos.y) <= TILE_SIZE;
+}
+
+void DungeonScene::EnterDungeonType()
+{
+    if (UIManager::GetInstance()->GetDungeonType() == DUNGEON_TYPE_FOREST)
+    {
+        dungeonManager->EnterDungeon("TinyForest");
+
+    }
+    else if (UIManager::GetInstance()->GetDungeonType() == DUNGEON_TYPE_ICE)
+    {
+        dungeonManager->EnterDungeon("IceCave");
+
+    }
+    else if (UIManager::GetInstance()->GetDungeonType() == DUNGEON_TYPE_MAGMA)
+    {
+        dungeonManager->EnterDungeon("Volcano");
+    }
+    UIManager::GetInstance()->ChangeState("IdleUI");
+
+    pool = dungeonManager->GetPokemonPool();
+    TurnManager::GetInstance()->InitTurnOrder(pool);
+
 }

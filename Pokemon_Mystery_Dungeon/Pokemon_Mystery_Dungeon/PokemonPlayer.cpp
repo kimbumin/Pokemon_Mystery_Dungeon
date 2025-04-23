@@ -4,6 +4,7 @@
 
 #include "ISkill.h"
 #include "SkillManager.h"
+#include "Camera.h"
 
 HRESULT PokemonPlayer::Init()
 {
@@ -28,6 +29,7 @@ void PokemonPlayer::Release()
 void PokemonPlayer::Update()
 {
     PokemonBase::Update();
+    Camera::GetInstance()->SetCameraPos(POINT{ static_cast<int>(pos.x), static_cast<int>(pos.y) });
 }
 
 bool PokemonPlayer::CanPickUpItem() const

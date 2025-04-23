@@ -12,7 +12,6 @@
 #include "Timer.h"
 #include "TurnManager.h"
 #include "UIManager.h"
-#include "SkillManager.h"
 
 HRESULT MainGame::Init()
 {
@@ -22,8 +21,7 @@ HRESULT MainGame::Init()
     UIManager::GetInstance()->Init();
     PokemonDataLoader::GetInstance()->Init();
     PokemonDataLoader::GetInstance()->LoadFromCSV("Data/PokemonBaseStatus.csv");
-    
-    SkillManager::GetInstance()->LoadSkillsFromCSV("Data/PokemonSkill_English.csv");
+
     PlayerManager::GetInstance()->Init();
     hdc = GetDC(g_hWnd);
 

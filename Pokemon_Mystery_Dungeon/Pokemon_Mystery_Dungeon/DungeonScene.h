@@ -1,11 +1,11 @@
 #pragma once
-#include "Map.h"
 #include "Scene.h"
 
 class Player;
 class MPlayer;
 class Map;
-
+class DungeonManager;
+class PokemonPool;
 class DungeonScene : public Scene
 {
 public:
@@ -24,17 +24,20 @@ public:
     virtual ~DungeonScene() {};
 
 private:
-    Map map;
     Image* sampleTile;
     Image* stairImage;
 
-    MPlayer* mPlayer;
+
+    Map* dungeonMap;
+    DungeonManager* dungeonManager;
+    PokemonPool* pool;
 
     int dungeonFloor;
     POINT stairPos;
 
-    TileType tiles[TILE_Y][TILE_X];
     std::vector<POINT> wallTiles;
+
+    void EnterDungeonType();
 
     float elapsedTime;
 

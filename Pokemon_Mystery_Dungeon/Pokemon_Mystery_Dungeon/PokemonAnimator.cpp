@@ -49,7 +49,7 @@ void PokemonAnimator::Render(HDC hdc, int x, int y)
     auto& data = animations[currentAnim];
     if (data.image)
     {
-        data.image->FrameRender(hdc, x, y, data.currentFrame,
+        data.image->FrameRenderWithCamera(hdc, x, y, data.currentFrame,
                                 static_cast<int>(direction));
     }
 }

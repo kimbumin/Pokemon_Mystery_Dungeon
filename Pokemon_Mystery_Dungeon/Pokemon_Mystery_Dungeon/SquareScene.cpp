@@ -25,7 +25,7 @@ HRESULT SquareScene::Init()
 {
     SetClientRect(g_hWnd, WINSIZE_X, WINSIZE_Y);
 
-    
+
 
     // Size : 954, 714
     backGround = ImageManager::GetInstance()->AddImage(
@@ -118,10 +118,8 @@ void SquareScene::Update()
     }
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F6))
     {
-        SceneManager::GetInstance()->AddScene("DungeonScene",
-                                              new DungeonScene());
-        SceneManager::GetInstance()->ChangeScene("DungeonScene",
-                                                 "LoadingScene");
+        SceneManager::GetInstance()->AddScene("DungeonScene", new DungeonScene());
+        SceneManager::GetInstance()->ChangeScene("DungeonScene","LoadingScene");
     }
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F5))
     {
@@ -167,7 +165,7 @@ void SquareScene::Update()
     if (KeyManager::GetInstance()->IsOnceKeyDown(0x44))  // 'D' 키
     {
         UIManager::GetInstance()->OpenUIStateBox("DungeonUI");
-        
+
 
         //SetDugeonType이런 거 만들어 줘야되고,
         //DungeonScene이동,
@@ -204,11 +202,11 @@ void SquareScene::Render(HDC hdc)
 
     if (river)
     {
-        river->FrameRenderWithCamera(hdc, 64, 54, currAnimaionFrame, 0);
-        river->FrameRenderWithCamera(hdc, 64, 104, currAnimaionFrame, 0);
-        river->FrameRenderWithCamera(hdc, 152, 273, currAnimaionFrame, 0);
-        river->FrameRenderWithCamera(hdc, 152, 400, currAnimaionFrame, 0);
-        river->FrameRenderWithCamera(hdc, 152, 460, currAnimaionFrame, 0);
+        river->FrameRenderWithCamera(hdc, 64, 54, currAnimaionFrame, 0,0,1);
+        river->FrameRenderWithCamera(hdc, 64, 104, currAnimaionFrame, 0, 0, 1);
+        river->FrameRenderWithCamera(hdc, 152, 273, currAnimaionFrame, 0, 0, 1);
+        river->FrameRenderWithCamera(hdc, 152, 400, currAnimaionFrame, 0, 0, 1);
+        river->FrameRenderWithCamera(hdc, 152, 460, currAnimaionFrame, 0, 0, 1);
     }
 
     if (collisionBoxTool)
@@ -234,6 +232,6 @@ void SquareScene::RenderFlowers(HDC hdc, Image* flower,const std::vector<POINT>&
 {
     for (const POINT& pos : positions)
     {
-        flower->FrameRenderWithCamera(hdc, pos.x, pos.y, 0, currFrame, 0);
+        flower->FrameRenderWithCamera(hdc, pos.x, pos.y, 0, currFrame,0, 1);
     }
 }
