@@ -31,8 +31,9 @@ HRESULT MainGame::Init()
         MessageBox(g_hWnd, TEXT("백버퍼 생성 실패"), TEXT("경고"), MB_OK);
         return E_FAIL;
     }
-    SceneManager::GetInstance()->AddScene("광장", new SquareScene());
-    SceneManager::GetInstance()->ChangeScene("광장");
+    //UIManager::GetInstance()->ChangeState("IdleUI");
+    SceneManager::GetInstance()->AddScene("Square", new SquareScene);
+    SceneManager::GetInstance()->ChangeScene("Square");
     // SceneManager::GetInstance()->AddScene("TestMap", new CameraTestScene());
     // SceneManager::GetInstance()->ChangeScene("TestMap");
     return S_OK;

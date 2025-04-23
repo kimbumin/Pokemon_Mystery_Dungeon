@@ -102,7 +102,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;_HAS_STD_BYTE=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
@@ -132,6 +132,7 @@
     <ClCompile Include="AttackAnimState.cpp" />
     <ClCompile Include="BossScene.cpp" />
     <ClCompile Include="Branch.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="CameraTestScene.cpp" />
     <ClCompile Include="CollisionBoxTool.cpp" />
@@ -205,6 +206,7 @@
     <ClInclude Include="AttackAnimState.h" />
     <ClInclude Include="BossScene.h" />
     <ClInclude Include="Branch.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraManager.h" />
     <ClInclude Include="CameraTestScene.h" />
     <ClInclude Include="CollisionBoxTool.h" />
@@ -227,6 +229,7 @@
     <ClInclude Include="IAnimState.h" />
     <ClInclude Include="IdleActionState.h" />
     <ClInclude Include="IdleAnimState.h" />
+    <ClInclude Include="IdleUIState.h" />
     <ClInclude Include="IItem.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageGDIPlus.h" />

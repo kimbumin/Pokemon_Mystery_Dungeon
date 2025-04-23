@@ -4,6 +4,7 @@
 #include <random>
 
 #include "Image.h"
+#include "Camera.h"
 
 // 최대 방 개수
 const int MAX_ROOMS = 8;
@@ -141,6 +142,63 @@ void Map::Render(HDC hdc)
     stairs->FrameRender(hdc, stairPos.x * TILE_SIZE, stairPos.y * TILE_SIZE, 0,
                         0);  // 중앙부터 그리려고 일단 FrameRender씀
 }
+
+void Map::RenderWithCamera(HDC hdc)
+{
+    // 카메라 위치 가져오기
+    POINT cam = Camera::GetInstance()->GetCameraPos();
+
+    // 이동가능 path tile, floor tile (13,1)
+    for (const POINT& pt : pathTiles)
+    {
+        // 카메라 위치 보정 후 렌더링
+        tileImage->FrameRenderWithCamera(hdc, pt.x * TILE_SIZE,
+                                         pt.y * TILE_SIZE, 13, 1, 0);
+    }
+
+    // 이동가능 타일
+    for (const POINT& pt : floorTiles)
+    {
+        pair<int, int> indexPos = tileIndex[pt.y][pt.x];
+
+        // 카메라 위치 보정 후 렌더링
+        if (indexPos == STONE_RIGHT or indexPos == STONE_LEFT_TOP or
+            indexPos == STONE_BOTTOM)
+        {
+            tileImage->FrameRenderWithCamera(hdc, pt.x * TILE_SIZE,
+                                             pt.y * TILE_SIZE, indexPos.first,
+                                             indexPos.second, 0);
+        }
+        else
+        {
+            if (indexPos == WEEDS)
+            {
+                tileImage->FrameRenderWithCamera(hdc, pt.x * TILE_SIZE,
+                                                 pt.y * TILE_SIZE, 16, 1, 0);
+            }
+            else
+            {
+                tileImage->FrameRenderWithCamera(hdc, pt.x * TILE_SIZE,
+                                                 pt.y * TILE_SIZE, 13, 1, 0);
+            }
+        }
+    }
+
+    // 이동불가 타일
+    for (const POINT& pt : wallTiles)
+    {
+        const auto& index = tileIndex[pt.y][pt.x];
+        // 카메라 위치 보정 후 렌더링
+        tileImage->FrameRenderWithCamera(hdc, pt.x * TILE_SIZE,
+                                         pt.y * TILE_SIZE, index.first,
+                                         index.second, 0);
+    }
+
+    // 계단 렌더링 (카메라 보정된 좌표)
+    stairs->FrameRenderWithCamera(hdc, stairPos.x * TILE_SIZE,
+                                  stairPos.y * TILE_SIZE, 0, 0);
+}
+
 
 void Map::Generate()
 {
@@ -455,17 +513,7 @@ void Map::TileDesign()
         {{1, 0, 0, 0, 0, 0, 0, 1}, {3, 23}},
         {{0, 0, 1, 0, 0, 1, 0, 0}, {4, 23}},
 
-        {{
-             1,
-             1,
-             1,
-             1,
-             1,
-             1,
-             1,
-             1,
-         },
-         {13, 1}},
+        {{1, 1, 1, 1, 1, 1, 1, 1,}, {13, 1}},
     };
 
     for (int y = 0; y < TILE_Y; ++y)

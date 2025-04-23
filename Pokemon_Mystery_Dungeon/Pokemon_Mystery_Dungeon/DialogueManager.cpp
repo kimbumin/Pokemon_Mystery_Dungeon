@@ -2,7 +2,6 @@
 #include <Windows.h>
 #undef byte
 
-
 #include "DialogueManager.h"
 // clang-format off
 #include "UIManager.h"
