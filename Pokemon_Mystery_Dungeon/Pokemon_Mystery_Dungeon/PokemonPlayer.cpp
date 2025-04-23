@@ -11,7 +11,7 @@ HRESULT PokemonPlayer::Init()
     exp = pow(level, 3);
     expToLevelUp = pow((level + 1), 3);
     learnedSkill[0] =
-        SkillManager::GetInstance()->CreateSkill("Tackle");  // Check
+        SkillManager::GetInstance()->CreateSkill("BodySlam");  // Check
     learnedSkill[1] =
         SkillManager::GetInstance()->CreateSkill("FireBlast");
     learnedSkill[2] =
