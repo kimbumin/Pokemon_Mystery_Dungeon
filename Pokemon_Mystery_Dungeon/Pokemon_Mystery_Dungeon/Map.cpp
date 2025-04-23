@@ -5,6 +5,7 @@
 
 #include "Image.h"
 #include "Camera.h"
+#include "UIManager.h"
 
 // 최대 방 개수
 const int MAX_ROOMS = 8;
@@ -84,7 +85,20 @@ HRESULT Map::Init()
         stairPos = floorTiles[floorDist(dre)];
     }
 
-    tileImage = tiniWoods;
+
+    if (UIManager::GetInstance()->GetDungeonType() == DUNGEON_TYPE_FOREST)
+    {
+        tileImage = tiniWoods;
+    }    
+    else if (UIManager::GetInstance()->GetDungeonType() == DUNGEON_TYPE_ICE)
+    {
+        tileImage = ice1;
+    }
+    else if (UIManager::GetInstance()->GetDungeonType() == DUNGEON_TYPE_MAGMA)
+    {
+        tileImage = magma1;
+    }
+//    tileImage = magma1;
 
     return S_OK;
 }

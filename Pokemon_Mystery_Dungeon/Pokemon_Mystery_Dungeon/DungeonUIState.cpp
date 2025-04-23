@@ -2,6 +2,7 @@
 
 #include "ImageGDIPlusManager.h"
 #include "UIManager.h"
+#include "DungeonScene.h"
 
 HRESULT DungeonUIState::Init()
 {
@@ -96,16 +97,26 @@ void DungeonUIState::Update()
         {
             UIManager::GetInstance()->SetDungeonType(DUNGEON_TYPE_ICE);
             UIManager::GetInstance()->ChangeState("IdleUI");
+            SceneManager::GetInstance()->AddScene("DungeonScene", new DungeonScene);
+            SceneManager::GetInstance()->ChangeScene("DungeonScene");
+
         }
         else if (YIndex == 1)
         {
             UIManager::GetInstance()->SetDungeonType(DUNGEON_TYPE_MAGMA);
             UIManager::GetInstance()->ChangeState("IdleUI");
+            SceneManager::GetInstance()->AddScene("DungeonScene",
+                                                  new DungeonScene);
+            SceneManager::GetInstance()->ChangeScene("DungeonScene");
+
         }
         else if (YIndex == 2)
         {
             UIManager::GetInstance()->SetDungeonType(DUNGEON_TYPE_FOREST);
             UIManager::GetInstance()->ChangeState("IdleUI");
+            SceneManager::GetInstance()->AddScene("DungeonScene",
+                                                  new DungeonScene);
+            SceneManager::GetInstance()->ChangeScene("DungeonScene");
         }
     }
 

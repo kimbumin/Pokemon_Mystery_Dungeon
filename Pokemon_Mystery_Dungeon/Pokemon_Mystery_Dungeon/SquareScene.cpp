@@ -92,10 +92,6 @@ void SquareScene::Release()
 {
     SkillManager::GetInstance()->ReleaseInstance();
 
-    if (UIManager::GetInstance())
-    {
-        UIManager::GetInstance()->Release();
-    }
 }
 
 void SquareScene::Update()
@@ -171,7 +167,7 @@ void SquareScene::Update()
     if (KeyManager::GetInstance()->IsOnceKeyDown(0x44))  // 'D' 키
     {
         UIManager::GetInstance()->OpenUIStateBox("DungeonUI");
-        
+
 
         //SetDugeonType이런 거 만들어 줘야되고,
         //DungeonScene이동,
