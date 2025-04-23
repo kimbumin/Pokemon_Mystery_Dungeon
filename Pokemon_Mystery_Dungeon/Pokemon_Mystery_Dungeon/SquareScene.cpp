@@ -118,10 +118,8 @@ void SquareScene::Update()
     }
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F6))
     {
-        SceneManager::GetInstance()->AddScene("DungeonScene",
-                                              new DungeonScene());
-        SceneManager::GetInstance()->ChangeScene("DungeonScene",
-                                                 "LoadingScene");
+        SceneManager::GetInstance()->AddScene("DungeonScene", new DungeonScene());
+        SceneManager::GetInstance()->ChangeScene("DungeonScene","LoadingScene");
     }
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F5))
     {
