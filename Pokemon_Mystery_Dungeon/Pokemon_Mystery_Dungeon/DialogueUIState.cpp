@@ -23,6 +23,13 @@ HRESULT DialogueUIState::Init()
 
     dialogueBoxImage->UpdateRealPos();
 
+    mainText = new UIElementText();
+    mainText->SetFont(20);
+    mainText->SetTextLine(5.0f);
+    mainText->SetTextColorRGB(28, 28, 132);
+    mainText->SetLocalPos(20, 30);
+    mainText->SetParent(dialogueBoxImage);
+
     return (dialogueBoxImage != nullptr) ? S_OK : E_FAIL;
 }
 
@@ -76,13 +83,9 @@ void DialogueUIState::PushDialogueLine(const wstring& text)
 void DialogueUIState::PushDialogueLine(const wstring& text,
                                        const map<wstring, wstring>& values)
 {
-    auto* newText = new UIElementText();
-    newText->RenderDialogue(text, values);  // 템플릿 치환 포함
-    newText->TypeEffect(text, 0.05f);
+    if (!mainText)
+        return;
 
-    newText->SetFont(20);
-    newText->SetTextLine(5.0f);
-    newText->SetTextColorRGB(28, 28, 132);
-    newText->SetLocalPos(20, 30);
-    newText->SetParent(dialogueBoxImage);
+    const wstring& replaced = mainText->RenderDialogue(text, values);
+    mainText->TypeEffect(replaced, 0.05f);
 }

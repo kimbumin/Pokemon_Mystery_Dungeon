@@ -31,9 +31,9 @@ public:
     virtual ~UIElementText() = default;
 
     void Render(HDC hdc) override;
-    void RenderDialogue(const std::wstring& txt,
-                        const std::map<std::wstring, std::wstring>& values);
-
+    const std::wstring& RenderDialogue(
+        const std::wstring& txt,
+        const std::map<std::wstring, std::wstring>& values);
     void DrawColoredText(HDC hdc, const std::wstring& line,
                          float x, float y);
 

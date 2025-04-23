@@ -2,6 +2,11 @@
 
 #include <sstream>
 
+void DebugLog(const std::wstring& msg)
+{
+    OutputDebugStringW((msg + L"\n").c_str());
+}
+
 void UIElementText::Render(HDC hdc)
 {
     if (fullText.empty())
@@ -26,22 +31,28 @@ void UIElementText::Render(HDC hdc)
 }
 
 // 실제로 텍스트 그리는건 아니고 친환해서 내부 텍스트로 설정하는거
-void UIElementText::RenderDialogue(const wstring& txt,
-                                   const map<wstring, wstring>& values)
+const std::wstring& UIElementText::RenderDialogue(
+    const std::wstring& txt, const std::map<std::wstring, std::wstring>& values)
 {
-    fullText = txt;
+    text = txt;
     for (const auto& [key, value] : values)
     {
-        wstring placeHolder = L"〈" + key + L"〉";
-        size_t pos = fullText.find(placeHolder);
-        while (pos != wstring::npos)
+        std::wstring placeHolder = L"<" + key + L">";
+
+        std::wstring replacement = L"<";
+        replacement += value;
+        replacement += L">";
+
+        size_t pos = text.find(placeHolder);
+        while (pos != std::wstring::npos)
         {
-            fullText.replace(pos, placeHolder.length(), L"〈" + value + L"〉");
-            pos = fullText.find(placeHolder);
+            text.replace(pos, placeHolder.length(), replacement);
+            pos = text.find(placeHolder);
         }
     }
 
-    text = fullText;
+    fullText = text;
+    return fullText;
 }
 
 void UIElementText::DrawColoredText(HDC hdc,
@@ -64,7 +75,7 @@ void UIElementText::DrawColoredText(HDC hdc,
 
     for (wchar_t ch : line)
     {
-        if (ch == L'〈')
+        if (ch == L'<')
         {
             if (!segment.empty())
             {
@@ -80,7 +91,7 @@ void UIElementText::DrawColoredText(HDC hdc,
             continue;
         }
 
-        if (ch == L'〉')
+        if (ch == L'>')
         {
             if (!segment.empty())
             {
