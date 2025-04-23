@@ -25,7 +25,6 @@ HRESULT SquareScene::Init()
 {
     SetClientRect(g_hWnd, WINSIZE_X, WINSIZE_Y);
 
-    UIManager::GetInstance()->Init();
 
     // Size : 954, 714
     backGround = ImageManager::GetInstance()->AddImage(
