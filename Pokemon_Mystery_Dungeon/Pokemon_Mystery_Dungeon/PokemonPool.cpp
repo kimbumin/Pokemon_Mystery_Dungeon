@@ -4,6 +4,8 @@
 #include "PokemonBase.h"
 #include "PokemonEnemy.h"
 #include "PokemonPlayer.h"
+#include "ISkill.h"
+#include <algorithm>
 
 HRESULT PokemonPool::Init()
 {
@@ -46,13 +48,61 @@ void PokemonPool::Update()
     }
 }
 
+// GPT가 짠 코드
+// 나중에 따로 볼 것
+// GPT Code
+// See Later
 void PokemonPool::Render(HDC hdc)
 {
-    for (iterPokemonPool = begin(); iterPokemonPool != end(); ++iterPokemonPool)
+    std::vector<RenderItem> renderQueue;
+
+    // 포켓몬 및 스킬 등록
+    for (auto& pokemon : pokemonPool)
     {
-        if ((*iterPokemonPool)->GetIsAlive())
+        if (pokemon && pokemon->GetIsAlive())
         {
-            (*iterPokemonPool)->Render(hdc);
+            // 포켓몬 등록
+            renderQueue.push_back({
+                pokemon->GetPos().y,
+                pokemon,
+                false,
+                nullptr  // 포켓몬은 shared_ptr 필요 없음
+                });
+
+            // 스킬 등록
+            for (int i = 0; i < 4; ++i)
+            {
+                std::shared_ptr<ISkill> skill = pokemon->GetSkill(i);  // shared_ptr로 받아오기
+                if (skill && skill->IsActive())
+                {
+                    renderQueue.push_back({
+                        skill->GetPos().y,
+                        skill.get(),     // raw pointer로 렌더링
+                        true,
+                        skill            // shared_ptr 수명 유지
+                        });
+                }
+            }
+        }
+    }
+
+    // 스킬을 항상 위로, 같은 타입이면 Y 기준 정렬
+    std::sort(renderQueue.begin(), renderQueue.end(), [](const RenderItem& a, const RenderItem& b) {
+        if (a.isSkill != b.isSkill)
+            return !a.isSkill;  // 포켓몬 먼저, 스킬 나중에
+        return a.y < b.y;       // 같은 타입이면 Y좌표 기준
+        });
+
+    // 렌더링
+    for (auto& item : renderQueue)
+    {
+        if (item.isSkill)
+        {
+            ((ISkill*)item.object)->Render(hdc);
+        }
+        else
+        {
+            ((PokemonBase*)item.object)->Render(hdc);
         }
     }
 }

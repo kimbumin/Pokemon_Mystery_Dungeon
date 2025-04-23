@@ -40,6 +40,8 @@ void SkillManager::LoadSkillsFromCSV(const string& filepath)
             data.accuracy = token.empty() ? 0 : stoi(token);
             getline(iss, token, ',');
             data.pp = token.empty() ? 0 : stoi(token);
+            getline(iss, token, ',');
+            data.animType = token;
 
             if (data.name.empty())
                 throw invalid_argument("Skill Name is empty");
@@ -56,11 +58,11 @@ void SkillManager::LoadSkillsFromCSV(const string& filepath)
             {
                 skill = make_shared<StoneShowerSkill>(data);
             }
-            else if (data.power >= 70)
+            else if (data.animType == "Swing")
             {
                 skill = make_shared<SwingSkill>(data);
             }
-            else if (data.power < 70)
+            else if (data.animType == "Attack")
             {
                 skill = make_shared<AttackSkill>(data);
             }

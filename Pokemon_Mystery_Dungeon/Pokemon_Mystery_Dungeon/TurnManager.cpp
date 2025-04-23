@@ -6,6 +6,9 @@
 #include "PokemonBase.h"
 #include "PokemonEnemy.h"
 #include "PokemonPool.h"
+#include "ISkill.h"
+#include "PlayerManager.h"
+#include "PokemonPlayer.h"
 
 void TurnManager::InitTurnOrder(PokemonPool* pokemonPool)
 {
@@ -73,7 +76,31 @@ void TurnManager::Update()
             {
                 Direction inputDir;
                 bool hasInput = false;
-
+                // Check UI
+                if (KeyManager::GetInstance()->IsOnceKeyDown('Q'))
+                {
+                    shared_ptr<ISkill> selectedSkill = PlayerManager::GetInstance()->GetPlayer()->GetSkill(0);
+                    current->ExecuteAttackAction(selectedSkill);
+                    state = TurnState::WaitingForCompletion;
+                }
+                if (KeyManager::GetInstance()->IsOnceKeyDown('W'))
+                {
+                    shared_ptr<ISkill> selectedSkill = PlayerManager::GetInstance()->GetPlayer()->GetSkill(1);
+                    current->ExecuteAttackAction(selectedSkill);
+                    state = TurnState::WaitingForCompletion;
+                }
+                if (KeyManager::GetInstance()->IsOnceKeyDown('E'))
+                {
+                    shared_ptr<ISkill> selectedSkill = PlayerManager::GetInstance()->GetPlayer()->GetSkill(2);
+                    current->ExecuteAttackAction(selectedSkill);
+                    state = TurnState::WaitingForCompletion;
+                }
+                if (KeyManager::GetInstance()->IsOnceKeyDown('R'))
+                {
+                    shared_ptr<ISkill> selectedSkill = PlayerManager::GetInstance()->GetPlayer()->GetSkill(3);
+                    current->ExecuteAttackAction(selectedSkill);
+                    state = TurnState::WaitingForCompletion;
+                }
                 // 버퍼 중이 아닌 상태에서 첫 입력 감지
                 if (!waitingForDiagonal)
                 {
