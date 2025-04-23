@@ -161,6 +161,10 @@ void SquareScene::Update()
         DialogueManager::GetInstance()->ShowLine(
             DialogueTemplate::FoundItem, {{L"itemName", L"Monster Ball"}});
     }
+    if (KeyManager::GetInstance()->IsOnceKeyDown(0x4F))  // 'S' 키
+    {
+        UIManager::GetInstance()->OpenUIStateBox("InventoryUI");
+    }
 
     if (KeyManager::GetInstance()->IsOnceKeyDown(0x44))  // 'D' 키
     {
