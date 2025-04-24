@@ -140,8 +140,7 @@ void DungeonScene::Update()
 
     CoolDownManager::GetInstance()->Update(dt);
 
-    if (!CoolDownManager::GetInstance()->IsCooldown("DownStair") &&
-        IsPlayerOnStair() &&
+    if (!CoolDownManager::GetInstance()->IsCooldown("DownStair") && IsPlayerOnStair() &&
         UIManager::GetInstance()->GetCurrentStateKey() != "DownStairUI")
     {
         UIManager::GetInstance()->OpenUIStateBox("DownStairUI");
@@ -180,6 +179,9 @@ void DungeonScene::GenerateNextFloor()
     EnterDungeonType();
     wallTiles = dungeonMap->GetWallTiles();
     stairPos = ConvertToPixel(dungeonMap->GetStairPos());
+
+
+
 }
 
 POINT DungeonScene::ConvertToPixel(POINT tilePos)
@@ -192,8 +194,8 @@ POINT DungeonScene::ConvertToPixel(POINT tilePos)
 bool DungeonScene::IsPlayerOnStair()
 {
     FPOINT playerPos = PlayerManager::GetInstance()->GetPlayer()->GetPos();
-    return abs(playerPos.x - stairPos.x) <= TILE_SIZE &&
-           abs(playerPos.y - stairPos.y) <= TILE_SIZE;
+    return abs(playerPos.x - stairPos.x) <= TILE_SIZE-5 &&
+           abs(playerPos.y - stairPos.y) <= TILE_SIZE-5;
 }
 
 void DungeonScene::EnterDungeonType()
