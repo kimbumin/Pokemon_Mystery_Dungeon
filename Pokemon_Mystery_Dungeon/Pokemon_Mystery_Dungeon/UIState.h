@@ -10,6 +10,10 @@ public:
     virtual HRESULT Init() = 0;
     virtual void Release() = 0;
     virtual void Update() = 0;
+    virtual void Update(float dt)
+    {
+        Update();
+    };
     virtual void Render(HDC hdc)
     {
     }

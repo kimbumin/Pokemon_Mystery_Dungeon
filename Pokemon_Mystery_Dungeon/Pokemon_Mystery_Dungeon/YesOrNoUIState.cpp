@@ -3,6 +3,7 @@
 #include "ImageGDIPlusManager.h"
 #include "UIElementImage.h"
 #include "UIElementText.h"
+#include "UIManager.h"
 
 HRESULT YesOrNoUIState::Init()
 {
@@ -26,8 +27,8 @@ HRESULT YesOrNoUIState::Init()
 
     // UI 엘리먼트 위치 설정
     YesOrNoBox->SetLocalPos(InfoBoxPosX, 200);
-    YesText->SetLocalPos(40, InfoBoxPosYOffset[0]);
-    NoText->SetLocalPos(40, InfoBoxPosYOffset[1]);
+    YesText->SetLocalPos(50, InfoBoxPosYOffset[0]);
+    NoText->SetLocalPos(50, InfoBoxPosYOffset[1]);
 
     Cursor->SetLocalPos(20, InfoBoxPosYOffset[0] + 5);
 
@@ -52,6 +53,28 @@ void YesOrNoUIState::Release()
 
 void YesOrNoUIState::Update()
 {
+    fadeOutTime += TimerManager::GetInstance()->GetDeltaTime();
+    fadeInTime = (sinf(fadeOutTime * 6.0f) * 0.5f) + 0.5f;
+
+    if (KeyManager::GetInstance()->IsOnceKeyDown(VK_DOWN))
+    {
+        YIndex = (YIndex + 1) % 2;
+        Cursor->SetLocalPos(CursorPosX, InfoBoxPosYOffset[YIndex]);
+        Cursor->UpdateRealPos();
+    }
+    else if (KeyManager::GetInstance()->IsOnceKeyDown(VK_UP))
+    {
+        YIndex = (YIndex - 1 + 2) % 2;
+        Cursor->SetLocalPos(CursorPosX, InfoBoxPosYOffset[YIndex]);
+        Cursor->UpdateRealPos();
+    }
+
+    if (KeyManager::GetInstance()->IsOnceKeyDown(0x58))  // 'X' 키
+    {
+        UIManager::GetInstance()->ChangeState("defaultUI");
+    }
+
+    Cursor->setAlpha(fadeInTime);
 }
 
 void YesOrNoUIState::Render(HDC hdc)

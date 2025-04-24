@@ -72,4 +72,7 @@ public:
 
     void Render(HDC hdc) override;
     void Update() override;
+    void Update(float dt) override;
+
+    void RenderPartial(HDC hdc, int width, int height);
 };

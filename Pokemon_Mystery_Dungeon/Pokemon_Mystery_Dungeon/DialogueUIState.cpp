@@ -23,6 +23,13 @@ HRESULT DialogueUIState::Init()
 
     dialogueBoxImage->UpdateRealPos();
 
+    mainText = new UIElementText();
+    mainText->SetFont(20);
+    mainText->SetTextLine(5.0f);
+    mainText->SetTextColorRGB(28, 28, 132);
+    mainText->SetLocalPos(20, 30);
+    mainText->SetParent(dialogueBoxImage);
+
     return (dialogueBoxImage != nullptr) ? S_OK : E_FAIL;
 }
 
@@ -43,6 +50,43 @@ void DialogueUIState::Update()
     }
 }
 
+void DialogueUIState::Update(float dt)
+{
+    if (dialogueBoxImage)
+        dialogueBoxImage->Update(dt);
+
+    if (mainText)
+        mainText->Update(dt);
+
+
+    if (KeyManager::GetInstance()->IsOnceKeyDown(0x58))  // 'X'
+    {
+        UIManager::GetInstance()->CloseUIStateBox("dialogueBox");
+        UIManager::GetInstance()->ChangeState("IdleUI");
+        isActive = false;
+        return;
+    }
+
+    
+
+    if (mainText && !dialogueFullyShown && mainText->IsTypingFinished())
+    {
+        dialogueFullyShown = true;
+        closeTimer = 0.0f;  
+    }
+
+    if (dialogueFullyShown)
+    {
+        closeTimer += dt;
+        if (closeTimer >= 2.0f)
+        {
+            PopNextDialogueLine();
+        }
+    }
+
+    
+}
+
 void DialogueUIState::Render(HDC hdc)
 {
     if (dialogueBoxImage)
@@ -53,7 +97,7 @@ void DialogueUIState::PushDialogueLine(const wstring& text)
 {
     auto* newText = new UIElementText();
     newText->SetText(text);
-    newText->SetFont(L"Arial", 18);
+    newText->SetFont(18);
     newText->SetTextLine(5.0f);
     newText->SetLocalPos(10, 10);
     newText->SetParent(dialogueBoxImage);
@@ -62,11 +106,44 @@ void DialogueUIState::PushDialogueLine(const wstring& text)
 void DialogueUIState::PushDialogueLine(const wstring& text,
                                        const map<wstring, wstring>& values)
 {
-    auto* newText = new UIElementText();
-    newText->RenderDialogue(text, values);  // 템플릿 치환 포함
-    newText->SetFont(L"Arial", 20);
-    newText->SetTextLine(5.0f);
-    newText->SetTextColor(28, 28, 132, 255);  // #1C1C84
-    newText->SetLocalPos(20, 30);
-    newText->SetParent(dialogueBoxImage);
+    if (!mainText)
+        return;
+
+    const wstring& replaced = mainText->RenderDialogue(text, values);
+    mainText->TypeEffect(replaced, 0.05f);
+
+    dialogueFullyShown = false;
+    closeTimer = 0.0f;
+}
+
+void DialogueUIState::QueueDialogueLine(const wstring& text,
+                                        const map<wstring, wstring>& values)
+{
+    dialogueQueue.push({text, values});
+
+    if (!isActive)
+    {
+        PopNextDialogueLine();
+    }
+}
+
+void DialogueUIState::PopNextDialogueLine()
+{
+    if (dialogueQueue.empty())
+    {
+        UIManager::GetInstance()->CloseUIStateBox("dialogueBox");
+        UIManager::GetInstance()->ChangeState("IdleUI");
+        isActive = false;
+        return;
+    }
+
+    const auto& [text, values] = dialogueQueue.front();
+    const std::wstring& replaced = mainText->RenderDialogue(text, values);
+    mainText->TypeEffect(replaced, 0.05f);
+
+    dialogueFullyShown = false;
+    closeTimer = 0.0f;
+    isActive = true;
+
+    dialogueQueue.pop();
 }

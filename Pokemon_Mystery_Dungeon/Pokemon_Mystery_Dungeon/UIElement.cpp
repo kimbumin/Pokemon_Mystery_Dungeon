@@ -41,6 +41,14 @@ void UIElement::Update()
 {
 }
 
+void UIElement::Update(float dt)
+{
+    for (auto child : children)
+    {
+        child->Update(dt);
+    }
+}
+
 void UIElement::Render(HDC hdc)
 {
 }

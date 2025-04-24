@@ -39,3 +39,21 @@ void UIElementImage::Update()
     }
     UIElement::Update();
 }
+
+void UIElementImage::Update(float dt)
+{
+    if (imageGDIPlus)
+    {
+        imageGDIPlus->Update(dt);
+    }
+    UIElement::Update(dt);
+}
+
+void UIElementImage::RenderPartial(HDC hdc, int width, int height)
+{
+    if (image)
+    {
+        FPOINT pos = GetRealPos(); 
+        image->RenderPartial(hdc, pos.x, pos.y, width, height);
+    }
+}

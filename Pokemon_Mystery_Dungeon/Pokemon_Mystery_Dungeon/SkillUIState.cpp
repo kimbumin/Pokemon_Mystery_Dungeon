@@ -55,9 +55,9 @@ HRESULT SkillUIState::Init()
         skillUI.SkillCount->SetLocalPos(200, y);
         skillUI.SkillMaxCount->SetLocalPos(230, y);
 
-        skillUI.SkillName->SetFont(L"Arial", 18);
-        skillUI.SkillCount->SetFont(L"Arial", 18);
-        skillUI.SkillMaxCount->SetFont(L"Arial", 18);
+        skillUI.SkillName->SetFont(18);
+        skillUI.SkillCount->SetFont(18);
+        skillUI.SkillMaxCount->SetFont(18);
 
         skillUI.SkillName->SetParent(SkillBox);
         skillUI.SkillCount->SetParent(SkillBox);
@@ -84,7 +84,7 @@ HRESULT SkillUIState::Init()
     for (int i = 0; i < 3; ++i)
     {
         SubText[i] = new UIElementText();
-        SubText[i]->SetFont(L"Arial", 18);
+        SubText[i]->SetFont(18);
         SubText[i]->SetText(subMenu[i]);
         SubText[i]->SetParent(SkillAssistBox);
         SubText[i]->SetLocalPos(50, SubOffsetY[i]);
