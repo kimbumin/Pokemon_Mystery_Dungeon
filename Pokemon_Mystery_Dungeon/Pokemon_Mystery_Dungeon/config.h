@@ -25,6 +25,7 @@ using namespace std;
 #include "CollisionManager.h"
 #include "CameraManager.h"
 #include "ImageGDIPlusManager.h"
+#include "SoundManager.h"
 
 
 /*
