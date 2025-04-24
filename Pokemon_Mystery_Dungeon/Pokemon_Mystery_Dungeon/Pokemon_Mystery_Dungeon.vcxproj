@@ -70,6 +70,10 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(ProjectDir)include/SDL2;$(ProjectDir)include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -111,7 +115,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2_mixer.lib;SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -198,6 +202,7 @@
     <ClCompile Include="SkillInfoUIState.cpp" />
     <ClCompile Include="SkillUIState.cpp" />
     <ClCompile Include="SkillManager.cpp" />
+    <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="SquareScene.cpp" />
     <ClCompile Include="StoneShowerSkill.cpp" />
     <ClCompile Include="SwingAnimState.cpp" />
@@ -289,6 +294,7 @@
     <ClInclude Include="SkillUIState.h" />
     <ClInclude Include="SkillInfoUIState.h" />
     <ClInclude Include="SkillManager.h" />
+    <ClInclude Include="SoundManager.h" />
     <ClInclude Include="SquareScene.h" />
     <ClInclude Include="StoneShowerSkill.h" />
     <ClInclude Include="SwingAnimState.h" />
