@@ -151,6 +151,8 @@ void PokemonBase::Render(HDC hdc)
 
 void PokemonBase::CalStatus()
 {
+    currentStatus.idNumber = baseStatus->idNumber;
+    currentStatus.types = baseStatus->types;
     currentStatus.hp = CalStat(baseStatus->hp) + 10;
     currentStatus.atk = CalStat(baseStatus->atk) + 5;
     currentStatus.def = CalStat(baseStatus->def) + 5;

@@ -144,9 +144,6 @@ void PokemonPlayer::EvolveTo(int newPokemonId)
     {
         return;
     }
-
-    SetStatus(baseStatus);
-    SetLevel(level);
     CalStatus();
 
     if (animator)
@@ -156,7 +153,7 @@ void PokemonPlayer::EvolveTo(int newPokemonId)
     }
     animator = new PokemonAnimator();
     SetAnimator();
-
+    PlayIdleAnim();
     // check 로그 출력 or 진화 연출
     // Print Log or Evolution Effect
 }

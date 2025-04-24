@@ -143,7 +143,10 @@ public:
     {
         this->isAlive = isAlive;
     }
-
+    inline void SetSkill(int index, shared_ptr<ISkill> skill)
+    {
+        this->learnedSkill[index] = skill;
+    }
     void SetAnimator();
 
     // Rapper Anim Function
