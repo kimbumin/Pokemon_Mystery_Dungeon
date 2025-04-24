@@ -136,7 +136,7 @@ void SquareScene::Update()
 
     if (collisionBoxTool)
     {
-        collisionBoxTool->Update();
+        //collisionBoxTool->Update();
         CollisionManager::GetInstance()->MapPlayerCheck(
             player, collisionBoxTool->GetRectBoxes());
     }
@@ -204,8 +204,8 @@ void SquareScene::Render(HDC hdc)
         river->FrameRenderWithCamera(hdc, 152, 460, currAnimaionFrame, 0, 0, 1);
     }
 
-    if (collisionBoxTool)
-        collisionBoxTool->Render(hdc);
+    //if (collisionBoxTool)
+    //    collisionBoxTool->Render(hdc);
 
     if (player)
         player->Render(hdc);
