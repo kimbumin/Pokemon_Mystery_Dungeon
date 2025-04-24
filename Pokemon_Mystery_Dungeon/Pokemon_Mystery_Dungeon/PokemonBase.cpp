@@ -173,7 +173,7 @@ void PokemonBase::TakeDamage(int damage)
         return;
     }
     currentHp -= damage;
-
+    PlayHurtAnim();
     // HP가 0 미만이 되지 않도록 보정
     if (currentHp < 0)
         currentHp = 0;
