@@ -63,6 +63,8 @@ void DialogueUIState::Update(float dt)
     {
         UIManager::GetInstance()->CloseUIStateBox("dialogueBox");
         UIManager::GetInstance()->ChangeState("IdleUI");
+        isActive = false;
+        return;
     }
 
     
@@ -78,10 +80,7 @@ void DialogueUIState::Update(float dt)
         closeTimer += dt;
         if (closeTimer >= 2.0f)
         {
-            UIManager::GetInstance()->CloseUIStateBox("dialogueBox");
-            UIManager::GetInstance()->ChangeState("IdleUI");
-            dialogueFullyShown = false;
-            closeTimer = 0.0f;
+            PopNextDialogueLine();
         }
     }
 
@@ -115,6 +114,36 @@ void DialogueUIState::PushDialogueLine(const wstring& text,
 
     dialogueFullyShown = false;
     closeTimer = 0.0f;
-
 }
 
+void DialogueUIState::QueueDialogueLine(const wstring& text,
+                                        const map<wstring, wstring>& values)
+{
+    dialogueQueue.push({text, values});
+
+    if (!isActive)
+    {
+        PopNextDialogueLine();
+    }
+}
+
+void DialogueUIState::PopNextDialogueLine()
+{
+    if (dialogueQueue.empty())
+    {
+        UIManager::GetInstance()->CloseUIStateBox("dialogueBox");
+        UIManager::GetInstance()->ChangeState("IdleUI");
+        isActive = false;
+        return;
+    }
+
+    const auto& [text, values] = dialogueQueue.front();
+    const std::wstring& replaced = mainText->RenderDialogue(text, values);
+    mainText->TypeEffect(replaced, 0.05f);
+
+    dialogueFullyShown = false;
+    closeTimer = 0.0f;
+    isActive = true;
+
+    dialogueQueue.pop();
+}

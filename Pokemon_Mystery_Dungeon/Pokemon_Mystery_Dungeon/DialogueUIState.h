@@ -1,5 +1,6 @@
 #pragma once
 #include "UIState.h"
+#include <queue>
 
 class UIElementImage;
 class UIElementText;
@@ -15,6 +16,9 @@ private:
     float closeTimer = 0.0f;
     bool dialogueFullyShown = false;
 
+    queue<pair<wstring, map<wstring, wstring>>> dialogueQueue;
+
+    bool isActive = false;
 public:
     HRESULT Init() override;
     void Release() override;
@@ -28,4 +32,9 @@ public:
 
     void PushDialogueLine(const wstring& text,
                           const map<wstring, wstring>& values);
+
+    void QueueDialogueLine(const wstring& text,
+                           const map<wstring, wstring>& values);
+
+    void PopNextDialogueLine();
 };
