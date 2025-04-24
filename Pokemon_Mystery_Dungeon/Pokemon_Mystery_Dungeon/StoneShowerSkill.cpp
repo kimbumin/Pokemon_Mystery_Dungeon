@@ -1,7 +1,7 @@
 #include "StoneShowerSkill.h"
 
 #include "PokemonBase.h"
-
+#include "Camera.h"
 StoneShowerSkill::StoneShowerSkill(const SkillData& skillData)
 {
     data = skillData;
@@ -64,7 +64,7 @@ void StoneShowerSkill::Use(PokemonBase* owner)
 
     pos.x += directionOffsets[dirIndex].first * 24;
     pos.y += directionOffsets[dirIndex].second * 24;
-
+    Camera::GetInstance()->Shake(0.1f, 5);
     isActive = true;
 }
 
