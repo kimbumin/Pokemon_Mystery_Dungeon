@@ -175,6 +175,9 @@ void UIManager::CloseUIStateBox(const string& key)
         currentState = nullptr;
         currentStateKey = "";
     }
+
+    IsOpenMap[key] = false; 
+
     ChangeState("IdleUI");
 }
 
