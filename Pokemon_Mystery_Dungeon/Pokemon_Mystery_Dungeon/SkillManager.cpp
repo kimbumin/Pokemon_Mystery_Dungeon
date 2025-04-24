@@ -1,10 +1,12 @@
 #include "SkillManager.h"
 
 #include "AttackSkill.h"
+#include "BoltSkill.h"
 #include "EmberSkill.h"
 #include "FireBlastSkill.h"
 #include "StoneShowerSkill.h"
 #include "SwingSkill.h"
+#include "WaterGunSkill.h"
 
 void SkillManager::LoadSkillsFromCSV(const string& filepath)
 {
@@ -63,6 +65,14 @@ void SkillManager::LoadSkillsFromCSV(const string& filepath)
             else if (data.name == "StoneShower")
             {
                 skill = make_shared<StoneShowerSkill>(data);
+            }
+            else if (data.name == "Thunderbolt")
+            {
+                skill = make_shared<BoltSkill>(data);
+            }
+            else if (data.name == "WaterGun")
+            {
+                skill = make_shared<WaterGunSkill>(data);
             }
             else if (data.animType == "Swing")
             {
