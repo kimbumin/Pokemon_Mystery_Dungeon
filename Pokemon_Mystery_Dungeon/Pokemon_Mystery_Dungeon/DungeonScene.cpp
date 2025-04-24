@@ -77,27 +77,10 @@ void DungeonScene::Update()
         if (UIManager::GetInstance()->GetCurrentStateKey() != "defaultUI")
             UIManager::GetInstance()->OpenUIStateBox("defaultUI");
     }
-    if (KeyManager::GetInstance()->IsOnceKeyDown(0x49))  // 'I' 키
-    {
-        DialogueManager::GetInstance()->ShowLine(
-            DialogueTemplate::FoundItem, { {L"itemName", L"Monster Ball"} });
-    }
 
     if (KeyManager::GetInstance()->IsOnceKeyDown(0x44))  // 'D' 키
     {
         UIManager::GetInstance()->OpenUIStateBox("DungeonUI");
-
-        // SetDugeonType이런 거 만들어 줘야되고,
-        // DungeonScene이동,
-        //
-    }
-    if (KeyManager::GetInstance()->IsOnceKeyDown(0x59))  // 'Y' 키
-    {
-        UIManager::GetInstance()->OpenUIStateBox("YesOrNoUI");
-    }
-    if (KeyManager::GetInstance()->IsOnceKeyDown(0x4D))  // 'M' 키
-    {
-        UIManager::GetInstance()->OpenUIStateBox("DownStairUI");
     }
 
     TurnManager::GetInstance()->Update();
@@ -117,7 +100,6 @@ void DungeonScene::Update()
 
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_SPACE) &&!FadeManager::GetInstance()->IsFading())
     {
-        ++dungeonFloor;
         FadeManager::GetInstance()->StartFadeOut(1.0);
         isSceneTransition = true;
     }
@@ -134,16 +116,22 @@ void DungeonScene::Update()
         Camera::GetInstance()->Update(elapsedTime);
         elapsedTime = 0;
     }
-    if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F9)){
-        Camera::GetInstance()->Shake(0.3f, 10);
-    }
 
+
+    // 플레이어 계단위면 ui띄운다.
     CoolDownManager::GetInstance()->Update(dt);
-
+    
     if (!CoolDownManager::GetInstance()->IsCooldown("DownStair") && IsPlayerOnStair() &&
         UIManager::GetInstance()->GetCurrentStateKey() != "DownStairUI")
     {
         UIManager::GetInstance()->OpenUIStateBox("DownStairUI");
+    }
+
+    if (UIManager::GetInstance()->IsDownStairUIActive())    //넘어가는게 yes를 클릭했다면, 
+    {   
+        GenerateNextFloor();
+        FadeManager::GetInstance()->StartFadeIn(1.0);
+        isSceneTransition = false;
     }
 }
 
@@ -180,8 +168,9 @@ void DungeonScene::GenerateNextFloor()
     wallTiles = dungeonMap->GetWallTiles();
     stairPos = ConvertToPixel(dungeonMap->GetStairPos());
 
-
-
+    //ui에서 상태바꿈
+    UIManager::GetInstance()->SetDownStairUIActive(false);
+    ++dungeonFloor;
 }
 
 POINT DungeonScene::ConvertToPixel(POINT tilePos)
