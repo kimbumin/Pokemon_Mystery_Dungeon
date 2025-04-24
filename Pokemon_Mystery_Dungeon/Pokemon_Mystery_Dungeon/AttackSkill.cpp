@@ -1,19 +1,22 @@
 #include "AttackSkill.h"
 
 #include "PokemonBase.h"
+#include "BattleSystem.h"
 
 AttackSkill::AttackSkill(const SkillData& skillData)
 {
     data = skillData;
-}
-
-HRESULT AttackSkill::Init()
-{
+    direction = 0;
     pos = {0, 0};
     isActive = false;
     frameCount = 0;
     elapsedTime = 0.0f;
     image = nullptr;
+}
+
+HRESULT AttackSkill::Init()
+{
+
     return S_OK;
 }
 
@@ -57,6 +60,14 @@ void AttackSkill::Use(PokemonBase* owner)
     pos.y += directionOffsets[dirIndex].second * 24;
 
     isActive = true;
+
+    PokemonBase* target = BattleSystem::GetInstance()->GetTargetInFront(owner);
+    if (target)
+    {
+        int damage =
+            BattleSystem::GetInstance()->CalculateDamage(owner, target, this);
+        target->TakeDamage(damage);
+    }
 }
 
 shared_ptr<ISkill> AttackSkill::Clone()

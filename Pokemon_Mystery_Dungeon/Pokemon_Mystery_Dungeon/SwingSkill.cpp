@@ -1,21 +1,22 @@
 #include "SwingSkill.h"
 
+#include "BattleSystem.h"
 #include "Image.h"
 #include "PokemonBase.h"
 
 SwingSkill::SwingSkill(const SkillData& skillData)
 {
     data = skillData;
-}
-
-HRESULT SwingSkill::Init()
-{
+    direction = 0;
     pos = {0, 0};
     isActive = false;
     frameCount = 0;
     elapsedTime = 0.0f;
     image = nullptr;
+}
 
+HRESULT SwingSkill::Init()
+{
     return S_OK;
 }
 
@@ -59,6 +60,14 @@ void SwingSkill::Use(PokemonBase* owner)
     pos.y += directionOffsets[dirIndex].second * 24;
 
     isActive = true;
+
+    PokemonBase* target = BattleSystem::GetInstance()->GetTargetInFront(owner);
+    if (target)
+    {
+        int damage =
+            BattleSystem::GetInstance()->CalculateDamage(owner, target, this);
+        target->TakeDamage(damage);
+    }
 }
 
 shared_ptr<ISkill> SwingSkill::Clone()

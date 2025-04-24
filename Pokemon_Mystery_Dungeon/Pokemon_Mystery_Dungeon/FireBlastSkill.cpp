@@ -1,22 +1,23 @@
 #include "FireBlastSkill.h"
 
+#include "BattleSystem.h"
 #include "PokemonBase.h"
 
 FireBlastSkill::FireBlastSkill(const SkillData& skillData)
 {
     data = skillData;
-}
-
-HRESULT FireBlastSkill::Init()
-{
+    direction = 0;
     pos = {0, 0};
     isActive = false;
     frameCount = 0;
     elapsedTime = 0.0f;
     image = ImageManager::GetInstance()->AddImage(
-        "FireBlast", TEXT("Image/SkillImage/FireBlast.bmp"), 1856 / 2, 61 / 2, 29,
-        1, true, RGB(255, 0, 255));
+        "FireBlast", TEXT("Image/SkillImage/FireBlast.bmp"), 1856 / 2, 61 / 2,
+        29, 1, true, RGB(255, 0, 255));
+}
 
+HRESULT FireBlastSkill::Init()
+{
     return S_OK;
 }
 
@@ -67,6 +68,14 @@ void FireBlastSkill::Use(PokemonBase* owner)
     pos.y += directionOffsets[dirIndex].second * 24;
 
     isActive = true;
+
+    PokemonBase* target = BattleSystem::GetInstance()->GetTargetInFront(owner);
+    if (target)
+    {
+        int damage =
+            BattleSystem::GetInstance()->CalculateDamage(owner, target, this);
+        target->TakeDamage(damage);
+    }
 }
 
 shared_ptr<ISkill> FireBlastSkill::Clone()
