@@ -115,7 +115,7 @@
     </Link>
     <PostBuildEvent>
       <Command>
-</Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -144,6 +144,7 @@
     <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="CameraTestScene.cpp" />
     <ClCompile Include="CollisionBoxTool.cpp" />
+    <ClCompile Include="CoolDownManager.cpp" />
     <ClCompile Include="DefaultUIState.cpp" />
     <ClCompile Include="DialogueManager.cpp" />
     <ClCompile Include="DialogueUIState.cpp" />
@@ -223,6 +224,7 @@
     <ClInclude Include="CameraManager.h" />
     <ClInclude Include="CameraTestScene.h" />
     <ClInclude Include="CollisionBoxTool.h" />
+    <ClInclude Include="CoolDownManager.h" />
     <ClInclude Include="DefaultUIState.h" />
     <ClInclude Include="DialogueManager.h" />
     <ClInclude Include="DialogueTemplate.h" />

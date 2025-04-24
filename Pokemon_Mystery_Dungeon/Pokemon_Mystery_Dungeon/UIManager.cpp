@@ -175,6 +175,7 @@ void UIManager::CloseUIStateBox(const string& key)
         currentState = nullptr;
         currentStateKey = "";
     }
+    ChangeState("IdleUI");
 }
 
 void UIManager::AddPersistentState(UIState* state)

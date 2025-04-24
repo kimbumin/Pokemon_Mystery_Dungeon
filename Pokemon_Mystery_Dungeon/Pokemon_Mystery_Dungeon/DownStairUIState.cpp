@@ -3,6 +3,7 @@
 #include "UIManager.h"
 #include "UIElementImage.h"
 #include "UIElementText.h"
+#include "CoolDownManager.h"
 
 HRESULT DownStairUIState::Init()
 {
@@ -83,6 +84,7 @@ void DownStairUIState::Update()
         }
         else if (YIndex == 1)
         {
+            CoolDownManager::GetInstance()->SetCoolDown("DownStair", 3.0f);
             UIManager::GetInstance()->ChangeState("IdleUI");
         }
     }

@@ -62,7 +62,6 @@ void DialogueUIState::Update(float dt)
     if (KeyManager::GetInstance()->IsOnceKeyDown(0x58))  // 'X'
     {
         UIManager::GetInstance()->CloseUIStateBox("dialogueBox");
-        UIManager::GetInstance()->ChangeState("IdleUI");
         isActive = false;
         return;
     }
@@ -132,7 +131,6 @@ void DialogueUIState::PopNextDialogueLine()
     if (dialogueQueue.empty())
     {
         UIManager::GetInstance()->CloseUIStateBox("dialogueBox");
-        UIManager::GetInstance()->ChangeState("IdleUI");
         isActive = false;
         return;
     }
