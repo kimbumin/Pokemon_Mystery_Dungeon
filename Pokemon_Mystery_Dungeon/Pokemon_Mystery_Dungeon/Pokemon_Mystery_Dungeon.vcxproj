@@ -134,6 +134,7 @@
     <ClCompile Include="BattleSystem.cpp" />
     <ClCompile Include="BossScene.cpp" />
     <ClCompile Include="Branch.cpp" />
+    <ClCompile Include="BuminScene.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="CameraTestScene.cpp" />
@@ -212,6 +213,7 @@
     <ClInclude Include="BattleSystem.h" />
     <ClInclude Include="BossScene.h" />
     <ClInclude Include="Branch.h" />
+    <ClInclude Include="BuminScene.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraManager.h" />
     <ClInclude Include="CameraTestScene.h" />
