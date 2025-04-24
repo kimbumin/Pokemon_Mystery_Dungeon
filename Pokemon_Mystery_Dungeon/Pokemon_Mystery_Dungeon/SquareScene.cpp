@@ -19,6 +19,7 @@
 #include "PokemonPlayer.h"
 #include "Camera.h"
 #include "FadeManager.h"
+#include "CoolDownManager.h"
 
 #define SQUARESIZE_X 954
 #define SQUARESIZE_Y 714
@@ -96,6 +97,8 @@ void SquareScene::Release()
 
 void SquareScene::Update()
 {
+    float dt = TimerManager::GetInstance()->GetDeltaTime();
+
     
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F1))
     {
@@ -159,9 +162,15 @@ void SquareScene::Update()
             DialogueTemplate::FoundItem, {{L"itemName", L"Monster Ball"}});
     }
 
+    CoolDownManager::GetInstance()->Update(dt);
+
     if (KeyManager::GetInstance()->IsOnceKeyDown(0x44))  // 'D' 키
     {
-        UIManager::GetInstance()->OpenUIStateBox("DungeonUI");
+        if (!CoolDownManager::GetInstance()->IsCooldown(
+                "DungeonUI")) 
+        {
+            UIManager::GetInstance()->OpenUIStateBox("DungeonUI");
+        }
 
     }
     if (KeyManager::GetInstance()->IsOnceKeyDown(0x59))  // 'Y' 키

@@ -71,7 +71,7 @@ HRESULT SkillUIState::Init()
     }
 
     
-    vector<SkillDisplayData> skillDisplayList;
+    
     auto player = PlayerManager::GetInstance()->GetPlayer();
     for (int i = 0; i < 4; ++i)
     {
@@ -89,9 +89,6 @@ HRESULT SkillUIState::Init()
             skillDisplayList.push_back(display);
         }
     }
-    currentSkills = skillDisplayList; 
-    SetSkills(currentSkills);
-
 
     // 서브
     SubCursor = new UIElementImage();
@@ -107,6 +104,31 @@ HRESULT SkillUIState::Init()
         SubText[i]->SetLocalPos(50, SubOffsetY[i]);
     }
 
+    if (!alreadyInitialized)
+    {
+        skillDisplayList.clear();
+
+        auto player = PlayerManager::GetInstance()->GetPlayer();
+        for (int i = 0; i < 4; ++i)
+        {
+            std::shared_ptr<ISkill> skill = player->GetSkill(i);
+            if (skill)
+            {
+                const SkillData& data = skill->GetSkillData();
+
+                SkillDisplayData display;
+                display.SkillName = ToWString(data.name);
+                display.currentCount = data.pp;
+                display.maxCount = data.pp;
+
+                skillDisplayList.push_back(display);
+            }
+        }
+
+        currentSkills = skillDisplayList;  // 초기화 한 번만
+        alreadyInitialized = true;
+    }
+    SetSkills(currentSkills);
 
     UpdateRealPos();
 
@@ -119,6 +141,7 @@ void SkillUIState::Release()
 
 void SkillUIState::Update()
 {
+
     fadeOutTime += TimerManager::GetInstance()->GetDeltaTime();
     fadeInTime = (sinf(fadeOutTime * 6.0f) * 0.5f) + 0.5f;
 
@@ -227,6 +250,8 @@ void SkillUIState::Render(HDC hdc)
 
 void SkillUIState::SetSkills(const vector<SkillDisplayData>& data)
 {
+    currentSkills = data;
+
     for (size_t i = 0; i < data.size() && i < SkillList.size(); ++i)
     {
         SkillList[i].SkillName->SetText(data[i].SkillName);
@@ -241,6 +266,7 @@ void SkillUIState::SetSkills(const vector<SkillDisplayData>& data)
 
 void SkillUIState::UseSkill(int index)
 {
+
 
     if (index < 0 || index >= currentSkills.size())
         return;
