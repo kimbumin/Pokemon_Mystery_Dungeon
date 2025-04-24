@@ -16,6 +16,7 @@
 #include "DialogueTemplate.h"
 #include "FadeManager.h"
 #include "SquareScene.h"
+#include "CoolDownManager.h"
 
 HRESULT DungeonScene::Init()
 {
@@ -60,6 +61,8 @@ void DungeonScene::Release()
 
 void DungeonScene::Update()
 {
+    float dt = TimerManager::GetInstance()->GetDeltaTime();
+
     if (dungeonMap)
     {
         dungeonMap->Update();
@@ -71,7 +74,8 @@ void DungeonScene::Update()
 
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_TAB))
     {
-        UIManager::GetInstance()->OpenUIStateBox("defaultUI");
+        if (UIManager::GetInstance()->GetCurrentStateKey() != "defaultUI")
+            UIManager::GetInstance()->OpenUIStateBox("defaultUI");
     }
     if (KeyManager::GetInstance()->IsOnceKeyDown(0x49))  // 'I' Ű
     {
@@ -133,6 +137,15 @@ void DungeonScene::Update()
     }
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F9)){
         Camera::GetInstance()->Shake(0.3f, 10);
+    }
+
+    CoolDownManager::GetInstance()->Update(dt);
+
+    if (!CoolDownManager::GetInstance()->IsCooldown("DownStair") &&
+        IsPlayerOnStair() &&
+        UIManager::GetInstance()->GetCurrentStateKey() != "DownStairUI")
+    {
+        UIManager::GetInstance()->OpenUIStateBox("DownStairUI");
     }
 }
 
