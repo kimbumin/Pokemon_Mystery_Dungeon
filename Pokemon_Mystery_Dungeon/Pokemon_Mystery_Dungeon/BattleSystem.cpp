@@ -10,23 +10,19 @@ void BattleSystem::SetPokemonPool(PokemonPool* pool)
 int BattleSystem::CalculateDamage(PokemonBase* attacker, PokemonBase* target,
                                   ISkill* skill)
 {
-    int power = skill->GetPower();              // SkillPower
+    int power = skill->GetPower();              // Skill power
     string skillType = skill->GetSkillType();   // "Physical" or "Special"
-    string skillElement = skill->GetElement();  // "Fire", "Water" ..
+    string skillElement = skill->GetElement();  // "Fire", "Water", etc.
 
-    const PokemonData& atkData =
-        attacker->GetCurrentPokemonData();  // attacker atkData
-    const PokemonData& defData =
-        target->GetCurrentPokemonData();  // target defData
+    const PokemonData& atkData = attacker->GetCurrentPokemonData();
+    const PokemonData& defData = target->GetCurrentPokemonData();
 
-    int atkStat = (skillType == "Physical")
-                      ? atkData.atk
-                      : atkData.spAtk;  // Atk Physical Cheak
-    int defStat = (skillType == "Physical")
-                      ? defData.def
-                      : defData.spDef;  // Def Physical Cheak
+    int level = attacker->GetLevel();
 
-    float typeBonus = 1.0f;  // Same Type Attack Bonus
+    int atkStat = (skillType == "Physical") ? atkData.atk : atkData.spAtk;
+    int defStat = (skillType == "Physical") ? defData.def : defData.spDef;
+
+    float typeBonus = 1.0f;
     for (const auto& t : atkData.types)
     {
         if (t == skillElement)
@@ -36,70 +32,58 @@ int BattleSystem::CalculateDamage(PokemonBase* attacker, PokemonBase* target,
         }
     }
 
-    float typeEffect = 1.0f;  // ElementTypeEffectiveness Hardcoding
+    float typeEffect = 1.0f;
     for (const auto& defType : defData.types)
     {
         if (skillElement == "Fire")
         {
             if (defType == "Grass" || defType == "Ice" || defType == "Bug")
-            {
                 typeEffect *= 2.0f;
-            }
             else if (defType == "Fire" || defType == "Water" ||
                      defType == "Rock")
-            {
                 typeEffect *= 0.5f;
-            }
         }
         else if (skillElement == "Water")
         {
             if (defType == "Fire" || defType == "Rock" || defType == "Ground")
-            {
                 typeEffect *= 2.0f;
-            }
             else if (defType == "Water" || defType == "Grass" ||
                      defType == "Dragon")
-            {
                 typeEffect *= 0.5f;
-            }
         }
         else if (skillElement == "Electric")
         {
             if (defType == "Water" || defType == "Flying")
-            {
                 typeEffect *= 2.0f;
-            }
             else if (defType == "Electric" || defType == "Grass" ||
                      defType == "Dragon")
-            {
                 typeEffect *= 0.5f;
-            }
             else if (defType == "Ground")
-            {
                 typeEffect *= 0.0f;
-            }
         }
         else if (skillElement == "Grass")
         {
             if (defType == "Water" || defType == "Ground" || defType == "Rock")
-            {
                 typeEffect *= 2.0f;
-            }
             else if (defType == "Fire" || defType == "Grass" ||
                      defType == "Flying")
-            {
                 typeEffect *= 0.5f;
-            }
         }
     }
 
     float randomRate = (rand() % 16 + 85) / 100.0f;
 
-    float totalDamage = ((atkStat * power) / (float)defStat) * typeBonus *
-                        typeEffect * randomRate;
+    float modifier = typeBonus * typeEffect * randomRate;
 
-    return static_cast<int>(totalDamage);
+    float damage =
+        (((((2.0f * level) / 5.0f + 2.0f) * power * atkStat) / defStat) /
+             50.0f +
+         2.0f) *
+        modifier;
+
+    return static_cast<int>(damage);
 }
+
 
 PokemonBase* BattleSystem::GetTargetInFront(PokemonBase* owner)
 {
