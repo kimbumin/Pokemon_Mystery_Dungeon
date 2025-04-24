@@ -102,7 +102,6 @@ void SquareScene::Update()
     
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F1))
     {
-        SceneManager::GetInstance()->AddScene("TileMapTool", new TilemapTool());
         SceneManager::GetInstance()->ChangeScene("TileMapTool");
     }
 
@@ -127,12 +126,10 @@ void SquareScene::Update()
 
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F6))
     {
-        SceneManager::GetInstance()->AddScene("DungeonScene", new DungeonScene());
         SceneManager::GetInstance()->ChangeScene("DungeonScene","LoadingScene");
     }
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F5))
     {
-        SceneManager::GetInstance()->AddScene("StartScene", new StartScene());
         SceneManager::GetInstance()->AddLoadingScene("LoadingScene",new LoadingScene());
         SceneManager::GetInstance()->ChangeScene("StartScene", "LoadingScene");
     }
@@ -248,5 +245,5 @@ void SquareScene::RenderFlowers(HDC hdc, Image* flower,const std::vector<POINT>&
 bool SquareScene::IsPlayerOnDungeonTrigger()
 {
     FPOINT playerPos = PlayerManager::GetInstance()->GetPlayer()->GetPos();
-    return playerPos.x < 0.f;
+    return playerPos.x < 15.f;
 }

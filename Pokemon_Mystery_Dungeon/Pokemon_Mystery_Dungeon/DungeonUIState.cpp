@@ -98,7 +98,6 @@ void DungeonUIState::Update()
 
             UIManager::GetInstance()->SetDungeonType(DUNGEON_TYPE_ICE);
             UIManager::GetInstance()->ChangeState("IdleUI");
-            SceneManager::GetInstance()->AddScene("DungeonScene", new DungeonScene);
             SceneManager::GetInstance()->ChangeScene("DungeonScene");
 
         }
@@ -106,8 +105,6 @@ void DungeonUIState::Update()
         {
             UIManager::GetInstance()->SetDungeonType(DUNGEON_TYPE_MAGMA);
             UIManager::GetInstance()->ChangeState("IdleUI");
-            SceneManager::GetInstance()->AddScene("DungeonScene",
-                                                  new DungeonScene);
             SceneManager::GetInstance()->ChangeScene("DungeonScene");
 
         }
@@ -115,8 +112,6 @@ void DungeonUIState::Update()
         {
             UIManager::GetInstance()->SetDungeonType(DUNGEON_TYPE_FOREST);
             UIManager::GetInstance()->ChangeState("IdleUI");
-            SceneManager::GetInstance()->AddScene("DungeonScene",
-                                                  new DungeonScene);
             SceneManager::GetInstance()->ChangeScene("DungeonScene");
         }
     }

@@ -51,7 +51,6 @@ void StartScene::Update()
     if (isSceneTransition && FadeManager::GetInstance()->IsFadeComplete())
     {
         isSceneTransition = false;
-        SceneManager::GetInstance()->AddScene("Square", new SquareScene);
         SceneManager::GetInstance()->ChangeScene("Square");
     }
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_SPACE) &&
