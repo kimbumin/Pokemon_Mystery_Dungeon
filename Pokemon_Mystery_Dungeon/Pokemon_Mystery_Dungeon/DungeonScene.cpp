@@ -104,6 +104,23 @@ void DungeonScene::Update()
         SceneManager::GetInstance()->ChangeScene("Square");
         dungeonFloor = 0;
     }
+    if (dungeonFloor > 2)
+    {
+        if (UIManager::GetInstance()->GetDungeonType() == DUNGEON_TYPE_ICE)
+        {
+            dungeonMap->SetTileImage(dungeonMap->GetNextIceTileImage());
+        }
+        else if (UIManager::GetInstance()->GetDungeonType() == DUNGEON_TYPE_MAGMA)
+        {
+            dungeonMap->SetTileImage(dungeonMap->GetNextMagmaTileImage());
+        }
+        else if (UIManager::GetInstance()->GetDungeonType() == DUNGEON_TYPE_FOREST)
+        {
+            dungeonMap->SetTileImage(dungeonMap->GetNextTiniTileImage());
+        }
+    }
+
+
 
     elapsedTime += TimerManager::GetInstance()->GetDeltaTime();
     if (elapsedTime > 0.016f)
