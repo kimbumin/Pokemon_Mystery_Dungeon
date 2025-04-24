@@ -113,6 +113,10 @@ public:
     {
         return isAlive;
     }
+    inline int GetCurrentHp() const
+    {
+        return currentHp;
+    }
     shared_ptr<ISkill> GetSkill(int index)
     {
         return learnedSkill[index];

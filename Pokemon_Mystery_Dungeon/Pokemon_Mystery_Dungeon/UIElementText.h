@@ -20,6 +20,8 @@ private:
 
     COLORREF textColor = RGB(0x1C, 0x1C, 0x84);
 
+    COLORREF highlightColor = RGB(241, 179, 0);
+
     wstring fullText;
     int visibleTextLength = 0;
     float elapsedTime = 0.0f;
@@ -41,6 +43,7 @@ public:
     void SetTextLine(float line);
     void SetFont(int size);
     void SetTextColorRGB(int r, int g, int b);
+    void SetHighlightColorRGB(int r, int g, int b);
     void TypeEffect(const wstring& txt, float interval = 0.05f);
     void SkipTyping();
     void Update(float dt);

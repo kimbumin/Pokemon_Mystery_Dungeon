@@ -99,12 +99,14 @@ void InventoryUIState::Update()
 
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_DOWN))
     {
+        // SoundManager::GetInstance()->PlaySFX("button");
         YIndex = (YIndex + 1) % 2;
         Cursor->SetLocalPos(CursorPosX, CursorPosY[YIndex]);
         Cursor->UpdateRealPos();
     }
     else if (KeyManager::GetInstance()->IsOnceKeyDown(VK_UP))
     {
+        // SoundManager::GetInstance()->PlaySFX("button");
         YIndex = (YIndex - 1 + 2) % 2;
         Cursor->SetLocalPos(CursorPosX, CursorPosY[YIndex]);
         Cursor->UpdateRealPos();
@@ -113,6 +115,7 @@ void InventoryUIState::Update()
 
     if (KeyManager::GetInstance()->IsOnceKeyDown(0x58))  // 'X' Ű
     {
+        // SoundManager::GetInstance()->PlaySFX("button");
         UIManager::GetInstance()->ChangeState("defaultUI");
     }
 

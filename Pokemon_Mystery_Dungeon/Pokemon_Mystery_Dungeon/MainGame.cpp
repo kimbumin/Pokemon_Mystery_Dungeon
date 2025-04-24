@@ -21,7 +21,7 @@ HRESULT MainGame::Init()
     ImageManager::GetInstance()->Init();
     KeyManager::GetInstance()->Init();
     SceneManager::GetInstance()->Init();
-    UIManager::GetInstance()->Init();
+   
     PokemonDataLoader::GetInstance()->Init();
     PokemonDataLoader::GetInstance()->LoadFromCSV("Data/PokemonBaseStatus.csv");
     PokemonEvolutionDataLoader::GetInstance()->Init();
@@ -31,6 +31,8 @@ HRESULT MainGame::Init()
     SkillManager::GetInstance()->LoadSkillsFromCSV(
         "Data/PokemonSkill_English.csv");
     PlayerManager::GetInstance()->Init();
+    UIManager::GetInstance()->Init();
+
 
     //사운드매니저 초기화
     SoundManager::GetInstance()->Init();

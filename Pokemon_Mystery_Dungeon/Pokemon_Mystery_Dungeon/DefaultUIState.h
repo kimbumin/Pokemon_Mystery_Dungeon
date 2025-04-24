@@ -28,6 +28,14 @@ private:
     UIElementText* PokemonNameText = nullptr;
     UIElementText* PokemonLevelText = nullptr;
     UIElementText* PokemonHPText = nullptr;
+    UIElementText* AtkText = nullptr;
+    UIElementText* DefText = nullptr;
+    UIElementText* SpAtkText = nullptr;
+    UIElementText* SpDefText = nullptr;
+    UIElementText* SpeedText = nullptr;
+    UIElementText* TypeText = nullptr;
+    UIElementText* SumText = nullptr;
+    UIElementText* AvgText = nullptr;
 
     int fontPosX = 50;
     const int OffsetY[3] = {30, 70, 110};
@@ -42,5 +50,8 @@ public:
     void Release() override;
     void Update() override;
     void Render(HDC hdc) override;
+    void PlayerInfoTextSetting(); 
+    wstring GetMapNameByType(DungeonType type);
+    void SetMapNameTextStyle(UIElementText* text, DungeonType type);
     ~DefaultUIState() override;
 };

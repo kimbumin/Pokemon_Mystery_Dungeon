@@ -19,7 +19,7 @@ HRESULT DialogueUIState::Init()
         1));
 
     dialogueBoxImage->SetLocalPos(dialogueBoxPosX, dialogueBoxPosY);
-    dialogueBoxImage->setAlpha(0.7f);
+    dialogueBoxImage->setAlpha(0.95f);
 
     dialogueBoxImage->UpdateRealPos();
 
@@ -46,6 +46,7 @@ void DialogueUIState::Update()
 
     if (KeyManager::GetInstance()->IsOnceKeyDown(0x58))  // 'X' 키
     {
+        // SoundManager::GetInstance()->PlaySFX("button");
         UIManager::GetInstance()->CloseUIStateBox("dialogueBox");
     }
 }
@@ -61,11 +62,28 @@ void DialogueUIState::Update(float dt)
 
     if (KeyManager::GetInstance()->IsOnceKeyDown(0x58))  // 'X'
     {
+        // SoundManager::GetInstance()->PlaySFX("button");
         UIManager::GetInstance()->CloseUIStateBox("dialogueBox");
         isActive = false;
         return;
     }
 
+    if (KeyManager::GetInstance()->IsOnceKeyDown(0x5A))  // 'Z'
+    {
+        // SoundManager::GetInstance()->PlaySFX("button");
+        if (mainText && !mainText->IsTypingFinished())
+        {
+            // 타이핑 중이면 즉시 전체 출력
+            mainText->SkipTyping();
+            return;
+        }
+        else if (dialogueFullyShown)
+        {
+            // 타이핑 끝난 상태면 다음 대사로 넘어감
+            PopNextDialogueLine();
+            return;
+        }
+    }
     
 
     if (mainText && !dialogueFullyShown && mainText->IsTypingFinished())
