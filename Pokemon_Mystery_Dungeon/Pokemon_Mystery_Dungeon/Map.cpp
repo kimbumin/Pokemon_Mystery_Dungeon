@@ -6,7 +6,8 @@
 #include "Image.h"
 #include "Camera.h"
 #include "UIManager.h"
-
+#include "PokemonPlayer.h"
+#include "PlayerManager.h"
 // 최대 방 개수
 const int MAX_ROOMS = 8;
 const int MIN_WIDTH = 4;
@@ -318,6 +319,20 @@ void Map::MiniMapRender(HDC hdc, int drawingX, int drawingY)
     HBRUSH stairBrush = CreateSolidBrush(RGB(255, 255, 0));
     FillRect(hdc, &stairRc, stairBrush);
     DeleteObject(stairBrush);
+
+
+
+    FPOINT playerPos = PlayerManager::GetInstance()->GetPlayer()->GetPos();
+    playerPos.x /= TILE_SIZE;
+    playerPos.y /= TILE_SIZE;
+
+    RECT playerRc = {drawingX + playerPos.x * MINIMAP_TILE_SIZE,
+                    drawingY + playerPos.y * MINIMAP_TILE_SIZE,
+                    drawingX + (playerPos.x + 1) * MINIMAP_TILE_SIZE,
+                    drawingY + (playerPos.y + 1) * MINIMAP_TILE_SIZE};
+    HBRUSH playerBrush = CreateSolidBrush(RGB(117, 249, 77));
+    FillRect(hdc, &playerRc, playerBrush);
+    DeleteObject(playerBrush);
 }
 
 void Map::CreateRoom(const Room& room)
