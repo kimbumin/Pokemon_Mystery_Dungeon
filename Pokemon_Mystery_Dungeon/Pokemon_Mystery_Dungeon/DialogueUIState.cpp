@@ -132,6 +132,7 @@ void DialogueUIState::PopNextDialogueLine()
     {
         UIManager::GetInstance()->CloseUIStateBox("dialogueBox");
         isActive = false;
+
         return;
     }
 
