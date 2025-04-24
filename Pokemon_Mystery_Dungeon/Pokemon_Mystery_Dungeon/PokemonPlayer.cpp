@@ -11,7 +11,7 @@
 #include "PokemonDataLoader.h"
 #include "PokemonEvolutionDataLoader.h"
 #include "SkillManager.h"
-
+#include "PokemonImageLoader.h"
 HRESULT PokemonPlayer::Init()
 {
     PokemonBase::Init();
@@ -142,6 +142,7 @@ void PokemonPlayer::TryEvolve()
 
 void PokemonPlayer::EvolveTo(int newPokemonId)
 {
+    PokemonImageLoader::GetInstance()->LoadPokemonAnim(newPokemonId);
     baseStatus = PokemonDataLoader::GetInstance()->GetData(newPokemonId);
     if (baseStatus == nullptr)
     {

@@ -162,6 +162,7 @@ void DungeonScene::Render(HDC hdc)
 
 void DungeonScene::GenerateNextFloor()
 {
+    dungeonManager->ExitDungeon();
     dungeonMap->Init();
     EnterDungeonType();
     wallTiles = dungeonMap->GetWallTiles();
