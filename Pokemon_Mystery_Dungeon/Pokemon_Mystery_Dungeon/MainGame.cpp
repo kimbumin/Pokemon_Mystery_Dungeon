@@ -14,8 +14,10 @@
 #include "UIManager.h"
 #include "SkillManager.h"
 #include "PokemonEvolutionDataLoader.h"
+#include "StartScene.h"
 HRESULT MainGame::Init()
 {
+    srand(time(NULL));
     ImageManager::GetInstance()->Init();
     KeyManager::GetInstance()->Init();
     SceneManager::GetInstance()->Init();
@@ -37,8 +39,8 @@ HRESULT MainGame::Init()
         return E_FAIL;
     }
     //UIManager::GetInstance()->ChangeState("IdleUI");
-    SceneManager::GetInstance()->AddScene("Square", new SquareScene);
-    SceneManager::GetInstance()->ChangeScene("Square");
+    SceneManager::GetInstance()->AddScene("StartScene", new StartScene());
+    SceneManager::GetInstance()->ChangeScene("StartScene");
     // SceneManager::GetInstance()->AddScene("TestMap", new CameraTestScene());
     // SceneManager::GetInstance()->ChangeScene("TestMap");
     return S_OK;
