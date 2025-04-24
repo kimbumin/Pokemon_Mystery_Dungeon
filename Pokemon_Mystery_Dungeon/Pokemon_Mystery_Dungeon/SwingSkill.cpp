@@ -74,3 +74,9 @@ shared_ptr<ISkill> SwingSkill::Clone()
 {
     return make_shared<SwingSkill>(*this);
 }
+void SwingSkill::Reset()
+{
+    isActive = false;
+    frameCount = 0;
+    elapsedTime = 0.0f;
+}

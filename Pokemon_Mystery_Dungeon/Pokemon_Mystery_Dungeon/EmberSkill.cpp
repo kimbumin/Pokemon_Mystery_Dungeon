@@ -81,3 +81,10 @@ shared_ptr<ISkill> EmberSkill::Clone()
 {
     return make_shared<EmberSkill>(*this);  // 스킬을 복제하여 반환
 }
+
+void EmberSkill::Reset()
+{
+    isActive = false;
+    frameCount = 0;
+    elapsedTime = 0.0f;
+}

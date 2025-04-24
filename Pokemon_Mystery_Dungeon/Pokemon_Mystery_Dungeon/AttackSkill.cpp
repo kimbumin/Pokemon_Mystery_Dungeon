@@ -74,3 +74,9 @@ shared_ptr<ISkill> AttackSkill::Clone()
 {
     return make_shared<AttackSkill>(*this);
 }
+void AttackSkill::Reset()
+{
+    isActive = false;
+    frameCount = 0;
+    elapsedTime = 0.0f;
+}

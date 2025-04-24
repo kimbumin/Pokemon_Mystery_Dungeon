@@ -81,3 +81,9 @@ shared_ptr<ISkill> StoneShowerSkill::Clone()
 {
     return make_shared<StoneShowerSkill>(*this);  // 스킬을 복제하여 반환
 }
+void StoneShowerSkill::Reset()
+{
+    isActive = false;
+    frameCount = 0;
+    elapsedTime = 0.0f;
+}
