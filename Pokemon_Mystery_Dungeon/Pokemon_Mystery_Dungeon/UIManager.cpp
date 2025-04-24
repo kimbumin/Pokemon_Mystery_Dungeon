@@ -150,6 +150,7 @@ void UIManager::RegisterAllUIStates()
     AddState("YesOrNoUI", new YesOrNoUIState());
     AddState("DownStairUI", new DownStairUIState());
     AddState("InventoryUI", new InventoryUIState());
+    AddState("YesOrNoUI", new YesOrNoUIState());
 }
 
 void UIManager::OpenUIStateBox(const string& key)

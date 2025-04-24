@@ -42,7 +42,7 @@ HRESULT DungeonUIState::Init()
 
     // 磊侥 按眉 积己 waterTypeText
     IceTypeText = new UIElementText();
-    IceTypeText->SetText(L"Water Dungeon");
+    IceTypeText->SetText(L"Ice Dungeon");
     IceTypeText->SetLocalPos(50, OffsetY[0]);
     IceTypeText->SetParent(DungeonInfoBox);
 
@@ -57,7 +57,7 @@ HRESULT DungeonUIState::Init()
 
     // 磊侥 按眉 积己 fireTypeText
     MagmaTypeText = new UIElementText();
-    MagmaTypeText->SetText(L"Fire Dungeon");
+    MagmaTypeText->SetText(L"Magma Dungeon");
     MagmaTypeText->SetLocalPos(50, OffsetY[1]);
     MagmaTypeText->SetParent(DungeonInfoBox);
 

@@ -14,6 +14,11 @@ private:
     const int InfoBoxPosX = 40;  // 나중에 플레이어 위치에 맞춰서 바꿔야함
     const int InfoBoxPosYOffset[2] = {30, 60};
 
+    float fadeOutTime = 0.0f;
+    float fadeInTime = 1.0f;
+    int YIndex = 0;
+    const int CursorPosX = 20;
+
 public:
     HRESULT Init() override;
     void Release() override;
