@@ -47,6 +47,23 @@ void PokemonEnemy::Update()
     }
 }
 
+void PokemonEnemy::TakeDamage(int damage)
+{
+    // 부모 로직 먼저 실행 (HP 감소, 애니메이션, 죽음 판정 + 로그 출력)
+    PokemonBase::TakeDamage(damage);
+
+    // 죽었으면 경험치 처리
+    if (!GetIsAlive())
+    {
+        const PokemonData& data = this->GetCurrentPokemonData();
+        int avgStat = (data.hp + data.atk + data.def + data.spAtk + data.spDef + data.speed) / 6;
+        int level = this->GetLevel();
+        int expGained = (avgStat / 2) * level;
+
+        PlayerManager::GetInstance()->GetPlayer()->GainExp(expGained);  // 경험치 분배
+    }
+}
+
 void PokemonEnemy::ExecuteTurn()
 {
     FPOINT myPos = this->GetPos();

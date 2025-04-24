@@ -1,10 +1,11 @@
 #pragma once
-#include "ISkill.h"
-#include "PokemonBase.h"
-#include "PokemonPool.h"
 #include "Singleton.h"
 
+#include "config.h"
+
 class PokemonPool;
+class PokemonBase;
+class ISkill;
 class BattleSystem : public Singleton<BattleSystem>
 {
 private:

@@ -2,7 +2,9 @@
 
 #include "PokemonBase.h"
 #include "BattleSystem.h"
-
+#include "DialogueManager.h"
+#include "DialogueTemplate.h"
+#include "CommonFunction.h"
 AttackSkill::AttackSkill(const SkillData& skillData)
 {
     data = skillData;
@@ -66,6 +68,13 @@ void AttackSkill::Use(PokemonBase* owner)
     {
         int damage =
             BattleSystem::GetInstance()->CalculateDamage(owner, target, this);
+        DialogueManager::GetInstance()->ShowLine(
+            DialogueTemplate::TookDamage,
+            {
+                {L"targetName", ToWString(target->GetCurrentPokemonData().name)},
+                {L"damage", ToWString(damage)}
+            }
+        );
         target->TakeDamage(damage);
     }
 }

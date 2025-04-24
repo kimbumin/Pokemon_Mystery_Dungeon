@@ -3,7 +3,9 @@
 #include "BattleSystem.h"
 #include "Image.h"
 #include "PokemonBase.h"
-
+#include "DialogueManager.h"
+#include "DialogueTemplate.h"
+#include "CommonFunction.h"
 SwingSkill::SwingSkill(const SkillData& skillData)
 {
     data = skillData;
@@ -66,6 +68,13 @@ void SwingSkill::Use(PokemonBase* owner)
     {
         int damage =
             BattleSystem::GetInstance()->CalculateDamage(owner, target, this);
+        DialogueManager::GetInstance()->ShowLine(
+            DialogueTemplate::TookDamage,
+            {
+                {L"targetName", ToWString(target->GetCurrentPokemonData().name)},
+                {L"damage", ToWString(damage)}
+            }
+        );
         target->TakeDamage(damage);
     }
 }

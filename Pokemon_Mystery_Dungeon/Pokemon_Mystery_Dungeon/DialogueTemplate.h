@@ -38,7 +38,7 @@ inline const std::wstring LevelUp = L"<pokemonName> grew to Lv.<level>!";
 inline const std::wstring Evolution = L"<oldName> evolved into <newName>!";
 // <oldName>은(는) <newName>으로 진화했다!
 
-inline const std::wstring LevelUpSummary = L"Level up! <statChanges>!";
+inline const std::wstring LevelUpSummary = L"Level up! <statChanges>";
 // 레벨업! <statChanges>!
 
 // 아이템 사용

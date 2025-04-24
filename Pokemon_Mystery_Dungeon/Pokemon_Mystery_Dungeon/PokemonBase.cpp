@@ -15,7 +15,9 @@
 #include "SkillManager.h"
 #include "SwingAnimState.h"
 #include "WalkAnimState.h"
-
+#include "DialogueManager.h"
+#include "DialogueTemplate.h"
+#include "CommonFunction.h"
 // Skill
 // UseItem
 
@@ -172,16 +174,21 @@ void PokemonBase::TakeDamage(int damage)
     {
         return;
     }
+
     currentHp -= damage;
-    PlayHurtAnim();
-    // HP가 0 미만이 되지 않도록 보정
+    ExecuteHurtAction();
+
     if (currentHp < 0)
         currentHp = 0;
 
-    // 죽었는지 여부 확인
-    if (currentHp == 0)
+    if (currentHp == 0 && isAlive)
     {
         isAlive = false;
+
+        DialogueManager::GetInstance()->ShowLine(
+            DialogueTemplate::Fainted,
+            { {L"targetName", ToWString(currentStatus.name)} }
+        );
     }
 }
 

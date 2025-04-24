@@ -27,7 +27,10 @@ public:
     virtual HRESULT Init() override;
     virtual void Release() override;
     virtual void Update() override;
+    virtual void Render(HDC hdc) override;
 
+    void Revive();
+    void TakeDamage(int damage) override;
     // SquareScene ฐüทร
     void SquareModeMove();
     void UpdateRect();

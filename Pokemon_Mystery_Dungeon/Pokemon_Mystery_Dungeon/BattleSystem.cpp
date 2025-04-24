@@ -1,6 +1,12 @@
 #include "BattleSystem.h"
 
 #include "config.h"
+#include "DialogueManager.h"
+#include "DialogueTemplate.h"
+#include "CommonFunction.h"
+#include "ISkill.h"
+#include "PokemonPool.h"
+#include "PokemonBase.h"
 
 void BattleSystem::SetPokemonPool(PokemonPool* pool)
 {
@@ -10,6 +16,14 @@ void BattleSystem::SetPokemonPool(PokemonPool* pool)
 int BattleSystem::CalculateDamage(PokemonBase* attacker, PokemonBase* target,
                                   ISkill* skill)
 {
+    DialogueManager::GetInstance()->ShowLine(
+        DialogueTemplate::UsedSkill,
+        {
+            {L"userName", ToWString(attacker->GetCurrentPokemonData().name)},
+            {L"skillName", ToWString(skill->GetName())}
+        }
+    );
+
     int power = skill->GetPower();              // Skill power
     string skillType = skill->GetSkillType();   // "Physical" or "Special"
     string skillElement = skill->GetElement();  // "Fire", "Water", etc.

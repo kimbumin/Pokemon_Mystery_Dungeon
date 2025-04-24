@@ -59,7 +59,10 @@ void PokemonPool::Render(HDC hdc)
     // 포켓몬 및 스킬 등록
     for (auto& pokemon : pokemonPool)
     {
-        if (pokemon && pokemon->GetIsAlive())
+        bool isPlayer = (pokemon == PlayerManager::GetInstance()->GetPlayer());
+
+        // 적은 살아있을 때만 렌더, 플레이어는 죽어도 렌더
+        if (pokemon && (pokemon->GetIsAlive() || isPlayer))
         {
             // 포켓몬 등록
             renderQueue.push_back({
@@ -72,14 +75,14 @@ void PokemonPool::Render(HDC hdc)
             // 스킬 등록
             for (int i = 0; i < 4; ++i)
             {
-                std::shared_ptr<ISkill> skill = pokemon->GetSkill(i);  // shared_ptr로 받아오기
+                std::shared_ptr<ISkill> skill = pokemon->GetSkill(i);
                 if (skill && skill->IsActive())
                 {
                     renderQueue.push_back({
                         skill->GetPos().y,
-                        skill.get(),     // raw pointer로 렌더링
+                        skill.get(),
                         true,
-                        skill            // shared_ptr 수명 유지
+                        skill  // shared_ptr 수명 유지
                         });
                 }
             }
@@ -106,7 +109,6 @@ void PokemonPool::Render(HDC hdc)
         }
     }
 }
-
 PokemonBase* PokemonPool::Get()
 {
     for (int i = 1; i < pokemonPool.size(); ++i)

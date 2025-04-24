@@ -123,6 +123,10 @@ public:
     {
         this->baseStatus = baseStatus;
     }
+    inline void SetHp(int hp)
+    {
+        this->currentHp = hp;
+    }
     inline void SetDirection(Direction direction)
     {
         this->direction = direction;
