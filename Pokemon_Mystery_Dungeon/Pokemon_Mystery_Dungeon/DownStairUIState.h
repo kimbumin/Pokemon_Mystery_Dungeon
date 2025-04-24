@@ -28,14 +28,12 @@ public:
     void Render(HDC hdc) override;
     ~DownStairUIState() override;
 
-    bool GetisActive(bool isActive)
+    bool GetIsActive()
     {
         return isActive;
     }
-    void SetisActive(bool isActive)
+    void SetIsActive(bool isActive)
     {
         this->isActive = isActive;
     }
-    
-
 };

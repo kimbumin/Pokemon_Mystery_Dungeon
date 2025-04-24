@@ -9,6 +9,7 @@
 #include "PokemonPlayer.h"
 #include "PokemonPool.h"
 #include "TurnManager.h"
+#include "BattleSystem.h"
 
 void DungeonManager::Init()
 {
@@ -31,7 +32,6 @@ void DungeonManager::EnterDungeon(string dungeonName)
 {
     pool = new PokemonPool();
     pool->Init();
-
     builder = new PokemonBuilder();
     builder->SetPool(pool);
     builder->SetMap(dungeonMap);
@@ -64,6 +64,8 @@ void DungeonManager::EnterDungeon(string dungeonName)
             enemy->SetMap(dungeonMap);
         }
     }
+    //배틀 시스템에서 pool리스트가 필요함
+    BattleSystem::GetInstance()->SetPokemonPool(pool);
 
     // 턴 매니저한테 Pool 넘기기
     TurnManager::GetInstance()->InitTurnOrder(pool);

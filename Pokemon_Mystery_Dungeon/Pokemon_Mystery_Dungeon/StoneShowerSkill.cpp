@@ -2,21 +2,23 @@
 
 #include "PokemonBase.h"
 #include "Camera.h"
+#include "BattleSystem.h"
+
 StoneShowerSkill::StoneShowerSkill(const SkillData& skillData)
 {
     data = skillData;
-}
-
-HRESULT StoneShowerSkill::Init()
-{
+    direction = 0;
     pos = {0, 0};
     isActive = false;
     frameCount = 0;
     elapsedTime = 0.0f;
     image = ImageManager::GetInstance()->AddImage(
-        "StoneShower", TEXT("Image/SkillImage/StoneShower.bmp"), 312, 54, 8,
-        1, true, RGB(255, 0, 255));
+        "StoneShower", TEXT("Image/SkillImage/StoneShower.bmp"), 312, 54, 8, 1,
+        true, RGB(255, 0, 255));
+}
 
+HRESULT StoneShowerSkill::Init()
+{
     return S_OK;
 }
 
@@ -66,9 +68,23 @@ void StoneShowerSkill::Use(PokemonBase* owner)
     pos.y += directionOffsets[dirIndex].second * 24;
     Camera::GetInstance()->Shake(0.1f, 5);
     isActive = true;
+
+    PokemonBase* target = BattleSystem::GetInstance()->GetTargetInFront(owner);
+    if (target)
+    {
+        int damage =
+            BattleSystem::GetInstance()->CalculateDamage(owner, target, this);
+        target->TakeDamage(damage);
+    }
 }
 
 shared_ptr<ISkill> StoneShowerSkill::Clone()
 {
     return make_shared<StoneShowerSkill>(*this);  // 스킬을 복제하여 반환
+}
+void StoneShowerSkill::Reset()
+{
+    isActive = false;
+    frameCount = 0;
+    elapsedTime = 0.0f;
 }

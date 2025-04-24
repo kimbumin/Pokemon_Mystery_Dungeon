@@ -166,8 +166,23 @@ int PokemonBase::CalStat(int value)
     return (value + IV + EV + 100) * level / 100;
 }
 
-void PokemonBase::TakeDamage()
+void PokemonBase::TakeDamage(int damage)
 {
+    if (damage <= 0)
+    {
+        return;
+    }
+    currentHp -= damage;
+    PlayHurtAnim();
+    // HP가 0 미만이 되지 않도록 보정
+    if (currentHp < 0)
+        currentHp = 0;
+
+    // 죽었는지 여부 확인
+    if (currentHp == 0)
+    {
+        isAlive = false;
+    }
 }
 
 void PokemonBase::SetAnimState(IAnimState* newState)
