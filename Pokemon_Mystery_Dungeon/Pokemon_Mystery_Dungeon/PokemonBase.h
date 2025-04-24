@@ -101,6 +101,10 @@ public:
     {
         return pos;
     }
+    inline int GetHp()
+    {
+        return currentHp;
+    }
     inline Map* GetMap()
     {
         return dungeonMap;
