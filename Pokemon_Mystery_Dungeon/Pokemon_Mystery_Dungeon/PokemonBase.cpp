@@ -176,7 +176,7 @@ void PokemonBase::TakeDamage(int damage)
     }
 
     currentHp -= damage;
-    PlayHurtAnim();
+    ExecuteHurtAction();
 
     if (currentHp < 0)
         currentHp = 0;
@@ -189,8 +189,6 @@ void PokemonBase::TakeDamage(int damage)
             DialogueTemplate::Fainted,
             { {L"targetName", ToWString(currentStatus.name)} }
         );
-
-        // Enemy 경험치 분배는 여기서 안 함
     }
 }
 

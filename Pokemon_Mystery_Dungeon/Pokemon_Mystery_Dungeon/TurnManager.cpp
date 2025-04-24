@@ -278,17 +278,7 @@ void TurnManager::Update()
                 }
             }
 
-            // 플레이어 사망 체크
-            PokemonPlayer* player = PlayerManager::GetInstance()->GetPlayer();
-            if (!player->GetIsAlive())
-            {
-                DialogueManager::GetInstance()->ShowLine(
-                    DialogueTemplate::RescueFailed, {{}});
-                player->Revive();
-                SceneManager::GetInstance()->ChangeScene("Square");
-                return;
-            }
-
+           
             ++currentIndex;
             int total = CountAlive();
             if (currentIndex >= total)
@@ -298,6 +288,21 @@ void TurnManager::Update()
 
             state = TurnState::WaitingForInput;
             break;
+    }
+
+    PokemonBase* player = PlayerManager::GetInstance()->GetPlayer();
+    if (!player->GetIsAlive() && UIManager::GetInstance()->GetCurrentStateKey() == "IdleUI")
+    {
+        // 씬 전환
+        SceneManager::GetInstance()->ChangeScene("Square");
+
+        // 플레이어 부활 처리
+        player->SetIsAlive(true);
+        player->SetPos({ 500, 300 });
+        player->SetHp(player->GetCurrentPokemonData().hp);
+        player->Init();
+
+        return;
     }
 }
 int TurnManager::CountAlive()

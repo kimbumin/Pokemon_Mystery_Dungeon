@@ -60,10 +60,26 @@ void PokemonPlayer::Update()
         POINT{static_cast<int>(pos.x), static_cast<int>(pos.y)});
 }
 
+void PokemonPlayer::Render(HDC hdc)
+{
+    PokemonBase::Render(hdc);
+
+}
+
 void PokemonPlayer::Revive()
 {
     currentHp = currentStatus.hp;
     SetIsAlive(true);
+}
+
+void PokemonPlayer::TakeDamage(int damage)
+{
+    PokemonBase::TakeDamage(damage);  // 기본 로직 실행 (HP 감소 + 로그 출력)
+
+    if (!GetIsAlive())
+    {
+
+    }
 }
 
 void PokemonPlayer::SquareModeMove()
