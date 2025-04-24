@@ -113,15 +113,14 @@ void DungeonScene::Update()
 
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_SPACE) &&!FadeManager::GetInstance()->IsFading())
     {
-        ++dungeonFloor; //test
+        ++dungeonFloor;
         FadeManager::GetInstance()->StartFadeOut(1.0);
-        GenerateNextFloor();
         isSceneTransition = true;
     }
-    if (dungeonFloor > 10)
+    if (dungeonFloor > 3)
     {
+        SceneManager::GetInstance()->ChangeScene("Square");
         dungeonFloor = 0;
-        SceneManager::GetInstance()->ChangeScene("SquareScene");
     }
 
     elapsedTime += TimerManager::GetInstance()->GetDeltaTime();
