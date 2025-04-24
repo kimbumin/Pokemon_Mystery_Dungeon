@@ -94,7 +94,6 @@ HRESULT SquareScene::Init()
 
 void SquareScene::Release()
 {
-    SkillManager::GetInstance()->ReleaseInstance();
     player->IsInSquare(false);
 }
 
