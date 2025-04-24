@@ -80,6 +80,7 @@ void DownStairUIState::Update()
     {
         if (YIndex == 0)
         {
+            isActive = true;
             UIManager::GetInstance()->ChangeState("IdleUI");
         }
         else if (YIndex == 1)

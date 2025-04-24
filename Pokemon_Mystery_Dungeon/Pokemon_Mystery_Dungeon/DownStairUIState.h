@@ -19,6 +19,7 @@ private:
     const int OffsetY[2] = {30, 60};
 
     int YIndex = 0;
+    bool isActive = false;
 
 public:
     HRESULT Init() override;
@@ -26,5 +27,15 @@ public:
     void Update() override;
     void Render(HDC hdc) override;
     ~DownStairUIState() override;
+
+    bool GetisActive(bool isActive)
+    {
+        return isActive;
+    }
+    void SetisActive(bool isActive)
+    {
+        this->isActive = isActive;
+    }
+    
 
 };
