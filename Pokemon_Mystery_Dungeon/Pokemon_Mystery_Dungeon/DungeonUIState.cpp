@@ -3,6 +3,7 @@
 #include "ImageGDIPlusManager.h"
 #include "UIManager.h"
 #include "DungeonScene.h"
+#include "CoolDownManager.h"
 
 HRESULT DungeonUIState::Init()
 {
@@ -93,8 +94,10 @@ void DungeonUIState::Update()
 
     if (KeyManager::GetInstance()->IsOnceKeyDown(0x5A)) // zŰ
     {
+        CoolDownManager::GetInstance()->SetCoolDown("EnterDungeon", 3.0f);
         if (YIndex == 0)
         {
+
             UIManager::GetInstance()->SetDungeonType(DUNGEON_TYPE_ICE);
             UIManager::GetInstance()->ChangeState("IdleUI");
             SceneManager::GetInstance()->AddScene("DungeonScene", new DungeonScene);
@@ -122,6 +125,7 @@ void DungeonUIState::Update()
 
     if (KeyManager::GetInstance()->IsOnceKeyDown(0x58))  // 'X' Ű
     {
+        CoolDownManager::GetInstance()->SetCoolDown("DungeonUI", 3.0f);
         UIManager::GetInstance()->ChangeState("IdleUI");
     }
 

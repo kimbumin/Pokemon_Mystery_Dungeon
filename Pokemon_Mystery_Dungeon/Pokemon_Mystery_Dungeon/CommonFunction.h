@@ -145,3 +145,8 @@ wstring ToWString(const T& value)
     wss << value;
     return wss.str();
 }
+
+inline wstring ToWString(const string& str)
+{
+    return wstring(str.begin(), str.end());
+}

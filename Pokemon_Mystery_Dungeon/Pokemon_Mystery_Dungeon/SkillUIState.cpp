@@ -4,6 +4,10 @@
 #include "Timer.h"
 #include "UIManager.h"
 #include "UIElementText.h"
+#include "PlayerManager.h"
+#include "ISkill.h" 
+#include "PokemonPlayer.h"
+#include "CommonFunction.h"
 
 HRESULT SkillUIState::Init()
 {
@@ -67,14 +71,24 @@ HRESULT SkillUIState::Init()
     }
 
     
+    
+    auto player = PlayerManager::GetInstance()->GetPlayer();
+    for (int i = 0; i < 4; ++i)
+    {
+        std::shared_ptr<ISkill> skill = player->GetSkill(i);
+        if (skill)
+        {
+            const SkillData& data = skill->GetSkillData();  
 
-     // 테스트용
-    std::vector<SkillDisplayData> testSkills = {{L"울음소리", 20, 20},
-                                                {L"몸통박치기", 15, 20},
-                                                {L"스파크", 10, 15},
-                                                {L"철벽", 5, 5}};
-    SetSkills(testSkills);
+            SkillDisplayData display;
+            display.SkillName =
+                ToWString(data.name);
+            display.currentCount = data.pp;
+            display.maxCount = data.pp;
 
+            skillDisplayList.push_back(display);
+        }
+    }
 
     // 서브
     SubCursor = new UIElementImage();
@@ -90,6 +104,31 @@ HRESULT SkillUIState::Init()
         SubText[i]->SetLocalPos(50, SubOffsetY[i]);
     }
 
+    if (!alreadyInitialized)
+    {
+        skillDisplayList.clear();
+
+        auto player = PlayerManager::GetInstance()->GetPlayer();
+        for (int i = 0; i < 4; ++i)
+        {
+            std::shared_ptr<ISkill> skill = player->GetSkill(i);
+            if (skill)
+            {
+                const SkillData& data = skill->GetSkillData();
+
+                SkillDisplayData display;
+                display.SkillName = ToWString(data.name);
+                display.currentCount = data.pp;
+                display.maxCount = data.pp;
+
+                skillDisplayList.push_back(display);
+            }
+        }
+
+        currentSkills = skillDisplayList;  // 초기화 한 번만
+        alreadyInitialized = true;
+    }
+    SetSkills(currentSkills);
 
     UpdateRealPos();
 
@@ -102,6 +141,7 @@ void SkillUIState::Release()
 
 void SkillUIState::Update()
 {
+
     fadeOutTime += TimerManager::GetInstance()->GetDeltaTime();
     fadeInTime = (sinf(fadeOutTime * 6.0f) * 0.5f) + 0.5f;
 
@@ -151,6 +191,7 @@ void SkillUIState::Update()
             {
                 case 0:  // 스킬 사용
                     // 스킬 사용 로직 추가
+                    UseSkill(YIndex);
                     isSkillUseBox = false;
                     SetSelectedSkillIndex(YIndex);
                     UIManager::GetInstance()->ChangeState("IdleUI");
@@ -209,6 +250,8 @@ void SkillUIState::Render(HDC hdc)
 
 void SkillUIState::SetSkills(const vector<SkillDisplayData>& data)
 {
+    currentSkills = data;
+
     for (size_t i = 0; i < data.size() && i < SkillList.size(); ++i)
     {
         SkillList[i].SkillName->SetText(data[i].SkillName);
@@ -223,11 +266,15 @@ void SkillUIState::SetSkills(const vector<SkillDisplayData>& data)
 
 void SkillUIState::UseSkill(int index)
 {
-    // 스킬 사용 로직 추가
-    if (index < 0 || index >= SkillList.size())
-    {
+
+
+    if (index < 0 || index >= currentSkills.size())
         return;
-    }
+
+    if (currentSkills[index].currentCount > 0)
+        currentSkills[index].currentCount--;
+
+    SetSkills(currentSkills);
 
 
 }

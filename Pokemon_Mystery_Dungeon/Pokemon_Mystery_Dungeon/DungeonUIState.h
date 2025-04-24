@@ -20,7 +20,7 @@ private:
     const int OffsetY[3] = {30, 60, 90};
     int YIndex = 0;
 
-
+    bool isActive = false;
 
 public:
     HRESULT Init() override;
@@ -28,4 +28,14 @@ public:
     void Update() override;
     void Render(HDC hdc) override;
     ~DungeonUIState() override;
+
+        bool GetIsActive()
+    {
+        return isActive;
+    }
+    void SetIsActive(bool isActive)
+    {
+        this->isActive = isActive;
+    }
+
 };
