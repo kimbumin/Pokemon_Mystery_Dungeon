@@ -1,7 +1,5 @@
 #include "SoundManager.h"
 
-#include <iostream>
-
 SoundManager* SoundManager::GetInstance()
 {
     static SoundManager instance;
@@ -12,12 +10,12 @@ void SoundManager::Init()
 {
     if (SDL_Init(SDL_INIT_AUDIO) < 0)
     {
-        std::cerr << "SDL Audio Init Error: " << SDL_GetError() << "\n";
+        cerr << "SDL Audio Init Error: " << SDL_GetError() << "\n";
     }
 
     if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
     {
-        std::cerr << "SDL_mixer Init Error: " << Mix_GetError() << "\n";
+        cerr << "SDL_mixer Init Error: " << Mix_GetError() << "\n";
     }
 }
 
@@ -38,7 +36,7 @@ void SoundManager::Release()
     SDL_QuitSubSystem(SDL_INIT_AUDIO);
 }
 
-void SoundManager::LoadBGM(const std::string& id, const std::string& path)
+void SoundManager::LoadBGM(const string& id, const string& path)
 {
     Mix_Music* music = Mix_LoadMUS(path.c_str());
     if (music)
@@ -47,11 +45,11 @@ void SoundManager::LoadBGM(const std::string& id, const std::string& path)
     }
     else
     {
-        std::cerr << "Failed to load BGM: " << Mix_GetError() << "\n";
+        cerr << "Failed to load BGM: " << Mix_GetError() << "\n";
     }
 }
 
-void SoundManager::LoadSFX(const std::string& id, const std::string& path)
+void SoundManager::LoadSFX(const string& id, const string& path)
 {
     Mix_Chunk* chunk = Mix_LoadWAV(path.c_str());
     if (chunk)
@@ -60,11 +58,11 @@ void SoundManager::LoadSFX(const std::string& id, const std::string& path)
     }
     else
     {
-        std::cerr << "Failed to load SFX: " << Mix_GetError() << "\n";
+        cerr << "Failed to load SFX: " << Mix_GetError() << "\n";
     }
 }
 
-void SoundManager::PlayBGM(const std::string& id, int loops)
+void SoundManager::PlayBGM(const string& id, int loops)
 {
     auto it = bgms.find(id);
     if (it != bgms.end())
@@ -78,7 +76,7 @@ void SoundManager::StopBGM()
     Mix_HaltMusic();
 }
 
-void SoundManager::PlaySFX(const std::string& id, int loops)
+void SoundManager::PlaySFX(const string& id, int loops)
 {
     auto it = sfxs.find(id);
     if (it != sfxs.end())
