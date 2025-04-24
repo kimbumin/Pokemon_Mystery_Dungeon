@@ -67,7 +67,7 @@ public:
     virtual void CalStatus();
     virtual int CalStat(int value);
 
-    virtual void TakeDamage();
+    virtual void TakeDamage(int damage);
     // virtual void StartTurn() = 0;
 
     void SetAnimState(IAnimState* newState);
