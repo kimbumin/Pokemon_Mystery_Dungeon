@@ -46,8 +46,9 @@ private:
     const int SubOffsetY[3] = {25, 55, 85};
     const wstring subMenu[3] = {L"Use Skill", L"Info Skill", L"Cancle Skill"};
 
-    
+    bool alreadyInitialized = false;
     int SelectedSkillIndex = -1;
+    vector<SkillDisplayData> skillDisplayList;
     vector<SkillDisplayData> currentSkills;
 
 public:
