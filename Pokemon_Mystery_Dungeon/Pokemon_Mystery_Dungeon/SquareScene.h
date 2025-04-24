@@ -27,6 +27,7 @@ private:
 
 	int currAnimaionFrame;
 	float elapsedTime;
+    float fadeElapsedTime;
 
 	wchar_t szText[128];
 	void RenderFlowers(HDC hdc, Image* flower, const std::vector<POINT>& positions, int currFrame);

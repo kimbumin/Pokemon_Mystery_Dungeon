@@ -14,6 +14,7 @@
 #include "PokemonPlayer.h"
 #include "DialogueManager.h"
 #include "DialogueTemplate.h"
+#include "FadeManager.h"
 
 HRESULT DungeonScene::Init()
 {
@@ -36,7 +37,7 @@ HRESULT DungeonScene::Init()
     elapsedTime = 0.f;
 
     GenerateNextFloor();
-
+    FadeManager::GetInstance()->StartFadeIn();
     return S_OK;
 }
 
@@ -100,9 +101,20 @@ void DungeonScene::Update()
     {
         SceneManager::GetInstance()->ChangeScene("Square");
     }
-    if (KeyManager::GetInstance()->IsOnceKeyDown(VK_SPACE))
+
+
+    if (isSceneTransition && FadeManager::GetInstance()->IsFadeComplete())
     {
         GenerateNextFloor();
+        FadeManager::GetInstance()->StartFadeIn(1.0);
+        isSceneTransition = false;
+    }
+
+    if (KeyManager::GetInstance()->IsOnceKeyDown(VK_SPACE) &&!FadeManager::GetInstance()->IsFading())
+    {
+        FadeManager::GetInstance()->StartFadeOut(1.0);
+        GenerateNextFloor();
+        isSceneTransition = true;
     }
     if (dungeonFloor > 5)
     {
@@ -114,6 +126,7 @@ void DungeonScene::Update()
     elapsedTime += TimerManager::GetInstance()->GetDeltaTime();
     if (elapsedTime > 0.016f)
     {
+        FadeManager::GetInstance()->Update();
         Camera::GetInstance()->Update(elapsedTime);
         elapsedTime = 0;
     }
@@ -144,6 +157,7 @@ void DungeonScene::Render(HDC hdc)
 
     //UI등 clip영역 밖에 추가하실거면 이 밑에 두세요 --
     UIManager::GetInstance()->Render(hdc);
+    FadeManager::GetInstance()->Render(hdc, 500, 400);
 }
 
 void DungeonScene::GenerateNextFloor()

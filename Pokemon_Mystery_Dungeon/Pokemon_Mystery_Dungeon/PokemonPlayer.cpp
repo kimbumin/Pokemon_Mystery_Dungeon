@@ -30,6 +30,14 @@ void PokemonPlayer::Update()
 {
     PokemonBase::Update();
     Camera::GetInstance()->SetCameraPos(POINT{ static_cast<int>(pos.x), static_cast<int>(pos.y) });
+
+    if (KeyManager::GetInstance()->IsOnceKeyDown(VK_OEM_PLUS))  
+        Camera::GetInstance()->ZoomIn();
+    if (KeyManager::GetInstance()->IsOnceKeyDown(VK_OEM_MINUS))
+        Camera::GetInstance()->ZoomOut();
+
+    Camera::GetInstance()->SetCameraPos(
+        POINT{static_cast<int>(pos.x), static_cast<int>(pos.y)});
 }
 
 bool PokemonPlayer::CanPickUpItem() const
