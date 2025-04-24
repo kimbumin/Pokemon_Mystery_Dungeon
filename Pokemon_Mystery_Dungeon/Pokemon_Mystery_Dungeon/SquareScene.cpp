@@ -15,7 +15,8 @@
 #include "StartScene.h"
 #include "TilemapTool.h"
 #include "UIManager.h"
-
+#include "PlayerManager.h"
+#include "PokemonPlayer.h"
 #include "Camera.h"
 #include "FadeManager.h"
 
@@ -80,9 +81,9 @@ HRESULT SquareScene::Init()
     collisionBoxTool = new CollisionBoxTool();
     collisionBoxTool->Init(L"Square");
 
-    mPlayer = new MPlayer();
-    mPlayer->Init();
-
+    player = PlayerManager::GetInstance()->GetPlayer();
+    player->IsInSquare(true);
+    player->SetPos({500, 300}); // Check
     Camera::GetInstance()->SetMapSize({SQUARESIZE_X, SQUARESIZE_Y});
     Camera::GetInstance()->SetScreenSize({500, 400});
 
@@ -94,11 +95,12 @@ HRESULT SquareScene::Init()
 void SquareScene::Release()
 {
     SkillManager::GetInstance()->ReleaseInstance();
-
+    player->IsInSquare(false);
 }
 
 void SquareScene::Update()
 {
+    
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F1))
     {
         SceneManager::GetInstance()->AddScene("TileMapTool", new TilemapTool());
@@ -140,14 +142,16 @@ void SquareScene::Update()
     if (collisionBoxTool)
     {
         collisionBoxTool->Update();
-        CollisionManager::GetInstance()->MapPlayerCheck( mPlayer, collisionBoxTool->GetRectBoxes());
+        CollisionManager::GetInstance()->MapPlayerCheck(
+            player, collisionBoxTool->GetRectBoxes());
     }
 
-    if (mPlayer)
+    if (player)
     {
-        mPlayer->Update();
-        Camera::GetInstance()->SetCameraPos(mPlayer->GetPos());
-
+        player->Update();
+        Camera::GetInstance()->SetCameraPos(POINT{static_cast<int>(player->GetPos().x),
+                  static_cast<int>(player->GetPos().y)});
+        
     }
 
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_TAB))
@@ -203,8 +207,8 @@ void SquareScene::Render(HDC hdc)
     if (collisionBoxTool)
         collisionBoxTool->Render(hdc);
 
-    if (mPlayer)
-        mPlayer->Render(hdc);
+    if (player)
+        player->Render(hdc);
 
     // 클리핑 해제
     SelectClipRgn(hdc, NULL);

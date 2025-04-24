@@ -7,7 +7,11 @@
 void PlayerManager::Init()
 {
     player = new PokemonPlayer();
+    // check 하드 코딩 했음...
+    // Bad hard coding
     PokemonImageLoader::GetInstance()->LoadPokemonAnim(4);
+    PokemonImageLoader::GetInstance()->LoadPokemonAnim(5);
+    PokemonImageLoader::GetInstance()->LoadPokemonAnim(6);
     player->SetIsAlive(true);
     player->SetStatus((PokemonDataLoader::GetInstance()->GetData(4)));
     player->SetLevel(6);

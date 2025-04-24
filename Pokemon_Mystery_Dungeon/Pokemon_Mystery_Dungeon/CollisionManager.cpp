@@ -2,7 +2,7 @@
 
 #include "CollisionBoxTool.h"
 #include "CommonFunction.h"
-#include "MPlayer.h"
+#include "PokemonPlayer.h"
 
 HRESULT CollisionManager::Init()
 {
@@ -13,20 +13,24 @@ void CollisionManager::Release()
 {
     ReleaseInstance();
 }
-void CollisionManager::MapPlayerCheck(MPlayer* mPlayer,
+void CollisionManager::MapPlayerCheck(PokemonPlayer* Player,
                                       std::vector<RECT> rcBoxes)
 {
-    if (!mPlayer)
+    if (!Player)
         return;
 
-    RECT playerRect = mPlayer->GetRect();
+    RECT playerRect = Player->GetRect();
 
     for (const RECT& rc : rcBoxes)
     {
         if (RectInRect(playerRect, rc))
         {
-            mPlayer->UndoMove();
+            Player->UndoMove();
             break;
         }
     }
+}
+void CollisionManager::MapPlayerCheck(PokemonPlayer* Player,
+                                      const std::wstring& mapName)
+{
 }

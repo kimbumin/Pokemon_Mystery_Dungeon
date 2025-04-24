@@ -17,7 +17,9 @@ bool PokemonDataLoader::LoadFromCSV(const string& filepath)
 {
     ifstream file(filepath);
     if (!file.is_open())
+    {
         return false;
+    }
 
     string line;
     getline(file, line);  // 첫 줄 생략
@@ -35,29 +37,33 @@ bool PokemonDataLoader::LoadFromCSV(const string& filepath)
 
         // 능력치들
         getline(stream, token, ',');
-        data.hp = std::stoi(token);
+        data.hp = stoi(token);
         getline(stream, token, ',');
-        data.atk = std::stoi(token);
+        data.atk = stoi(token);
         getline(stream, token, ',');
-        data.def = std::stoi(token);
+        data.def = stoi(token);
         getline(stream, token, ',');
-        data.spAtk = std::stoi(token);
+        data.spAtk = stoi(token);
         getline(stream, token, ',');
-        data.spDef = std::stoi(token);
+        data.spDef = stoi(token);
         getline(stream, token, ',');
-        data.speed = std::stoi(token);
+        data.speed = stoi(token);
         getline(stream, token, ',');
-        data.sum = std::stoi(token);
+        data.sum = stoi(token);
         getline(stream, token, ',');
-        data.average = std::stof(token);
+        data.average = stof(token);
 
         // 타입1, 타입2
         getline(stream, token, ',');
         if (!token.empty())
+        {
             data.types.push_back(token);
+        }
         getline(stream, token, ',');
         if (!token.empty())
+        {
             data.types.push_back(token);
+        }
 
         baseDataMap[data.idNumber] = data;
     }

@@ -1,15 +1,14 @@
 #pragma once
-#include "MPlayer.h"
 #include "Scene.h"
 
 class Boss;
 class CollisionBoxTool;
-
+class PokemonPlayer;
 class BossScene : public Scene
 {
 private:
     Boss* boss;
-    MPlayer* mPlayer;
+    PokemonPlayer* player;
 
 public:
     HRESULT Init() override;

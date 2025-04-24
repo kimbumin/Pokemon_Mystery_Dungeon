@@ -69,6 +69,13 @@ struct PokemonData {
 	vector<string> types;
 };
 
+struct EvolutionData
+{
+    int basePokemonId;
+    int evolvedPokemonId;
+    int requiredLevel;
+};
+
 enum DungeonType
 {
 	DUNGEON_TYPE_ICE,

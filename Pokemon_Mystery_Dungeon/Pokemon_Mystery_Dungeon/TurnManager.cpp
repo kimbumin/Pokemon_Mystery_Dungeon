@@ -18,6 +18,7 @@ void TurnManager::InitTurnOrder(PokemonPool* pokemonPool)
 
 void TurnManager::Release()
 {
+    turnOrder = nullptr;
     TurnManager::GetInstance()->ReleaseInstance();
 }
 
