@@ -93,7 +93,7 @@ int BattleSystem::CalculateDamage(PokemonBase* attacker, PokemonBase* target,
         }
     }
 
-    float randomRate = (rand() % 71 + 10) / 100.0f;
+    float randomRate = (rand() % 16 + 85) / 100.0f;
 
     float totalDamage = ((atkStat * power) / (float)defStat) * typeBonus *
                         typeEffect * randomRate;
@@ -106,17 +106,20 @@ PokemonBase* BattleSystem::GetTargetInFront(PokemonBase* owner)
     FPOINT pos = owner->GetPos();
     int dir = static_cast<int>(owner->GetDirection());
 
-    FPOINT frontPos = {
-        pos.x + directionOffsets[dir].first * TILE_SIZE,
-        pos.y + directionOffsets[dir].second * TILE_SIZE
-    };
+    FPOINT frontPos = {pos.x + directionOffsets[dir].first * TILE_SIZE,
+                       pos.y + directionOffsets[dir].second * TILE_SIZE};
 
     for (auto iter = pokemonPool->begin(); iter != pokemonPool->end(); ++iter)
     {
         PokemonBase* target = *iter;
-        if (target == owner) continue;
-        if (!target->GetIsAlive()) continue;
-
+        if (target == owner)
+        {
+            continue;
+        }
+        if (!target->GetIsAlive())
+        {
+            continue;
+        }
         FPOINT targetPos = target->GetPos();
         if (abs(targetPos.x - frontPos.x) < TILE_SIZE &&
             abs(targetPos.y - frontPos.y) < TILE_SIZE)
@@ -127,14 +130,3 @@ PokemonBase* BattleSystem::GetTargetInFront(PokemonBase* owner)
 
     return nullptr;
 }
-
-
-// Skill Use(Owner) Change
-//     PokemonBase* target =
-//     BattleSystem::GetInstance()->GetTargetInFront(owner);
-// if (target)
-//{
-//     int damage =
-//         BattleSystem::GetInstance()->CalculateDamage(owner, target, this);
-//     target->TakeDamage(damage);
-// }
