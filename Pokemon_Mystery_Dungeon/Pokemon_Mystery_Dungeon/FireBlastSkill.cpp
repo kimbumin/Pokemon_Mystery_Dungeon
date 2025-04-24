@@ -86,6 +86,7 @@ void FireBlastSkill::Use(PokemonBase* owner)
         );
         target->TakeDamage(damage);
     }
+    SoundManager::GetInstance()->PlaySFX("fire");
 }
 
 shared_ptr<ISkill> FireBlastSkill::Clone()

@@ -34,7 +34,6 @@ void EmberSkill::Update()
     if (isActive)
     {
         elapsedTime += TimerManager::GetInstance()->GetDeltaTime();
-
         if (elapsedTime >= (1.f / image->GetMaxFrameX()))
         {
             frameCount++;
@@ -87,6 +86,7 @@ void EmberSkill::Use(PokemonBase* owner)
         );
         target->TakeDamage(damage);
     }
+    SoundManager::GetInstance()->PlaySFX("fire");
 }
 
 shared_ptr<ISkill> EmberSkill::Clone()
