@@ -145,3 +145,8 @@ wstring ToWString(const T& value)
     wss << value;
     return wss.str();
 }
+
+inline std::wstring ToWString(const std::string& str)
+{
+	return std::wstring(str.begin(), str.end());
+}

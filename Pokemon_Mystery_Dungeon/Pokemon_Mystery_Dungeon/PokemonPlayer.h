@@ -28,6 +28,8 @@ public:
     virtual void Release() override;
     virtual void Update() override;
 
+    void Revive();
+
     // SquareScene ฐüทร
     void SquareModeMove();
     void UpdateRect();

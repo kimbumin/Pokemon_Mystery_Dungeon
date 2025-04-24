@@ -2,7 +2,9 @@
 
 #include "BattleSystem.h"
 #include "PokemonBase.h"
-
+#include "DialogueManager.h"
+#include "DialogueTemplate.h"
+#include "CommonFunction.h"
 EmberSkill::EmberSkill(const SkillData& skillData)
 {
     data = skillData;
@@ -73,6 +75,13 @@ void EmberSkill::Use(PokemonBase* owner)
     {
         int damage =
             BattleSystem::GetInstance()->CalculateDamage(owner, target, this);
+        DialogueManager::GetInstance()->ShowLine(
+            DialogueTemplate::TookDamage,
+            {
+                {L"targetName", ToWString(target->GetCurrentPokemonData().name)},
+                {L"damage", ToWString(damage)}
+            }
+        );
         target->TakeDamage(damage);
     }
 }

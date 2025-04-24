@@ -1,5 +1,7 @@
 #include "TurnManager.h"
 
+#include "DialogueManager.h"
+#include "DialogueTemplate.h"
 #include "IActionState.h"
 #include "IAnimState.h"
 #include "ISkill.h"
@@ -11,6 +13,7 @@
 #include "PokemonPool.h"
 #include "SkillUIState.h"
 #include "UIManager.h"
+
 void TurnManager::InitTurnOrder(PokemonPool* pokemonPool)
 {
     turnOrder = pokemonPool;
@@ -263,6 +266,29 @@ void TurnManager::Update()
             break;
 
         case TurnState::TurnEnd:
+
+            for (auto iter = turnOrder->begin() + 1; iter != turnOrder->end();
+                 ++iter)
+            {
+                PokemonBase* enemy = *iter;
+                if (!enemy->GetIsAlive())
+                {
+                    enemy->Release();
+                    turnOrder->Return(enemy);
+                }
+            }
+
+            // 플레이어 사망 체크
+            PokemonPlayer* player = PlayerManager::GetInstance()->GetPlayer();
+            if (!player->GetIsAlive())
+            {
+                DialogueManager::GetInstance()->ShowLine(
+                    DialogueTemplate::RescueFailed, {{}});
+                player->Revive();
+                SceneManager::GetInstance()->ChangeScene("Square");
+                return;
+            }
+
             ++currentIndex;
             int total = CountAlive();
             if (currentIndex >= total)

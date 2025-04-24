@@ -10,8 +10,10 @@
 #include "PokemonAnimator.h"
 #include "PokemonDataLoader.h"
 #include "PokemonEvolutionDataLoader.h"
-#include "SkillManager.h"
 #include "PokemonImageLoader.h"
+#include "SkillManager.h"
+#include "UIManager.h"
+
 HRESULT PokemonPlayer::Init()
 {
     PokemonBase::Init();
@@ -47,6 +49,7 @@ void PokemonPlayer::Update()
         {
             GainExp(5000);
         }
+        
     }
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_OEM_PLUS))
         Camera::GetInstance()->ZoomIn();
@@ -54,11 +57,25 @@ void PokemonPlayer::Update()
         Camera::GetInstance()->ZoomOut();
 
     Camera::GetInstance()->SetCameraPos(
-        POINT{ static_cast<int>(pos.x), static_cast<int>(pos.y) });
+        POINT{static_cast<int>(pos.x), static_cast<int>(pos.y)});
+}
+
+void PokemonPlayer::Revive()
+{
+    currentHp = currentStatus.hp;
+    SetIsAlive(true);
 }
 
 void PokemonPlayer::SquareModeMove()
 {
+    //if (UIManager::GetInstance()->GetCurrentStateKey() == "DungeonUI" || UIManager::GetInstance()->GetCurrentStateKey() == "defaultUI")
+    //{
+
+    //}
+    //else
+    //{
+    //    
+    //}
     if (KeyManager::GetInstance()->IsStayKeyDown(VK_LEFT))
     {
         direction = Direction::WEST;
@@ -122,11 +139,17 @@ void PokemonPlayer::LevelUp()
     // check ·Î±× Ãâ·Â
     // Print Log
     PokemonData prevStatus = currentStatus;
-
     ++level;
+
+    DialogueManager::GetInstance()->ShowLine(
+        DialogueTemplate::LevelUp,
+        {{L"level", ToWString(level)},
+         {L"pokemonName", ToWString(currentStatus.name)}});
+
     expToLevelUp = pow((level + 1), 3);
     TryEvolve();
     CalStatus();
+    PrintLevelUpSummaryDialogue(prevStatus, currentStatus);
 }
 
 void PokemonPlayer::TryEvolve()
@@ -143,7 +166,13 @@ void PokemonPlayer::TryEvolve()
 void PokemonPlayer::EvolveTo(int newPokemonId)
 {
     PokemonImageLoader::GetInstance()->LoadPokemonAnim(newPokemonId);
-    baseStatus = PokemonDataLoader::GetInstance()->GetData(newPokemonId);
+    PokemonData* newStatus =
+        PokemonDataLoader::GetInstance()->GetData(newPokemonId);
+    DialogueManager::GetInstance()->ShowLine(
+        DialogueTemplate::Evolution, {{L"oldName", ToWString(baseStatus->name)},
+                                      {L"newName", ToWString(newStatus->name)}});
+
+    baseStatus = newStatus;
     if (baseStatus == nullptr)
     {
         return;
@@ -172,32 +201,39 @@ void PokemonPlayer::PrintLevelUpSummaryDialogue(const PokemonData& prevStatus,
         int newValue;
     };
 
-    std::vector<StatChange> changes = {
+    vector<StatChange> changes = {
         {L"HP", prevStatus.hp, newStatus.hp},
         {L"Attack", prevStatus.atk, newStatus.atk},
         {L"Defense", prevStatus.def, newStatus.def},
         {L"Sp. Atk", prevStatus.spAtk, newStatus.spAtk},
-        {L"Sp. Def", prevStatus.spDef, newStatus.spDef},
-        {L"Speed", prevStatus.speed, newStatus.speed}};
+        {L"Sp. Def", prevStatus.spDef, newStatus.spDef} };
+         //{L"Speed", prevStatus.speed, newStatus.speed}};
 
-    std::wstring statChanges;
+    wstring statChanges;
     bool first = true;
-
+    int i = 0;
+    statChanges += L"\n ";
     for (const auto& change : changes)
     {
+        
         int diff = change.newValue - change.prevValue;
         if (diff > 0)
         {
+            ++i;
             if (!first)
             {
-                statChanges += L", ";
+                statChanges += L" ";
             }
-            statChanges += change.name + L" +" + ToWString(diff);
+            statChanges += L"<" + change.name +L">" + L"<+" + ToWString(diff) + L">";
             first = false;
+        }
+        if (i % 2)
+        {
+            statChanges += L"\n";
         }
     }
 
     // Check DialogueManager¸¦ ÅëÇØ Ãâ·Â
-    // DialogueManager::GetInstance()->ShowLine(DialogueTemplate::LevelUpSummary,
-    // {{L"statChanges", statChanges}});
+    DialogueManager::GetInstance()->ShowLine(DialogueTemplate::LevelUpSummary,
+                                             {{L"statChanges", statChanges}});
 }

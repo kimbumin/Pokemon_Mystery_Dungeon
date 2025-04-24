@@ -2,7 +2,9 @@
 
 #include "BattleSystem.h"
 #include "PokemonBase.h"
-
+#include "DialogueManager.h"
+#include "DialogueTemplate.h"
+#include "CommonFunction.h"
 FireBlastSkill::FireBlastSkill(const SkillData& skillData)
 {
     data = skillData;
@@ -74,6 +76,13 @@ void FireBlastSkill::Use(PokemonBase* owner)
     {
         int damage =
             BattleSystem::GetInstance()->CalculateDamage(owner, target, this);
+        DialogueManager::GetInstance()->ShowLine(
+            DialogueTemplate::TookDamage,
+            {
+                {L"targetName", ToWString(target->GetCurrentPokemonData().name)},
+                {L"damage", ToWString(damage)}
+            }
+        );
         target->TakeDamage(damage);
     }
 }

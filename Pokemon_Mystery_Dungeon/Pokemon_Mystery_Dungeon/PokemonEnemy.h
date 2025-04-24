@@ -11,6 +11,7 @@ public:
     virtual void Release() override;
     virtual void Update() override;
 
+    virtual void TakeDamage(int damage) override;
     virtual void ExecuteTurn() override;
     vector<FPOINT> AStarPathfinding(int startX, int startY, int goalX,
                                     int goalY);
