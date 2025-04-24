@@ -188,6 +188,7 @@ void SquareScene::Update()
         if (!CoolDownManager::GetInstance()->IsCooldown("DungeonUI"))
         {
             UIManager::GetInstance()->OpenUIStateBox("DungeonUI");
+            CoolDownManager::GetInstance()->SetCoolDown("DungeonUI", 3.0f);
         }
     }
 }
