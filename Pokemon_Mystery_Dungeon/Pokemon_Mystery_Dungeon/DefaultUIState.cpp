@@ -4,6 +4,9 @@
 #include "UIElementImage.h"
 #include "UIElementText.h"
 #include "UIManager.h"
+#include "PlayerManager.h"
+#include "PokemonPlayer.h"
+#include "ISkill.h"
 
 HRESULT DefaultUIState::Init()
 {

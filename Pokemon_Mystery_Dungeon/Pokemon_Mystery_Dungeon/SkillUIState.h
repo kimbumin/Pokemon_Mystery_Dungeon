@@ -48,6 +48,7 @@ private:
 
     
     int SelectedSkillIndex = -1;
+    vector<SkillDisplayData> currentSkills;
 
 public:
     HRESULT Init() override;
@@ -66,6 +67,7 @@ public:
     {
         return SelectedSkillIndex;
     }
+
 
     ~SkillUIState() override;
 };

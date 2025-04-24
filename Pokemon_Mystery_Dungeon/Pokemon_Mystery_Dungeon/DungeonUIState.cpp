@@ -95,6 +95,7 @@ void DungeonUIState::Update()
     {
         if (YIndex == 0)
         {
+            isActive = true;
             UIManager::GetInstance()->SetDungeonType(DUNGEON_TYPE_ICE);
             UIManager::GetInstance()->ChangeState("IdleUI");
             SceneManager::GetInstance()->AddScene("DungeonScene", new DungeonScene);
