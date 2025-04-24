@@ -5,16 +5,16 @@
 #include "Image.h"
 #include "PlayerManager.h"
 #include "PokemonDataLoader.h"
+#include "PokemonEvolutionDataLoader.h"
 #include "PokemonImageLoader.h"
+#include "SkillManager.h"
 #include "SquareScene.h"
+#include "StartScene.h"
 #include "TileMapTestScene.h"
 #include "TilemapTool.h"
 #include "Timer.h"
 #include "TurnManager.h"
 #include "UIManager.h"
-#include "SkillManager.h"
-#include "PokemonEvolutionDataLoader.h"
-#include "StartScene.h"
 HRESULT MainGame::Init()
 {
     srand(time(NULL));
@@ -27,9 +27,18 @@ HRESULT MainGame::Init()
     PokemonEvolutionDataLoader::GetInstance()->Init();
     PokemonEvolutionDataLoader::GetInstance()->LoadFromCSV(
         "Data/PokemonEvolution.csv");
-    
-    SkillManager::GetInstance()->LoadSkillsFromCSV("Data/PokemonSkill_English.csv");
+
+    SkillManager::GetInstance()->LoadSkillsFromCSV(
+        "Data/PokemonSkill_English.csv");
     PlayerManager::GetInstance()->Init();
+
+    //사운드매니저 초기화
+    SoundManager::GetInstance()->Init();
+    SoundManager::GetInstance()->LoadBGM("intro", "music/intro.ogg");
+    SoundManager::GetInstance()->LoadBGM("square", "music/square.ogg");
+    SoundManager::GetInstance()->LoadBGM("adventure", "music/adventure.ogg");
+    SoundManager::GetInstance()->LoadBGM("rip", "music/rip.ogg");
+    SoundManager::GetInstance()->PlayBGM("intro");
     hdc = GetDC(g_hWnd);
 
     backBuffer = new Image();
@@ -38,7 +47,7 @@ HRESULT MainGame::Init()
         MessageBox(g_hWnd, TEXT("백버퍼 생성 실패"), TEXT("경고"), MB_OK);
         return E_FAIL;
     }
-    //UIManager::GetInstance()->ChangeState("IdleUI");
+    // UIManager::GetInstance()->ChangeState("IdleUI");
     SceneManager::GetInstance()->AddScene("StartScene", new StartScene());
     SceneManager::GetInstance()->ChangeScene("StartScene");
     // SceneManager::GetInstance()->AddScene("TestMap", new CameraTestScene());
