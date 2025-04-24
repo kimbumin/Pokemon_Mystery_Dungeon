@@ -53,18 +53,15 @@ HRESULT SquareScene::Init()
         {85, 266},  {320, 589}, {856, 443}, {76, 293}, {261, 355},
     };
     yellowPositions = {
-        // 占쌩억옙 占쏙옙占쏙옙 3占쏙옙
         {477, 77},
         {477, 110},
         {477, 143},
 
-        // 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙 4占쏙옙
         {545, 95},
         {545, 128},
         {545, 161},
         {545, 194},
 
-        // 占쏙옙타 占쏙옙占쏙옙 占쏙옙치
         {353, 578},
         {388, 291},
         {854, 377},
@@ -133,14 +130,13 @@ void SquareScene::Update()
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F5))
     {
         SceneManager::GetInstance()->AddScene("StartScene", new StartScene());
-        SceneManager::GetInstance()->AddLoadingScene("LoadingScene",
-                                                     new LoadingScene());
+        SceneManager::GetInstance()->AddLoadingScene("LoadingScene",new LoadingScene());
         SceneManager::GetInstance()->ChangeScene("StartScene", "LoadingScene");
     }
 
     if (collisionBoxTool)
     {
-        collisionBoxTool->Update();
+        //collisionBoxTool->Update();
         CollisionManager::GetInstance()->MapPlayerCheck(
             player, collisionBoxTool->GetRectBoxes());
     }
@@ -176,6 +172,11 @@ void SquareScene::Update()
     {
         UIManager::GetInstance()->OpenUIStateBox("DownStairUI");
     }
+
+    if (IsPlayerOnDungeonTrigger())
+    {
+        UIManager::GetInstance()->OpenUIStateBox("DungeonUI");
+    }
 }
 
 void SquareScene::Render(HDC hdc)
@@ -203,8 +204,8 @@ void SquareScene::Render(HDC hdc)
         river->FrameRenderWithCamera(hdc, 152, 460, currAnimaionFrame, 0, 0, 1);
     }
 
-    if (collisionBoxTool)
-        collisionBoxTool->Render(hdc);
+    //if (collisionBoxTool)
+    //    collisionBoxTool->Render(hdc);
 
     if (player)
         player->Render(hdc);
@@ -228,4 +229,10 @@ void SquareScene::RenderFlowers(HDC hdc, Image* flower,const std::vector<POINT>&
     {
         flower->FrameRenderWithCamera(hdc, pos.x, pos.y, 0, currFrame,0, 1);
     }
+}
+
+bool SquareScene::IsPlayerOnDungeonTrigger()
+{
+    FPOINT playerPos = PlayerManager::GetInstance()->GetPlayer()->GetPos();
+    return playerPos.x < 0.f;
 }

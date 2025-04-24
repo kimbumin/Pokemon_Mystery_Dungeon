@@ -27,7 +27,7 @@ public:
     void Render(HDC hdc);
     HRESULT ChangeState(string key);
     UIState* AddState(string key, UIState* state);
-    UIState* FindState(const string& key);
+    UIState* FindState(const string& key) const;
     void RegisterAllUIStates();
 
     void OpenUIStateBox(const string& key);
@@ -49,6 +49,7 @@ public:
     {
         dungeonType = type;
     }
-
+    bool IsDownStairUIActive() const;
+    void SetDownStairUIActive(bool active);
 
 };
