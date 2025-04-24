@@ -129,7 +129,7 @@ UIState* UIManager::AddState(string key, UIState* state)
     return state;
 }
 
-UIState* UIManager::FindState(const string& key)
+UIState* UIManager::FindState(const string& key) const
 {
     auto iter = UiStateMap.find(key);
     if (iter != UiStateMap.end())
@@ -204,4 +204,19 @@ void UIManager::AddToggleState(UIState* state, bool isOpen)
             toggleStates.erase(iter);
         }
     }
+}
+
+bool UIManager::IsDownStairUIActive() const
+{
+    DownStairUIState* ui =
+        dynamic_cast<DownStairUIState*>(FindState("DownStairUI"));
+    return ui ? ui->GetIsActive() : false;
+}
+
+void UIManager::SetDownStairUIActive(bool active)
+{
+    DownStairUIState* ui =
+        dynamic_cast<DownStairUIState*>(FindState("DownStairUI"));
+    if (ui)
+        ui->SetIsActive(active);
 }

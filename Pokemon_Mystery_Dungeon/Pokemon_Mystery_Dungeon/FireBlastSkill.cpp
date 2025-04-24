@@ -5,6 +5,7 @@
 #include "DialogueManager.h"
 #include "DialogueTemplate.h"
 #include "CommonFunction.h"
+#include "Camera.h"
 FireBlastSkill::FireBlastSkill(const SkillData& skillData)
 {
     data = skillData;
@@ -68,7 +69,7 @@ void FireBlastSkill::Use(PokemonBase* owner)
     // 여기 수정
     pos.x += directionOffsets[dirIndex].first * 24;
     pos.y += directionOffsets[dirIndex].second * 24;
-
+    Camera::GetInstance()->Shake(0.1f, 5);
     isActive = true;
 
     PokemonBase* target = BattleSystem::GetInstance()->GetTargetInFront(owner);

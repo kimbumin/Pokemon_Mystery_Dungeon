@@ -224,7 +224,9 @@ void PokemonPlayer::PrintLevelUpSummaryDialogue(const PokemonData& prevStatus,
             {
                 statChanges += L" ";
             }
+
             statChanges += L"<" + change.name +L">" + L"<+" + ToWString(diff) + L">";
+
             first = false;
         }
         if (i % 2)

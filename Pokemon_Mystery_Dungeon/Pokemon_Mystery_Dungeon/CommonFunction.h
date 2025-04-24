@@ -146,7 +146,7 @@ wstring ToWString(const T& value)
     return wss.str();
 }
 
-inline std::wstring ToWString(const std::string& str)
+inline wstring ToWString(const string& str)
 {
-	return std::wstring(str.begin(), str.end());
+    return wstring(str.begin(), str.end());
 }

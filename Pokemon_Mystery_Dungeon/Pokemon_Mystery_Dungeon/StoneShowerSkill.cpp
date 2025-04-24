@@ -1,6 +1,7 @@
 #include "StoneShowerSkill.h"
 
 #include "PokemonBase.h"
+#include "Camera.h"
 #include "BattleSystem.h"
 #include "DialogueManager.h"
 #include "DialogueTemplate.h"
@@ -67,7 +68,7 @@ void StoneShowerSkill::Use(PokemonBase* owner)
 
     pos.x += directionOffsets[dirIndex].first * 24;
     pos.y += directionOffsets[dirIndex].second * 24;
-
+    Camera::GetInstance()->Shake(0.1f, 5);
     isActive = true;
 
     PokemonBase* target = BattleSystem::GetInstance()->GetTargetInFront(owner);
