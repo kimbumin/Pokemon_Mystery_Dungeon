@@ -47,6 +47,11 @@ void AttackActionState::Update(PokemonBase* owner)
     if (elapsed >= duration)
     {
         isFinished = true;
+        //스킬 종료 시 상태 초기화추가
+        if (selectedSkill)
+        {
+            selectedSkill->Reset();
+        }
         return;
     }
 }
