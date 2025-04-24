@@ -297,9 +297,6 @@
     <ClCompile Include="YesOrNoUIState.cpp">
       <Filter>Ui\UiState\소스</Filter>
     </ClCompile>
-    <ClCompile Include="BattleSystem.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="DongminScene.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -308,6 +305,9 @@
     </ClCompile>
     <ClCompile Include="BuminScene.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="FadeManager.cpp">
+      <Filter>Scene\소스</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -574,6 +574,9 @@
     </ClInclude>
     <ClInclude Include="BuminScene.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="FadeManager.h">
+      <Filter>Scene\헤더</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

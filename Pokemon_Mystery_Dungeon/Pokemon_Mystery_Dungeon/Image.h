@@ -88,9 +88,13 @@ public:
 
     void RenderWithCamera(HDC hdc, int x, int y);
     void FrameRenderWithCamera(HDC hdc, int x, int y, int frameX, int frameY,
-                               int transparent = 0, bool isCenter = 1);
+                               bool isFlip =0, bool isCenter = 1);
+   // void FrameRenderWithCamera(HDC hdc, int x, int y, int frameX, int frameY,
+   //                            int transparent = 0, bool isCenter = 1);
     // 메모리 해제
     void Release();
+
+    void RenderPartial(HDC hdc, int destX, int destY, int width, int height);
 
     inline HDC GetMemDC()
     {

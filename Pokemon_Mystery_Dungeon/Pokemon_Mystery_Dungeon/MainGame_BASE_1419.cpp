@@ -12,8 +12,7 @@
 #include "Timer.h"
 #include "TurnManager.h"
 #include "UIManager.h"
-#include "SkillManager.h"
-#include "PokemonEvolutionDataLoader.h"
+
 HRESULT MainGame::Init()
 {
     ImageManager::GetInstance()->Init();
@@ -22,11 +21,7 @@ HRESULT MainGame::Init()
     UIManager::GetInstance()->Init();
     PokemonDataLoader::GetInstance()->Init();
     PokemonDataLoader::GetInstance()->LoadFromCSV("Data/PokemonBaseStatus.csv");
-    PokemonEvolutionDataLoader::GetInstance()->Init();
-    PokemonEvolutionDataLoader::GetInstance()->LoadFromCSV(
-        "Data/PokemonEvolution.csv");
-    
-    SkillManager::GetInstance()->LoadSkillsFromCSV("Data/PokemonSkill_English.csv");
+
     PlayerManager::GetInstance()->Init();
     hdc = GetDC(g_hWnd);
 
@@ -63,6 +58,7 @@ void MainGame::Release()
 
 void MainGame::Update()
 {
+    TurnManager::GetInstance()->Update();
     SceneManager::GetInstance()->Update();
     UIManager::GetInstance()->Update();
     InvalidateRect(g_hWnd, NULL, false);
@@ -76,6 +72,8 @@ void MainGame::Render()
     SceneManager::GetInstance()->Render(hBackBufferDC);
 
     TimerManager::GetInstance()->Render(hBackBufferDC);
+
+    PlayerManager::GetInstance()->Render(hBackBufferDC);
 
     backBuffer->Render(hdc);
 }

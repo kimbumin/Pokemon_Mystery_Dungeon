@@ -15,7 +15,7 @@ private:
     int shakeMagnitude = 0;      
 
     float zoom = 1.0f;
-    const float minZoom = 0.5f;
+    const float minZoom = 1.0f;
     const float maxZoom = 2.0f;
 
 public:

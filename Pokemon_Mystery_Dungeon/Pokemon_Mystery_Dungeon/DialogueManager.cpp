@@ -22,10 +22,10 @@ void DialogueManager::ShowLine(const wstring& templateText,
         UIManager::GetInstance()->FindState("dialogueBox"));
     if (state)
     {
-        // 텍스트 + 치환 map 전달
-        state->PushDialogueLine(templateText, values);
+        state->QueueDialogueLine(templateText, values);
     }
 }
+
 
 /*
 * 내가 헷갈려서 자주 다시 보려고 정리해둔 주석

@@ -12,8 +12,13 @@
 #include "Timer.h"
 #include "TurnManager.h"
 #include "UIManager.h"
+<<<<<<< HEAD
+#include "DongminScene.h"
 #include "SkillManager.h"
-#include "PokemonEvolutionDataLoader.h"
+=======
+#include "SkillManager.h"
+
+>>>>>>> 927ae877675086b46d1a86f49fe395c8b653696f
 HRESULT MainGame::Init()
 {
     ImageManager::GetInstance()->Init();
@@ -22,11 +27,13 @@ HRESULT MainGame::Init()
     UIManager::GetInstance()->Init();
     PokemonDataLoader::GetInstance()->Init();
     PokemonDataLoader::GetInstance()->LoadFromCSV("Data/PokemonBaseStatus.csv");
-    PokemonEvolutionDataLoader::GetInstance()->Init();
-    PokemonEvolutionDataLoader::GetInstance()->LoadFromCSV(
-        "Data/PokemonEvolution.csv");
+<<<<<<< HEAD
+    SkillManager::GetInstance()->LoadSkillsFromCSV(
+        "Data/PokemonSkill_English.csv");
+=======
     
     SkillManager::GetInstance()->LoadSkillsFromCSV("Data/PokemonSkill_English.csv");
+>>>>>>> 927ae877675086b46d1a86f49fe395c8b653696f
     PlayerManager::GetInstance()->Init();
     hdc = GetDC(g_hWnd);
 
@@ -39,6 +46,8 @@ HRESULT MainGame::Init()
     //UIManager::GetInstance()->ChangeState("IdleUI");
     SceneManager::GetInstance()->AddScene("Square", new SquareScene);
     SceneManager::GetInstance()->ChangeScene("Square");
+    SceneManager::GetInstance()->AddScene("t", new DongminScene);
+    SceneManager::GetInstance()->ChangeScene("t");
     // SceneManager::GetInstance()->AddScene("TestMap", new CameraTestScene());
     // SceneManager::GetInstance()->ChangeScene("TestMap");
     return S_OK;
@@ -63,6 +72,7 @@ void MainGame::Release()
 
 void MainGame::Update()
 {
+    TurnManager::GetInstance()->Update();
     SceneManager::GetInstance()->Update();
     UIManager::GetInstance()->Update();
     InvalidateRect(g_hWnd, NULL, false);
@@ -76,6 +86,8 @@ void MainGame::Render()
     SceneManager::GetInstance()->Render(hBackBufferDC);
 
     TimerManager::GetInstance()->Render(hBackBufferDC);
+
+    PlayerManager::GetInstance()->Render(hBackBufferDC);
 
     backBuffer->Render(hdc);
 }

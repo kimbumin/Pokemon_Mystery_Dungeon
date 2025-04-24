@@ -5,16 +5,16 @@
 // clang-format on
 
 class MPlayer;
-
+class PokemonPlayer;
 class CollisionManager : public Singleton<CollisionManager>
 {
 public:
     HRESULT Init();
     void Release();
 
-    void MapPlayerCheck(MPlayer* mPlayer, std::vector<RECT> rcBoxes);
+    void MapPlayerCheck(PokemonPlayer* Player, std::vector<RECT> rcBoxes);
 
-    void MapPlayerCheck(MPlayer* mPlayer, const std::wstring& mapName);
+    void MapPlayerCheck(PokemonPlayer* Player, const std::wstring& mapName);
 
 private:
     MPlayer* mPlayer;

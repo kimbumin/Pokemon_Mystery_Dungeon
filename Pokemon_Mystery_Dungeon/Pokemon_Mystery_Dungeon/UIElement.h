@@ -24,6 +24,7 @@ public:
     void UpdateRealPos();
 
     virtual void Update();
+    virtual void Update(float dt);
     virtual void Render(HDC hdc);
 
     void SetLocalPos(float x, float y)

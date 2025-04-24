@@ -45,7 +45,7 @@ protected:
     AttackActionState* attackAction;
     HurtActionState* hurtAction;
 
-    FPOINT pos = {240, 240};
+    FPOINT pos = {500, 300};
     Map* dungeonMap;
     int level;
     int currentHp;
@@ -143,7 +143,10 @@ public:
     {
         this->isAlive = isAlive;
     }
-
+    inline void SetSkill(int index, shared_ptr<ISkill> skill)
+    {
+        this->learnedSkill[index] = skill;
+    }
     void SetAnimator();
 
     // Rapper Anim Function

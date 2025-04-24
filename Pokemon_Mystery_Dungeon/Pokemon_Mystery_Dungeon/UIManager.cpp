@@ -10,6 +10,7 @@
 #include "YesOrNoUIState.h"
 #include "IdleUIState.h"
 #include "DownStairUIState.h"
+#include "InventoryUIState.h"
 
 
 UIState* UIManager::currentState = nullptr;
@@ -17,6 +18,7 @@ UIState* UIManager::nextState = nullptr;
 
 void UIManager::Init()
 {
+    AddFontResourceEx(L"Font\\DungGeunMo.ttf", FR_PRIVATE, 0);
     AddPersistentState(new InfoUIState());
 
     RegisterAllUIStates();
@@ -49,21 +51,23 @@ void UIManager::Release()
 
 void UIManager::Update()
 {
+     float dt = TimerManager::GetInstance()->GetDeltaTime();
     for (auto& state : persistentStates)
     {
-        state->Update();
+        state->Update(dt);
     }
 
     for (auto& state : toggleStates)
     {
-        state->Update();
+        state->Update(dt);
     }
 
     if (currentState)
     {
-        currentState->Update();
+        currentState->Update(dt);
     }
 }
+
 
 void UIManager::Render(HDC hdc)
 {
@@ -145,6 +149,8 @@ void UIManager::RegisterAllUIStates()
     AddState("DungeonUI", new DungeonUIState());
     AddState("YesOrNoUI", new YesOrNoUIState());
     AddState("DownStairUI", new DownStairUIState());
+    AddState("InventoryUI", new InventoryUIState());
+    AddState("YesOrNoUI", new YesOrNoUIState());
 }
 
 void UIManager::OpenUIStateBox(const string& key)

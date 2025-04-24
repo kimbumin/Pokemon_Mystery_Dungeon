@@ -15,8 +15,10 @@
 #include "StartScene.h"
 #include "TilemapTool.h"
 #include "UIManager.h"
-
+#include "PlayerManager.h"
+#include "PokemonPlayer.h"
 #include "Camera.h"
+#include "FadeManager.h"
 
 #define SQUARESIZE_X 954
 #define SQUARESIZE_Y 714
@@ -73,29 +75,32 @@ HRESULT SquareScene::Init()
     };
 
 
-    elapsedTime = 0;
+    elapsedTime = 0.f;
+    fadeElapsedTime = 0.f;
 
     collisionBoxTool = new CollisionBoxTool();
     collisionBoxTool->Init(L"Square");
 
-    mPlayer = new MPlayer();
-    mPlayer->Init();
-
+    player = PlayerManager::GetInstance()->GetPlayer();
+    player->IsInSquare(true);
+    player->SetPos({500, 300}); // Check
     Camera::GetInstance()->SetMapSize({SQUARESIZE_X, SQUARESIZE_Y});
     Camera::GetInstance()->SetScreenSize({500, 400});
 
 
+    FadeManager::GetInstance()->StartFadeIn(1.0f);
     return S_OK;
 }
 
 void SquareScene::Release()
 {
     SkillManager::GetInstance()->ReleaseInstance();
-
+    player->IsInSquare(false);
 }
 
 void SquareScene::Update()
 {
+    
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F1))
     {
         SceneManager::GetInstance()->AddScene("TileMapTool", new TilemapTool());
@@ -103,19 +108,24 @@ void SquareScene::Update()
     }
 
 
-    if (yellowFlower && TimerManager::GetInstance())
+
+    elapsedTime += TimerManager::GetInstance()->GetDeltaTime();
+    if (elapsedTime > 0.3f)
     {
-        elapsedTime += TimerManager::GetInstance()->GetDeltaTime();
-        if (elapsedTime > 0.3f)
+        currAnimaionFrame++;
+        if (currAnimaionFrame >= yellowFlower->GetMaxFrameY())
         {
-            currAnimaionFrame++;
-            if (currAnimaionFrame >= yellowFlower->GetMaxFrameY())
-            {
-                currAnimaionFrame = 0;
-            }
-            elapsedTime = 0;
+            currAnimaionFrame = 0;
         }
+        elapsedTime = 0;
     }
+    fadeElapsedTime += TimerManager::GetInstance()->GetDeltaTime();
+    if (fadeElapsedTime > 0.016f)
+    {
+        FadeManager::GetInstance()->Update();
+        fadeElapsedTime = 0;
+    }
+
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F6))
     {
         SceneManager::GetInstance()->AddScene("DungeonScene", new DungeonScene());
@@ -129,27 +139,19 @@ void SquareScene::Update()
         SceneManager::GetInstance()->ChangeScene("StartScene", "LoadingScene");
     }
 
-    elapsedTime += TimerManager::GetInstance()->GetDeltaTime();
-    if (elapsedTime > 0.3f)
-    {
-        currAnimaionFrame++;
-        if (currAnimaionFrame >= yellowFlower->GetMaxFrameY())
-        {
-            currAnimaionFrame = 0;
-        }
-        elapsedTime = 0;
-    }
     if (collisionBoxTool)
     {
         collisionBoxTool->Update();
-        CollisionManager::GetInstance()->MapPlayerCheck( mPlayer, collisionBoxTool->GetRectBoxes());
+        CollisionManager::GetInstance()->MapPlayerCheck(
+            player, collisionBoxTool->GetRectBoxes());
     }
 
-    if (mPlayer)
+    if (player)
     {
-        mPlayer->Update();
-        Camera::GetInstance()->SetCameraPos(mPlayer->GetPos());
-
+        player->Update();
+        Camera::GetInstance()->SetCameraPos(POINT{static_cast<int>(player->GetPos().x),
+                  static_cast<int>(player->GetPos().y)});
+        
     }
 
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_TAB))
@@ -165,13 +167,6 @@ void SquareScene::Update()
     if (KeyManager::GetInstance()->IsOnceKeyDown(0x44))  // 'D' 키
     {
         UIManager::GetInstance()->OpenUIStateBox("DungeonUI");
-
-
-        //SetDugeonType이런 거 만들어 줘야되고,
-        //DungeonScene이동,
-        // 
-
-
 
     }
     if (KeyManager::GetInstance()->IsOnceKeyDown(0x59))  // 'Y' 키
@@ -212,8 +207,8 @@ void SquareScene::Render(HDC hdc)
     if (collisionBoxTool)
         collisionBoxTool->Render(hdc);
 
-    if (mPlayer)
-        mPlayer->Render(hdc);
+    if (player)
+        player->Render(hdc);
 
     // 클리핑 해제
     SelectClipRgn(hdc, NULL);
@@ -225,7 +220,7 @@ void SquareScene::Render(HDC hdc)
 
     wsprintf(szText, TEXT("Mouse X : %d, Y : %d"), g_ptMouse.x, g_ptMouse.y);
     TextOut(hdc, 300, 60, szText, wcslen(szText));
-
+    FadeManager::GetInstance()->Render(hdc, WINSIZE_X, WINSIZE_Y);
 }
 
 void SquareScene::RenderFlowers(HDC hdc, Image* flower,const std::vector<POINT>& positions, int currFrame)
