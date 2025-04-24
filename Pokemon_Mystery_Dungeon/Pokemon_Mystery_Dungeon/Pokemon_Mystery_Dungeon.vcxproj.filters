@@ -303,6 +303,9 @@
     <ClCompile Include="DownStairUIState.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="BuminScene.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
     <ClCompile Include="FadeManager.cpp">
       <Filter>Scene\소스</Filter>
     </ClCompile>
@@ -548,6 +551,9 @@
     <ClInclude Include="AttackSkill.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="BattleSystem.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
     <ClInclude Include="DongminScene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -564,6 +570,9 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="SwingSkill.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="BuminScene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="FadeManager.h">

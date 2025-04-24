@@ -32,6 +32,7 @@ public:
     virtual void Render(HDC hdc) = 0;
     virtual void Use(PokemonBase* owner) = 0;
     virtual shared_ptr<ISkill> Clone() = 0;
+    virtual void Reset() = 0;
 
     // getter ÇÔ¼öµé
     inline string GetName() const

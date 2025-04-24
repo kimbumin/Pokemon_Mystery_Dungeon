@@ -138,8 +138,10 @@
     <ClCompile Include="AttackActionState.cpp" />
     <ClCompile Include="AttackAnimState.cpp" />
     <ClCompile Include="AttackSkill.cpp" />
+    <ClCompile Include="BattleSystem.cpp" />
     <ClCompile Include="BossScene.cpp" />
     <ClCompile Include="Branch.cpp" />
+    <ClCompile Include="BuminScene.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="CameraTestScene.cpp" />
@@ -218,8 +220,10 @@
     <ClInclude Include="AttackActionState.h" />
     <ClInclude Include="AttackAnimState.h" />
     <ClInclude Include="AttackSkill.h" />
+    <ClInclude Include="BattleSystem.h" />
     <ClInclude Include="BossScene.h" />
     <ClInclude Include="Branch.h" />
+    <ClInclude Include="BuminScene.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraManager.h" />
     <ClInclude Include="CameraTestScene.h" />

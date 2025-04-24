@@ -1,14 +1,12 @@
 #include "EmberSkill.h"
 
+#include "BattleSystem.h"
 #include "PokemonBase.h"
 
 EmberSkill::EmberSkill(const SkillData& skillData)
 {
     data = skillData;
-}
-
-HRESULT EmberSkill::Init()
-{
+    direction = 0;
     pos = {0, 0};
     isActive = false;
     frameCount = 0;
@@ -16,7 +14,10 @@ HRESULT EmberSkill::Init()
     image = ImageManager::GetInstance()->AddImage(
         "Ember", TEXT("Image/SkillImage/Ember.bmp"), 190, 19, 10, 1, true,
         RGB(255, 0, 255));
+}
 
+HRESULT EmberSkill::Init()
+{
     return S_OK;
 }
 
@@ -52,7 +53,7 @@ void EmberSkill::Render(HDC hdc)
         if (frameX >= image->GetMaxFrameX())
             frameX = image->GetMaxFrameX() - 1;
 
-        image->FrameRenderWithCamera(hdc, pos.x, pos.y, frameX, 0,0,true);
+        image->FrameRenderWithCamera(hdc, pos.x, pos.y, frameX, 0, 0, true);
     }
 }
 
@@ -66,9 +67,24 @@ void EmberSkill::Use(PokemonBase* owner)
     pos.y += directionOffsets[dirIndex].second * 24;
 
     isActive = true;
+
+    PokemonBase* target = BattleSystem::GetInstance()->GetTargetInFront(owner);
+    if (target)
+    {
+        int damage =
+            BattleSystem::GetInstance()->CalculateDamage(owner, target, this);
+        target->TakeDamage(damage);
+    }
 }
 
 shared_ptr<ISkill> EmberSkill::Clone()
 {
     return make_shared<EmberSkill>(*this);  // 스킬을 복제하여 반환
+}
+
+void EmberSkill::Reset()
+{
+    isActive = false;
+    frameCount = 0;
+    elapsedTime = 0.0f;
 }
