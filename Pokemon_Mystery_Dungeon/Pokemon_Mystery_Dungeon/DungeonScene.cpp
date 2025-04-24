@@ -78,10 +78,6 @@ void DungeonScene::Update()
             UIManager::GetInstance()->OpenUIStateBox("defaultUI");
     }
 
-    if (KeyManager::GetInstance()->IsOnceKeyDown(0x44))  // 'D' Ű
-    {
-        UIManager::GetInstance()->OpenUIStateBox("DungeonUI");
-    }
 
     TurnManager::GetInstance()->Update();
 
