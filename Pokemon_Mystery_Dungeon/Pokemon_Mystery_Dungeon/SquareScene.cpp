@@ -136,7 +136,7 @@ void SquareScene::Update()
 
     if (collisionBoxTool)
     {
-        //collisionBoxTool->Update();
+        collisionBoxTool->Update();
         CollisionManager::GetInstance()->MapPlayerCheck(
             player, collisionBoxTool->GetRectBoxes());
     }
@@ -172,6 +172,11 @@ void SquareScene::Update()
     {
         UIManager::GetInstance()->OpenUIStateBox("DownStairUI");
     }
+
+    if (IsPlayerOnDungeonTrigger())
+    {
+        UIManager::GetInstance()->OpenUIStateBox("DungeonUI");
+    }
 }
 
 void SquareScene::Render(HDC hdc)
@@ -199,8 +204,8 @@ void SquareScene::Render(HDC hdc)
         river->FrameRenderWithCamera(hdc, 152, 460, currAnimaionFrame, 0, 0, 1);
     }
 
-    //if (collisionBoxTool)
-    //    collisionBoxTool->Render(hdc);
+    if (collisionBoxTool)
+        collisionBoxTool->Render(hdc);
 
     if (player)
         player->Render(hdc);
@@ -224,4 +229,10 @@ void SquareScene::RenderFlowers(HDC hdc, Image* flower,const std::vector<POINT>&
     {
         flower->FrameRenderWithCamera(hdc, pos.x, pos.y, 0, currFrame,0, 1);
     }
+}
+
+bool SquareScene::IsPlayerOnDungeonTrigger()
+{
+    FPOINT playerPos = PlayerManager::GetInstance()->GetPlayer()->GetPos();
+    return playerPos.x < 0.f;
 }
