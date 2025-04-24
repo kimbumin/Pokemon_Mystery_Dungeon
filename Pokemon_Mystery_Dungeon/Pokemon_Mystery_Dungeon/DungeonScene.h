@@ -26,6 +26,7 @@ public:
 private:
     Image* sampleTile;
     Image* stairImage;
+    bool isSceneTransition = false;
 
 
     Map* dungeonMap;

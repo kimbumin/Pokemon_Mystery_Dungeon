@@ -18,6 +18,7 @@
 #include "PlayerManager.h"
 #include "PokemonPlayer.h"
 #include "Camera.h"
+#include "FadeManager.h"
 
 #define SQUARESIZE_X 954
 #define SQUARESIZE_Y 714
@@ -74,7 +75,8 @@ HRESULT SquareScene::Init()
     };
 
 
-    elapsedTime = 0;
+    elapsedTime = 0.f;
+    fadeElapsedTime = 0.f;
 
     collisionBoxTool = new CollisionBoxTool();
     collisionBoxTool->Init(L"Square");
@@ -86,6 +88,7 @@ HRESULT SquareScene::Init()
     Camera::GetInstance()->SetScreenSize({500, 400});
 
 
+    FadeManager::GetInstance()->StartFadeIn(1.0f);
     return S_OK;
 }
 
@@ -105,19 +108,24 @@ void SquareScene::Update()
     }
 
 
-    if (yellowFlower && TimerManager::GetInstance())
+
+    elapsedTime += TimerManager::GetInstance()->GetDeltaTime();
+    if (elapsedTime > 0.3f)
     {
-        elapsedTime += TimerManager::GetInstance()->GetDeltaTime();
-        if (elapsedTime > 0.3f)
+        currAnimaionFrame++;
+        if (currAnimaionFrame >= yellowFlower->GetMaxFrameY())
         {
-            currAnimaionFrame++;
-            if (currAnimaionFrame >= yellowFlower->GetMaxFrameY())
-            {
-                currAnimaionFrame = 0;
-            }
-            elapsedTime = 0;
+            currAnimaionFrame = 0;
         }
+        elapsedTime = 0;
     }
+    fadeElapsedTime += TimerManager::GetInstance()->GetDeltaTime();
+    if (fadeElapsedTime > 0.016f)
+    {
+        FadeManager::GetInstance()->Update();
+        fadeElapsedTime = 0;
+    }
+
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F6))
     {
         SceneManager::GetInstance()->AddScene("DungeonScene", new DungeonScene());
@@ -131,16 +139,6 @@ void SquareScene::Update()
         SceneManager::GetInstance()->ChangeScene("StartScene", "LoadingScene");
     }
 
-    elapsedTime += TimerManager::GetInstance()->GetDeltaTime();
-    if (elapsedTime > 0.3f)
-    {
-        currAnimaionFrame++;
-        if (currAnimaionFrame >= yellowFlower->GetMaxFrameY())
-        {
-            currAnimaionFrame = 0;
-        }
-        elapsedTime = 0;
-    }
     if (collisionBoxTool)
     {
         collisionBoxTool->Update();
@@ -169,13 +167,6 @@ void SquareScene::Update()
     if (KeyManager::GetInstance()->IsOnceKeyDown(0x44))  // 'D' 키
     {
         UIManager::GetInstance()->OpenUIStateBox("DungeonUI");
-
-
-        //SetDugeonType이런 거 만들어 줘야되고,
-        //DungeonScene이동,
-        // 
-
-
 
     }
     if (KeyManager::GetInstance()->IsOnceKeyDown(0x59))  // 'Y' 키
@@ -229,7 +220,7 @@ void SquareScene::Render(HDC hdc)
 
     wsprintf(szText, TEXT("Mouse X : %d, Y : %d"), g_ptMouse.x, g_ptMouse.y);
     TextOut(hdc, 300, 60, szText, wcslen(szText));
-
+    FadeManager::GetInstance()->Render(hdc, WINSIZE_X, WINSIZE_Y);
 }
 
 void SquareScene::RenderFlowers(HDC hdc, Image* flower,const std::vector<POINT>& positions, int currFrame)

@@ -19,4 +19,5 @@ private:
     std::vector<ImageGDIPlus*> introFrames;
     int currFrameIndex;
     float elapsedTime;
+    bool isSceneTransition = false;
 };

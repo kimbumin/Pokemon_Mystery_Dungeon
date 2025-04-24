@@ -46,7 +46,7 @@ void Camera::Shake(float duration, int magnitude)
 
 void Camera::ZoomIn()
 {
-    zoom += 0.1f;
+    zoom += 1.0f;
     if (zoom > maxZoom)
     {
         zoom = maxZoom;
@@ -55,7 +55,7 @@ void Camera::ZoomIn()
 
 void Camera::ZoomOut()
 {
-    zoom -= 0.1f;
+    zoom -= 1.0f;
     if (zoom < minZoom)
     {
         zoom = minZoom;

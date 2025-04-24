@@ -307,16 +307,83 @@ void Image::Release()
     }
 }
 
+//void Image::RenderWithCamera(HDC hdc, int x, int y)
+//{
+//    POINT cam = Camera::GetInstance()->GetCameraPos();
+//
+//
+//    this->Render(hdc, x - cam.x, y - cam.y);
+//}
+//
+//void Image::FrameRenderWithCamera(HDC hdc, int x, int y, int frameX, int frameY,int transparent, bool isCenter)
+//{
+//    POINT cam = Camera::GetInstance()->GetCameraPos();
+//
+//
+//    this->FrameRender(hdc, x - cam.x, y - cam.y, frameX, frameY, transparent,isCenter);
+//}
+
 void Image::RenderWithCamera(HDC hdc, int x, int y)
 {
-    POINT cam = Camera::GetInstance()->GetCameraPos();
-    this->Render(hdc, x - cam.x, y - cam.y);
+    Camera* cam = Camera::GetInstance();
+    POINT camPos = cam->GetCameraPos();
+    float zoom = cam->GetZoom();  
+
+    int drawX = static_cast<int>((x - camPos.x) * zoom);
+    int drawY = static_cast<int>((y - camPos.y) * zoom);
+    
+    int drawW = static_cast<int>(imageInfo->width * zoom);
+    int drawH = static_cast<int>(imageInfo->height * zoom);
+
+    if (isTransparent)
+    {
+        GdiTransparentBlt(hdc, drawX, drawY, drawW,drawH, 
+                          imageInfo->hMemDC, 0, 0, imageInfo->width,
+                          imageInfo->height, transColor);
+    }
+    else
+    {
+        StretchBlt(hdc, drawX, drawY, drawW, drawH,       
+                   imageInfo->hMemDC, 0, 0, imageInfo->width, imageInfo->height,
+                   SRCCOPY);
+    }
 }
 
-void Image::FrameRenderWithCamera(HDC hdc, int x, int y, int frameX, int frameY,int transparent, bool isCenter)
+void Image::FrameRenderWithCamera(HDC hdc, int x, int y, int frameX, int frameY,
+                                  bool isFlip, bool isCenter)
 {
-    POINT cam = Camera::GetInstance()->GetCameraPos();
+    Camera* cam = Camera::GetInstance();
+    POINT camPos = cam->GetCameraPos();
+    float zoom = cam->GetZoom();
 
+    int drawX = static_cast<int>((x - camPos.x) * zoom);
+    int drawY = static_cast<int>((y - camPos.y) * zoom);
 
-    this->FrameRender(hdc, x - cam.x, y - cam.y, frameX, frameY, transparent,isCenter);
+    int srcW = imageInfo->frameWidth;
+    int srcH = imageInfo->frameHeight;
+
+    int drawW = static_cast<int>(srcW * zoom);
+    int drawH = static_cast<int>(srcH * zoom);
+
+    if (isCenter)
+    {
+        drawX -= drawW / 2;
+        drawY -= drawH / 2;
+    }
+
+    if (isFlip)
+    {
+        StretchBlt(imageInfo->hTempDC, 0, 0, srcW, srcH, imageInfo->hMemDC,
+                   (srcW * frameX) + (srcW - 1), srcH * frameY, -srcW, srcH,
+                   SRCCOPY);
+
+        GdiTransparentBlt(hdc, drawX, drawY, drawW, drawH, imageInfo->hTempDC,
+                          0, 0, srcW, srcH, transColor);
+    }
+    else
+    {
+        GdiTransparentBlt(hdc, drawX, drawY, drawW, drawH, imageInfo->hMemDC,
+                          srcW * frameX, srcH * frameY, srcW, srcH, transColor);
+    }
+
 }

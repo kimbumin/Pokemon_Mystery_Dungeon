@@ -49,6 +49,13 @@ void PokemonPlayer::Update()
         {
             GainExp(5000);
         }
+          if (KeyManager::GetInstance()->IsOnceKeyDown(VK_OEM_PLUS))  
+        Camera::GetInstance()->ZoomIn();
+    if (KeyManager::GetInstance()->IsOnceKeyDown(VK_OEM_MINUS))
+        Camera::GetInstance()->ZoomOut();
+
+    Camera::GetInstance()->SetCameraPos(
+        POINT{static_cast<int>(pos.x), static_cast<int>(pos.y)});
     }
     Camera::GetInstance()->SetCameraPos(
         POINT{static_cast<int>(pos.x), static_cast<int>(pos.y)});
@@ -116,7 +123,7 @@ void PokemonPlayer::GainExp(int amount)
 
 void PokemonPlayer::LevelUp()
 {
-    // check �α� ���
+    // check ·Î±× Ãâ·Â
     // Print Log
     PokemonData prevStatus = currentStatus;
 
@@ -154,7 +161,7 @@ void PokemonPlayer::EvolveTo(int newPokemonId)
     animator = new PokemonAnimator();
     SetAnimator();
     PlayIdleAnim();
-    // check �α� ��� or ��ȭ ����
+    // check ·Î±× Ãâ·Â or ÁøÈ­ ¿¬Ãâ
     // Print Log or Evolution Effect
 }
 
@@ -193,6 +200,6 @@ void PokemonPlayer::PrintLevelUpSummaryDialogue(const PokemonData& prevStatus,
         }
     }
 
-    // Check DialogueManager�� ���� ���
+    // Check DialogueManager¸¦ ÅëÇØ Ãâ·Â
     // DialogueManager::GetInstance()->ShowLine(DialogueTemplate::LevelUpSummary, {{L"statChanges", statChanges}});
 }

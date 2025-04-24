@@ -147,6 +147,7 @@
     <ClCompile Include="EmberSkill.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="DungeonScene.cpp" />
+    <ClCompile Include="FadeManager.cpp" />
     <ClCompile Include="FireBlastSkill.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="HurtAnimState.cpp" />
@@ -228,6 +229,7 @@
     <ClInclude Include="DungeonUIState.h" />
     <ClInclude Include="EmberSkill.h" />
     <ClInclude Include="DungeonScene.h" />
+    <ClInclude Include="FadeManager.h" />
     <ClInclude Include="FireBlastSkill.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="HurtAnimState.h" />

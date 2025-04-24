@@ -303,8 +303,8 @@
     <ClCompile Include="DownStairUIState.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="PokemonEvolutionDataLoader.cpp">
-      <Filter>Pokemon\Data</Filter>
+    <ClCompile Include="FadeManager.cpp">
+      <Filter>Scene\소스</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -566,8 +566,8 @@
     <ClInclude Include="SwingSkill.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="PokemonEvolutionDataLoader.h">
-      <Filter>Pokemon\Data</Filter>
+    <ClInclude Include="FadeManager.h">
+      <Filter>Scene\헤더</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
