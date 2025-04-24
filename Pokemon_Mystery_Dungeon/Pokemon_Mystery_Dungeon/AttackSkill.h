@@ -22,4 +22,5 @@ public:
     void Render(HDC hdc) override;
     void Use(PokemonBase* owner) override;
     shared_ptr<ISkill> Clone() override;
+    void Reset() override;
 };

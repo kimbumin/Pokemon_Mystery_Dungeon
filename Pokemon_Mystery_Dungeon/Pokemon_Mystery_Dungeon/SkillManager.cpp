@@ -20,28 +20,34 @@ void SkillManager::LoadSkillsFromCSV(const string& filepath)
     {
         lineNumber++;
         if (line.empty())
+            continue;
+
+        istringstream iss(line);
+        vector<string> tokens;
+        string token;
+
+        while (getline(iss, token, ','))
+            tokens.push_back(token);
+
+        if (tokens.size() != 8)
         {
+            OutputDebugStringA(("Invalid skill data at line " +
+                                to_string(lineNumber) + ": " + line + "\n")
+                                   .c_str());
             continue;
         }
-        istringstream iss(line);
+
+        SkillData data;
         try
         {
-            getline(iss, token, ',');
-            data.number = stoi(token);
-            getline(iss, token, ',');
-            data.name = token;
-            getline(iss, token, ',');
-            data.element = token;
-            getline(iss, token, ',');
-            data.type = token;
-            getline(iss, token, ',');
-            data.power = token.empty() ? 0 : stoi(token);
-            getline(iss, token, ',');
-            data.accuracy = token.empty() ? 0 : stoi(token);
-            getline(iss, token, ',');
-            data.pp = token.empty() ? 0 : stoi(token);
-            getline(iss, token, ',');
-            data.animType = token;
+            data.number = stoi(tokens[0]);
+            data.name = tokens[1];
+            data.element = tokens[2];
+            data.type = tokens[3];
+            data.power = stoi(tokens[4]);
+            data.accuracy = stoi(tokens[5]);
+            data.pp = stoi(tokens[6]);
+            data.animType = tokens[7];
 
             if (data.name.empty())
                 throw invalid_argument("Skill Name is empty");
