@@ -101,6 +101,8 @@ void DungeonUIState::Update()
             SceneManager::GetInstance()->AddScene("DungeonScene", new DungeonScene);
             SceneManager::GetInstance()->ChangeScene("DungeonScene");
 
+            SoundManager::GetInstance()->StopBGM();
+            SoundManager::GetInstance()->PlayBGM("ice");
         }
         else if (YIndex == 1)
         {
@@ -110,6 +112,9 @@ void DungeonUIState::Update()
                                                   new DungeonScene);
             SceneManager::GetInstance()->ChangeScene("DungeonScene");
 
+            SoundManager::GetInstance()->StopBGM();
+            SoundManager::GetInstance()->PlayBGM("magma");
+
         }
         else if (YIndex == 2)
         {
@@ -118,6 +123,9 @@ void DungeonUIState::Update()
             SceneManager::GetInstance()->AddScene("DungeonScene",
                                                   new DungeonScene);
             SceneManager::GetInstance()->ChangeScene("DungeonScene");
+
+            SoundManager::GetInstance()->StopBGM();
+            SoundManager::GetInstance()->PlayBGM("forest");
         }
     }
 
