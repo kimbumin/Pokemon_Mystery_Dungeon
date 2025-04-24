@@ -15,6 +15,7 @@
 #include "DialogueManager.h"
 #include "DialogueTemplate.h"
 #include "FadeManager.h"
+#include "SquareScene.h"
 
 HRESULT DungeonScene::Init()
 {
@@ -112,15 +113,15 @@ void DungeonScene::Update()
 
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_SPACE) &&!FadeManager::GetInstance()->IsFading())
     {
+        ++dungeonFloor; //test
         FadeManager::GetInstance()->StartFadeOut(1.0);
         GenerateNextFloor();
         isSceneTransition = true;
     }
-    if (dungeonFloor > 5)
+    if (dungeonFloor > 10)
     {
         dungeonFloor = 0;
-        SceneManager::GetInstance()->AddScene("BossScene", new BossScene());
-        SceneManager::GetInstance()->ChangeScene("BossScene");
+        SceneManager::GetInstance()->ChangeScene("SquareScene");
     }
 
     elapsedTime += TimerManager::GetInstance()->GetDeltaTime();

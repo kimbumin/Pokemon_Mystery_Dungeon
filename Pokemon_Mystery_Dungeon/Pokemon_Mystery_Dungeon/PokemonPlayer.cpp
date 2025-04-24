@@ -3,6 +3,7 @@
 #include <cmath>
 
 #include "Camera.h"
+#include "CommonFunction.h"
 #include "DialogueManager.h"
 #include "DialogueTemplate.h"
 #include "ISkill.h"
@@ -10,8 +11,6 @@
 #include "PokemonDataLoader.h"
 #include "PokemonEvolutionDataLoader.h"
 #include "SkillManager.h"
-#include "CommonFunction.h"
-
 
 HRESULT PokemonPlayer::Init()
 {
@@ -40,7 +39,6 @@ void PokemonPlayer::Update()
         SavePrevPos();
         SquareModeMove();
         UpdateRect();
-
     }
     else
     {
@@ -49,16 +47,14 @@ void PokemonPlayer::Update()
         {
             GainExp(5000);
         }
-          if (KeyManager::GetInstance()->IsOnceKeyDown(VK_OEM_PLUS))  
+    }
+    if (KeyManager::GetInstance()->IsOnceKeyDown(VK_OEM_PLUS))
         Camera::GetInstance()->ZoomIn();
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_OEM_MINUS))
         Camera::GetInstance()->ZoomOut();
 
     Camera::GetInstance()->SetCameraPos(
-        POINT{static_cast<int>(pos.x), static_cast<int>(pos.y)});
-    }
-    Camera::GetInstance()->SetCameraPos(
-        POINT{static_cast<int>(pos.x), static_cast<int>(pos.y)});
+        POINT{ static_cast<int>(pos.x), static_cast<int>(pos.y) });
 }
 
 void PokemonPlayer::SquareModeMove()
@@ -166,7 +162,7 @@ void PokemonPlayer::EvolveTo(int newPokemonId)
 }
 
 void PokemonPlayer::PrintLevelUpSummaryDialogue(const PokemonData& prevStatus,
-                                 const PokemonData& newStatus)
+                                                const PokemonData& newStatus)
 {
     struct StatChange
     {
@@ -201,5 +197,6 @@ void PokemonPlayer::PrintLevelUpSummaryDialogue(const PokemonData& prevStatus,
     }
 
     // Check DialogueManager¸¦ ÅëÇØ Ãâ·Â
-    // DialogueManager::GetInstance()->ShowLine(DialogueTemplate::LevelUpSummary, {{L"statChanges", statChanges}});
+    // DialogueManager::GetInstance()->ShowLine(DialogueTemplate::LevelUpSummary,
+    // {{L"statChanges", statChanges}});
 }
