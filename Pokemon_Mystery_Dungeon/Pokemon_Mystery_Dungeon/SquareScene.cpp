@@ -184,7 +184,10 @@ void SquareScene::Update()
 
     if (IsPlayerOnDungeonTrigger())
     {
-        UIManager::GetInstance()->OpenUIStateBox("DungeonUI");
+        if (!CoolDownManager::GetInstance()->IsCooldown("DungeonUI"))
+        {
+            UIManager::GetInstance()->OpenUIStateBox("DungeonUI");
+        }
     }
 }
 
