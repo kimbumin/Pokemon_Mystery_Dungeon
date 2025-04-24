@@ -69,8 +69,15 @@ void PokemonEnemy::ExecuteTurn()
 
     if (dist <= 1)
     {
-        // ExecuteAttackAction(nullptr);
-        ExecuteIdleAction();
+        int skillIndex = 0;
+        
+        skillIndex = rand() % 2;  // Check 현재 스킬이 2개 밖에 없어서 하드코딩 함
+
+        shared_ptr<ISkill> skill = GetSkill(skillIndex);
+        if (skill)
+        {
+            ExecuteAttackAction(skill);
+        }
     }
     else if (dist <= 3)
     {

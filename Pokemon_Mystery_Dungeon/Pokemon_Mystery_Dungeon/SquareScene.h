@@ -2,10 +2,8 @@
 #include "Scene.h"
 
 class CollisionBoxTool;
-class MPlayer;
-class PokemonBase;
 class SkillManager;
-
+class PokemonPlayer;
 class SquareScene : public Scene
 {
 public:
@@ -22,17 +20,18 @@ private:
     Image* redFlower;
     Image* yellowFlower;
     Image* river;
-    PokemonBase* pokemon;
+    PokemonPlayer* player;
     SkillManager* skillManager;
 
 	int currAnimaionFrame;
 	float elapsedTime;
+    float fadeElapsedTime;
 
 	wchar_t szText[128];
 	void RenderFlowers(HDC hdc, Image* flower, const std::vector<POINT>& positions, int currFrame);
 
 	std::vector<POINT> redPositions;
 	std::vector<POINT> yellowPositions;
-    MPlayer* mPlayer;
+
     CollisionBoxTool* collisionBoxTool;
 };

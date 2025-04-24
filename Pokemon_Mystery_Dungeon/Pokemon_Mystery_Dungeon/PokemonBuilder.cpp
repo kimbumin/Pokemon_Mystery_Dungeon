@@ -4,6 +4,7 @@
 #include "PokemonBase.h"
 #include "PokemonDataLoader.h"
 #include "PokemonPool.h"
+#include "SkillManager.h"
 
 PokemonBase* PokemonBuilder::Build(int id, int level, FPOINT pos)
 {
@@ -24,6 +25,76 @@ PokemonBase* PokemonBuilder::Build(int id, int level, FPOINT pos)
     pokemon->SetPos(pos);
     pokemon->SetIsAlive(true);
     pokemon->Init();
+
+    shared_ptr<ISkill> skill1 = SkillManager::GetInstance()->CreateSkill("BodySlam");
+    shared_ptr<ISkill> skill2;
+
+    if (pokemon->GetCurrentPokemonData().types[0] == "Normal")
+    {
+        skill2 = SkillManager::GetInstance()->CreateSkill("Tackle");
+    }
+    else if (pokemon->GetCurrentPokemonData().types[0] == "Fighting")
+    {
+        skill2 = SkillManager::GetInstance()->CreateSkill("KneeKick");
+    }
+    else if (pokemon->GetCurrentPokemonData().types[0] == "Grass")
+    {
+        skill2 = SkillManager::GetInstance()->CreateSkill("PetalDance");
+    }
+    else if (pokemon->GetCurrentPokemonData().types[0] == "Fire")
+    {
+        skill2 = SkillManager::GetInstance()->CreateSkill("Ember");
+    }
+    else if (pokemon->GetCurrentPokemonData().types[0] == "Water")
+    {
+        skill2 = SkillManager::GetInstance()->CreateSkill("WaterGun");
+    }
+    else if (pokemon->GetCurrentPokemonData().types[0] == "Flying")
+    {
+        skill2 = SkillManager::GetInstance()->CreateSkill("WingAttack");
+    }
+    else if (pokemon->GetCurrentPokemonData().types[0] == "Poison")
+    {
+        skill2 = SkillManager::GetInstance()->CreateSkill("Sludge");
+    }
+    else if (pokemon->GetCurrentPokemonData().types[0] == "Electric")
+    {
+        skill2 = SkillManager::GetInstance()->CreateSkill("Thunderbolt");
+    }
+    else if (pokemon->GetCurrentPokemonData().types[0] == "Ground")
+    {
+        skill2 = SkillManager::GetInstance()->CreateSkill("EarthPower");
+    }
+    else if (pokemon->GetCurrentPokemonData().types[0] == "Rock")
+    {
+        skill2 = SkillManager::GetInstance()->CreateSkill("StoneShower");
+    }
+    else if (pokemon->GetCurrentPokemonData().types[0] == "Ice")
+    {
+        skill2 = SkillManager::GetInstance()->CreateSkill("IcePunch");
+    }
+    else if (pokemon->GetCurrentPokemonData().types[0] == "Bug")
+    {
+        skill2 = SkillManager::GetInstance()->CreateSkill("BugBuzz");
+    }
+    else if (pokemon->GetCurrentPokemonData().types[0] == "Psychic")
+    {
+        skill2 = SkillManager::GetInstance()->CreateSkill("Psychokinesis");
+    }
+    else if (pokemon->GetCurrentPokemonData().types[0] == "Dragon")
+    {
+        skill2 = SkillManager::GetInstance()->CreateSkill("DragonClaw");
+    }
+    else if (pokemon->GetCurrentPokemonData().types[0] == "Ghost")
+    {
+        skill2 = SkillManager::GetInstance()->CreateSkill("ShadowBall");
+    }
+
+
+    if (skill1)
+        pokemon->SetSkill(0, skill1);
+    if (skill2)
+        pokemon->SetSkill(1, skill2);
 
     return pokemon;
 }

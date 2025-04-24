@@ -154,6 +154,7 @@
     <ClCompile Include="EmberSkill.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="DungeonScene.cpp" />
+    <ClCompile Include="FadeManager.cpp" />
     <ClCompile Include="FireBlastSkill.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="HurtAnimState.cpp" />
@@ -182,6 +183,7 @@
     <ClCompile Include="PokemonBuilder.cpp" />
     <ClCompile Include="PokemonDataLoader.cpp" />
     <ClCompile Include="PokemonEnemy.cpp" />
+    <ClCompile Include="PokemonEvolutionDataLoader.cpp" />
     <ClCompile Include="PokemonImageLoader.cpp" />
     <ClCompile Include="PokemonPool.cpp" />
     <ClCompile Include="PPAider.cpp" />
@@ -234,6 +236,7 @@
     <ClInclude Include="DungeonUIState.h" />
     <ClInclude Include="EmberSkill.h" />
     <ClInclude Include="DungeonScene.h" />
+    <ClInclude Include="FadeManager.h" />
     <ClInclude Include="FireBlastSkill.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="HurtAnimState.h" />
@@ -265,6 +268,7 @@
     <ClInclude Include="PokemonBuilder.h" />
     <ClInclude Include="PokemonDataLoader.h" />
     <ClInclude Include="PokemonEnemy.h" />
+    <ClInclude Include="PokemonEvolutionDataLoader.h" />
     <ClInclude Include="PokemonImageLoader.h" />
     <ClInclude Include="PokemonPool.h" />
     <ClInclude Include="PPAider.h" />

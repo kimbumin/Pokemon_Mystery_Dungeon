@@ -6,7 +6,8 @@
 #include "KeyManager.h"
 #include "SceneManager.h"
 #include "Camera.h"
-
+#include "PokemonPlayer.h"
+#include "PlayerManager.h"
 HRESULT BossScene::Init()
 {
     collisionBoxTool = new CollisionBoxTool();
@@ -23,9 +24,7 @@ HRESULT BossScene::Init()
             backGroundHeight, 1, 1, true, RGB(255, 0, 255));
     }
 
-    mPlayer = new MPlayer;
-    mPlayer->Init();
-    mPlayer->SetPos({180,160});
+    player = PlayerManager::GetInstance()->GetPlayer();
 
     Camera::GetInstance()->SetMapSize({TILE_X * TILE_SIZE, TILE_Y * TILE_SIZE});
     Camera::GetInstance()->SetScreenSize({500, 400});
@@ -37,13 +36,6 @@ HRESULT BossScene::Init()
 
 void BossScene::Release()
 {
-    if (mPlayer)
-    {
-        mPlayer->Release();
-        delete mPlayer;
-        mPlayer = nullptr;
-    }
-
     // if (boss) {
     //	boss->Release();
     //	delete boss;
@@ -58,10 +50,12 @@ void BossScene::Update()
         SceneManager::GetInstance()->ChangeScene("Square");
     }
 
-    if (mPlayer)
+    if (player)
     {
-        mPlayer->Update();
-        Camera::GetInstance()->SetCameraPos(mPlayer->GetPos());
+        player->Update();
+        Camera::GetInstance()->SetCameraPos(
+            POINT{static_cast<int>(player->GetPos().x),
+                  static_cast<int>(player->GetPos().y)});
     }
     // if (boss) boss->Update();
 
@@ -74,7 +68,7 @@ void BossScene::Update()
     {
         collisionBoxTool->Update();
         CollisionManager::GetInstance()->MapPlayerCheck(
-            mPlayer, collisionBoxTool->GetRectBoxes());
+            player, collisionBoxTool->GetRectBoxes());
     }
 }
 
@@ -85,8 +79,8 @@ void BossScene::Render(HDC hdc)
 
     backGround->RenderWithCamera(hdc, 0, 0);
 
-    if (mPlayer)
-        mPlayer->Render(hdc);
+    if (player)
+        player->Render(hdc);
     // if (boss) boss->Render(hdc);
     if (collisionBoxTool)
     {

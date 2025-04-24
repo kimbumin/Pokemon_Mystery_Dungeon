@@ -15,6 +15,9 @@
 // clang-format off
 #include "config.h"
 // clang-format on
+#include <string>
+#include <sstream>
+
 inline RECT GetRect(int left, int top, int width, int height)
 {
 	RECT rc{ left, top, left + width, top + height };
@@ -133,4 +136,12 @@ inline void SetClientRect(HWND hWnd, int width, int height)
 
 	SetWindowPos(hWnd, NULL, 0, 0, rc.right - rc.left, 
 		rc.bottom - rc.top, SWP_NOMOVE | SWP_NOZORDER);
+}
+
+template <typename T>
+wstring ToWString(const T& value)
+{
+    wstringstream wss;
+    wss << value;
+    return wss.str();
 }
