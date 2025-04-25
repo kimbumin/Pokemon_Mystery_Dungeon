@@ -176,6 +176,7 @@ void SkillUIState::Update()
     {
         if (KeyManager::GetInstance()->IsOnceKeyDown(VK_DOWN))
         {
+            SoundManager::GetInstance()->PlaySFX("button");
             YIndex = (YIndex + 1) % 4;
             Cursor->SetLocalPos(25, OffsetY[YIndex]);
             Cursor->UpdateRealPos();
@@ -183,6 +184,7 @@ void SkillUIState::Update()
         }
         else if (KeyManager::GetInstance()->IsOnceKeyDown(VK_UP))
         {
+            SoundManager::GetInstance()->PlaySFX("button");
             YIndex = (YIndex - 1 + 4) % 4;
             Cursor->SetLocalPos(25, OffsetY[YIndex]);
             Cursor->UpdateRealPos();
@@ -193,12 +195,14 @@ void SkillUIState::Update()
     {
         if (KeyManager::GetInstance()->IsOnceKeyDown(VK_DOWN))
         {
+            SoundManager::GetInstance()->PlaySFX("button");
             subCorsorIndex = (subCorsorIndex + 1) % 2;
             SubCursor->SetLocalPos(25, SubOffsetY[subCorsorIndex]);
             SubCursor->UpdateRealPos();
         }
         else if (KeyManager::GetInstance()->IsOnceKeyDown(VK_UP))
         {
+            SoundManager::GetInstance()->PlaySFX("button");
             subCorsorIndex = (subCorsorIndex - 1 + 2) % 2;
             SubCursor->SetLocalPos(25, SubOffsetY[subCorsorIndex]);
             SubCursor->UpdateRealPos();

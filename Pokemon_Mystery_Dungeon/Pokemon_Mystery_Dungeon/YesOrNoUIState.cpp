@@ -58,12 +58,14 @@ void YesOrNoUIState::Update()
 
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_DOWN))
     {
+        SoundManager::GetInstance()->PlaySFX("button");
         YIndex = (YIndex + 1) % 2;
         Cursor->SetLocalPos(CursorPosX, InfoBoxPosYOffset[YIndex]);
         Cursor->UpdateRealPos();
     }
     else if (KeyManager::GetInstance()->IsOnceKeyDown(VK_UP))
     {
+        SoundManager::GetInstance()->PlaySFX("button");
         YIndex = (YIndex - 1 + 2) % 2;
         Cursor->SetLocalPos(CursorPosX, InfoBoxPosYOffset[YIndex]);
         Cursor->UpdateRealPos();
