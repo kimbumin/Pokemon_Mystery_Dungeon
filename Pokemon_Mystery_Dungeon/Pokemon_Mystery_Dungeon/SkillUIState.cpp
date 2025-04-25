@@ -70,7 +70,34 @@ HRESULT SkillUIState::Init()
         SkillList.push_back(skillUI);
     }
 
-    
+    SkillNameText = new UIElementText();
+    SkillTypeText = new UIElementText();
+    SkillElementText = new UIElementText();
+    SkillPowerText = new UIElementText();
+    SkillAccuracyText = new UIElementText();
+    SkillPPText = new UIElementText();
+
+    UIElementText* skillTexts[] = {SkillNameText,     SkillTypeText,
+                                   SkillElementText,  SkillPowerText,
+                                   SkillAccuracyText, SkillPPText};
+
+    const wchar_t* labels[] = {L"Name",  L"Type",     L"Element",
+                               L"Power", L"Accuracy", L"PP"};
+
+    for (int i = 0; i < 6; ++i)
+    {
+        skillTexts[i]->SetFont(17);
+        skillTexts[i]->SetTextLine(4.0f);
+        skillTexts[i]->SetParent(UseInfoBox);
+    }
+
+    SkillNameText->SetLocalPos(50, 30);
+    SkillTypeText->SetLocalPos(250, 30);
+    SkillElementText->SetLocalPos(50, 50);
+
+    SkillPowerText->SetLocalPos(250, 50);
+    SkillAccuracyText->SetLocalPos(50, 70);
+    SkillPPText->SetLocalPos(250, 70);
     
     auto player = PlayerManager::GetInstance()->GetPlayer();
     for (int i = 0; i < 4; ++i)
@@ -95,7 +122,7 @@ HRESULT SkillUIState::Init()
     SubCursor->SetImage(CursorImage);
     SubCursor->SetParent(SkillAssistBox);
 
-    for (int i = 0; i < 3; ++i)
+    for (int i = 0; i < 2; ++i)
     {
         SubText[i] = new UIElementText();
         SubText[i]->SetFont(18);
@@ -141,7 +168,7 @@ void SkillUIState::Release()
 
 void SkillUIState::Update()
 {
-
+    UpdateSkillInfoText(YIndex);
     fadeOutTime += TimerManager::GetInstance()->GetDeltaTime();
     fadeInTime = (sinf(fadeOutTime * 6.0f) * 0.5f) + 0.5f;
 
@@ -152,25 +179,27 @@ void SkillUIState::Update()
             YIndex = (YIndex + 1) % 4;
             Cursor->SetLocalPos(25, OffsetY[YIndex]);
             Cursor->UpdateRealPos();
+            UpdateSkillInfoText(YIndex);
         }
         else if (KeyManager::GetInstance()->IsOnceKeyDown(VK_UP))
         {
             YIndex = (YIndex - 1 + 4) % 4;
             Cursor->SetLocalPos(25, OffsetY[YIndex]);
             Cursor->UpdateRealPos();
+            UpdateSkillInfoText(YIndex);
         }
     }
     else
     {
         if (KeyManager::GetInstance()->IsOnceKeyDown(VK_DOWN))
         {
-            subCorsorIndex = (subCorsorIndex + 1) % 3;
+            subCorsorIndex = (subCorsorIndex + 1) % 2;
             SubCursor->SetLocalPos(25, SubOffsetY[subCorsorIndex]);
             SubCursor->UpdateRealPos();
         }
         else if (KeyManager::GetInstance()->IsOnceKeyDown(VK_UP))
         {
-            subCorsorIndex = (subCorsorIndex - 1 + 3) % 3;
+            subCorsorIndex = (subCorsorIndex - 1 + 2) % 2;
             SubCursor->SetLocalPos(25, SubOffsetY[subCorsorIndex]);
             SubCursor->UpdateRealPos();
         }
@@ -196,10 +225,7 @@ void SkillUIState::Update()
                     SetSelectedSkillIndex(YIndex);
                     UIManager::GetInstance()->ChangeState("IdleUI");
                     break;
-                case 1:  // 스킬 정보
-                    UIManager::GetInstance()->ChangeState("SkillUseUI");
-                    break;
-                case 2:  // 스킬 취소
+                case 1:  // 스킬 취소
                     isSkillUseBox = false;
                     break;
                 default:
@@ -278,6 +304,68 @@ void SkillUIState::UseSkill(int index)
 
 
 }
+
+void SkillUIState::UpdateSkillInfoText(int index)
+{
+    auto* player = PlayerManager::GetInstance()->GetPlayer();
+    if (!player)
+        return;
+
+    shared_ptr<ISkill> skill = player->GetSkill(index);
+    if (!skill)
+        return;
+
+    const SkillData& data = skill->GetSkillData();
+
+    SkillNameText->SetText(L"Name: " + ToWString(data.name));
+    SkillTypeText->SetText(L"Type: " + ToWString(data.type));
+    SkillElementText->SetText(L"Element: <" + ToWString(data.element) + L">");
+    SkillPowerText->SetText(L"Power: " + to_wstring(data.power));
+    SkillAccuracyText->SetText(L"Accuracy: " + to_wstring(data.accuracy));
+    SkillPPText->SetText(L"PP: " + to_wstring(data.pp));
+
+    SetElementTextColor(SkillElementText, data.element);
+}
+
+void SkillUIState::SetElementTextColor(UIElementText* text,
+                                       const string& element)
+{
+    if (element == "Fire")
+        text->SetHighlightColorRGB(255, 80, 0);
+    else if (element == "Water")
+        text->SetHighlightColorRGB(0, 120, 255);
+    else if (element == "Grass")
+        text->SetHighlightColorRGB(0, 200, 100);
+    else if (element == "Electric")
+        text->SetHighlightColorRGB(255, 215, 0);
+    else if (element == "Ice")
+        text->SetHighlightColorRGB(100, 200, 255);
+    else if (element == "Rock")
+        text->SetHighlightColorRGB(160, 82, 45);
+    else if (element == "Poison")
+        text->SetHighlightColorRGB(148, 0, 211);
+    else if (element == "Normal")
+        text->SetHighlightColorRGB(192, 192, 192);
+    else if (element == "Flying")
+        text->SetHighlightColorRGB(135, 206, 250);
+    else if (element == "Psychic")
+        text->SetHighlightColorRGB(255, 105, 180);
+    else if (element == "Ghost")
+        text->SetHighlightColorRGB(123, 104, 238);
+    else if (element == "Dragon")
+        text->SetHighlightColorRGB(0, 0, 205);
+    else if (element == "Bug")
+        text->SetHighlightColorRGB(154, 205, 50);
+    else if (element == "Ground")
+        text->SetHighlightColorRGB(210, 180, 140);
+    else if (element == "Fighting")
+        text->SetHighlightColorRGB(178, 34, 34);
+    else
+        text->SetHighlightColorRGB(255, 255, 255);
+
+}
+
+
 
 SkillUIState::~SkillUIState()
 {

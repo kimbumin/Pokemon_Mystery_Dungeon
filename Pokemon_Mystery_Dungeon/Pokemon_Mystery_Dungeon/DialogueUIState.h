@@ -10,6 +10,7 @@ private:
     UIElementImage* dialogueBoxImage = nullptr;
     UIElementText* mainText = nullptr;
 
+
     const int dialogueBoxPosX = 25;
     const int dialogueBoxPosY = 220;
 

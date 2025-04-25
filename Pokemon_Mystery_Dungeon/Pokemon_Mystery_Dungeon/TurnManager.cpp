@@ -256,6 +256,7 @@ void TurnManager::Update()
                 current->ExecuteTurn();
                 state = TurnState::WaitingForCompletion;
             }
+            current->SetHp(current->GetHp() + 1);
             break;
 
         case TurnState::WaitingForCompletion:

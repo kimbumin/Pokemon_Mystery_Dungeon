@@ -8,16 +8,20 @@ class DungeonUIState : public UIState, public UIElement
 {
 private:
     UIElementImage* DungeonInfoBox = nullptr;
-    UIElementImage* WaterType = nullptr;
-    UIElementImage* FireType = nullptr;
 
     UIElementImage* Cursor = nullptr;
+
+    UIElementImage* IceType = nullptr;
+    UIElementImage* MagmaType = nullptr;
+    UIElementImage* ForestType = nullptr;
 
     UIElementText* IceTypeText = nullptr;
     UIElementText* MagmaTypeText = nullptr;
     UIElementText* ForestTypeText = nullptr;
 
-    const int OffsetY[3] = {30, 60, 90};
+
+    const int OffsetImageY[3] = {22, 72, 122};
+    const int OffsetY[3] = {35, 90, 135};
     int YIndex = 0;
 
     bool isActive = false;

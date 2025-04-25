@@ -12,10 +12,13 @@ HRESULT DungeonUIState::Init()
         "DungeonInfoBox", L"Image/UIImage/DungeonUIState/DungeonInfoBox.png");
     auto CursorImage =
         manager.AddImage("Cursor", L"Image/UIImage/DungeonUIState/Cursor.png");
-    //auto WaterTypeGifImage = manager.AddImage(
-    //    "WaterType", L"Image/UIImage/DungeonUIState/waterType.gif", 1, 1, true);
-    //auto FireTypeGifImage = manager.AddImage(
-    //    "FireType", L"Image/UIImage/DungeonUIState/fireType.gif", 1, 1, true);
+    auto IceTypeImage = manager.AddImage(
+        "IceType", L"Image/UIImage/DungeonUIState/IceType.png");
+    auto MagmaTypeImage = manager.AddImage(
+        "MagmaType", L"Image/UIImage/DungeonUIState/MagmaType.png");
+    auto ForestTypeImage = manager.AddImage(
+        "WaterTypeGif", L"Image/UIImage/DungeonUIState/ForestType.png");
+
 
     // UI 엘리먼트 생성
     DungeonInfoBox = new UIElementImage();
@@ -28,6 +31,24 @@ HRESULT DungeonUIState::Init()
     Cursor->SetImage(CursorImage);
     Cursor->SetLocalPos(30, OffsetY[0]);
     Cursor->SetParent(DungeonInfoBox);
+
+    IceType = new UIElementImage();
+    IceType->SetImage(IceTypeImage);
+    IceType->SetLocalPos(18, OffsetImageY[0]);
+    IceType->setAlpha(0.5f);
+    IceType->SetParent(DungeonInfoBox);
+
+    MagmaType = new UIElementImage();
+    MagmaType->SetImage(MagmaTypeImage);
+    MagmaType->SetLocalPos(18, OffsetImageY[1]);
+    MagmaType->setAlpha(0.5f);
+    MagmaType->SetParent(DungeonInfoBox);
+
+    ForestType = new UIElementImage();
+    ForestType->SetImage(ForestTypeImage);
+    ForestType->SetLocalPos(18, OffsetImageY[2]);
+    ForestType->setAlpha(0.5f);
+    ForestType->SetParent(DungeonInfoBox);
 
     int parentWidth = DungeonInfoBox->GetImageWidth();
 
@@ -80,12 +101,14 @@ void DungeonUIState::Update()
 {
     if(KeyManager::GetInstance()->IsOnceKeyDown(VK_DOWN))
     {
+        // SoundManager::GetInstance()->PlaySFX("button");
         YIndex = (YIndex + 1) % 3;
         Cursor->SetLocalPos(25, OffsetY[YIndex]);
         Cursor->UpdateRealPos();
     }
     else if (KeyManager::GetInstance()->IsOnceKeyDown(VK_UP))
     {
+        // SoundManager::GetInstance()->PlaySFX("button");
         YIndex = (YIndex - 1 + 3) % 3;
         Cursor->SetLocalPos(25, OffsetY[YIndex]);
         Cursor->UpdateRealPos();
@@ -93,6 +116,7 @@ void DungeonUIState::Update()
 
     if (KeyManager::GetInstance()->IsOnceKeyDown(0x5A)) // z키
     {
+        // SoundManager::GetInstance()->PlaySFX("button");
         if (YIndex == 0)
         {
 
@@ -100,6 +124,8 @@ void DungeonUIState::Update()
             UIManager::GetInstance()->ChangeState("IdleUI");
             SceneManager::GetInstance()->ChangeScene("DungeonScene");
 
+            SoundManager::GetInstance()->StopBGM();
+            SoundManager::GetInstance()->PlayBGM("ice");
         }
         else if (YIndex == 1)
         {
@@ -107,17 +133,24 @@ void DungeonUIState::Update()
             UIManager::GetInstance()->ChangeState("IdleUI");
             SceneManager::GetInstance()->ChangeScene("DungeonScene");
 
+            SoundManager::GetInstance()->StopBGM();
+            SoundManager::GetInstance()->PlayBGM("magma");
+
         }
         else if (YIndex == 2)
         {
             UIManager::GetInstance()->SetDungeonType(DUNGEON_TYPE_FOREST);
             UIManager::GetInstance()->ChangeState("IdleUI");
             SceneManager::GetInstance()->ChangeScene("DungeonScene");
+
+            SoundManager::GetInstance()->StopBGM();
+            SoundManager::GetInstance()->PlayBGM("forest");
         }
     }
 
     if (KeyManager::GetInstance()->IsOnceKeyDown(0x58))  // 'X' 키
     {
+        // SoundManager::GetInstance()->PlaySFX("button");
         UIManager::GetInstance()->CloseUIStateBox("DungeonUI");
     }
 
@@ -130,14 +163,6 @@ void DungeonUIState::Render(HDC hdc)
         DungeonInfoBox->Render(hdc);
     }
 
-    if (WaterType)
-    {
-        WaterType->Render(hdc);
-    }
-    if (FireType)
-    {
-        FireType->Render(hdc);
-    }
 }
 
 DungeonUIState::~DungeonUIState()

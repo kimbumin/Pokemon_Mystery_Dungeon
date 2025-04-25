@@ -77,6 +77,7 @@ void SwingSkill::Use(PokemonBase* owner)
         );
         target->TakeDamage(damage);
     }
+    SoundManager::GetInstance()->PlaySFX("attack");
 }
 
 shared_ptr<ISkill> SwingSkill::Clone()

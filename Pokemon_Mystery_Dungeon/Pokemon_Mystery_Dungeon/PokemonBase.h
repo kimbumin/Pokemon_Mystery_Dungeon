@@ -101,6 +101,10 @@ public:
     {
         return pos;
     }
+    inline int GetHp()
+    {
+        return currentHp;
+    }
     inline Map* GetMap()
     {
         return dungeonMap;
@@ -112,6 +116,10 @@ public:
     inline bool GetIsAlive()
     {
         return isAlive;
+    }
+    inline int GetCurrentHp() const
+    {
+        return currentHp;
     }
     shared_ptr<ISkill> GetSkill(int index)
     {
