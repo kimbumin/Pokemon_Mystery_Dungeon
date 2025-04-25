@@ -36,10 +36,18 @@ HRESULT MainGame::Init()
 
     //사운드매니저 초기화
     SoundManager::GetInstance()->Init();
-    SoundManager::GetInstance()->LoadBGM("intro", "music/intro.ogg");
-    SoundManager::GetInstance()->LoadBGM("square", "music/square.ogg");
-    SoundManager::GetInstance()->LoadBGM("adventure", "music/adventure.ogg");
+    SoundManager::GetInstance()->LoadBGM("intro", "music/Intro.mp3");
+    SoundManager::GetInstance()->LoadBGM("square", "music/square.mp3");
+    SoundManager::GetInstance()->LoadBGM("forest", "music/forest.mp3");
+    SoundManager::GetInstance()->LoadBGM("magma", "music/volcanic.mp3");
+    SoundManager::GetInstance()->LoadBGM("ice", "music/freeze.mp3");
     SoundManager::GetInstance()->LoadBGM("rip", "music/rip.ogg");
+    SoundManager::GetInstance()->LoadSFX("button", "sound_effect/enter.wav");
+    SoundManager::GetInstance()->LoadSFX("fire", "sound_effect/fireSkill.mp3");
+    SoundManager::GetInstance()->LoadSFX("attack", "sound_effect/attack.mp3");
+
+    SoundManager::GetInstance()->SetBGMVolume(10);
+    SoundManager::GetInstance()->SetSFXVolume(10);
     SoundManager::GetInstance()->PlayBGM("intro");
     hdc = GetDC(g_hWnd);
 

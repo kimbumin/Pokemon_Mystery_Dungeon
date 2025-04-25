@@ -87,6 +87,9 @@ HRESULT SquareScene::Init()
 
 
     FadeManager::GetInstance()->StartFadeIn(1.0f);
+
+    SoundManager::GetInstance()->StopBGM();
+    SoundManager::GetInstance()->PlayBGM("square");
     return S_OK;
 }
 
