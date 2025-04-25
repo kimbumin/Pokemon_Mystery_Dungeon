@@ -1,6 +1,7 @@
 // config.h
 
 #pragma once
+#define _HAS_STD_BYTE 0
 #pragma comment(lib, "Winmm.lib")
 
 #include <Windows.h>
@@ -8,7 +9,12 @@
 #include <iostream>
 #include <bitset>
 #include <map>
+#include <unordered_map>
+#include <set>
+#include <unordered_set>
 #include <vector>
+#include <fstream>
+#include <sstream>
 
 using namespace std;
 
@@ -16,17 +22,39 @@ using namespace std;
 #include "ImageManager.h"
 #include "TimerManager.h"
 #include "SceneManager.h"
+#include "CollisionManager.h"
+#include "CameraManager.h"
+#include "ImageGDIPlusManager.h"
+#include "SoundManager.h"
+
 
 /*
-	ÄÄÆÄÀÏ·¯¿¡¼­ ÇØ´ç ÄÚµå¸¦ µÚ¿¡ Á¤ÀÇµÈ ÄÚµå·Î º¯°æÇÑ´Ù. 
+	ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ ï¿½Úµå¸¦ ï¿½Ú¿ï¿½ ï¿½ï¿½ï¿½Çµï¿½ ï¿½Úµï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
 */
-#define WINSIZE_X	1080
-#define WINSIZE_Y	500
+#define WINSIZE_X	800
+#define WINSIZE_Y	400
+
+#define GameViewSize_X	500
+#define GameViewSize_Y	400
+
 #define TILEMAPTOOL_X	1420
 #define TILEMAPTOOL_Y	700
+#define SAMPLE_TILE_X	21
+#define SAMPLE_TILE_Y	24
+#define TILE_SIZE	24
+#define TILE_SELECT_SIZE 25
+
+
+//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ Å¸ï¿½ï¿½ Å©ï¿½ï¿½ 25Å¸ï¿½ï¿½ * 25Å¸ï¿½ï¿½  
+#define TILE_X	25
+#define TILE_Y	25
 
 #define DEG_TO_RAD(degree) ((3.14 / 180.0) * degree)
 #define RAD_TO_DEG(radian) ((180.0 / 3.14) * radian)
+
+// IV => ï¿½ï¿½Ã¼ï¿½ï¿½, EV = ï¿½ï¿½ï¿½Ä¡
+#define IV 30
+#define EV 20
 
 typedef struct tagFPOINT
 {
@@ -34,9 +62,76 @@ typedef struct tagFPOINT
 	float y;
 } FPOINT;
 
+// ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½âº» ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+struct PokemonData {
+	int idNumber;
+	string name;
+	int hp, atk, def, spAtk, spDef, speed, sum, average;
+	vector<string> types;
+};
+
+struct EvolutionData
+{
+    int basePokemonId;
+    int evolvedPokemonId;
+    int requiredLevel;
+};
+
+enum DungeonType
+{
+	DUNGEON_TYPE_ICE,
+    DUNGEON_TYPE_MAGMA,
+    DUNGEON_TYPE_FOREST,
+    DUNGEON_TYPE_LENGTH,
+};
+
+enum class Direction
+{
+	SOUTH,      // 0,1
+	SOUTHEAST,  // 1,1
+	EAST,       // 1,0
+	NORTHEAST,  // 1,-1
+	NORTH,      // 0,-1
+	NORTHWEST,  // -1,-1
+	WEST,       // -1,0
+	SOUTHWEST,  // -1,1
+	LENGTH,
+};
+
+// ï¿½è¿­ï¿½ï¿½ Indexï¿½ï¿½ Direction ï¿½Ö¾î¼­
+constexpr pair<int, int> directionOffsets[8] = {
+	{ 0,  1 },  // SOUTH
+	{ 1,  1 },  // SOUTHEAST
+	{ 1,  0 },  // EAST
+	{ 1, -1 },  // NORTHEAST
+	{ 0, -1 },  // NORTH
+	{-1, -1 },  // NORTHWEST
+	{-1,  0 },  // WEST
+	{-1,  1 }   // SOUTHWEST
+};
+
+// ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+const vector<string> animTypes = { "Attack", "Hurt", "Idle", "Rotate", "Swing", "Walk" };
+
+const vector<string> skillElementType =
+{
+	"Normal", "Fire", "Fighting", "Water", "Flying", "Grass", "Poison", "Electric", "Ground",
+	"Psychic", "Rock", "Ice", "Bug", "Dragon", "Ghost"
+};
+
+const vector<string> skillAnimType = {"Normal","Special"};
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+struct DungeonSpawnInfo
+{
+    vector<int> pokemonIds; // ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½Ï¸ï¿½ï¿½ï¿½ï¿½ ID
+    int minLevel; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    int maxLevel;
+    int spawnCount; // ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+};
+
 /*
-	extern Å°¿öµå : º¯¼ö³ª ÇÔ¼ö°¡ ´Ù¸¥ ÆÄÀÏ¿¡ Á¤ÀÇµÇ¾î ÀÖ´Ù ¶ó´Â
-	»ç½ÇÀ» ¾Ë¸®´Â Å°¿öµå.
+	extern Å°ï¿½ï¿½ï¿½ï¿½ : ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ï¿½ï¿½ ï¿½Ù¸ï¿½ ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ÇµÇ¾ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½
+	ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë¸ï¿½ï¿½ï¿½ Å°ï¿½ï¿½ï¿½ï¿½.
 */
 extern HWND g_hWnd;
 extern HINSTANCE g_hInstance;

@@ -1,82 +1,133 @@
 #include "MainGame.h"
+
+#include "CameraTestScene.h"
 #include "CommonFunction.h"
 #include "Image.h"
-#include "Timer.h"
+#include "PlayerManager.h"
+#include "PokemonDataLoader.h"
+#include "PokemonEvolutionDataLoader.h"
+#include "PokemonImageLoader.h"
+#include "SkillManager.h"
+#include "SquareScene.h"
+#include "StartScene.h"
+#include "DungeonScene.h"
+#include "TileMapTestScene.h"
 #include "TilemapTool.h"
-
+#include "Timer.h"
+#include "TurnManager.h"
+#include "UIManager.h"
 HRESULT MainGame::Init()
 {
-	ImageManager::GetInstance()->Init();
-	KeyManager::GetInstance()->Init();
-	SceneManager::GetInstance()->Init();
+    srand(time(NULL));
+    ImageManager::GetInstance()->Init();
+    KeyManager::GetInstance()->Init();
+    SceneManager::GetInstance()->Init();
+   
+    PokemonDataLoader::GetInstance()->Init();
+    PokemonDataLoader::GetInstance()->LoadFromCSV("Data/PokemonBaseStatus.csv");
+    PokemonEvolutionDataLoader::GetInstance()->Init();
+    PokemonEvolutionDataLoader::GetInstance()->LoadFromCSV(
+        "Data/PokemonEvolution.csv");
 
-	hdc = GetDC(g_hWnd);
+    SkillManager::GetInstance()->LoadSkillsFromCSV(
+        "Data/PokemonSkill_English.csv");
+    PlayerManager::GetInstance()->Init();
+    UIManager::GetInstance()->Init();
 
-	backBuffer = new Image();
-	if (FAILED(backBuffer->Init(TILEMAPTOOL_X, TILEMAPTOOL_Y)))
-	{
-		MessageBox(g_hWnd, 
-			TEXT("¹é¹öÆÛ »ý¼º ½ÇÆÐ"), TEXT("°æ°í"), MB_OK);
-		return E_FAIL;
-	}
 
-	return S_OK;
+    //ì‚¬ìš´ë“œë§¤ë‹ˆì € ì´ˆê¸°í™”
+    SoundManager::GetInstance()->Init();
+    SoundManager::GetInstance()->LoadBGM("intro", "music/Intro.mp3");
+    SoundManager::GetInstance()->LoadBGM("square", "music/square.mp3");
+    SoundManager::GetInstance()->LoadBGM("forest", "music/forest.mp3");
+    SoundManager::GetInstance()->LoadBGM("magma", "music/volcanic.mp3");
+    SoundManager::GetInstance()->LoadBGM("ice", "music/freeze.mp3");
+    SoundManager::GetInstance()->LoadBGM("rip", "music/rip.ogg");
+    SoundManager::GetInstance()->LoadSFX("button", "sound_effect/enter.wav");
+    SoundManager::GetInstance()->LoadSFX("fire", "sound_effect/fireSkill.mp3");
+    SoundManager::GetInstance()->LoadSFX("attack", "sound_effect/attack.mp3");
+
+    SoundManager::GetInstance()->SetBGMVolume(60);
+    SoundManager::GetInstance()->SetSFXVolume(30);
+    SoundManager::GetInstance()->PlayBGM("intro");
+    hdc = GetDC(g_hWnd);
+
+    backBuffer = new Image();
+    if (FAILED(backBuffer->Init(TILEMAPTOOL_X, TILEMAPTOOL_Y)))
+    {
+        MessageBox(g_hWnd, TEXT("ë°±ë²„í¼ ìƒì„± ì‹¤íŒ¨"), TEXT("ê²½ê³ "), MB_OK);
+        return E_FAIL;
+    }
+    // UIManager::GetInstance()->ChangeState("IdleUI");
+    SceneManager::GetInstance()->AddScene("StartScene", new StartScene());
+    SceneManager::GetInstance()->AddScene("DungeonScene", new DungeonScene());
+    SceneManager::GetInstance()->AddScene("Square", new SquareScene());
+    SceneManager::GetInstance()->AddScene("TileMapTool", new TilemapTool());
+
+
+    SceneManager::GetInstance()->ChangeScene("StartScene");
+    // SceneManager::GetInstance()->AddScene("TestMap", new CameraTestScene());
+    // SceneManager::GetInstance()->ChangeScene("TestMap");
+    return S_OK;
 }
 
 void MainGame::Release()
 {
-	if (backBuffer)
-	{
-		backBuffer->Release();
-		delete backBuffer;
-		backBuffer = nullptr;
-	}
+    if (backBuffer)
+    {
+        backBuffer->Release();
+        delete backBuffer;
+        backBuffer = nullptr;
+    }
 
-	ReleaseDC(g_hWnd, hdc);
+    ReleaseDC(g_hWnd, hdc);
 
-	SceneManager::GetInstance()->Release();
-	KeyManager::GetInstance()->Release();
-	ImageManager::GetInstance()->Release();
+    SceneManager::GetInstance()->Release();
+    KeyManager::GetInstance()->Release();
+    ImageManager::GetInstance()->Release();
+    PlayerManager::GetInstance()->Release();
 }
 
 void MainGame::Update()
 {
-	SceneManager::GetInstance()->Update();
-	InvalidateRect(g_hWnd, NULL, false);
+    SceneManager::GetInstance()->Update();
+    UIManager::GetInstance()->Update();
+    InvalidateRect(g_hWnd, NULL, false);
 }
 
 void MainGame::Render()
 {
-	HDC hBackBufferDC = backBuffer->GetMemDC();
+    HDC hBackBufferDC = backBuffer->GetMemDC();
+    PatBlt(hBackBufferDC, 0, 0, WINSIZE_X, WINSIZE_Y, BLACKNESS);
 
-	SceneManager::GetInstance()->Render(hBackBufferDC);
+    SceneManager::GetInstance()->Render(hBackBufferDC);
 
-	TimerManager::GetInstance()->Render(hBackBufferDC);
+    TimerManager::GetInstance()->Render(hBackBufferDC);
 
-
-	backBuffer->Render(hdc);
+    backBuffer->Render(hdc);
 }
 
-LRESULT MainGame::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
+LRESULT MainGame::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam,
+                           LPARAM lParam)
 {
-	switch (iMessage)
-	{
-	case WM_KEYDOWN:
-		break;
-	case WM_LBUTTONDOWN:
-		break;
-	case WM_LBUTTONUP:
-		break;
-	case WM_MOUSEMOVE:
-		g_ptMouse.x = LOWORD(lParam);
-		g_ptMouse.y = HIWORD(lParam);
-		break;
-	case WM_DESTROY:
-		PostQuitMessage(0);
-		break;
-	}
+    switch (iMessage)
+    {
+        case WM_KEYDOWN:
+            break;
+        case WM_LBUTTONDOWN:
+            break;
+        case WM_LBUTTONUP:
+            break;
+        case WM_MOUSEMOVE:
+            g_ptMouse.x = LOWORD(lParam);
+            g_ptMouse.y = HIWORD(lParam);
+            break;
+        case WM_DESTROY:
+            PostQuitMessage(0);
+            break;
+    }
 
-	return DefWindowProc(hWnd, iMessage, wParam, lParam);
+    return DefWindowProc(hWnd, iMessage, wParam, lParam);
 }
 
 MainGame::MainGame()

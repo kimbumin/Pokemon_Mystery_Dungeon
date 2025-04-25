@@ -13,75 +13,594 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="2DFramework">
+      <UniqueIdentifier>{c72a09f2-7172-4632-9836-3a2913d9d2b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame">
+      <UniqueIdentifier>{80bebe1e-dc27-4ede-8b88-0e2160ec812f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pokemon">
+      <UniqueIdentifier>{1bf48eb1-590d-4728-99f9-99ca672d423e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{599419f2-6869-4367-b57b-c0d081d5ced7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\소스">
+      <UniqueIdentifier>{8b772c0c-b823-4a6a-99bf-78a2a32f8c4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\헤더">
+      <UniqueIdentifier>{d019c4f3-a62c-46d0-bbcd-44cbfd3d0eab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pokemon\Anim">
+      <UniqueIdentifier>{7a6cd8e0-6042-42c9-8af4-006104b917d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pokemon\Data">
+      <UniqueIdentifier>{ccad6fa7-6281-498a-8920-ae27b68b7657}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Skill">
+      <UniqueIdentifier>{3bcafe55-105c-41e8-9f74-0df9f1ad2904}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Skill\SkillList">
+      <UniqueIdentifier>{2cd1cea9-45b4-40ea-9b9f-302ff2538fce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui">
+      <UniqueIdentifier>{5238f2ff-cd0c-4c68-9af1-b7ad6148d201}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\UiState">
+      <UniqueIdentifier>{c7938cab-8ee9-4d08-b4a2-a3697f6886bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\UiState\소스">
+      <UniqueIdentifier>{74092ff9-2d35-4db6-a77f-e9516a019092}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\UiState\헤더">
+      <UniqueIdentifier>{53a9530e-f1f7-4664-9136-6ee6a72b8a40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\UiConfig">
+      <UniqueIdentifier>{18fdbbbd-9614-492f-bd3f-a237b3b76ad8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\UiConfig\헤더">
+      <UniqueIdentifier>{e3f41a62-b217-441a-9f4a-07581c51498b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\UiConfig\소스">
+      <UniqueIdentifier>{e0ee7add-e1cc-4a7e-bb40-97762c1e4572}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pokemon\Anim\AnimState">
+      <UniqueIdentifier>{26c85d89-0c82-474c-af36-a924a242eafe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pokemon\Action">
+      <UniqueIdentifier>{c0154f23-7937-4184-b0d5-a2b424262739}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ItemManager">
+      <UniqueIdentifier>{68f4fe66-5ac9-4eee-9157-1ee63d69df50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ItemManager\Item">
+      <UniqueIdentifier>{292e1985-8ade-4dd1-8a97-5bfdae3d0072}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Image.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="ImageManager.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="KeyManager.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="MainGame.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="Image.cpp">
+      <Filter>2DFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageManager.cpp">
+      <Filter>2DFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyManager.cpp">
+      <Filter>2DFramework</Filter>
     </ClCompile>
     <ClCompile Include="SceneManager.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="TilemapTool.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>2DFramework</Filter>
     </ClCompile>
     <ClCompile Include="Timer.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>2DFramework</Filter>
     </ClCompile>
     <ClCompile Include="TimerManager.cpp">
+      <Filter>2DFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame.cpp">
+      <Filter>MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="PokemonBase.cpp">
+      <Filter>Pokemon</Filter>
+    </ClCompile>
+    <ClCompile Include="SquareScene.cpp">
+      <Filter>Scene\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="TilemapTool.cpp">
+      <Filter>Scene\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="PokemonImageLoader.cpp">
+      <Filter>Pokemon\Anim</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackAnimState.cpp">
+      <Filter>Pokemon\Anim\AnimState</Filter>
+    </ClCompile>
+    <ClCompile Include="IdleAnimState.cpp">
+      <Filter>Pokemon\Anim\AnimState</Filter>
+    </ClCompile>
+    <ClCompile Include="PokemonAnimator.cpp">
+      <Filter>Pokemon\Anim</Filter>
+    </ClCompile>
+    <ClCompile Include="PokemonDataLoader.cpp">
+      <Filter>Pokemon\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="RotateAnimState.cpp">
+      <Filter>Pokemon\Anim\AnimState</Filter>
+    </ClCompile>
+    <ClCompile Include="HurtAnimState.cpp">
+      <Filter>Pokemon\Anim\AnimState</Filter>
+    </ClCompile>
+    <ClCompile Include="SwingAnimState.cpp">
+      <Filter>Pokemon\Anim\AnimState</Filter>
+    </ClCompile>
+    <ClCompile Include="WalkAnimState.cpp">
+      <Filter>Pokemon\Anim\AnimState</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleUIState.cpp">
+      <Filter>Ui\UiState\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillUIState.cpp">
+      <Filter>Ui\UiState\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="InventoryUIState.cpp">
+      <Filter>Ui\UiState\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraManager.cpp">
+      <Filter>2DFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraTestScene.cpp">
+      <Filter>Ui</Filter>
+    </ClCompile>
+    <ClCompile Include="DefaultUIState.cpp">
+      <Filter>Ui\UiState\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="DialogueUIState.cpp">
+      <Filter>Ui\UiState\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageGDIPlus.cpp">
+      <Filter>2DFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillManager.cpp">
+      <Filter>Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="EmberSkill.cpp">
+      <Filter>Skill\SkillList</Filter>
+    </ClCompile>
+    <ClCompile Include="DungeonScene.cpp">
+      <Filter>Scene\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Scene\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="PokemonPlayer.cpp">
+      <Filter>Pokemon</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveActionState.cpp">
+      <Filter>Pokemon\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="IdleActionState.cpp">
+      <Filter>Pokemon\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="TurnManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionManager.cpp">
+      <Filter>2DFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="StartScene.cpp">
+      <Filter>Scene\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageGDIPlusManager.cpp">
+      <Filter>2DFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="UIManager.cpp">
+      <Filter>Ui\UiConfig\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="UIElement.cpp">
+      <Filter>Ui\UiConfig\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="UIElementImage.cpp">
+      <Filter>Ui\UiConfig\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemManager.cpp">
+      <Filter>ItemManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Branch.cpp">
+      <Filter>ItemManager\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="LeppaBerry.cpp">
+      <Filter>ItemManager\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="OranBerry.cpp">
+      <Filter>ItemManager\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="PPAider.cpp">
+      <Filter>ItemManager\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="PPHeal.cpp">
+      <Filter>ItemManager\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadingScene.cpp">
+      <Filter>Scene\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionBoxTool.cpp">
+      <Filter>Scene\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="MPlayer.cpp">
+      <Filter>Scene\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="BossScene.cpp">
+      <Filter>Scene\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Scene\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="FireBlastSkill.cpp">
+      <Filter>Skill\SkillList</Filter>
+    </ClCompile>
+    <ClCompile Include="StoneShowerSkill.cpp">
+      <Filter>Skill\SkillList</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackSkill.cpp">
+      <Filter>Skill\SkillList</Filter>
+    </ClCompile>
+    <ClCompile Include="SwingSkill.cpp">
+      <Filter>Skill\SkillList</Filter>
+    </ClCompile>
+    <ClCompile Include="DungeonManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="TileMapTestScene.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerManager.cpp">
+      <Filter>Pokemon</Filter>
+    </ClCompile>
+    <ClCompile Include="PokemonBuilder.cpp">
+      <Filter>Pokemon</Filter>
+    </ClCompile>
+    <ClCompile Include="PokemonEnemy.cpp">
+      <Filter>Pokemon</Filter>
+    </ClCompile>
+    <ClCompile Include="PokemonPool.cpp">
+      <Filter>Pokemon</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackActionState.cpp">
+      <Filter>Pokemon\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="HurtActionState.cpp">
+      <Filter>Pokemon\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="InfoUIState.cpp">
+      <Filter>Ui\UiState\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillInfoUIState.cpp">
+      <Filter>Ui\UiState\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="DungeonUIState.cpp">
+      <Filter>Ui\UiState\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="UIElementText.cpp">
+      <Filter>Ui\UiConfig\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="DialogueManager.cpp">
+      <Filter>Ui\UiConfig\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="YesOrNoUIState.cpp">
+      <Filter>Ui\UiState\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="DongminScene.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="DownStairUIState.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="BuminScene.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="FadeManager.cpp">
+      <Filter>Scene\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="BattleSystem.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CoolDownManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="PokemonEvolutionDataLoader.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundManager.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameObject.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Image.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="ImageManager.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="KeyManager.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="MainGame.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneManager.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Singleton.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="TilemapTool.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Timer.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="TimerManager.h">
-      <Filter>소스 파일</Filter>
+    <ClInclude Include="config.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="CommonFunction.h">
-      <Filter>소스 파일</Filter>
+      <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="config.h">
-      <Filter>소스 파일</Filter>
+    <ClInclude Include="KeyManager.h">
+      <Filter>2DFramework</Filter>
     </ClInclude>
+    <ClInclude Include="Image.h">
+      <Filter>2DFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageManager.h">
+      <Filter>2DFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>2DFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton.h">
+      <Filter>2DFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>2DFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="TimerManager.h">
+      <Filter>2DFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame.h">
+      <Filter>MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="SquareScene.h">
+      <Filter>Scene\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="TilemapTool.h">
+      <Filter>Scene\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleUIState.h">
+      <Filter>Ui\UiState\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="PokemonImageLoader.h">
+      <Filter>Pokemon\Anim</Filter>
+    </ClInclude>
+    <ClInclude Include="IAnimState.h">
+      <Filter>Pokemon\Anim\AnimState</Filter>
+    </ClInclude>
+    <ClInclude Include="IdleAnimState.h">
+      <Filter>Pokemon\Anim\AnimState</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackAnimState.h">
+      <Filter>Pokemon\Anim\AnimState</Filter>
+    </ClInclude>
+    <ClInclude Include="PokemonAnimator.h">
+      <Filter>Pokemon\Anim</Filter>
+    </ClInclude>
+    <ClInclude Include="HurtAnimState.h">
+      <Filter>Pokemon\Anim\AnimState</Filter>
+    </ClInclude>
+    <ClInclude Include="RotateAnimState.h">
+      <Filter>Pokemon\Anim\AnimState</Filter>
+    </ClInclude>
+    <ClInclude Include="SwingAnimState.h">
+      <Filter>Pokemon\Anim\AnimState</Filter>
+    </ClInclude>
+    <ClInclude Include="WalkAnimState.h">
+      <Filter>Pokemon\Anim\AnimState</Filter>
+    </ClInclude>
+    <ClInclude Include="UIState.h">
+      <Filter>Ui\UiState\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillInfoUIState.h">
+      <Filter>Ui\UiState\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillUIState.h">
+      <Filter>Ui\UiState\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="InventoryUIState.h">
+      <Filter>Ui\UiState\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraManager.h">
+      <Filter>2DFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraTestScene.h">
+      <Filter>Ui</Filter>
+    </ClInclude>
+    <ClInclude Include="DefaultUIState.h">
+      <Filter>Ui\UiState\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="DialogueUIState.h">
+      <Filter>Ui\UiState\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageGDIPlus.h">
+      <Filter>2DFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="ISkill.h">
+      <Filter>Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillManager.h">
+      <Filter>Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="EmberSkill.h">
+      <Filter>Skill\SkillList</Filter>
+    </ClInclude>
+    <ClInclude Include="DungeonScene.h">
+      <Filter>Scene\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="Room.h">
+      <Filter>Scene\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Scene\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="PokemonPlayer.h">
+      <Filter>Pokemon</Filter>
+    </ClInclude>
+    <ClInclude Include="IActionState.h">
+      <Filter>Pokemon\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveActionState.h">
+      <Filter>Pokemon\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="IdleActionState.h">
+      <Filter>Pokemon\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="TurnManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="PokemonBase.h">
+      <Filter>Pokemon</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionManager.h">
+      <Filter>2DFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="StartScene.h">
+      <Filter>Scene\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageGDIPlusManager.h">
+      <Filter>2DFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="UIManager.h">
+      <Filter>Ui\UiConfig\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="UIElement.h">
+      <Filter>Ui\UiConfig\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="UIElementImage.h">
+      <Filter>Ui\UiConfig\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="IItem.h">
+      <Filter>ItemManager</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemManager.h">
+      <Filter>ItemManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Branch.h">
+      <Filter>ItemManager\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="LeppaBerry.h">
+      <Filter>ItemManager\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="OranBerry.h">
+      <Filter>ItemManager\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="PPAider.h">
+      <Filter>ItemManager\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="PPHeal.h">
+      <Filter>ItemManager\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="PokemonBase.h">
+      <Filter>Pokemon</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadingScene.h">
+      <Filter>Scene\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionBoxTool.h">
+      <Filter>Scene\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="MPlayer.h">
+      <Filter>Scene\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="BossScene.h">
+      <Filter>Scene\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Scene\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="DungeonManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="TileMapTestScene.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerManager.h">
+      <Filter>Pokemon</Filter>
+    </ClInclude>
+    <ClInclude Include="PokemonBuilder.h">
+      <Filter>Pokemon</Filter>
+    </ClInclude>
+    <ClInclude Include="PokemonEnemy.h">
+      <Filter>Pokemon</Filter>
+    </ClInclude>
+    <ClInclude Include="PokemonPool.h">
+      <Filter>Pokemon</Filter>
+    </ClInclude>
+    <ClInclude Include="HurtActionState.h">
+      <Filter>Pokemon\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackActionState.h">
+      <Filter>Pokemon\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="PokemonDataLoader.h">
+      <Filter>Pokemon\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="DungeonUIState.h">
+      <Filter>Ui\UiState\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="YesOrNoUIState.h">
+      <Filter>Ui\UiState\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="UIElementText.h">
+      <Filter>Ui\UiConfig\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="InfoUIState.h">
+      <Filter>Ui\UiState\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="DialogueManager.h">
+      <Filter>Ui\UiConfig\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="DialogueTemplate.h">
+      <Filter>Ui\UiConfig\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackSkill.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="BattleSystem.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="DongminScene.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="DownStairUIState.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="FireBlastSkill.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="IdleUIState.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="StoneShowerSkill.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="SwingSkill.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="BuminScene.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="FadeManager.h">
+      <Filter>Scene\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="CoolDownManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="PokemonEvolutionDataLoader.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>
