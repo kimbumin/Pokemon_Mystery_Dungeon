@@ -21,11 +21,11 @@ void DungeonManager::LoadDungeonData()
     // 던전 이름 → 등장 포켓몬 ID + 레벨 범위 + 수
     // 외부 파일로 빼낼생각이 있다
     // 밑에는 예시
-    dungeonSpawnMap["Volcano"] = DungeonSpawnInfo{{4, 5, 37}, 5, 10, 4};
+    dungeonSpawnMap["Volcano"] = DungeonSpawnInfo{{146,136, 76,75, 37, 150}, 10, 30, 4};
 
-    dungeonSpawnMap["TinyForest"] = DungeonSpawnInfo{{10, 13, 16}, 3, 6, 4};
+    dungeonSpawnMap["TinyForest"] = DungeonSpawnInfo{{133,10, 15, 18,151,149}, 3, 15, 4};
 
-    dungeonSpawnMap["IceCave"] = DungeonSpawnInfo{ {4, 5, 37}, 5, 10, 4 };
+    dungeonSpawnMap["IceCave"] = DungeonSpawnInfo{ {130,25 ,135,7,8,9,52,64,94,143,144}, 5, 20, 4 };
 }
 
 void DungeonManager::EnterDungeon(string dungeonName)
