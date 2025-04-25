@@ -23,7 +23,7 @@ void DungeonManager::LoadDungeonData()
     // 밑에는 예시
     dungeonSpawnMap["Volcano"] = DungeonSpawnInfo{{146,136, 76,75, 37, 150}, 10, 30, 4};
 
-    dungeonSpawnMap["TinyForest"] = DungeonSpawnInfo{{133,10, 15, 18,151,149}, 3, 15, 4};
+    dungeonSpawnMap["TinyForest"] = DungeonSpawnInfo{{133,10, 15, 18,151,148}, 3, 15, 4};
 
     dungeonSpawnMap["IceCave"] = DungeonSpawnInfo{ {130,25 ,135,7,8,9,52,64,94,143,144}, 5, 20, 4 };
 }
@@ -32,6 +32,12 @@ void DungeonManager::EnterDungeon(string dungeonName)
 {
     pool = new PokemonPool();
     pool->Init();
+    // 플레이어 부활 처리
+    PokemonPlayer* player = PlayerManager::GetInstance()->GetPlayer();
+    player->SetIsAlive(true);
+    player->SetPos({ 500, 300 });
+    player->SetHp(player->GetCurrentPokemonData().hp);
+    player->Init();
     builder = new PokemonBuilder();
     builder->SetPool(pool);
     builder->SetMap(dungeonMap);

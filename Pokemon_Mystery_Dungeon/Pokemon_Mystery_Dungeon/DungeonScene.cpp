@@ -84,6 +84,12 @@ void DungeonScene::Update()
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F6))
     {
         SceneManager::GetInstance()->ChangeScene("Square");
+        // 플레이어 부활 처리
+        PokemonPlayer* player = PlayerManager::GetInstance()->GetPlayer();
+        player->SetIsAlive(true);
+        player->SetPos({ 500, 300 });
+        player->SetHp(player->GetCurrentPokemonData().hp);
+        player->Init();
     }
 
 

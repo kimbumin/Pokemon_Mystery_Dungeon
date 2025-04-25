@@ -278,7 +278,10 @@ void TurnManager::Update()
                 }
             }
 
-           
+            if (UIManager::GetInstance()->GetCurrentStateKey() == "dialogueUI")
+            {
+                return;
+            }
             ++currentIndex;
             int total = CountAlive();
             if (currentIndex >= total)
@@ -291,7 +294,7 @@ void TurnManager::Update()
     }
 
     PokemonBase* player = PlayerManager::GetInstance()->GetPlayer();
-    if (!player->GetIsAlive() && UIManager::GetInstance()->GetCurrentStateKey() == "IdleUI")
+    if (!player->GetIsAlive() && UIManager::GetInstance()->GetCurrentStateKey() == "IdleUI" )
     {
         // ¾À ÀüÈ¯
         SceneManager::GetInstance()->ChangeScene("Square");
