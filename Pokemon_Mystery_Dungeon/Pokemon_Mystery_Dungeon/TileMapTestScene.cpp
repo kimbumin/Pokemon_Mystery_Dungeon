@@ -94,7 +94,6 @@ void TileMapTestScene::Update()
 
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F1))
     {
-        SceneManager::GetInstance()->AddScene("TileMapTool", new TilemapTool());
         SceneManager::GetInstance()->ChangeScene("TileMapTool");
     }
 
@@ -111,7 +110,6 @@ void TileMapTestScene::Update()
 
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_F6))
     {
-        SceneManager::GetInstance()->AddScene("DungeonScene", new DungeonScene());
         SceneManager::GetInstance()->ChangeScene("DungeonScene");
     }
 }

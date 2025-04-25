@@ -10,6 +10,7 @@
 #include "SkillManager.h"
 #include "SquareScene.h"
 #include "StartScene.h"
+#include "DungeonScene.h"
 #include "TileMapTestScene.h"
 #include "TilemapTool.h"
 #include "Timer.h"
@@ -59,6 +60,11 @@ HRESULT MainGame::Init()
     }
     // UIManager::GetInstance()->ChangeState("IdleUI");
     SceneManager::GetInstance()->AddScene("StartScene", new StartScene());
+    SceneManager::GetInstance()->AddScene("DungeonScene", new DungeonScene());
+    SceneManager::GetInstance()->AddScene("Square", new SquareScene());
+    SceneManager::GetInstance()->AddScene("TileMapTool", new TilemapTool());
+
+
     SceneManager::GetInstance()->ChangeScene("StartScene");
     // SceneManager::GetInstance()->AddScene("TestMap", new CameraTestScene());
     // SceneManager::GetInstance()->ChangeScene("TestMap");

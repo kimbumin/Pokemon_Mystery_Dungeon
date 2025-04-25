@@ -10,6 +10,7 @@
 #include "PlayerManager.h"
 // 최대 방 개수
 const int MAX_ROOMS = 8;
+const int MIN_ROOMS = 5;
 const int MIN_WIDTH = 4;
 const int MAX_WIDTH = 6;
 
@@ -99,7 +100,11 @@ HRESULT Map::Init()
     {
         tileImage = magma1;
     }
-//    tileImage = magma1;
+    //else if (UIManager::GetInstance()->GetDungeonType() == DUNGEON_TYPE_SEA)
+    //{
+    //    tileImage = sea1;
+    //}
+    //    tileImage = magma1;
 
     return S_OK;
 }
@@ -217,45 +222,49 @@ void Map::RenderWithCamera(HDC hdc)
 
 void Map::Generate()
 {
-    for (int y = 0; y < TILE_Y; ++y)
+    do
     {
-        for (int x = 0; x < TILE_X; ++x)
+        for (int y = 0; y < TILE_Y; ++y)
         {
-            tiles[y][x] = TILE_WALL;
-        }
-    }
-
-    rooms.clear();
-
-    for (int i = 0; i < MAX_ROOMS; ++i)
-    {
-        Room newRoom;
-        newRoom.width = uidWidth(dre);
-        newRoom.height = uidHeight(dre);
-        newRoom.x = rand() % (TILE_X - newRoom.width - 1);
-        newRoom.y = rand() % (TILE_Y - newRoom.height - 1);
-
-        bool overlapped = false;
-        for (const auto& r : rooms)
-        {
-            if (newRoom.Intersects(r))
+            for (int x = 0; x < TILE_X; ++x)
             {
-                overlapped = true;
-                break;
+                tiles[y][x] = TILE_WALL;
             }
         }
 
-        if (!overlapped)
-        {
-            CreateRoom(newRoom);
+        rooms.clear();
 
-            if (!rooms.empty())
+        for (int i = 0; i < MAX_ROOMS; ++i)
+        {
+            Room newRoom;
+            newRoom.width = uidWidth(dre);
+            newRoom.height = uidHeight(dre);
+            newRoom.x = rand() % (TILE_X - newRoom.width - 1);
+            newRoom.y = rand() % (TILE_Y - newRoom.height - 1);
+
+            bool overlapped = false;
+            for (const auto& r : rooms)
             {
-                ConnectRooms(rooms.back(), newRoom);
+                if (newRoom.Intersects(r))
+                {
+                    overlapped = true;
+                    break;
+                }
             }
-            rooms.push_back(newRoom);
+
+            if (!overlapped)
+            {
+                CreateRoom(newRoom);
+
+                if (!rooms.empty())
+                {
+                    ConnectRooms(rooms.back(), newRoom);
+                }
+                rooms.push_back(newRoom);
+            }
         }
-    }
+    } while (rooms.size() < MIN_ROOMS);  // 최소 방개수
+
 }
 
 void Map::Draw(HDC hdc)
@@ -543,6 +552,8 @@ void Map::TileDesign()
         {{0, 0, 1, 0, 0, 1, 0, 0}, {4, 23}},
 
         {{1, 1, 1, 1, 1, 1, 1, 1,}, {13, 1}},
+        {{0, 0, 1, 0, 0, 1, 1, 0}, {5, 2}},
+        {{0, 1, 1, 0, 0, 1, 0, 0}, {3, 0}},
     };
 
     for (int y = 0; y < TILE_Y; ++y)

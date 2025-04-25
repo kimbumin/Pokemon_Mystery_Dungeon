@@ -91,6 +91,24 @@ public:
         return stairPos;
     }
 
+    Image* GetNextIceTileImage()
+    {
+        return ice2;
+    }
+    Image* GetNextMagmaTileImage()
+    {
+        return magma2;
+    }
+    Image* GetNextTiniTileImage()
+    {
+        return tiniMeadow;
+    }
+    void SetTileImage(Image* image)
+    {
+        this->tileImage = image;
+    }
+
+
 private:
     TileType tiles[TILE_Y][TILE_X];
     std::vector<Room> rooms;
