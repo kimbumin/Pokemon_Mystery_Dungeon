@@ -66,21 +66,21 @@ void DownStairUIState::Update()
 {
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_DOWN))
     {
-        // SoundManager::GetInstance()->PlaySFX("button");
+        SoundManager::GetInstance()->PlaySFX("button");
         YIndex = (YIndex + 1) % 2;
         Cursor->SetLocalPos(25, OffsetY[YIndex]);
         Cursor->UpdateRealPos();
     }
     else if (KeyManager::GetInstance()->IsOnceKeyDown(VK_UP))
     {
-        // SoundManager::GetInstance()->PlaySFX("button");
+        SoundManager::GetInstance()->PlaySFX("button");
         YIndex = (YIndex - 1 + 2) % 2;
         Cursor->SetLocalPos(25, OffsetY[YIndex]);
         Cursor->UpdateRealPos();
     }
     if (KeyManager::GetInstance()->IsOnceKeyDown(0x5A))  // zŰ
     {
-        // SoundManager::GetInstance()->PlaySFX("button");
+        SoundManager::GetInstance()->PlaySFX("button");
         if (YIndex == 0)
         {
             isActive = true;

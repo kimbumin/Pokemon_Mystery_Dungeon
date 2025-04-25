@@ -172,14 +172,14 @@ void DefaultUIState::Update()
 
     if (KeyManager::GetInstance()->IsOnceKeyDown(VK_DOWN))
     {
-        //SoundManager::GetInstance()->PlaySFX("button");
+        SoundManager::GetInstance()->PlaySFX("button");
         YIndex = (YIndex + 1) % 3;
         Cursor->SetLocalPos(25, OffsetY[YIndex]);
         Cursor->UpdateRealPos();
     }
     else if (KeyManager::GetInstance()->IsOnceKeyDown(VK_UP))
     {
-        //SoundManager::GetInstance()->PlaySFX("button");
+        SoundManager::GetInstance()->PlaySFX("button");
         YIndex = (YIndex - 1 + 3) % 3;
         Cursor->SetLocalPos(25, OffsetY[YIndex]);
         Cursor->UpdateRealPos();
@@ -204,7 +204,7 @@ void DefaultUIState::Update()
     }
     if (KeyManager::GetInstance()->IsOnceKeyDown(0x58))
     {
-        // SoundManager::GetInstance()->PlaySFX("button");
+        SoundManager::GetInstance()->PlaySFX("button");
         UIManager::GetInstance()->ChangeState("IdleUI");
     }
 

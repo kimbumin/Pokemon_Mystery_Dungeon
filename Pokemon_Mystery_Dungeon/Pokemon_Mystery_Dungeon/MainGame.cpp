@@ -47,8 +47,8 @@ HRESULT MainGame::Init()
     SoundManager::GetInstance()->LoadSFX("fire", "sound_effect/fireSkill.mp3");
     SoundManager::GetInstance()->LoadSFX("attack", "sound_effect/attack.mp3");
 
-    SoundManager::GetInstance()->SetBGMVolume(10);
-    SoundManager::GetInstance()->SetSFXVolume(10);
+    SoundManager::GetInstance()->SetBGMVolume(60);
+    SoundManager::GetInstance()->SetSFXVolume(30);
     SoundManager::GetInstance()->PlayBGM("intro");
     hdc = GetDC(g_hWnd);
 
