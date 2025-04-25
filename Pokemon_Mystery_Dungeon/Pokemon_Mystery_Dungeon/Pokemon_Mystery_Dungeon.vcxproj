@@ -182,6 +182,7 @@
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="OranBerry.cpp" />
     <ClCompile Include="MoveActionState.cpp" />
+    <ClCompile Include="PlayerInfoUIRender.cpp" />
     <ClCompile Include="PlayerManager.cpp" />
     <ClCompile Include="MPlayer.cpp" />
     <ClCompile Include="PokemonAnimator.cpp" />
@@ -272,6 +273,7 @@
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="OranBerry.h" />
     <ClInclude Include="MoveActionState.h" />
+    <ClInclude Include="PlayerInfoUIRender.h" />
     <ClInclude Include="PlayerManager.h" />
     <ClInclude Include="MPlayer.h" />
     <ClInclude Include="PokemonAnimator.h" />

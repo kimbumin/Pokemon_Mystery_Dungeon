@@ -5,6 +5,7 @@
 
 class UIElementImage;
 class UIElementText;
+class PokemonBase;
 class InfoUIState : public UIState, public UIElement
 {
 private:
@@ -12,6 +13,9 @@ private:
     UIElementImage* SecondInfoBox = nullptr;
     UIElementImage* ThirdInfoBox = nullptr;
     UIElementImage* FourthInfoBox = nullptr;
+    UIElementImage* BottomRight = nullptr;
+
+    UIElementImage* playerImageBox = nullptr;
     
     UIElementImage* CurrHpBar = nullptr;
     UIElementImage* MaxHpBar = nullptr;
@@ -25,12 +29,13 @@ private:
     int currentHP = 50;
     int maxHP = 100;
 
-    float percent = (float)currentHP / maxHP;
-
     int barWidth;
     int barHeight;
 
     const int InfoBoxPosYOffset[4] = {0, 50, 100, 150};
+
+    PokemonBase* player = nullptr;
+    float percent = 1.0f;
 
 public:
     HRESULT Init() override;
@@ -39,4 +44,5 @@ public:
     void Render(HDC hdc) override;
     ~InfoUIState() override;
     void SetInfoBoxText(int index, const wstring& text);
+    void SetPlayerInfo(PokemonBase* player);
 };

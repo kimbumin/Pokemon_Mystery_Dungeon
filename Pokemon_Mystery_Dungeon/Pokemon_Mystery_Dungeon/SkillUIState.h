@@ -34,7 +34,7 @@ private:
     static const int SkillListMax = 4;
 
     UIElementImage* SubCursor = nullptr;
-    UIElementText* SubText[3] = {};
+    UIElementText* SubText[4] = {};
 
     const int OffsetY[SkillListMax] = {70, 100, 130, 160};
     int YIndex = 0;
@@ -43,13 +43,20 @@ private:
 
     bool isSkillUseBox = false;
     int subCorsorIndex = 0;
-    const int SubOffsetY[3] = {25, 55, 85};
-    const wstring subMenu[3] = {L"Use Skill", L"Info Skill", L"Cancle Skill"};
+    const int SubOffsetY[2] = {25, 55};
+    const wstring subMenu[2] = {L"Use Skill",  L"Cancle Skill"};
 
     bool alreadyInitialized = false;
     int SelectedSkillIndex = -1;
     vector<SkillDisplayData> skillDisplayList;
     vector<SkillDisplayData> currentSkills;
+
+    UIElementText* SkillNameText = nullptr;
+    UIElementText* SkillTypeText = nullptr;
+    UIElementText* SkillElementText = nullptr;
+    UIElementText* SkillPowerText = nullptr;
+    UIElementText* SkillAccuracyText = nullptr;
+    UIElementText* SkillPPText = nullptr;
 
 public:
     HRESULT Init() override;
@@ -60,6 +67,10 @@ public:
     void SetSkills(const vector<SkillDisplayData>& data);
 
     void UseSkill(int index);
+    void UpdateSkillInfoText(int index);
+
+    void SetElementTextColor(UIElementText* text, const string& element);
+
     void SetSelectedSkillIndex(int index)
     {
         SelectedSkillIndex = index;

@@ -67,7 +67,6 @@ void UIElementText::DrawColoredText(HDC hdc,
     SetBkMode(hdc, TRANSPARENT);
 
     COLORREF normalColor = textColor;
-    COLORREF highlightColor = RGB(241, 179, 0);
 
     bool inHighlight = false;
     std::wstring segment;
@@ -141,6 +140,11 @@ void UIElementText::SetFont(int size)
 void UIElementText::SetTextColorRGB(int r, int g, int b)
 {
     textColor = RGB(r, g, b);
+}
+
+void UIElementText::SetHighlightColorRGB(int r, int g, int b)
+{
+    highlightColor = RGB(r, g, b);
 }
 
 void UIElementText::TypeEffect(const wstring& txt, float interval)
