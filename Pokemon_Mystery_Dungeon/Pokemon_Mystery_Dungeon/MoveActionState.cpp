@@ -15,7 +15,7 @@ void MoveActionState::Enter(PokemonBase* owner)
     destPos.x += dx * TILE_SIZE;
     destPos.y += dy * TILE_SIZE;
 
-    duration = 0.2f;
+    duration = 0.05f;
     // Check 애니메이션 총 재생 시간 -> 하드코딩 말고 다른 방법 개선 필요
     // (PokemonBase에서도 AddAnimation 할때 하드 코딩 되어있음)
     elapsed = 0.f;

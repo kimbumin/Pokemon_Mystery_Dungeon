@@ -22,7 +22,7 @@ HRESULT PokemonPlayer::Init()
     learnedSkill[0] =
         SkillManager::GetInstance()->CreateSkill("BodySlam");  // Check
     learnedSkill[1] = SkillManager::GetInstance()->CreateSkill("FireBlast");
-    learnedSkill[2] = SkillManager::GetInstance()->CreateSkill("DoubleEdge");
+    learnedSkill[2] = SkillManager::GetInstance()->CreateSkill("Thunderbolt");
     learnedSkill[3] = SkillManager::GetInstance()->CreateSkill("Ember");
 
     UpdateRect();

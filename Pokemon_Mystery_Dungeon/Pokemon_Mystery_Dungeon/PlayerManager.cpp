@@ -14,7 +14,7 @@ void PlayerManager::Init()
     PokemonImageLoader::GetInstance()->LoadPokemonAnim(6);
     player->SetIsAlive(true);
     player->SetStatus((PokemonDataLoader::GetInstance()->GetData(4)));
-    player->SetLevel(6);
+    player->SetLevel(15);
 
     player->Init();
 
