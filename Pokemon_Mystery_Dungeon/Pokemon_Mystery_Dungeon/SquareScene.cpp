@@ -232,8 +232,6 @@ void SquareScene::Render(HDC hdc)
     TimerManager::GetInstance()->Render(hdc);
     UIManager::GetInstance()->Render(hdc);
 
-    wsprintf(szText, TEXT("Mouse X : %d, Y : %d"), g_ptMouse.x, g_ptMouse.y);
-    TextOut(hdc, 300, 60, szText, wcslen(szText));
     FadeManager::GetInstance()->Render(hdc, WINSIZE_X, WINSIZE_Y);
 }
 
