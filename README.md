@@ -14,7 +14,7 @@
 ## 윈도우
 ### SDL2
 1. SDL2 개발용 라이브러리 다운로드
-    - SDL2 다운로드 페이지에서 SDL2-devel-2.0.x-VC.zip 파일 다운로드
+    - SDL2 다운로드 페이지에서 SDL2-devel-2.x.x-VC.zip 파일 다운로드
 2. 압축 해제 후 폴더 구성
     - include/ : 헤더 파일 (SDL.h 등)
     - lib/x86/ 또는 lib/x64/ : 정적/동적 라이브러리 파일
@@ -26,15 +26,15 @@
 
 ### SDL2_mixer
 1. SDL2 개발용 라이브러리 다운로드
-    - SDL2 다운로드 페이지에서 SDL2-devel-2.0.x-VC.zip 파일 다운로드
+    - SDL2 다운로드 페이지에서 SDL2_mixer-devel-2.x.x-VC.zip 파일 다운로드
 2. 압축 해제 후 폴더 구성
-include/ : 헤더 파일 (SDL.h 등)
-lib/x86/ 또는 lib/x64/ : 정적/동적 라이브러리 파일
+    - include/ : 헤더 파일 (SDL_mixer.h 등)
+    - lib/x86/ 또는 lib/x64/ : 정적/동적 라이브러리 파일
 3. Visual Studio 설정
     - 프로젝트 > 속성 > C/C++ > 일반 > 추가 포함 디렉터리에 include 경로 추가
     - 프로젝트 > 속성 > 링커 > 일반 > 추가 라이브러리 디렉터리에 lib/x64 경로 추가
-    - 프로젝트 > 속성 > 링커 > 입력 > 추가 종속성에 SDL2.lib, SDL2main.lib 추가
-    - 실행 파일 위치에 SDL2.dll 복사
+    - 프로젝트 > 속성 > 링커 > 입력 > 추가 종속성에 SDL2_mixer.lib 추가
+    - 실행 파일 위치에 SDL2_mixer.lib 복사
 
 # SDL2 다운로드 주소
 - https://github.com/libsdl-org
